@@ -6,7 +6,7 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## Dataset
 
-_nordatlantisk-ft_ is compiled from data available on Folketingets Open Data platform ([Folketinget 2024](#ref-folketinget_folketingets_2024)) and comprises voting records of Northatlantic MPs. As per January 12, 2024, this includes records of `9469` ballots in Folketinget. See [`/docs/codebook.md`](docs/codebook.md) for details.
+_nordatlantisk-ft_ is compiled from data available on Folketingets Open Data platform[^1] and comprises voting records of Northatlantic MPs. As per January 12, 2024, this includes records of `9469` ballots in Folketinget. See [`/docs/codebook.md`](docs/codebook.md) for details.
 
 ## MPs
 
@@ -37,7 +37,7 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since 2004. Ther
 
 ## Political Parties
 
-Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed below with additional information on their positions from the ParlGov dataset ([Döring, Huber, and Manow 2022](#ref-doring_parlgov_2022)).
+Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed below with additional information on their positions from the ParlGov dataset[^2].
 
 | Party | Full Name         |    Party Family     | Origin | Left-Right | State-Market | Liberty-Authority | Anti-Pro EU |
 | :---- | :---------------- | :-----------------: | :----: | :--------: | :----------: | :---------------: | :---------: |
@@ -70,10 +70,6 @@ The following sample plots were generated from [`./analysis/example_plots.R`](./
 
 # References
 
-::: {#ref-doring_parlgov_2022 .csl-entry}
-Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.
-:::
+[^1]: Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
 
-::: {#ref-folketinget_folketingets_2024 .csl-entry}
-Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
-:::
+[^2]: Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.

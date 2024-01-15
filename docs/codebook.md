@@ -12,9 +12,14 @@
 
 # Introduction
 
-This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in [`../data/`](../data). Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of Folketinget ([2024](#ref-folketinget_folketingets_2024)), the parliament of Denmark.
+This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in [`../data/`](../data). Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of Folketinget[^folketinget-1], the parliament of Denmark.
 
-All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, the tabular metadata is provided in `json` files at [`../data/processed/csv`](../data/processed/csv) according to the W3C Metadata Vocabulary for Tabular Data ([W3C 2015](#ref-w3c_w3c_2015)).
+[^folketinget-1]: Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
+
+All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, the tabular metadata is provided in `json` files at [`../data/processed/csv`](../data/processed/csv) according to the W3C Metadata Vocabulary for Tabular Data[^w3c-2].
+
+[^w3c-2]: W3C. 2015. “W3C Recommendation: Metadata Vocabulary for Tabular Data.” <https://www.w3.org/TR/tabular-metadata/>.
+
 
 # File and Variable Descriptions
 
@@ -112,7 +117,10 @@ summary(MP_names$party)
 ##          6          4          2          1          2          2          3
 ```
 
-Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed below with additional information on their positions from the ParlGov dataset ([Döring, Huber, and Manow 2022](#ref-doring_parlgov_2022)).
+Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed below with additional information on their positions from the ParlGov dataset[^doering-4].
+
+[^doering-4]: Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.
+
 
 | Party | Full Name         |    Party Family     | Origin | Left-Right | State-Market | Liberty-Authority | Anti-Pro EU |
 | :---- | :---------------- | :-----------------: | :----: | :--------: | :----------: | :---------------: | :---------: |
@@ -123,7 +131,15 @@ Since 2004, Greenlandic MPs have belonged to two political parties while MPs fro
 | C     | Javnaðarflokkurin |  Social Democracy   |   FO   |    3.3     |     3.5      |        3.5        |     8.1     |
 | E     | Tjóðveldi         | Communist/Socialist |   FO   |    1.3     |     1.4      |         3         |     3.3     |
 
-See Ackrén ([2015](#ref-ackren_political_2015)) for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West ([2022](#ref-west_skipanarligar_2022)) in Faroese and West ([2020](#ref-west_faerosk_2020)) in Danish. Harder ([2022](#ref-harder_supplerende_2022)) provides a list of all Greenlandic and Faroese MPs and their party association(s) going back until 1953.
+See Ackrén 2015[^ackren-5] for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West 2022 in Faroese[^west-6] and West 2020 in Danish[^west-7]. Harder 2022[^harder-8] provides a list of all Greenlandic and Faroese MPs and their party association(s) going back until 1953.
+
+[^ackren-5]: Ackrén, Maria. 2015. “The Political Parties in Greenland and Their Development.” In *States Falling Apart? Secessionist and Autonomy Movements in Europe*, 317–35. Publications of the Institute of Federalism Fribourg University Switzerland 10. Bern: Stämpfli Verlag.
+
+[^west-7]: West, Hallbera. 2020. “Færøsk Politik – Mellem Gamle Politiske Traditioner Og Ny Forvaltningspraksis.” *Økonomi & Politik* 93 (4): 11–23. <https://doi.org/10.7146/okonomi-og-politik.v93i4.123410>.
+
+[^west-6]: West, Hallbera. 2022. “Skipanarligar Fortreytir Og Føroysk Stjórnarviðurskifti.” *Fróðskaparrit* 68 (December): 87–110. <https://ojs.setur.fo/index.php/frit/article/view/304>.
+
+[^harder-8]: Harder, Mette Marie Stæhr. 2022. “Supplerende Materiale: Færøske Og Grønlandske Mandater i Folketinget.” *Politica* 54 (1). <https://politica.dk/fileadmin/politica/Dokumenter/politica_54_1/harder_supplerende_materiale.pdf>.
 
 ### MP_names$start_date
 
@@ -879,35 +895,3 @@ str(northatlantic_ft$ballot_result_string)
 ```
 ##  chr [1:36876] "Vedtaget\n\n108 stemmer for forslaget (V, S, DF, RV, SF, EL, LA, KF, UFG)\n\n0 stemmer imod forslaget\n\n0 stem"| __truncated__ ...
 ```
-
-# References
-
-::: {#refs .references .csl-bib-body .hanging-indent}
-::: {#ref-ackren*political_2015 .csl-entry}
-Ackrén, Maria. 2015. “The Political Parties in Greenland and Their Development.” In \_States Falling Apart? Secessionist and Autonomy Movements in Europe*, 317–35. Publications of the Institute of Federalism Fribourg University Switzerland 10. Bern: Stämpfli Verlag.
-:::
-
-::: {#ref-doring_parlgov_2022 .csl-entry}
-Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.
-:::
-
-::: {#ref-folketinget_folketingets_2024 .csl-entry}
-Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
-:::
-
-::: {#ref-harder*supplerende_2022 .csl-entry}
-Harder, Mette Marie Stæhr. 2022. “Supplerende Materiale: Færøske Og Grønlandske Mandater i Folketinget.” \_Politica* 54 (1). <https://politica.dk/fileadmin/politica/Dokumenter/politica_54_1/harder_supplerende_materiale.pdf>.
-:::
-
-::: {#ref-w3c_w3c_2015 .csl-entry}
-W3C. 2015. “W3C Recommendation: Metadata Vocabulary for Tabular Data.” <https://www.w3.org/TR/tabular-metadata/>.
-:::
-
-::: {#ref-west*faerosk_2020 .csl-entry}
-West, Hallbera. 2020. “Færøsk Politik – Mellem Gamle Politiske Traditioner Og Ny Forvaltningspraksis.” *Økonomi & Politik\_ 93 (4): 11–23. <https://doi.org/10.7146/okonomi-og-politik.v93i4.123410>.
-:::
-
-::: {#ref-west*skipanarligar_2022 .csl-entry}
-———. 2022. “Skipanarligar Fortreytir Og Føroysk Stjórnarviðurskifti.” \_Fróðskaparrit* 68 (December): 87–110. <https://ojs.setur.fo/index.php/frit/article/view/304>.
-:::
-:::

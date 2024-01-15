@@ -6,7 +6,7 @@ This repository contains voting records of Greenlandic and Faroese Members of Pa
 
 ## Repository Structure
 
-The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) by [\@maehr](https://github.com/maehr), follows the [Advanced Structure for Data Analysis](https://the-turing-way.netlify.app/project-design/project-repo/project-repo-advanced.html) of _The Turing Way_ and is organized as follows:
+The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) by [@maehr](https://github.com/maehr), follows the [Advanced Structure for Data Analysis](https://the-turing-way.netlify.app/project-design/project-repo/project-repo-advanced.html) of _The Turing Way_ and is organized as follows:
 
 - `analysis/`: scripts and notebooks used to analyze the data
 - `assets/`: images, logos, etc. used in the README and other documentation
@@ -27,7 +27,7 @@ For all MPs that were elected in either Greenland or the Faroe Islands since 200
 
 In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
 
-Descriptions of all variables are provided in the [codebook](./docs/codebook.md). Take a first glance at the dataset [here](report.md).
+Descriptions of all variables are provided in the [codebook](./docs/codebook.md). Take a first glance at the dataset [in report.md](report.md).
 
 ### Installation
 
@@ -59,7 +59,7 @@ This data is openly available to everyone and can be used for any research or ed
 
 ## Support
 
-This project is maintained by [\@mtwente](https://github.com/mtwente). Please understand that we can't provide individual support via email. We also believe that help is much more valuable when it's shared publicly, so more people can benefit from it.
+This project is maintained by [@mtwente](https://github.com/mtwente). Please understand that we can't provide individual support via email. We also believe that help is much more valuable when it's shared publicly, so more people can benefit from it.
 
 | Type                                   | Platforms                                                                     |
 | -------------------------------------- | ----------------------------------------------------------------------------- |
