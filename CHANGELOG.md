@@ -1,14 +1,3 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased](https://github.com/mtwente/nordatlantisk-ft/compare/...HEAD)
-
-### Documentation
-
 - Update CHANGELOG.md
 - Update CHANGELOG.md
 - Fix inline section links with anchors in github-flavored markdown
@@ -17,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change heading 1 of README.md
 - Update CHANGELOG.md
 - Delete .Rmd version of codebook
+- Update CHANGELOG.md
+- Minor wording changes in README.md
 
 ### Features
 
