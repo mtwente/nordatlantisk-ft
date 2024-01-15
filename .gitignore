@@ -4,6 +4,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/git,linux,macos,node,dotenv,windows,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,linux,macos,node,dotenv,windows,visualstudiocode
 
+# manual additions (R specific) at the end of the file
+
 ### dotenv ###
 .env
 
@@ -228,3 +230,9 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/git,linux,macos,node,dotenv,windows,visualstudiocode
+
+# Local History for R Studio
+.Rhistory
+
+# Local R Project User file
+.Rproj.user

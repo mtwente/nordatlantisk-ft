@@ -1,0 +1,105 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "northatlantic_ft.csv",
+	"dc:title": "nordatlantisk ft",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2023-01-11",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:relation": "../../../src/targets/join_results.R",
+	"tableSchema": {
+		"aboutUrl": "../../../README.md",
+		"notes": "Data Set with  Voting Records of Greenlandic and Faroese MPs in Folketinget",
+		"columns": [
+			{
+				"name": "ballot_id",
+				"dc:title": "Ballot ID",
+				"dc:description": "ID assigned to the ballot in Folketinget records",
+				"datatype": { "base": "integer", "minimum": "1" }
+			},
+			{
+				"name": "MP_id",
+				"dc:title": "MP ID",
+				"dc:description": "Folketinget ODA ID assigned to the MP..",
+				"datatype": { "base": "integer", "minimum": "1" }
+			},
+			{
+				"name": "vote_type_id",
+				"dc:title": "Vote Type ID",
+				"dc:description": "Folketinget ODA ID assigned to the vote type.",
+				"datatype": { "base": "integer", "minimum": "1", "maximum": "4" }
+			},
+			{
+				"name": "vote_id",
+				"dc:title": "Vote ID",
+				"dc:description": "Folketinget ODA ID assigned to the vote.",
+				"datatype": { "base": "integer", "minimum": "1" }
+			},
+			{
+				"name": "ballot_pass",
+				"dc:title": "Ballot Pass",
+				"dc:description": "Boolean indicating if the ballot passed.",
+				"datatype": { "base": "boolean", "format": "TRUE|FALSE" }
+			},
+			{
+				"name": "ft_for",
+				"dc:title": "For Votes",
+				"dc:description": "Number of votes in favor of the proposal.",
+				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+			},
+			{
+				"name": "ft_against",
+				"dc:title": "Against Votes",
+				"dc:description": "Number of votes against the proposal.",
+				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+			},
+			{
+				"name": "ft_abstention",
+				"dc:title": "Abstention Votes",
+				"dc:description": "Number of abstention votes.",
+				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+			},
+			{
+				"name": "ft_absent",
+				"dc:title": "Absent Votes",
+				"dc:description": "Number of absent MPs.",
+				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+			},
+			{
+				"name": "ballot_date",
+				"dc:title": "Ballot Date",
+				"dc:description": "Date of the ballot.",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			},
+			{
+				"name": "ballot_type_id",
+				"dc:title": "Ballot Type ID",
+				"dc:description": "ID assigned to the ballot type.",
+				"datatype": { "base": "integer", "minimum": "1", "maximum": "4" }
+			},
+			{
+				"name": "comment",
+				"dc:title": "Comment",
+				"dc:description": "Additional comments about the ballot.",
+				"null": "NA",
+				"datatype": "string",
+				"lang": "dk"
+			},
+			{
+				"name": "ballot_result_string",
+				"dc:title": "Ballot Result String",
+				"dc:description": "String describing the ballot result.",
+				"null": "NA",
+				"datatype": "string",
+				"lang": "dk"
+			}
+		],
+		"dialect": {
+			"delimiter": ",",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		},
+		"primaryKey": ["vote_id"]
+	}
+}

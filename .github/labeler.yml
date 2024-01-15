@@ -33,3 +33,12 @@ src:
   - example.env
   - src/*
   - test/*
+  - nordatlantisk-ft.Rproj
+  - renv/*
+  - renv.lock
+  - .Rprofile
+  - run.R
+  - run.sh
+  - _targets/*
+  - _targets_packages.R
+  - _targets.R

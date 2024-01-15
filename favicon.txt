@@ -1,6 +1,11 @@
-This favicon was generated using the following graphics from Twitter Twemoji:
+This favicon was generated using the following graphics from Wikimedia Commons:
 
-- Graphics Title: 1f5c3.svg
-- Graphics Author: Copyright 2020 Twitter, Inc and other contributors (https://github.com/twitter/twemoji)
-- Graphics Source: https://github.com/twitter/twemoji/blob/master/assets/svg/1f5c3.svg
-- Graphics License: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+- Graphics Title: Flag_of_Greenland.svg
+- Graphics Author: Jeffrey Connell (https://en.wikipedia.org/wiki/User:IceKarma)
+- Graphics Source: https://commons.wikimedia.org/wiki/File:Flag_of_Greenland.svg
+- Graphics License: Public Domain
+
+- Graphics Title: Flag_of_the_Faroe_Islands.svg
+- Graphics Author: Jeffrey Connell (https://en.wikipedia.org/wiki/User:IceKarma)
+- Graphics Source: https://commons.wikimedia.org/wiki/File:Flag_of_the_Faroe_Islands.svg
+- Graphics License: Public Domain

@@ -1,8 +1,8 @@
 {
-	"name": "REPO_NAME",
-	"description": "SHORT_DESCRIPTION",
-	"author": "FULLNAME <[INSERT CONTACT METHOD]>",
-	"url": "https://github.com/USERNAME/REPO_NAME/issues",
+	"name": "nordatlantisk-ft",
+	"description": "Voting Records for Greenlandic and Faroese MPs in Folketinget",
+	"author": "Moritz Twente <mailto:moritz.twente@unibas.ch>",
+	"url": "https://github.com/mtwente/nordatlantisk-ft/issues",
 	"license": "AGPL-3.0",
 	"scripts": {
 		"check": "prettier --ignore-path .gitignore  --check . '!{CODE_OF_CONDUCT.md,LICENSE.md,_layouts/default.html,package-lock.json,pnpm-lock.yaml,yarn.lock}'",

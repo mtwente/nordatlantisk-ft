@@ -10,7 +10,7 @@ body:
     id: dataset
     attributes:
       label: 'Dataset Information'
-      placeholder: 'e.g. data/clean/abc.csv'
+      placeholder: 'e.g. data/processed/abc.csv'
   - type: textarea
     id: expected_data
     attributes:

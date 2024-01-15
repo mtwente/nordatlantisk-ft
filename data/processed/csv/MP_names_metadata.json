@@ -1,0 +1,77 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "MP_names.csv",
+	"dc:title": "MP Names",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2023-01-11",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:relation": "../../../src/create_MP_list.R",
+	"tableSchema": {
+		"aboutUrl": "../../../README.md",
+		"notes": "Table with names of members of Folketinget for which to get voting records",
+		"columns": [
+			{
+				"name": "surname",
+				"dc:title": "Surname",
+				"description": "Surname of the MP.",
+				"datatype": "string"
+			},
+			{
+				"name": "first_name",
+				"dc:title": "First Name",
+				"description": "First name(s) of the MP.",
+				"datatype": "string"
+			},
+			{
+				"name": "MP_id",
+				"dc:title": "MP ID",
+				"description": "Folketinget ODA ID assigned to the MP.",
+				"datatype": { "base": "integer", "minimum": "1" },
+				"required": true
+			},
+			{
+				"name": "origin",
+				"dc:title": "Origin",
+				"description": "Geographical origin of the MP.",
+				"datatype": { "base": "string", "format": "GL|FO" }
+			},
+			{
+				"name": "party",
+				"dc:title": "Party Code",
+				"description": "Political party affiliation (abbreviated) of the MP.",
+				"datatype": "string"
+			},
+			{
+				"name": "start_date",
+				"dc:title": "Start Date",
+				"description": "Start date of the MP's term.",
+				"null": "NA",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			},
+			{
+				"name": "end_date",
+				"dc:title": "End Date",
+				"description": "End date of the MP's term.",
+				"null": "NA",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			}
+		],
+		"dialect": {
+			"delimiter": ",",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		},
+		"primaryKey": ["MP_id"],
+		"foreignKeys": [
+			{
+				"columnReference": "origin",
+				"reference": {
+					"resource": "https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/slim-2/slim-2.json",
+					"columnReference": "alpha-2"
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,2 @@
+load("/Users/twente0000/Desktop/nordatlantisk-ft/data/processed/ballot_results_ft.rds")
+load("/Users/twente0000/Desktop/nordatlantisk-ft/data/processed/MP_names.rds")
