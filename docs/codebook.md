@@ -20,7 +20,6 @@ All data is available in `rds` format that can be read in an R Session via `read
 
 [^w3c-2]: W3C. 2015. “W3C Recommendation: Metadata Vocabulary for Tabular Data.” <https://www.w3.org/TR/tabular-metadata/>.
 
-
 # File and Variable Descriptions
 
 ## MP_names
@@ -121,7 +120,6 @@ Since 2004, Greenlandic MPs have belonged to two political parties while MPs fro
 
 [^doering-4]: Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.
 
-
 | Party | Full Name         |    Party Family     | Origin | Left-Right | State-Market | Liberty-Authority | Anti-Pro EU |
 | :---- | :---------------- | :-----------------: | :----: | :--------: | :----------: | :---------------: | :---------: |
 | IA    | Inuit Ataqatigiit | Communist/Socialist |   GL   |    1.3     |     1.4      |         3         |     3.3     |
@@ -133,13 +131,10 @@ Since 2004, Greenlandic MPs have belonged to two political parties while MPs fro
 
 See Ackrén 2015[^ackren-5] for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West 2022 in Faroese[^west-6] and West 2020 in Danish[^west-7]. Harder 2022[^harder-8] provides a list of all Greenlandic and Faroese MPs and their party association(s) going back until 1953.
 
-[^ackren-5]: Ackrén, Maria. 2015. “The Political Parties in Greenland and Their Development.” In *States Falling Apart? Secessionist and Autonomy Movements in Europe*, 317–35. Publications of the Institute of Federalism Fribourg University Switzerland 10. Bern: Stämpfli Verlag.
-
-[^west-7]: West, Hallbera. 2020. “Færøsk Politik – Mellem Gamle Politiske Traditioner Og Ny Forvaltningspraksis.” *Økonomi & Politik* 93 (4): 11–23. <https://doi.org/10.7146/okonomi-og-politik.v93i4.123410>.
-
-[^west-6]: West, Hallbera. 2022. “Skipanarligar Fortreytir Og Føroysk Stjórnarviðurskifti.” *Fróðskaparrit* 68 (December): 87–110. <https://ojs.setur.fo/index.php/frit/article/view/304>.
-
-[^harder-8]: Harder, Mette Marie Stæhr. 2022. “Supplerende Materiale: Færøske Og Grønlandske Mandater i Folketinget.” *Politica* 54 (1). <https://politica.dk/fileadmin/politica/Dokumenter/politica_54_1/harder_supplerende_materiale.pdf>.
+[^ackren-5]: Ackrén, Maria. 2015. “The Political Parties in Greenland and Their Development.” In _States Falling Apart? Secessionist and Autonomy Movements in Europe_, 317–35. Publications of the Institute of Federalism Fribourg University Switzerland 10. Bern: Stämpfli Verlag.
+[^west-7]: West, Hallbera. 2020. “Færøsk Politik – Mellem Gamle Politiske Traditioner Og Ny Forvaltningspraksis.” _Økonomi & Politik_ 93 (4): 11–23. <https://doi.org/10.7146/okonomi-og-politik.v93i4.123410>.
+[^west-6]: West, Hallbera. 2022. “Skipanarligar Fortreytir Og Føroysk Stjórnarviðurskifti.” _Fróðskaparrit_ 68 (December): 87–110. <https://ojs.setur.fo/index.php/frit/article/view/304>.
+[^harder-8]: Harder, Mette Marie Stæhr. 2022. “Supplerende Materiale: Færøske Og Grønlandske Mandater i Folketinget.” _Politica_ 54 (1). <https://politica.dk/fileadmin/politica/Dokumenter/politica_54_1/harder_supplerende_materiale.pdf>.
 
 ### MP_names$start_date
 

@@ -71,5 +71,4 @@ The following sample plots were generated from [`./analysis/example_plots.R`](./
 # References
 
 [^1]: Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
-
 [^2]: Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.
