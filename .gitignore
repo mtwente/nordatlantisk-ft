@@ -233,6 +233,7 @@ $RECYCLE.BIN/
 
 # Local History for R Studio
 .Rhistory
+.Rapp.history
 
 # Local R Project User file
 .Rproj.user
