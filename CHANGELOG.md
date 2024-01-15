@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/mtwente/nordatlantisk-ft/compare/...HEAD)
 
+### Documentation
+
+- Update CHANGELOG.md
+- Update CHANGELOG.md
+- Fix inline section links with anchors in github-flavored markdown
+- Change literature referencing from .bib file to markdown footnotes
+- Change literature referencing from .bib file to markdown footnotes
+- Change heading 1 of README.md
+
 ### Features
 
 - Add data sets and scripts for working with Folketinget parliamentary data
