@@ -1,6 +1,6 @@
 # Voting Records of Greenlandic and Faroese MPs in Folketinget
 
-This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketing, the Parliament of Denmark. The data in this repository is openly available to everyone and is intended to support reproducible research.
+This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketing, the Parliament of Denmark. The data in nordatlantisk-ft is openly available to everyone and is intended to support reproducible research.
 
 [![GitHub issues](https://img.shields.io/github/issues/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/issues) [![GitHub forks](https://img.shields.io/github/forks/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/network) [![GitHub stars](https://img.shields.io/github/stars/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/stargazers) [![GitHub license](https://img.shields.io/github/license/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/blob/main/LICENSE.md) [![Zotero](https://img.shields.io/badge/zotero-nordatlantisk--ft-red?style=flat&logo=zotero&logoColor=white&labelColor=565656&color=bb393c)](https://www.zotero.org/groups/5346749/nordatlantisk-ft)
 
@@ -49,9 +49,9 @@ targets::tar_make()
 
 Running `tar_make()` will execute the workflow as defined in [`_targets.R`](./_targets.R), skipping files ('targets') that have not changed since the last build process.
 
-The targets pipeline is set to check for new voting records **every twelve weeks**. To force running the scripts with the most recent data available, remove the `cue` arguments from the targets `ballot_info` and `raw_voting_records` in `_targets.R`.
+The targets pipeline is set to check for new voting records **every twelve weeks only**. To force running the scripts with the most recent data available, remove the `cue` arguments from the targets `ballot_info` and `raw_voting_records` in `_targets.R`.
 
-You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), replace the contents of the column `MP_names$MP_id` in the file available at [`./data/processed/csv/MP_names.csv`](./data/processed/csv/MP_names.csv) and then run `targets::tar_make()`.
+You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add the IDs to the column `MP_names$MP_id` in the file available at [`./data/processed/csv/MP_names.csv`](./data/processed/csv/MP_names.csv) and then run `targets::tar_make()`.
 
 ## Use
 
