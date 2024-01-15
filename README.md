@@ -1,4 +1,4 @@
-# nordatlantisk-ft
+# Voting Records of Greenlandic and Faroese MPs in Folketinget
 
 This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketing, the Parliament of Denmark. The data in this repository is openly available to everyone and is intended to support reproducible research.
 
