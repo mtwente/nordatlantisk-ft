@@ -31,13 +31,13 @@ Descriptions of all variables are provided in the [codebook](./docs/codebook.md)
 
 ### Installation
 
-Use the [renv package](https://rstudio.github.io/renv/index.html) to install all dependencies and set up a reproducible environment within the R project:
+Use the [renv package](https://rstudio.github.io/renv/index.html) to install all dependencies and set up a reproducible environment within the R project. To see which packages are loaded with renv for the workflow before installing them to the project library, run `renv::dependencies()`.
 
 ```r
 renv::restore()
 ```
 
-To see which packages are loaded with renv for the workflow before installing them, run `renv::dependencies()`.
+If you are running a recent Mac OS, you will have to [install a Fortran compiler manually](https://mac.r-project.org/tools/) for compiling the packages before running `renv::restore()`.
 
 ### Build
 
