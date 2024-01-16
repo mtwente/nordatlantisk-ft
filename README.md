@@ -2,7 +2,8 @@
 
 This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketing, the Parliament of Denmark. The data in nordatlantisk-ft is openly available to everyone and is intended to support reproducible research.
 
-[![GitHub issues](https://img.shields.io/github/issues/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/issues) [![GitHub forks](https://img.shields.io/github/forks/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/network) [![GitHub stars](https://img.shields.io/github/stars/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/stargazers) [![GitHub license](https://img.shields.io/github/license/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/blob/main/LICENSE.md) [![Zotero](https://img.shields.io/badge/zotero-nordatlantisk--ft-red?style=flat&logo=zotero&logoColor=white&labelColor=565656&color=bb393c)](https://www.zotero.org/groups/5346749/nordatlantisk-ft)
+[![GitHub issues](https://img.shields.io/github/issues/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/issues) [![GitHub forks](https://img.shields.io/github/forks/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/network) [![GitHub stars](https://img.shields.io/github/stars/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/stargazers) [![GitHub license](https://img.shields.io/github/license/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/blob/main/LICENSE.md) [![DOI](https://zenodo.org/badge/737343000.svg)](https://zenodo.org/doi/10.5281/zenodo.10517954)
+[![Zotero](https://img.shields.io/badge/zotero-nordatlantisk--ft-red?style=flat&logo=zotero&logoColor=white&labelColor=565656&color=bb393c)](https://www.zotero.org/groups/5346749/nordatlantisk-ft)
 
 ## Repository Structure
 
@@ -57,6 +58,24 @@ You can use the scripts to assemble data sets with voting records of other membe
 
 This data is openly available to everyone and can be used for any research or educational purpose. If you use this data in your research, please cite as specified in [CITATION.cff](CITATION.cff).
 
+The following citation formats are also available through _Zenodo_:
+
+- [BibTeX](https://zenodo.org/record/10517955/export/hx)
+- [CSL](https://zenodo.org/record/10517955/export/csl)
+- [DataCite](https://zenodo.org/record/10517955/export/dcite4)
+- [Dublin Core](https://zenodo.org/record/10517955/export/xd)
+- [DCAT](https://zenodo.org/record/10517955/export/dcat)
+- [JSON](https://zenodo.org/record/10517955/export/json)
+- [JSON-LD](https://zenodo.org/record/10517955/export/schemaorg_jsonld)
+- [GeoJSON](https://zenodo.org/record/10517955/export/geojson)
+- [MARCXML](https://zenodo.org/record/10517955/export/xm)
+
+_Zenodo_ provides an [API (REST & OAI-PMH)](https://developers.zenodo.org/) to access the data. For example, the following command will return the metadata for the most recent version of the data
+
+```bash
+curl -i https://zenodo.org/api/records/10517955
+```
+
 ## Support
 
 This project is maintained by [@mtwente](https://github.com/mtwente). Please understand that we can't provide individual support via email. We also believe that help is much more valuable when it's shared publicly, so more people can benefit from it.
@@ -77,7 +96,6 @@ This project is maintained by [@mtwente](https://github.com/mtwente). Please und
 - implement [frictionless-r](https://github.com/frictionlessdata/frictionless-r)
 - implement tests
 - in addition to the [Zotero Group](https://www.zotero.org/groups/5346749/nordatlantisk-ft), provide bibliography for scientific literature on Northatlantic MPs as BibTeX file.
-- add DOI to README and CITATION.cff
 
 ## Contributing
 
