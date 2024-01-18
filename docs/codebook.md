@@ -10,7 +10,7 @@
   - [northatlantic_ft](#northatlantic_ft)
 - [References](#references)
 
-# Introduction
+## Introduction
 
 This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in [`../data/`](../data). Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of Folketinget[^folketinget-1], the parliament of Denmark.
 
@@ -20,9 +20,9 @@ All data is available in `rds` format that can be read in an R Session via `read
 
 [^w3c-2]: W3C. 2015. “W3C Recommendation: Metadata Vocabulary for Tabular Data.” <https://www.w3.org/TR/tabular-metadata/>.
 
-# File and Variable Descriptions
+## File and Variable Descriptions
 
-## MP_names
+### MP_names
 
 `MP_names` is provided in `csv` and `rds` formats in [`../data/processed`](../data/processed). The `csv` file serves as starting point for building the data set, as the workflow pipeline[^codebook-1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from 2004 until January 2024, which results in 20 MPs.
 
@@ -44,7 +44,7 @@ head(MP_names)
 
 Descriptions of all variables in `MP_names` are provided in the following sections. The only variable necessary to execute the workflow is stored as [`MP_names$MP_id`](#mp_namesmp_id).
 
-### MP_names$surname
+#### MP_names$surname
 
 All surname(s) are stored as values of the type `character`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
 
@@ -59,7 +59,7 @@ head(MP_names$surname)
 ## [6] "Rossen"
 ```
 
-### MP_names$first_name
+#### MP_names$first_name
 
 All first names are stored as values of the type `character`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_names$MP_id`](#MP_names_MP_id) instead for reliable identification.
 
@@ -73,7 +73,7 @@ head(MP_names$first_name)
 ## [1] "Sara"      "Johan"     "Doris"     "Lars-Emil" "Kuupik"    "Sofia"
 ```
 
-### MP_names$MP_id
+#### MP_names$MP_id
 
 Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `integer` as `factor` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in.
 
@@ -90,7 +90,7 @@ head(MP_names$MP_id)
 
 This variable corresponds to the `aktørid` variable and the `Aktør` resource in [the Folketing online database](https://oda.ft.dk). Note that in Folketinget’s data model, ministries, parliamentary commissions, NGOs etc. are also listed as `Aktør` with their resp. `aktørid`.
 
-### MP_names$origin
+#### MP_names$origin
 
 `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `integer` as `factor` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered _Northatlantic_ MPs.
 
@@ -103,7 +103,7 @@ summary(MP_names$origin)
 ## 12  8
 ```
 
-### MP_names$party
+#### MP_names$party
 
 The political party that each MP belongs to is stored as value of the type `integer` as `factor` variable. As per January 2024, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office. For now, these cases are stored as a separate character string (`SIU et al.`).
 
@@ -136,7 +136,7 @@ See Ackrén 2015[^ackren-5] for an analysis of the development of Greenlandic po
 [^west-6]: West, Hallbera. 2022. “Skipanarligar Fortreytir Og Føroysk Stjórnarviðurskifti.” _Fróðskaparrit_ 68 (December): 87–110. <https://ojs.setur.fo/index.php/frit/article/view/304>.
 [^harder-8]: Harder, Mette Marie Stæhr. 2022. “Supplerende Materiale: Færøske Og Grønlandske Mandater i Folketinget.” _Politica_ 54 (1). <https://politica.dk/fileadmin/politica/Dokumenter/politica_54_1/harder_supplerende_materiale.pdf>.
 
-### MP_names$start_date
+#### MP_names$start_date
 
 For now, `start_date` is an empty placeholder variable. It will provide information on which date the MPs joined Folketinget.
 
@@ -148,7 +148,7 @@ head(MP_names$start_date)
 ## [1] NA NA NA NA NA NA
 ```
 
-### MP_names$end_date
+#### MP_names$end_date
 
 For now, `end_date` is an empty placeholder variable. It will provide information on which date the MPs left Folketinget.
 
@@ -162,7 +162,7 @@ head(MP_names$end_date)
 
 ---
 
-## northatlantic_votes
+### northatlantic_votes
 
 `northatlantic_votes` is provided as `rds` file in [`../data/processed/`](../data/processed). After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#northatlantic_votes_raw) is available as `csv` file in [`../data/raw/`](../data/raw). As per January 2024, `northatlantic_votes.rds` contains 36876 observations of 4 variables.
 
@@ -182,7 +182,7 @@ head(northatlantic_votes)
 
 Descriptions of all variables in `northatlantic_votes` are provided in the following sections.
 
-### northatlantic_votes$vote_id
+#### northatlantic_votes$vote_id
 
 All votes cast in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each vote ID is thus a unique identifier for one vote cast in Folketinget. All IDs are stored as values of the type `integer` as `factor` variable.
 
@@ -197,7 +197,7 @@ head(northatlantic_votes$vote_id)
 ## 36876 Levels: 1000151 1000154 1000159 1000160 1000330 1000333 1000338 ... 999978
 ```
 
-### northatlantic_votes$vote_type_id
+#### northatlantic_votes$vote_type_id
 
 All votes cast in Folketinget are recorded using numeric values that correspond to the MP’s decision. All Vote Type IDs are stored as values of the type `integer` as `factor` variable.
 
@@ -219,7 +219,7 @@ head(northatlantic_votes$vote_type_id)
 ## Levels: 1 2 3 4
 ```
 
-### northatlantic_votes$ballot_id
+#### northatlantic_votes$ballot_id
 
 All ballot procedures in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot ID is thus a unique identifier for one ballot in Folketinget. All IDs are stored as values of the type `integer` as `factor` variable.
 
@@ -234,7 +234,7 @@ head(northatlantic_votes$ballot_id)
 ## 9317 Levels: 1 10 100 1000 1001 1002 1003 1004 1005 1006 1007 1008 1009 ... 999
 ```
 
-### northatlantic_votes$MP_id
+#### northatlantic_votes$MP_id
 
 See [`MP_names$MP_id`](#mp_namesmp_id).
 
@@ -249,7 +249,7 @@ head(northatlantic_votes$MP_id)
 
 ---
 
-## northatlantic_votes_raw
+### northatlantic_votes_raw
 
 `northatlantic_votes_raw` is provided as `csv` file in [`../data/raw/`](../data/raw). It contains the downloaded data on voting records before any preprocessing. The [processed data](#northatlantic_votes) is available as `rds` file in [`../data/processed`](../data/processed). As per January 2024, `northatlantic_votes_raw.csv` contains 36876 observations of 5 variables.
 
@@ -281,7 +281,7 @@ head(northatlantic_votes_raw$id)
 ## [1]    177    356 113827 114006 114185 114364
 ```
 
-### northatlantic_votes_raw$typeid
+#### northatlantic_votes_raw$typeid
 
 See [`northatlantic_votes$vote_type_id`](#northatlantic_votesvote_type_id). In the raw data, `typeid` is stored as `integer` value.
 
@@ -293,7 +293,7 @@ head(northatlantic_votes_raw$typeid)
 ## [1] 3 3 3 3 3 3
 ```
 
-### northatlantic_votes_raw$afstemningid
+#### northatlantic_votes_raw$afstemningid
 
 See [`northatlantic_votes$ballot_id`](#northatlantic_votesballot_id). In the raw data, `afstemningid` is stored as `integer` value.
 
@@ -307,7 +307,7 @@ head(northatlantic_votes_raw$afstemningid)
 ## [1]   1   2 283 284 285 286
 ```
 
-### northatlantic_votes_raw$opdateringsdato
+#### northatlantic_votes_raw$opdateringsdato
 
 For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its last update is stored in `opdateringsdato`. All dates are stored as values of the type `character`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
 
@@ -325,7 +325,7 @@ head(northatlantic_votes_raw$opdateringsdato)
 
 ---
 
-## ballot_results_ft
+### ballot_results_ft
 
 `ballot_results_ft` is provided as `rds` file in [`../data/processed/`](../data/processed). After all ballots are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#ballot_info_raw) is available as `csv` file in [`../data/raw/`](../data/raw). As per January 2024, `ballot_results_ft.rds` contains 9469 observations of 13 variables.
 
@@ -352,7 +352,7 @@ str(ballot_results_ft)
 
 Descriptions of all variables in `ballot_results_ft` are provided in the following sections.
 
-### ballot_results_ft$ballot_id
+#### ballot_results_ft$ballot_id
 
 See [northatlantic_votes$ballot_id](#northatlantic_votesballot_id). Take care not to confuse `ballot_id` with [`ballot_nr`](#ballot_results_ftballot_nr).
 
@@ -365,7 +365,7 @@ head(ballot_results_ft$ballot_id)
 ## 9469 Levels: 1 10 100 1000 1001 1002 1003 1004 1005 1006 1007 1008 1009 ... 999
 ```
 
-### ballot_results_ft$meeting_id
+#### ballot_results_ft$meeting_id
 
 All meetings in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each meeting ID is thus a unique identifier for one meeting in Folketinget. All IDs are stored as values of the type `integer` as `factor` variable.
 
@@ -382,7 +382,7 @@ head(ballot_results_ft$meeting_id)
 ## 942 Levels: 10231 10232 10237 10244 10245 10249 10254 10259 10272 ... 9817
 ```
 
-### ballot_results_ft$ballot_pass
+#### ballot_results_ft$ballot_pass
 
 The result of all ballots in Folketinget is stored in `ballot_pass` as `logical` variable. If parliament votes in favor of a proposal, it passes and `ballot_pass` is assigned `TRUE`; if parliament votes a proposal down, it does not pass and `ballot_pass` is assigned `FALSE`.
 
@@ -396,7 +396,7 @@ head(ballot_results_ft$ballot_pass)
 ## [1] FALSE  TRUE  TRUE  TRUE  TRUE FALSE
 ```
 
-### ballot_results_ft$ballot_date
+#### ballot_results_ft$ballot_date
 
 The date on which each ballot takes place in Folketinget is stored as value of the type `double`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `2004-10-07` and the most recent entry from `2023-12-21` as per January 2024.
 
@@ -411,7 +411,7 @@ head(ballot_results_ft$ballot_date)
 ## [6] "2020-03-19"
 ```
 
-### ballot_results_ft$ft_for
+#### ballot_results_ft$ft_for
 
 In `ft_for`, the number of votes cast in favor of a proposal is stored as `numeric` value of the type `double`. Since the record keeping of Folketinget is inconsistent regarding the coding of ballot results, values for this variable are calculated in two steps. First, using the retrieved raw data, [`get_missing_info()`](../src/targets/get_missing_info.R) sums up all recorded individual votes in favor of the proposal using the `switch()` function on every row where [`ballot_info_raw$typeid`](#ballot_info_rawtypeid) equals `1`. The results of a considerable share of ballots are recorded only using [a – Danish – character string](#ballot_results_ftcomment) instead of in a list of votes. In these cases, the number of votes in favor of those proposals is extracted with [`clean_ballot_results()`](../src/targets/clean_ballot_results.R) using the `strex` package and then added to the number of approving votes from the first step.
 
@@ -425,7 +425,7 @@ head(ballot_results_ft$ft_for)
 ## [1]  3 95 95 95 92 12
 ```
 
-### ballot_results_ft$ft_against
+#### ballot_results_ft$ft_against
 
 In `ft_against`, the number of votes cast against a proposal is stored as `numeric` value of the type `double`. Since the record keeping of Folketinget is inconsistent regarding the coding of ballot results, values for this variable are calculated in two steps. First, using the retrieved raw data, [`get_missing_info()`](../src/targets/get_missing_info.R) sums up all recorded individual votes in favor of the proposal using the `switch()` function on every row where [`ballot_info_raw$typeid`](#ballot_info_rawtypeid) equals `2`. The results of a considerable share of ballots are recorded only using [a – Danish – character string](#comment) instead of in a list of votes. In these cases, the number of no-votes is extracted with [`clean_ballot_results()`](../src/targets/clean_ballot_results.R) using the `strex` package and then added to the number of no-votes from the first step.
 
@@ -439,7 +439,7 @@ head(ballot_results_ft$ft_against)
 ## [1] 92  0  0  0  0 81
 ```
 
-### ballot_results_ft$ft_abstention
+#### ballot_results_ft$ft_abstention
 
 In `ft_abstention`, the number of abstaining votes is stored as `numeric` value of the type `double`. Since the record keeping of Folketinget is inconsistent regarding the coding of ballot results, values for this variable are calculated in two steps. First, using the retrieved raw data, [`get_missing_info()`](../src/targets/get_missing_info.R) sums up all recorded individual abstaining votes using the `switch()` function on every row where [`ballot_info_raw$typeid`](#ballot_info_rawtypeid) equals `4`. The results of a considerable share of ballots are recorded only using [a – Danish – character string](#ballot_results_ftcomment) instead of in a list of votes. In these cases, the number of abstentions is extracted with [`clean_ballot_results()`](../src/targets/clean_ballot_results.R) using the `strex` package and then added to the number of abstaining votes from the first step.
 
@@ -453,7 +453,7 @@ head(ballot_results_ft$ft_abstention)
 ## [1] 0 0 0 0 0 0
 ```
 
-### ballot_results_ft$ft_absent
+#### ballot_results_ft$ft_absent
 
 In `ft_absent`, the number of MPs who were absent for each ballot is stored as `numeric` value of the type `double`. Since the record keeping of Folketinget is inconsistent regarding the coding of ballot results, values for this variable are calculated by substracting `ft_for`, `ft_against` and `ft_abstention` from `179`, the total number of MPs in Folketinget, using [`clean_ballot_results()`](../src/targets/clean_ballot_results.R).
 
@@ -467,7 +467,7 @@ head(ballot_results_ft$ft_absent)
 ## [1] 84 84 84 84 87 86
 ```
 
-### ballot_results_ft$ft_process_id
+#### ballot_results_ft$ft_process_id
 
 All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `integer` as `factor` variable.
 
@@ -484,7 +484,7 @@ head(ballot_results_ft$ft_process_id)
 ## 7024 Levels: 100011 100025 100046 100061 100122 100140 100154 1002 ... 99960
 ```
 
-### ballot_results_ft$ballot_nr
+#### ballot_results_ft$ballot_nr
 
 In addition to the [`ballot_id`](#ballot_results_ftballot_id), all ballot procedures in Folketinget are also assigned a number by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot number is thus another identifier for one ballot in Folketinget. All ballot numbers are stored as values of the type `integer` as `factor` variable.
 
@@ -499,7 +499,7 @@ head(ballot_results_ft$ballot_nr)
 ## 745 Levels: 1 10 100 101 102 103 104 105 106 107 108 109 11 110 111 112 ... 99
 ```
 
-### ballot_results_ft$ballot_type_id
+#### ballot_results_ft$ballot_type_id
 
 All ballot procedures in Folketinget are categorised using numeric values that correspond to the type of ballot. All Ballot Type IDs are stored as values of the type `integer` as `factor` variable.
 
@@ -521,7 +521,7 @@ head(ballot_results_ft$ballot_type_id)
 ## Levels: 1 2 3 4
 ```
 
-### ballot_results_ft$comment
+#### ballot_results_ft$comment
 
 If necessary, comments on each ballot are stored as values of the type `character` in Danish language. A Folketing wording standard for `comment` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations. As per January 2024, there are `450` observations with comments (total number of observations: `9469`). Comments on ballot results mostly regard human or technical errors, for example:
 
@@ -551,7 +551,7 @@ head(ballot_results_ft$comment)
 ## [6] "På grund af en fejl er Jens Joels (S) og Lars Christian Lilleholts (V) stemmer registreret som værende for forslaget. De stemte imod."
 ```
 
-### ballot_results_ft$ballot_result_string
+#### ballot_results_ft$ballot_result_string
 
 In `ballot_result_string`, ballot results are stored as values of the type `character` in Danish language. The variable indicates whether the proposal was adopted or not; how many votes were in favor resp. against or abstentions, and from which political parties these votes came. A Folketing wording standard for `ballot_result_string` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations.
 
@@ -567,7 +567,7 @@ str(ballot_results_ft$ballot_result_string)
 
 ---
 
-## ballot_info_raw
+### ballot_info_raw
 
 `ballot_info_raw` is provided as `csv` file in [`../data/raw/`](../data/raw). It contains the downloaded data on voting records before any preprocessing. The [processed data](#ballot_results_ft) is available as `rds` file in [`../data/processed`](../data/processed). As per January 2024, `ballot_info_raw.csv` contains 9469 observations of 9 variables.
 
@@ -601,7 +601,7 @@ head(ballot_info_raw)
 
 Descriptions of all variables in `ballot_info_raw` are provided in the following sections.
 
-### ballot_info_raw$id
+#### ballot_info_raw$id
 
 See [ballot_result_ft$ballot_id](#ballot_results_ftballot_id). Take care not to confuse `id` with [`nummer`](#ballot_info_rawnummer). In the raw data, `id` is stored as `integer` value.
 
@@ -613,7 +613,7 @@ head(ballot_info_raw$id)
 ## [1] 1 2 3 4 5 6
 ```
 
-### ballot_info_raw$nummer
+#### ballot_info_raw$nummer
 
 See [ballot_results_ft$ballot_nr](#ballot_results_ftballot_nr). Take care not to confuse `nummer` with [`id`](#ballot_info_rawid). In the raw data, `nummer` is stored as `integer` value.
 
@@ -625,7 +625,7 @@ head(ballot_info_raw$nummer)
 ## [1] 411 412   1   7 412 410
 ```
 
-### ballot_info_raw$konklusion
+#### ballot_info_raw$konklusion
 
 See [ballot_results_ft$ballot_result_string](#ballot_results_ftballot_result_string). In the raw data, `konklusion` is stored as `character` value.
 
@@ -642,7 +642,7 @@ head(ballot_info_raw$konklusion)
 ## [6] "\nVedtaget\n\n104 stemmer for forslaget (V, S, DF, RV, SF, EL, LA, KF, UFG)\n\n0 stemmer imod forslaget\n\n0 stemmer hverken for eller imod forslaget\n\n"
 ```
 
-### ballot_info_raw$vedtaget
+#### ballot_info_raw$vedtaget
 
 See [ballot_results_ft$ballot_pass](#ballot_results_ftballot_pass). In the raw data, `vedtaget` is stored as `logical` value.
 
@@ -654,7 +654,7 @@ head(ballot_info_raw$vedtaget)
 ## [1] TRUE TRUE TRUE TRUE TRUE TRUE
 ```
 
-### ballot_info_raw$kommentar
+#### ballot_info_raw$kommentar
 
 See [ballot_results_ft$comment](#ballot_results_ftcomment). In the raw data, `kommentar` is stored as `character` value.
 
@@ -666,7 +666,7 @@ head(ballot_info_raw$kommentar)
 ## [1] NA NA "" "" "" ""
 ```
 
-### ballot_info_raw$mødeid
+#### ballot_info_raw$mødeid
 
 See [ballot_results_ft$meeting_id](#ballot_results_ftmeeting_id). In the raw data, `mødeid` is stored as `integer` value.
 
@@ -678,7 +678,7 @@ head(ballot_info_raw$mødeid)
 ## [1]  17  18  41 156  18  15
 ```
 
-### ballot_info_raw$typeid
+#### ballot_info_raw$typeid
 
 See [ballot_results_ft$ballot_type_id](#ballot_results_ftballot_type_id). In the raw data, `typeid` is stored as `integer` value.
 
@@ -690,7 +690,7 @@ head(ballot_info_raw$typeid)
 ## [1] 2 1 3 1 1 1
 ```
 
-### ballot_info_raw$sagstrinid
+#### ballot_info_raw$sagstrinid
 
 See [ballot_results_ft$ft_process_id](#ballot_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `integer` value.
 
@@ -702,7 +702,7 @@ head(ballot_info_raw$sagstrinid)
 ## [1]    NA  4849 17351 18370  4849 16581
 ```
 
-### ballot_info_raw$opdateringsdato
+#### ballot_info_raw$opdateringsdato
 
 For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its last update is stored in `opdateringsdato`. All dates are stored as values of the type `character`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
 
@@ -720,7 +720,7 @@ head(ballot_info_raw$opdateringsdato)
 
 ---
 
-## northatlantic_ft
+### northatlantic_ft
 
 `northatlantic_ft` is the resulting product of the [targets pipeline](../_targets.R) and is provided as both `rds` file in [`../data/processed`](../data/processed/) and `csv` file in [`../data/processed/csv`](../data/processed/csv). It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft) and [`northatlantic_votes`](#northatlantic_votes). As per January 2024, `northatlantic_ft` contains 36876 observations of 13 variables.
 
@@ -747,7 +747,7 @@ str(northatlantic_ft)
 
 Descriptions of all variables in `northatlantic_ft` are provided in the following sections.
 
-### northatlantic_ft$ballot_id
+#### northatlantic_ft$ballot_id
 
 `ballot_id` is created by using [`join_results()`](../src/targets/join_results.R) on `northatlantic_votes` and `ballot_results_ft`. See [`northatlantic_votes$ballot_id`](#northatlantic_votesballot_id).
 
@@ -759,7 +759,7 @@ str(northatlantic_ft$ballot_id)
 ##  Factor w/ 9469 levels "1","10","100",..: 1 1109 2011 2022 2033 2044 2054 2065 2074 2085 ...
 ```
 
-### northatlantic_ft$MP_id
+#### northatlantic_ft$MP_id
 
 `MP_id` is created by using [`join_results()`](../src/targets/join_results.R) on `northatlantic_votes` and `ballot_results_ft`. See [`northatlantic_votes$MP_id`](#northatlantic_votesmp_id).
 
@@ -771,7 +771,7 @@ str(northatlantic_ft$MP_id)
 ##  Factor w/ 20 levels "12283","13","14000",..: 2 2 2 2 2 2 2 2 2 2 ...
 ```
 
-### northatlantic_ft$vote_type_id
+#### northatlantic_ft$vote_type_id
 
 `northatlantic_ft` is a result of [`join_results()`](../src/targets/join_results.R) in which `vote_type_id` is joined from `northatlantic_votes$vote_type_id`. See [`northatlantic_votes$vote_type_id`](#northatlantic_votesvote_type_id).
 
@@ -783,7 +783,7 @@ str(northatlantic_ft$vote_type_id)
 ##  Factor w/ 4 levels "1","2","3","4": 3 3 3 3 3 3 3 3 3 3 ...
 ```
 
-### northatlantic_ft$ballot_pass
+#### northatlantic_ft$ballot_pass
 
 See [`ballot_results_ft$ballot_pass`](#ballot_results_ftballot_pass).
 
@@ -795,7 +795,7 @@ str(northatlantic_ft$ballot_pass)
 ##  logi [1:36876] TRUE TRUE TRUE TRUE TRUE TRUE ...
 ```
 
-### northatlantic_ft$ft_for
+#### northatlantic_ft$ft_for
 
 See [`ballot_results_ft$ft_for`](#ballot_results_ftft_for).
 
@@ -807,7 +807,7 @@ str(northatlantic_ft$ft_for)
 ##  num [1:36876] 108 98 91 92 58 98 93 54 59 105 ...
 ```
 
-### northatlantic_ft$ft_against
+#### northatlantic_ft$ft_against
 
 See [`ballot_results_ft$ft_against`](#ballot_results_ftft_against).
 
@@ -819,7 +819,7 @@ str(northatlantic_ft$ft_against)
 ##  num [1:36876] 0 10 13 13 45 8 13 51 32 0 ...
 ```
 
-### northatlantic_ft$ft_abstention
+#### northatlantic_ft$ft_abstention
 
 See [`ballot_results_ft$ft_abstention`](#ballot_results_ftft_abstention).
 
@@ -831,7 +831,7 @@ str(northatlantic_ft$ft_abstention)
 ##  num [1:36876] 0 0 0 0 0 0 0 0 13 0 ...
 ```
 
-### northatlantic_ft$ft_absent
+#### northatlantic_ft$ft_absent
 
 See [`ballot_results_ft$ft_absent`](#ballot_results_ftft_absent).
 
@@ -843,7 +843,7 @@ str(northatlantic_ft$ft_absent)
 ##  num [1:36876] 71 71 75 74 76 73 73 74 75 74 ...
 ```
 
-### northatlantic_ft$ballot_date
+#### northatlantic_ft$ballot_date
 
 See [`ballot_results_ft$ballot_date`](#ballot_results_ftballot_date).
 
@@ -855,7 +855,7 @@ str(northatlantic_ft$ballot_date)
 ##  Date[1:36876], format: "2014-09-09" "2014-09-09" "2014-01-23" "2014-01-23" "2014-01-23" ...
 ```
 
-### northatlantic_ft$ballot_type_id
+#### northatlantic_ft$ballot_type_id
 
 See [`ballot_results_ft$ballot_type_id`](#ballot_results_ftballot_type_id).
 
@@ -867,7 +867,7 @@ str(northatlantic_ft$ballot_type_id)
 ##  Factor w/ 4 levels "1","2","3","4": 2 1 3 1 1 1 1 1 1 1 ...
 ```
 
-### northatlantic_ft$comment
+#### northatlantic_ft$comment
 
 See [`ballot_results_ft$comment`](#ballot_results_ftcomment).
 
@@ -879,7 +879,7 @@ str(northatlantic_ft$comment)
 ##  chr [1:36876] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA ...
 ```
 
-### northatlantic_ft$ballot_result_string
+#### northatlantic_ft$ballot_result_string
 
 See [`ballot_results_ft$ballot_result_string`](#ballot_results_ftballot_result_string).
 
