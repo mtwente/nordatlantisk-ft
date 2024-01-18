@@ -6,8 +6,9 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## Dataset
 
-_nordatlantisk-ft_ is compiled from data available on Folketingets Open Data platform[^1] and comprises voting records of Northatlantic MPs. As per January 12, 2024, this includes records of `9469` ballots in Folketinget. See [`/docs/codebook.md`](docs/codebook.md) for details and refer to Berntzen et al. 2019[^berntzen] for background information on Folketingets open data ecosystem.
+_nordatlantisk-ft_ is compiled from data available on Folketingets Open Data platform[^oda] and comprises voting records of Northatlantic MPs. As per January 12, 2024, this includes records of `9469` ballots in Folketinget. See [`/docs/codebook.md`](docs/codebook.md) for details and refer to Berntzen et al. 2019[^berntzen] for background information on Folketingets open data ecosystem.
 
+[^oda]: Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
 [^berntzen]: Berntzen, Lasse, Marius Johannessen, Kim Andersen, and Jonathan Crusoe. 2019. “Parliamentary Open Data in Scandinavia.” Computers 8 (3): 65. <https://doi.org/10.3390/computers8030065>.
 
 ## MPs
@@ -39,7 +40,9 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since 2004. Ther
 
 ## Political Parties
 
-Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed below with additional information on their positions from the ParlGov dataset[^2].
+Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed below with additional information on their positions from the ParlGov dataset[^parlgov].
+
+[^parlgov]: Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.
 
 | Party | Full Name         |    Party Family     | Origin | Left-Right | State-Market | Liberty-Authority | Anti-Pro EU |
 | :---- | :---------------- | :-----------------: | :----: | :--------: | :----------: | :---------------: | :---------: |
@@ -70,7 +73,4 @@ The following sample plots were generated from [`./analysis/example_plots.R`](./
 
 <img src="./assets/images/2024-01-12-scatterplot_without_absences.png"/>
 
-# References
-
-[^1]: Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
-[^2]: Döring, Holger, Constantin Huber, and Philip Manow. 2022. “ParlGov 2022 Release.” Harvard Dataverse. <https://doi.org/10.7910/DVN/UKILBE>.
+## References

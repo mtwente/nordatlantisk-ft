@@ -890,3 +890,5 @@ str(northatlantic_ft$ballot_result_string)
 ```
 ##  chr [1:36876] "Vedtaget\n\n108 stemmer for forslaget (V, S, DF, RV, SF, EL, LA, KF, UFG)\n\n0 stemmer imod forslaget\n\n0 stem"| __truncated__ ...
 ```
+
+## References
