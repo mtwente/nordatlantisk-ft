@@ -3,7 +3,7 @@
 This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketing, the Parliament of Denmark. The data in nordatlantisk-ft is openly available to everyone and is intended to support reproducible research.
 
 [![GitHub issues](https://img.shields.io/github/issues/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/issues) [![GitHub forks](https://img.shields.io/github/forks/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/network) [![GitHub stars](https://img.shields.io/github/stars/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/stargazers) [![GitHub license](https://img.shields.io/github/license/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/blob/main/LICENSE.md) [![DOI](https://zenodo.org/badge/737343000.svg)](https://zenodo.org/doi/10.5281/zenodo.10517954)
-[![Zotero](https://img.shields.io/badge/zotero-nordatlantisk--ft-red?style=flat&logo=zotero&logoColor=white&labelColor=565656&color=bb393c)](https://www.zotero.org/groups/5346749/nordatlantisk-ft)
+[![Zotero](https://img.shields.io/badge/zotero-nordatlantisk--ft-bb393c?logo=zotero)](https://www.zotero.org/groups/5346749/nordatlantisk-ft)
 
 ## Repository Structure
 
