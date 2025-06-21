@@ -6,7 +6,7 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## Dataset
 
-_nordatlantisk-ft_ is compiled from data available on Folketingets Open Data platform[^oda] and comprises voting records of Northatlantic MPs. As per January 12, 2024, this includes records of `9469` ballots in Folketinget. See [`/docs/codebook.md`](docs/codebook.md) for details and refer to Berntzen et al. 2019[^berntzen] for background information on Folketingets open data ecosystem.
+_nordatlantisk-ft_ is compiled from data available on Folketingets Open Data platform[^oda] and comprises voting records of Northatlantic MPs. As per June 20, 2025, this includes records of `10073` ballots in Folketinget. See [`/docs/codebook.md`](docs/codebook.md) for details and refer to Berntzen et al. 2019[^berntzen] for background information on Folketingets open data ecosystem.
 
 [^oda]: Folketinget. 2024. “Folketingets Åbne Data.” <https://oda.ft.dk>.
 [^berntzen]: Berntzen, Lasse, Marius Johannessen, Kim Andersen, and Jonathan Crusoe. 2019. “Parliamentary Open Data in Scandinavia.” Computers 8 (3): 65. <https://doi.org/10.3390/computers8030065>.
@@ -27,7 +27,7 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since 2004. Ther
 | Nielsen             | Nick          | 14000 | GL     | SIU et al. |
 | Chemnitz            | Aaja          | 15757 | GL     | IA         |
 | Hammond             | Aleqa         | 15758 | GL     | SIU et al. |
-| Høegh-Dam           | Aki-Matilda   | 18688 | GL     | SIU        |
+| Høegh-Dam           | Aki-Matilda   | 18688 | GL     | SIU et al. |
 | Olsen               | Markus E.     | 20635 | GL     | SIU        |
 | Joensen             | Edmund        | 247   | FO     | B          |
 | Arge                | Magni         | 15881 | FO     | E          |

@@ -24,7 +24,7 @@ All data is available in `rds` format that can be read in an R Session via `read
 
 ### MP_names
 
-`MP_names` is provided in `csv` and `rds` formats in [`../data/processed`](../data/processed). The `csv` file serves as starting point for building the data set, as the workflow pipeline[^codebook-1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from 2004 until January 2024, which results in 20 MPs.
+`MP_names` is provided in `csv` and `rds` formats in [`../data/processed`](../data/processed). The `csv` file serves as starting point for building the data set, as the workflow pipeline[^codebook-1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from 2004 until June 2025, which results in 20 MPs.
 
 [^codebook-1]: See [`../README.md`](../README.md) or [`../_targets.R`](../_targets.R)
 
@@ -164,7 +164,7 @@ head(MP_names$end_date)
 
 ### northatlantic_votes
 
-`northatlantic_votes` is provided as `rds` file in [`../data/processed/`](../data/processed). After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#northatlantic_votes_raw) is available as `csv` file in [`../data/raw/`](../data/raw). As per January 2024, `northatlantic_votes.rds` contains 36876 observations of 4 variables.
+`northatlantic_votes` is provided as `rds` file in [`../data/processed/`](../data/processed). After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#northatlantic_votes_raw) is available as `csv` file in [`../data/raw/`](../data/raw). As per June 2025, `northatlantic_votes.rds` contains 39882 observations of 4 variables.
 
 ```r
 head(northatlantic_votes)
@@ -722,16 +722,18 @@ head(ballot_info_raw$opdateringsdato)
 
 ### northatlantic_ft
 
-`northatlantic_ft` is the resulting product of the [targets pipeline](../_targets.R) and is provided as both `rds` file in [`../data/processed`](../data/processed/) and `csv` file in [`../data/processed/csv`](../data/processed/csv). It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft) and [`northatlantic_votes`](#northatlantic_votes). As per January 2024, `northatlantic_ft` contains 36876 observations of 13 variables.
+`northatlantic_ft` is the resulting product of the [targets pipeline](../_targets.R) and is provided as both `rds` file in [`../data/processed`](../data/processed/) and `csv` file in [`../data/processed/csv`](../data/processed/csv). It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft) and [`northatlantic_votes`](#northatlantic_votes). As per June 2025, `northatlantic_ft` contains 39882 observations of 15 variables.
 
 ```r
 str(northatlantic_ft)
 ```
 
 ```
-## 'data.frame':    36876 obs. of  13 variables:
+## 'data.frame':    39882 obs. of  15 variables:
 ##  $ ballot_id           : Factor w/ 9469 levels "1","10","100",..: 1 1109 2011 2022 2033 2044 2054 2065 2074 2085 ...
 ##  $ MP_id               : Factor w/ 20 levels "12283","13","14000",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ surname             : chr  "Olsvig" "Olsvig" "Olsvig" "Olsvig" ...
+##  $ party               : Factor w/ 7 levels "IA","SIU","SIU et al.",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ vote_type_id        : Factor w/ 4 levels "1","2","3","4": 3 3 3 3 3 3 3 3 3 3 ...
 ##  $ vote_id             : Factor w/ 36876 levels "1000151","1000154",..: 17242 24913 2940 2984 3028 3072 3116 3160 3204 3248 ...
 ##  $ ballot_pass         : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
@@ -769,6 +771,30 @@ str(northatlantic_ft$MP_id)
 
 ```
 ##  Factor w/ 20 levels "12283","13","14000",..: 2 2 2 2 2 2 2 2 2 2 ...
+```
+
+#### northatlantic_ft$surname
+
+`surname` is created by using [`join_results()`](../src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$surname`](#mp_namessurname).
+
+```r
+str(northatlantic_ft$surname)
+```
+
+```r
+## chr [1:39882] "Olsvig" "Olsvig" "Olsvig" "Olsvig" "Olsvig" "Olsvig" "Olsvig" "Olsvig" "Olsvig" ...
+```
+
+#### northatlantic_ft$party
+
+`party` is created by using [`join_results()`](../src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$party`](#mp_namesparty).
+
+```r
+str(northatlantic_ft$party)
+```
+
+```r
+## Factor w/ 7 levels "IA","SIU","SIU et al.",..: 1 1 1 1 1 1 1 1 1 1 ...
 ```
 
 #### northatlantic_ft$vote_type_id

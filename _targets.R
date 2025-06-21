@@ -51,13 +51,17 @@ tar_source(files = "src/targets")
 
 tar_plan(
   
-  MP_names_file_path = paste0(here("data", "processed", "MP_names.rds")),
+  tar_target(
+    MP_names_file,
+    here("data", "processed", "MP_names.rds"),
+    format = "file"
+  ),
   
-  MP_names_file = readRDS(MP_names_file_path),
+  MP_names = readRDS(MP_names_file),
   
   tar_target(
     name = raw_voting_records,
-    command = get_voting_records(MP_names_file),
+    command = get_voting_records(MP_names),
     cue = tar_cue_age(
       name = cleaned_voting_records,
       age = as.difftime(12, units = "weeks")
@@ -81,7 +85,7 @@ tar_plan(
   
   cleaned_ballot_results = clean_ballot_results(raw_ballot_results),
   
-  northatlantic_ft = join_results(cleaned_voting_records, cleaned_ballot_results),
+  northatlantic_ft = join_results(cleaned_voting_records, cleaned_ballot_results, MP_names),
   
   #codebook = render_codebook()
 )

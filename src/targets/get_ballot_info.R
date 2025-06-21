@@ -23,9 +23,15 @@ get_ballot_info <- function() {
       get_content()
     
     # save ballot results from nested list into temp_content_list, append vector to data frame
-    for (i in 1:length(temp_content_ballot_results[[3]])) {
-      temp_content_list <- lapply(temp_content_ballot_results[[3]][[i]],
-                                  function(x) if (is.null(x)) NA else x)
+    for (i in seq_along(temp_content_ballot_results[[3]])) {
+      entry <- temp_content_ballot_results[[3]][[i]]
+      
+      if (!is.list(entry)) {
+        warning("Skipping non-list element at index ", i, " on page ", n)
+        next
+      }
+      
+      temp_content_list <- lapply(entry, function(x) if (is.null(x)) NA else x)
       temp_content_df <- as.data.frame(t(unlist(temp_content_list)))
       temp_downloaded_ballot_results <- rbind(temp_downloaded_ballot_results, temp_content_df)
     }

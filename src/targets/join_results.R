@@ -5,17 +5,20 @@ library(here)
 
 # Definition -----
 
-join_results <- function(voting_records, ballot_results) {
+join_results <- function(voting_records, ballot_results, MP_names) {
   
   voting_records <- voting_records %>%
     left_join(ballot_results %>% select(ballot_id, ballot_pass, ballot_date,
                                            ft_for, ft_against, ft_abstention, ft_absent,
                                            ballot_type_id, comment, ballot_result_string),
-              by = "ballot_id")
+              by = "ballot_id") %>%
+    
+    left_join(MP_names %>% select(MP_id, surname, party),
+              by = "MP_id")
   
   # Clean Up Data Frame Columns  -----
   
-  col_order <- c("ballot_id", "MP_id", "vote_type_id", "vote_id",
+  col_order <- c("ballot_id", "MP_id", "surname", "party", "vote_type_id", "vote_id",
                  "ballot_pass", "ft_for", "ft_against", "ft_abstention", "ft_absent",
                  "ballot_date", "ballot_type_id", "comment", "ballot_result_string")
   
