@@ -30,9 +30,16 @@ get_missing_info <- function(input_df) {
       temp_NAcontent_results <- paste0("https://oda.ft.dk/api/Afstemning(", temp_NAafst_id, ")/Stemme?$inlinecount=allpages&$skip=", q) %>%
         get_content()
       
-      for (z in 1:length(temp_NAcontent_results[[3]])) {
+      for (z in seq_along(temp_NAcontent_results[[3]])) {
+        vote <- temp_NAcontent_results[[3]][[z]]
         
-        vote_type_id <- temp_NAcontent_results[[3]][[z]][[2]]
+        if (!is.list(vote) || length(vote) < 2) {
+          warning("Skipping malformed vote entry at z = ", z, " for Afstemning ID = ", temp_NAafst_id)
+          next
+        }
+        
+        vote_type_id <- vote[[2]]
+        
         switch(vote_type_id,
                "1" = {input_df[input_df$id == temp_NAafst_id, "ft_for"] <- input_df[input_df$id == temp_NAafst_id, "ft_for"] + 1},
                "2" = {input_df[input_df$id == temp_NAafst_id, "ft_imod"] <- input_df[input_df$id == temp_NAafst_id, "ft_imod"] + 1},
