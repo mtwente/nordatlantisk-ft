@@ -27,7 +27,7 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since 2004. Ther
 | Nielsen             | Nick          | 14000 | GL     | SIU et al. |
 | Chemnitz            | Aaja          | 15757 | GL     | IA         |
 | Hammond             | Aleqa         | 15758 | GL     | SIU et al. |
-| Høegh-Dam           | Aki-Matilda   | 18688 | GL     | SIU        |
+| Høegh-Dam           | Aki-Matilda   | 18688 | GL     | SIU et al. |
 | Olsen               | Markus E.     | 20635 | GL     | SIU        |
 | Joensen             | Edmund        | 247   | FO     | B          |
 | Arge                | Magni         | 15881 | FO     | E          |
