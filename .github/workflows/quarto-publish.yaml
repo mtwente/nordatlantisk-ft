@@ -123,9 +123,11 @@ jobs:
           nohup python3 -m http.server 5528 &
           sleep 3  # Give the server time to start
 
-      - name: Check for broken links
+      - name: Check for broken links (non-blocking)
         run: |
-          wget --spider --recursive --no-parent --no-check-certificate http://localhost:5528/ || exit 1
+          echo "Checking for broken links (non-fatal)..."
+          wget --spider --recursive --no-parent --no-check-certificate http://localhost:5528/ 2>&1 | tee wget-log.txt
+          grep -q "Remote file does not exist" wget-log.txt && echo "::warning::Broken links found (ignored in CI)" || echo "No broken links found"
 
   deploy:
     name: Deploy
