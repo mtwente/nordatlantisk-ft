@@ -43,12 +43,12 @@ website:
           - text: Contributing
             href: CONTRIBUTING.md
           - text: License (Data)
-            href: LICENSE-CCBY.md
+            href: LICENSE-CCBY-SA.md
           - text: License (Code)
             href: LICENSE-AGPL.md
           - text: Security
             href: SECURITY.md
-      - href: report.md
+      - href: report.qmd
         contents: project-management/*
 
 format:

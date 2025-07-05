@@ -35,7 +35,7 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## Dataset
 
-*nordatlantisk-ft* is compiled from data available on Folketingets Open Data platform [@folketingetFolketingetsAbneData2024] and comprises voting records of Northatlantic MPs. As per June 20, 2025, this includes records of `r length(unique(northatlantic_ft$ballot_id))` ballots in Folketinget. See [`/docs/codebook.md`](docs/codebook.md) for details and refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
+*nordatlantisk-ft* is compiled from data available on Folketingets Open Data platform [@folketingetFolketingetsAbneData2024] and comprises voting records of Northatlantic MPs. As per June 20, 2025, this includes records of `r length(unique(northatlantic_ft$ballot_id))` ballots in Folketinget. See [`/docs/codebook.qmd`](docs/codebook.qmd) for details and refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
 
 ## MPs
 

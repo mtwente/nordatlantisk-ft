@@ -16,7 +16,7 @@ The structure of this repository is based on the [Open Research Data Template](h
 - `docs/`: documentation for the data and the repository
 - `src/`: source code for the data (e.g., scripts used to collect or process the data)
 - `test/`: tests for the data and source code
-- `report.md`: a report with basic insights into the data set
+- `report.qmd`: a report with basic insights into the data set
 
 Additionally, there is a [Zotero group library](https://www.zotero.org/groups/5346749/nordatlantisk-ft) with a collection of scientific articles and news reports that are of relevance for studying the Northatlantic MPs' work in Folketinget.
 
@@ -28,7 +28,7 @@ For all MPs that were elected in either Greenland or the Faroe Islands since 200
 
 In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
 
-Descriptions of all variables are provided in the [codebook](./docs/codebook.md). Take a first glance at the dataset [in report.md](report.md).
+Descriptions of all variables are provided in the [codebook](./docs/codebook.qmd). Take a first glance at the dataset [in report.qmd](report.qmd).
 
 ### Installation
 
