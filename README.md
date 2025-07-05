@@ -2,7 +2,12 @@
 
 This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketing, the Parliament of Denmark. The data in nordatlantisk-ft is openly available to everyone and is intended to support reproducible research.
 
-[![GitHub issues](https://img.shields.io/github/issues/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/issues) [![GitHub forks](https://img.shields.io/github/forks/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/network) [![GitHub stars](https://img.shields.io/github/stars/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/stargazers) [![GitHub license](https://img.shields.io/github/license/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/blob/main/LICENSE.md) [![DOI](https://zenodo.org/badge/737343000.svg)](https://zenodo.org/doi/10.5281/zenodo.10517954)
+[![GitHub issues](https://img.shields.io/github/issues/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/issues)
+[![GitHub forks](https://img.shields.io/github/forks/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/network)
+[![GitHub stars](https://img.shields.io/github/stars/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/stargazers)
+[![Code license](https://img.shields.io/badge/Code-AGPL_3.0-orange)](LICENSE-AGPL.md)
+[![Data license](https://img.shields.io/badge/Data-CC_BY--SA_4.0-green)](LICENSE-CCBY-SA.md)
+[![DOI](https://zenodo.org/badge/737343000.svg)](https://zenodo.org/doi/10.5281/zenodo.10517954)
 [![Zotero](https://img.shields.io/badge/zotero-nordatlantisk--ft-bb393c?logo=zotero)](https://www.zotero.org/groups/5346749/nordatlantisk-ft)
 
 ## Repository Structure
@@ -116,4 +121,6 @@ Voting records and ballot results were retrieved from [Folketinget's open data s
 
 ## License
 
-The data in this repository is released under the Creative Commons Attribution 4.0 International (CC BY 4.0) License - see the [LICENSE.md](LICENSE.md) file for details. By using this data, you agree to give appropriate credit to the original author(s) and to indicate if any modifications have been made.
+The **data** in this repository is released under the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) License – see the [LICENSE CC BY-SA](LICENSE-CCBY-SA.md) file for details. By using this data, you agree to give appropriate credit to the original author(s) and to indicate if any modifications have been made.
+
+The **code** in this repository is released under the GNU Affero General Public License v3.0 – see the [LICENSE-AGPL](LICENSE-AGPL.md) file for details. By using this code, you agree to make any modifications available under the same license.
