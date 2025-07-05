@@ -1,0 +1,32 @@
+---
+title: Descriptive Statistics
+authors:
+  - name: Moritz Twente
+    affiliation: University of Basel
+    email: moritz.twente@unibas.ch
+    orcid: 0009-0005-7187-9774
+date-modified: last-modified
+lang: en
+---
+
+```{r setup}
+#| echo: false
+#| message: false
+
+# Setup -----
+## Packages -----
+
+library(here)
+library(ggplot2)
+library(dplyr)
+library(pointblank)
+
+## Read Data -----
+
+northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
+```
+
+```{r table-scan}
+
+scan_data(northatlantic_ft, navbar = FALSE, sections = "OVICM")
+```
