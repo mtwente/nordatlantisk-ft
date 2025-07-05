@@ -237,3 +237,8 @@ $RECYCLE.BIN/
 
 # Local R Project User file
 .Rproj.user
+
+# Quarto
+.quarto/
+_site/
+/.quarto/

@@ -1,0 +1,12 @@
+---
+title: nordatlantisk-ft
+subtitle: Voting Records of Greenlandic and Faroese MPs in Folketinget
+lang: en
+format:
+  html:
+    filters:
+      - filter_h1.lua
+date-modified: last-modified
+---
+
+{{< include README.md >}}

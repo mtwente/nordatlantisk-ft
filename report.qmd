@@ -1,0 +1,166 @@
+---
+title: A First Glance at nordatlantisk-ft
+authors:
+  - name: Moritz Twente
+    affiliation: University of Basel
+    email: moritz.twente@unibas.ch
+    orcid: 0009-0005-7187-9774
+date-modified: last-modified
+bibliography: assets/nordatlantisk-ft.bib
+link-citations: true
+lang: en
+---
+
+```{r setup}
+#| echo: false
+#| message: false
+
+# Setup -----
+## Packages -----
+
+library(here)
+library(ggplot2)
+library(dplyr)
+
+## Read Data -----
+
+northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
+
+## Manipulate Data -----
+
+northatlantic_ft_without_absences <- subset(northatlantic_ft, vote_type_id != 3)
+```
+
+There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of them are elected in Denmark proper, while the remaining four seats are guaranteed for the so-called North Atlantic MPs from Greenland and the Faroe Islands, which both are autonomous members of the Danish Realm today after being under Danish colonial rule for centuries.
+
+## Dataset
+
+*nordatlantisk-ft* is compiled from data available on Folketingets Open Data platform [@folketingetFolketingetsAbneData2024] and comprises voting records of Northatlantic MPs. As per June 20, 2025, this includes records of `r length(unique(northatlantic_ft$ballot_id))` ballots in Folketinget. See [`/docs/codebook.qmd`](docs/codebook.qmd) for details and refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
+
+## MPs
+
+This dataset contains votes cast by Greenlandic and Faroese MPs since 2004. There have been twenty individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform. Twelve of them have been elected in Greenland and eight in the Faroe Islands.
+
+| Surname(s)          | First name(s) | MP ID | Origin | Party      |
+|---------------------|---------------|-------|--------|------------|
+| Olsvig              | Sara          | 13    | GL     | IA         |
+| Lund Olsen          | Johan         | 277   | GL     | IA         |
+| Jakobsen            | Doris         | 294   | GL     | SIU        |
+| Johansen            | Lars-Emil     | 670   | GL     | SIU        |
+| Kleist              | Kuupik        | 672   | GL     | IA         |
+| Rossen              | Sofia         | 1484  | GL     | IA         |
+| Henningsen Heilmann | Juliane       | 6689  | GL     | IA         |
+| Nielsen             | Nick          | 14000 | GL     | SIU et al. |
+| Chemnitz            | Aaja          | 15757 | GL     | IA         |
+| Hammond             | Aleqa         | 15758 | GL     | SIU et al. |
+| Høegh-Dam           | Aki-Matilda   | 18688 | GL     | SIU et al. |
+| Olsen               | Markus E.     | 20635 | GL     | SIU        |
+| Joensen             | Edmund        | 247   | FO     | B          |
+| Arge                | Magni         | 15881 | FO     | E          |
+| Hoydal              | Høgni         | 1833  | FO     | E          |
+| Johannesen          | Axel          | 12283 | FO     | C          |
+| Skaale              | Sjúrður       | 262   | FO     | C          |
+| á Fríðriksmørk      | Annita        | 6684  | FO     | E          |
+| Kallsberg           | Anfinn        | 3093  | FO     | A          |
+| Falkenberg          | Anna          | 20349 | FO     | B          |
+
+## Political Parties
+
+Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed below with additional information on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
+
+| Party | Full Name | Party Family | Origin | Left-Right | State-Market | Liberty-Authority | Anti-Pro EU |
+|:--------|:--------|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
+| IA | Inuit Ataqatigiit | Communist/Socialist | GL | 1.3 | 1.4 | 3 | 3.3 |
+| SIU | Siumut | Social Democracy | GL | 3.3 | 3.5 | 3.5 | 8.1 |
+| A | Fólkaflokkurin | Conservative | FO | 7.4 | 6.4 | 6.9 | 7.9 |
+| B | Sambandsflokkurin | Conservative | FO | 7.4 | 6.4 | 6.9 | 7.9 |
+| C | Javnaðarflokkurin | Social Democracy | FO | 3.3 | 3.5 | 3.5 | 8.1 |
+| E | Tjóðveldi | Communist/Socialist | FO | 1.3 | 1.4 | 3 | 3.3 |
+
+## Sample Plots
+
+The following sample plots were generated from [`./analysis/example_plots.R`](./analysis/example_plots.R) using `ggplot2` with the data available on June 20, 2025.
+
+### Votes Per MP
+
+```{r votes-per-mp}
+#| echo: false
+#| message: false
+
+plot_votes <- ggplot(northatlantic_ft, aes(y = surname, fill = vote_type_id)) +
+  geom_bar() +
+  
+  scale_y_discrete(
+  ) +
+  
+  scale_fill_manual(
+    name = "Vote",
+    labels = c("for", "against", "absence", "abstention"),
+    values = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")
+  )
+
+plot_votes
+```
+
+### Votes Per MP Without Absences
+
+```{r votes-per-mp-filtered}
+#| echo: false
+#| message: false
+
+plot_votes_without_absences <- ggplot(northatlantic_ft_without_absences, aes(y = surname, fill = vote_type_id)) +
+  geom_bar() +
+  
+  scale_y_discrete(
+  ) +
+  
+  scale_fill_manual(
+    name = "Vote",
+    labels = c("for", "against", "abstention"),
+    values = c("#6195CF", "#F7CB45", "#777777")
+  )
+
+plot_votes_without_absences
+```
+
+### Votes Per MP Over Time
+
+```{r votes-over-time}
+#| echo: false
+#| message: false
+
+scatterplot <- ggplot(northatlantic_ft, aes(x = ballot_date, y = surname, color = vote_type_id)) +
+  geom_point() +
+  
+  scale_y_discrete(
+    ) +
+  
+  scale_color_manual(
+    name = "Vote",
+    labels = c("for", "against", "absence", "abstention"),
+    values = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")
+  )
+
+scatterplot
+```
+
+### Votes Per MP Over Time Without Absences
+
+```{r votes-over-time-filtered}
+#| echo: false
+#| message: false
+
+scatterplot_without_absences <- ggplot(northatlantic_ft_without_absences, aes(x = ballot_date, y = surname, color = vote_type_id)) +
+  geom_point() +
+  
+  scale_y_discrete(
+  ) +
+  
+  scale_color_manual(
+    name = "Vote",
+    labels = c("for", "against", "abstention"),
+    values = c("#6195CF", "#F7CB45", "#777777")
+  )
+
+scatterplot_without_absences
+```
