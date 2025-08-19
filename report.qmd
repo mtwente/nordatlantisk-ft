@@ -26,16 +26,21 @@ library(dplyr)
 
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
+mp_names <- readRDS(here("data", "processed", "MP_names.rds"))
+
+plot_dataset <- northatlantic_ft %>%
+  left_join(mp_names %>% select(surname, origin), by = "surname")
+
 ## Manipulate Data -----
 
-northatlantic_ft_without_absences <- subset(northatlantic_ft, vote_type_id != 3)
+plot_dataset_without_absences <- subset(plot_dataset, vote_type_id != 3)
 ```
 
 There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of them are elected in Denmark proper, while the remaining four seats are guaranteed for the so-called North Atlantic MPs from Greenland and the Faroe Islands, which both are autonomous members of the Danish Realm today after being under Danish colonial rule for centuries.
 
 ## Dataset
 
-*nordatlantisk-ft* is compiled from data available on Folketingets Open Data platform [@folketingetFolketingetsAbneData2024] and comprises voting records of Northatlantic MPs. As per June 20, 2025, this includes records of `r length(unique(northatlantic_ft$ballot_id))` ballots in Folketinget. See [`/docs/codebook.qmd`](docs/codebook.qmd) for details and refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
+*nordatlantisk-ft* is compiled from data available on Folketingets Open Data platform [@folketingetFolketingetsAbneData2024] and comprises voting records of Northatlantic MPs. As per August 19, 2025, this includes records of `r length(unique(northatlantic_ft$ballot_id))` ballots in Folketinget. See [`/docs/codebook.qmd`](docs/codebook.qmd) for details and refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
 
 ## MPs
 
@@ -87,17 +92,15 @@ The following sample plots were generated from [`./analysis/example_plots.R`](./
 #| echo: false
 #| message: false
 
-plot_votes <- ggplot(northatlantic_ft, aes(y = surname, fill = vote_type_id)) +
+plot_votes <- ggplot(plot_dataset, aes(y = surname, fill = vote_type_id)) +
   geom_bar() +
-  
-  scale_y_discrete(
-  ) +
-  
+  scale_y_discrete() +
   scale_fill_manual(
     name = "Vote",
     labels = c("for", "against", "absence", "abstention"),
     values = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")
-  )
+  ) +
+  facet_wrap(~ origin, ncol = 1, scales = "free_y")
 
 plot_votes
 ```
@@ -108,17 +111,15 @@ plot_votes
 #| echo: false
 #| message: false
 
-plot_votes_without_absences <- ggplot(northatlantic_ft_without_absences, aes(y = surname, fill = vote_type_id)) +
+plot_votes_without_absences <- ggplot(plot_dataset_without_absences, aes(y = surname, fill = vote_type_id)) +
   geom_bar() +
-  
-  scale_y_discrete(
-  ) +
-  
+  scale_y_discrete() +
   scale_fill_manual(
     name = "Vote",
     labels = c("for", "against", "abstention"),
     values = c("#6195CF", "#F7CB45", "#777777")
-  )
+  ) +
+  facet_wrap(~ origin, ncol = 1, scales = "free_y") 
 
 plot_votes_without_absences
 ```
@@ -129,7 +130,7 @@ plot_votes_without_absences
 #| echo: false
 #| message: false
 
-scatterplot <- ggplot(northatlantic_ft, aes(x = ballot_date, y = surname, color = vote_type_id)) +
+scatterplot <- ggplot(plot_dataset, aes(x = ballot_date, y = surname, color = vote_type_id)) +
   geom_point() +
   
   scale_y_discrete(
@@ -139,7 +140,8 @@ scatterplot <- ggplot(northatlantic_ft, aes(x = ballot_date, y = surname, color 
     name = "Vote",
     labels = c("for", "against", "absence", "abstention"),
     values = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")
-  )
+  ) +
+  facet_wrap(~ origin, ncol = 1, scales = "free_y") 
 
 scatterplot
 ```
@@ -150,7 +152,7 @@ scatterplot
 #| echo: false
 #| message: false
 
-scatterplot_without_absences <- ggplot(northatlantic_ft_without_absences, aes(x = ballot_date, y = surname, color = vote_type_id)) +
+scatterplot_without_absences <- ggplot(plot_dataset_without_absences, aes(x = ballot_date, y = surname, color = vote_type_id)) +
   geom_point() +
   
   scale_y_discrete(
@@ -160,7 +162,8 @@ scatterplot_without_absences <- ggplot(northatlantic_ft_without_absences, aes(x 
     name = "Vote",
     labels = c("for", "against", "abstention"),
     values = c("#6195CF", "#F7CB45", "#777777")
-  )
+  ) +
+ facet_wrap(~ origin, ncol = 1, scales = "free_y") 
 
 scatterplot_without_absences
 ```
