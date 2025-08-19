@@ -12,7 +12,7 @@ lang: en
 ---
 
 ::: callout-note
-As of July 2025, I am migrating this repository to [Quarto](https://www.quarto.org). This page has not been updated yet and may not reflect the current state of teh data set.
+As of July 2025, I am migrating this repository to [Quarto](https://www.quarto.org). This page has not been updated yet and may not reflect the current state of the data set.
 :::
 
 ## Introduction {#introduction}
