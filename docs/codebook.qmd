@@ -17,7 +17,7 @@ As of July 2025, I am migrating this repository to [Quarto](https://www.quarto.o
 
 ## Introduction {#introduction}
 
-This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in [`../data/`](../data). Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2024.
+This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in [`../data/`](../data). Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2025.
 
 All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, the tabular metadata is provided in `json` files at [`../data/processed/csv`](../data/processed/csv) according to the W3C Metadata Vocabulary for Tabular Data [@w3cW3CRecommendationMetadata2015].
 
