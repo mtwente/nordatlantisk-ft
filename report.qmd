@@ -63,7 +63,7 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since 2004. Ther
 | Joensen             | Edmund        | 247   | FO     | B          |
 | Arge                | Magni         | 15881 | FO     | E          |
 | Hoydal              | Høgni         | 1833  | FO     | E          |
-| Johannesen          | Axel          | 12283 | FO     | C          |
+| Johannesen          | Aksel         | 12283 | FO     | C          |
 | Skaale              | Sjúrður       | 262   | FO     | C          |
 | á Fríðriksmørk      | Annita        | 6684  | FO     | E          |
 | Kallsberg           | Anfinn        | 3093  | FO     | A          |

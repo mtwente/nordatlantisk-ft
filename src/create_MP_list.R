@@ -20,7 +20,7 @@ MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johan
                          end_date = c(rep(NA, 12)))
 
 MP_names_FO <-  data.frame(surname = c("Joensen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg"),
-                          first_name = c("Edmund", "Magni", "Høgni", "Axel", "Sjúrður", "Annita", "Anfinn", "Anna"),
+                          first_name = c("Edmund", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna"),
                           MP_id = factor(c(247, 15881, 1833, 12283, 262, 6684, 3093, 20349)),
                           origin = factor(rep("FO", 8)),
                           party = factor(c("B", "E", "E", "C", "C", "E", "A", "B")),
