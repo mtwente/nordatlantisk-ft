@@ -50,7 +50,7 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been twenty individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform. Twelve of them have been elected in Greenland and eight in the Faroe Islands.
 
-```{r pol-parties}
+```{r mp-list}
 #| echo: false
 #| message: false
 #| label: tbl-MPs
@@ -70,7 +70,7 @@ kable(MPs_fo, caption = "MPs from Faroese Parties")
 
 Since 2004, MPs from the Faroe Islands were members of four different political parties. Voters in Greenland elected politicians from two different political parties. However, a few of those switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq). All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
 
-```{r pol-parties}
+```{r parties-list}
 #| echo: false
 #| message: false
 #| label: tbl-parties
