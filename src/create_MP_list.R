@@ -15,7 +15,7 @@ MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johan
                          first_name = c("Sara", "Johan", "Doris", "Lars-Emil", "Kuupik", "Sofia", "Juliane", "Nick", "Aaja", "Aleqa", "Aki-Matilda", "Markus E."),
                          MP_id = factor(c(13, 277, 294, 670, 672, 1484, 6689, 14000, 15757, 15758, 18688, 20635)),
                          origin = factor(rep("GL", 12)),
-                         party = factor(c("IA", "IA", "SIU", "SIU", "IA", "IA", "IA", "SIU et al.", "IA", "SIU et al.", "SIU", "SIU")),
+                         party = factor(c("IA", "IA", "SIU", "SIU", "IA", "IA", "IA", "SIU", "IA", "SIU, NQ", "SIU, N", "SIU")),
                          start_date = c(rep(NA, 12)),
                          end_date = c(rep(NA, 12)))
 
