@@ -68,7 +68,7 @@ kable(MPs_fo, caption = "MPs from Faroese Parties")
 
 ## Political Parties
 
-Since 2004, Greenlandic MPs have belonged to two political parties while MPs from Faroe Islands were members of four different political parties. They are listed in @tbl-parties with additional information on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
+Since 2004, MPs from the Faroe Islands were members of four different political parties. Voters in Greenland elected politicians from two different political parties. However, a few of those switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq). All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
 
 ```{r pol-parties}
 #| echo: false
