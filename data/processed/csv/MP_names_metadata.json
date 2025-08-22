@@ -44,6 +44,12 @@
 				"datatype": "string"
 			},
 			{
+				"name": "substitute",
+				"dc:title": "Substitute",
+				"description": "Indicates whether the MP in question joined Folketinget as a substitute member (TRUE), replacing another MP who whent on leave.",
+				"datatype": "boolean"
+			},
+			{
 				"name": "start_date",
 				"dc:title": "Start Date",
 				"description": "Start date of the MP's term.",
