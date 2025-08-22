@@ -33,7 +33,7 @@ For all MPs that were elected in either Greenland or the Faroe Islands since 200
 
 In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
 
-Descriptions of all variables are provided in the [codebook](./docs/codebook.qmd). Take a first glance at the dataset [in report.qmd](report.qmd).
+Descriptions of all variables are provided in the [codebook](./docs/codebook.qmd). Take a [first glance](report.qmd).
 
 ### Installation
 
