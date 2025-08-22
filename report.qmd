@@ -23,21 +23,61 @@ library(ggplot2)
 library(dplyr)
 library(readr)
 library(knitr)
+library(forcats)
+library(lubridate)
 
 ## Read Data -----
 
-northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
-
+### List of MPs -----
 mp_names <- readRDS(here("data", "processed", "MP_names.rds"))
+
+### List of political parties -----
+political_parties <- read.csv(here("assets", "political-parties.csv"), sep = ";", check.names = FALSE)
+
+### Voting Records Database -----
+northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
 plot_dataset <- northatlantic_ft %>%
   left_join(mp_names %>% select(surname, origin), by = "surname")
 
-political_parties <- read.csv(here("assets", "political-parties.csv"), sep = ";", check.names = FALSE)
+### Timeline of Mandates -----
+mandates <- read.delim(here("assets", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+elections <- read.delim(here("assets", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+
+#### Convert dates
+mandates <- mandates %>%
+  mutate(
+    start = ymd(start),
+    end   = ymd(end),
+    # Replace NA in "end" with today's date
+    end   = if_else(is.na(end), Sys.Date(), end)
+  )
 
 ## Manipulate Data -----
 
+### Subset only with votes that were actually cast
 plot_dataset_without_absences <- subset(plot_dataset, vote_type_id != 3)
+
+### Order dataset by MP surnames for plotting
+plot_dataset_ordered <- plot_dataset %>%
+  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length))
+
+## Set Plotting Theme -----
+
+theme_nordatlantisk_basis <- function(){
+  
+  theme_grey() %+replace%
+    theme(axis.title = element_blank(),
+          axis.ticks.y = element_blank(),
+          panel.background = element_blank(),
+          panel.grid.major.x = element_line(color = "#000000", linewidth = 0.1),
+          panel.grid.minor.x = element_line(color = "#000000", linewidth = 0.1),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          axis.ticks.x = element_line(color = "#000000", linewidth = 0.1),
+          axis.line.y.left = element_line(color = "#000000", linewidth = 0.1))
+}
+
 ```
 
 There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of them are elected in Denmark proper, while the remaining four seats are guaranteed for the so-called North Atlantic MPs from Greenland and the Faroe Islands, which both are autonomous members of the Danish Realm today after being under Danish colonial rule for centuries.
@@ -48,7 +88,7 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## MPs
 
-This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been twenty individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform. Twelve of them have been elected in Greenland and eight in the Faroe Islands.
+This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties. See @harderSupplerendeMaterialeFaeroske2022 for a list of all Greenlandic and Faroese MPs and their party association(s) going back until 1953.
 
 ```{r mp-list}
 #| echo: false
@@ -66,9 +106,67 @@ kable(MPs_gl, caption = "MPs from Greenlandic Parties")
 kable(MPs_fo, caption = "MPs from Faroese Parties")
 ```
 
+As documented in the column `substitute`, some of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^subst], filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. @fig-mandates shows membership periods and substitions on a timeline for the duration that is covered by this data set[^term].
+
+[^subst]: Doris Jakobsen (SIU), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset.
+
+[^term]: An earlier term served by Edmund Joensen is cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`.
+
+```{r timeline-mandates}
+#| echo: false
+#| message: false
+#| label: fig-mandates
+#| fig-cap: Timeline of MPs from Greenland and the Faroe Islands during the timeframe covered by this data set.
+
+# remove pre-2000 MPs (Edmund Joensen's first term)
+mandates <- mandates %>%
+  filter(end >= as.Date("2000-01-01"))
+
+# Order MPs by first start date for nicer plotting
+mandates <- mandates %>%
+  group_by(surname) %>%
+  mutate(first_start = min(start)) %>%
+  ungroup() %>%
+  arrange(desc(first_start)) %>%
+  mutate(surname = factor(surname, levels = unique(surname)))
+
+mandates$origin <- factor(mandates$origin, levels = c("GL", "FO"))
+
+ggplot(mandates, aes(x = start, xend = end, y = surname, yend = surname, color = substitute)) +
+  geom_segment(linewidth = 6, lineend = "butt") +
+  scale_color_manual(values = c("FALSE" = "#6195CF", "TRUE" = "#F7CB45"), labels = c("Regular", "Substitute")) +
+  labs(
+    color = "Membership"
+  ) +
+  
+  # Folketing Elections
+  geom_vline(data = elections, aes(xintercept = as.Date(date), linetype = election),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(values = c("General Election" = "longdash"), name = "") +
+  
+  facet_grid(origin ~ ., scales = "free_y", space = "free_y",
+             labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
+  ) +
+  
+  coord_cartesian(xlim = c(min(northatlantic_ft$ballot_date), NA)) +
+  
+  theme_nordatlantisk_basis() +
+  theme(legend.position = "right",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05),
+        panel.grid.minor.x = element_blank())
+```
+
 ## Political Parties
 
-Since 2004, MPs from the Faroe Islands were members of four different political parties. Voters in Greenland elected politicians from two different political parties. However, a few of those switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq). All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
+All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
+
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$Origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$Origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq[^newparties]).
+
+[^newparties]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies.
+
+See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see @westSkipanarligarFortreytirOg2022 in Faroese and @westFaeroskPolitikMellem2020 in Danish.
 
 ```{r parties-list}
 #| echo: false
@@ -98,8 +196,9 @@ The following sample plots were generated from using `ggplot2` with the data ava
 #| label: fig-votes-per-mp
 #| fig-cap: Full voting records for each MP coded by the type of vote cast (for, against, absent, abstaining).
 
-plot_votes <- ggplot(plot_dataset, aes(y = surname, fill = vote_type_id)) +
+plot_votes <- ggplot(plot_dataset_ordered, aes(y = surname, fill = vote_type_id)) +
   geom_bar() +
+  scale_x_continuous(expand = expansion(mult = c(0, .05))) +
   scale_y_discrete() +
   scale_fill_manual(
     name = "Vote",
@@ -109,7 +208,9 @@ plot_votes <- ggplot(plot_dataset, aes(y = surname, fill = vote_type_id)) +
 
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
             labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
-            )
+            ) +
+    
+  theme_nordatlantisk_basis()
 
 plot_votes
 ```
@@ -120,10 +221,14 @@ plot_votes
 #| echo: false
 #| message: false
 #| label: fig-votes-per-mp-filtered
-#| fig-cap: Voting records for each MP coded by the type of vote cast (for, against, abstaining). Only showing ballots when the MP is in attendance.
+#| fig-cap: Number of votes cast by each MP coded by the type of vote (for, against, abstaining). Only showing ballots when the MP is in attendance.
 
-plot_votes_without_absences <- ggplot(plot_dataset_without_absences, aes(y = surname, fill = vote_type_id)) +
+plot_dataset_without_absences_ordered <- plot_dataset_without_absences %>%
+  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length))
+
+plot_votes_without_absences <- ggplot(plot_dataset_without_absences_ordered, aes(y = surname, fill = vote_type_id)) +
   geom_bar() +
+  scale_x_continuous(expand = expansion(mult = c(0, .05))) +
   scale_y_discrete() +
   scale_fill_manual(
     name = "Vote",
@@ -133,7 +238,9 @@ plot_votes_without_absences <- ggplot(plot_dataset_without_absences, aes(y = sur
 
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
           labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
-          )
+          ) +
+
+  theme_nordatlantisk_basis()
 
 plot_votes_without_absences
 ```
@@ -143,11 +250,19 @@ plot_votes_without_absences
 ```{r votes-over-time}
 #| echo: false
 #| message: false
+#| label: fig-votes-timeline
+#| fig-cap: Distribution of votes over time per MP (for, against, absent, abstaining). Because there are so many data points, vertical jittering is added to make it a little easier to get an overview of the available data.
 
-scatterplot <- ggplot(plot_dataset, aes(x = ballot_date, y = surname, color = vote_type_id)) +
-  geom_point() +
-  scale_y_discrete(
-    ) +
+plot_dataset <- plot_dataset %>%
+  mutate(surname = factor(surname, levels = levels(mandates$surname)))
+
+scatterplot <- ggplot(plot_dataset %>%
+                        arrange(desc(vote_type_id)),
+                      aes(x = ballot_date, y = surname, color = vote_type_id)) +
+
+  geom_jitter(width = 0, height = 0.2, size = 1.2, shape = 19, key_glyph = draw_key_rect) +
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_discrete() +
   
   scale_color_manual(
     name = "Vote",
@@ -155,9 +270,16 @@ scatterplot <- ggplot(plot_dataset, aes(x = ballot_date, y = surname, color = vo
     values = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")
   ) +
 
+  guides(color = guide_legend(override.aes = list(fill = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")))) + 
+
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
         labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
-        )
+        ) +
+
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
 
 scatterplot
 ```
@@ -167,10 +289,18 @@ scatterplot
 ```{r votes-over-time-filtered}
 #| echo: false
 #| message: false
+#| label: fig-votes-timeline-filtered
+#| fig-cap: Distribution of votes over time per MP (for, against, abstaining). Only showing ballots when the MP is in attendance. Because there are so many data points, vertical and horizontal jittering is added to make it a little easier to get an overview of the available data.
 
-scatterplot_without_absences <- ggplot(plot_dataset_without_absences, aes(x = ballot_date, y = surname, color = vote_type_id)) +
-  geom_point() +
-  
+plot_dataset_without_absences <- plot_dataset_without_absences %>%
+  mutate(surname = factor(surname, levels = levels(mandates$surname)))
+
+scatterplot_without_absences <- ggplot(plot_dataset_without_absences %>% 
+                                        arrange(vote_type_id),
+                                      aes(x = ballot_date, y = surname, color = vote_type_id)) +
+
+  geom_jitter(width = 0.4, height = 0.25, size = 1.2, shape = 19, alpha = 0.8, key_glyph = draw_key_rect) +
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
   scale_y_discrete(
   ) +
   
@@ -179,10 +309,17 @@ scatterplot_without_absences <- ggplot(plot_dataset_without_absences, aes(x = ba
     labels = c("for", "against", "abstention"),
     values = c("#6195CF", "#F7CB45", "#777777")
   ) +
- #facet_wrap(~ origin, ncol = 1, scales = "free_y")
+
+  guides(color = guide_legend(override.aes = list(fill = c("#6195CF", "#F7CB45", "#777777"), alpha = 1))) + 
+
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
           labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
-          )
+          ) +
+
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
 
 scatterplot_without_absences
 ```
