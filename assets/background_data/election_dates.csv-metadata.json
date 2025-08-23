@@ -1,0 +1,35 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "election_dates.csv",
+	"dc:title": "Folketinget Election Dates",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2025-08-22",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"tableSchema": {
+		"aboutUrl": "/README.md",
+		"notes": "Table with dates of general Folketinget elections since 2001.",
+		"columns": [
+			{
+				"name": "election",
+				"dc:title": "Election",
+				"description": "Type of election",
+				"datatype": "string"
+			},
+
+			{
+				"name": "date",
+				"dc:title": "Election Date",
+				"description": "Date the election took place",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			}
+		],
+		"dialect": {
+			"delimiter": ";",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		},
+		"primaryKey": ["election"]
+	}
+}

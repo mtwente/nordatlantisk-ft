@@ -1,0 +1,57 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "MP_dates.csv",
+	"dc:title": "Calendar Information on Membership Terms",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2025-06-22",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"tableSchema": {
+		"aboutUrl": "/README.md",
+		"notes": "Dataset with information on the beginning and end of Folketinget memberships per MPs.",
+		"columns": [
+			{
+				"name": "surname",
+				"dc:title": "Surname(s)",
+				"dc:description": "Surname(s) of the MP",
+				"datatype": "string"
+			},
+			{
+				"name": "firstname",
+				"dc:title": "First Name(s)",
+				"dc:description": "First Name(s) of the MP",
+				"datatype": "string"
+			},
+			{
+				"name": "origin",
+				"dc:title": "Origin",
+				"description": "Geographical origin of the MP.",
+				"datatype": { "base": "string", "format": "GL|FO" }
+			},
+			{
+				"name": "start",
+				"dc:title": "Start Date",
+				"dc:description": "Date of the beginning of parliamentary membership",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			},
+			{
+				"name": "end",
+				"dc:title": "End Date",
+				"dc:description": "Date of the end of parliamentary membership",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			},
+			{
+				"name": "substitute",
+				"dc:title": "Substitute Membership",
+				"description": "Information whether the MP served Folketinget as a substitute member for another MP who went on leave",
+				"datatype": "boolean"
+			}
+		],
+		"dialect": {
+			"delimiter": ";",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		}
+	}
+}

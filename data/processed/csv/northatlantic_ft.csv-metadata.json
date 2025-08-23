@@ -7,10 +7,10 @@
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
-	"dc:relation": "../../../src/targets/join_results.R",
+	"dc:relation": "/src/targets/join_results.R",
 	"tableSchema": {
-		"aboutUrl": "../../../README.md",
-		"notes": "Data Set with  Voting Records of Greenlandic and Faroese MPs in Folketinget",
+		"aboutUrl": "/README.md",
+		"notes": "Data Set with Voting Records of Greenlandic and Faroese MPs in Folketinget",
 		"columns": [
 			{
 				"name": "ballot_id",
@@ -21,8 +21,20 @@
 			{
 				"name": "MP_id",
 				"dc:title": "MP ID",
-				"dc:description": "Folketinget ODA ID assigned to the MP..",
+				"dc:description": "Folketinget ODA ID assigned to the MP",
 				"datatype": { "base": "integer", "minimum": "1" }
+			},
+			{
+				"name": "surname",
+				"dc:title": "Surname(s)",
+				"dc:description": "Surname(s) of the MP",
+				"datatype": "string"
+			},
+			{
+				"name": "party",
+				"dc:title": "Party",
+				"dc:description": "Political Party the MP is member of",
+				"datatype": "string"
 			},
 			{
 				"name": "vote_type_id",
@@ -43,28 +55,48 @@
 				"datatype": { "base": "boolean", "format": "TRUE|FALSE" }
 			},
 			{
+				"name": "ft_process_step",
+				"dc:title": "Folketinget Process Step",
+				"dc:description": "Stage of the parliamentary process the ballot is part of",
+				"datatype": "string",
+				"lang": "dk"
+			},
+			{
+				"name": "ft_topic_id",
+				"dc:title": "Topic ID",
+				"dc:description": "Folketinget ODA ID assigned to the parliamentary process the ballot is part of",
+				"datatype": { "base": "integer", "minimum": "1" }
+			},
+			{
+				"name": "ft_topic",
+				"dc:title": "Ballot Topic",
+				"dc:description": "Description of the topic the proposal on the ballot is about",
+				"datatype": "string",
+				"lang": "dk"
+			},
+			{
 				"name": "ft_for",
 				"dc:title": "For Votes",
 				"dc:description": "Number of votes in favor of the proposal.",
-				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
 			},
 			{
 				"name": "ft_against",
 				"dc:title": "Against Votes",
 				"dc:description": "Number of votes against the proposal.",
-				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
 			},
 			{
 				"name": "ft_abstention",
 				"dc:title": "Abstention Votes",
 				"dc:description": "Number of abstention votes.",
-				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
 			},
 			{
 				"name": "ft_absent",
 				"dc:title": "Absent Votes",
 				"dc:description": "Number of absent MPs.",
-				"datatype": { "base": "integer", "minimum": "1", "maximum": "179" }
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
 			},
 			{
 				"name": "ballot_date",

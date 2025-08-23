@@ -1,0 +1,106 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "political_parties.csv",
+	"dc:title": "Political Parties",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2025-08-21",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"tableSchema": {
+		"aboutUrl": "/README.md",
+		"notes": "Table with names and policy positions of Northatlantic political parties that have been represented in Folketinget.",
+		"columns": [
+			{
+				"name": "Party",
+				"dc:title": "Political Party",
+				"description": "Abbreviation for the political party",
+				"datatype": "string"
+			},
+			{
+				"name": "Full Name",
+				"dc:title": "Full Name",
+				"description": "Full name of the political party",
+				"datatype": "string",
+				"lang": "kl|fo"
+			},
+			{
+				"name": "Party Family",
+				"dc:title": "Party Family",
+				"description": "Title of the political party family the party is part of",
+				"datatype": "string",
+				"lang": "en"
+			},
+			{
+				"name": "Origin",
+				"dc:title": "Origin",
+				"description": "Geographical origin of the political party",
+				"datatype": { "base": "string", "format": "GL|FO" }
+			},
+			{
+				"name": "Left-Right",
+				"dc:title": "Left-Right Position",
+				"description": "Placement on the Left-Right scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			},
+			{
+				"name": "State-Market",
+				"dc:title": "State-Market Position",
+				"description": "Placement on the State-Market scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			},
+			{
+				"name": "Liberty-Authority",
+				"dc:title": "Liberty-Authority Position",
+				"description": "Placement on the Liberty-Authority scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			},
+			{
+				"name": "Anti-Pro EU",
+				"dc:title": "Anti-Pro EU Position",
+				"description": "Placement on the Anti-Pro EU scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			}
+		],
+		"dialect": {
+			"delimiter": ";",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		},
+		"primaryKey": ["Party"],
+		"foreignKeys": [
+			{
+				"columnReference": "Left-Right",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "left_right",
+					"dc:description": "0--10 scale mean value in left/right dimension with data from Castles/Mair 1983, Huber/Inglehart 1995, Benoit/Laver 2006 and CHES 2010"
+				}
+			},
+			{
+				"columnReference": "State-Market",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "state_market",
+					"dc:description": "0--10 scale mean value in 'regulation of the economy' dimension with data from Benoit/Laver 2006 and CHES 2010"
+				}
+			},
+			{
+				"columnReference": "Liberty-Authority",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "liberty_authority",
+					"dc:description": "0--10 scale mean value in 'libertarian/authoritarian' dimension with data from Benoit/Laver 2006 and CHES 2010"
+				}
+			},
+			{
+				"columnReference": "Anti-Pro EU",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "eu_anti_pro",
+					"dc:description": "0--10 scale mean value in 'EU integration' dimension with data from Ray 1999, Benoit/Laver 2006 and CHES 2010"
+				}
+			}
+		]
+	}
+}
