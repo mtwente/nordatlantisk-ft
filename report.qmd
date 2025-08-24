@@ -96,11 +96,15 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(
 #| label: tbl-MPs
 #| tbl-cap: List of MPs from Greenland and the Faroe Islands in Folketinget since 2004.
 
-MPs_gl <- subset(mp_names, origin == "GL")[, !(names(mp_names) %in% c("origin", "start_date", "end_date"))]
-MPs_fo <- subset(mp_names, origin == "FO")[, !(names(mp_names) %in% c("origin", "start_date", "end_date"))]
+MPs_gl <- mp_names %>%
+  filter(origin == "GL") %>%
+  select(-origin, -start_date, -end_date) %>%
+  arrange(surname)
 
-rownames(MPs_gl) <- NULL
-rownames(MPs_fo) <- NULL
+MPs_fo <- mp_names %>%
+  filter(origin == "FO") %>%
+  select(-origin, -start_date, -end_date) %>%
+  arrange(surname)
 
 kable(MPs_gl, caption = "MPs from Greenlandic Parties")
 kable(MPs_fo, caption = "MPs from Faroese Parties")
