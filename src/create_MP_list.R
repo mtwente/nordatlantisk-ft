@@ -20,14 +20,14 @@ MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johan
                          start_date = c(rep(NA, 12)),
                          end_date = c(rep(NA, 12)))
 
-MP_names_FO <-  data.frame(surname = c("Joensen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg"),
-                          first_name = c("Edmund", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna"),
-                          MP_id = factor(c(247, 15881, 1833, 12283, 262, 6684, 3093, 20349)),
-                          origin = factor(rep("FO", 8)),
-                          party = factor(c("B", "E", "E", "C", "C", "E", "A", "B")),
-                          substitute = c(FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE),
-                          start_date = c(rep(NA, 8)),
-                          end_date = c(rep(NA, 8)))
+MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg"),
+                          first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna"),
+                          MP_id = factor(c(247, 918, 15881, 1833, 12283, 262, 6684, 3093, 20349)),
+                          origin = factor(rep("FO", 9)),
+                          party = factor(c("B", "B", "E", "E", "C", "C", "E", "A", "B")),
+                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE),
+                          start_date = c(rep(NA, 9)),
+                          end_date = c(rep(NA, 9)))
 
 MP_names <- rbind(MP_names_GL, MP_names_FO)
 

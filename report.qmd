@@ -114,9 +114,9 @@ kable(MPs_fo, caption = "MPs from Faroese Parties")
 
 As documented in the column `substitute`, some of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. @fig-mandates shows membership periods and substitions on a timeline for the duration that is covered by this data set[^2].
 
-[^1]: Doris Jakobsen (SIU), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset.
+[^1]: Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset.
 
-[^2]: An earlier term served by Edmund Joensen is cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`.
+[^2]: Previous terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`.
 
 ```{r timeline-mandates}
 #| echo: false
@@ -124,7 +124,7 @@ As documented in the column `substitute`, some of the politicians that are part 
 #| label: fig-mandates
 #| fig-cap: Timeline of MPs from Greenland and the Faroe Islands during the timeframe covered by this data set.
 
-# remove pre-2000 MPs (Edmund Joensen's first term)
+# remove pre-2000 MPs (Edmund Joensen's and Lisbeth Petersen's first terms)
 mandates <- mandates %>%
   filter(end >= as.Date("2000-01-01"))
 
