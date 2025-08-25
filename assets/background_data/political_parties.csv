@@ -1,9 +1,9 @@
-﻿Party;Full Name;Party Family;Origin;Left-Right;State-Market;Liberty-Authority;Anti-Pro EU
-IA;Inuit Ataqatigiit;Communist/Socialist;GL;1.3;1.4;3;3.3
-N;Naleraq;;GL;;;;
-NQ;Nunatta Qitornai;;GL;;;;
-SIU;Siumut;Social Democracy;GL;3.3;3.5;3.5;8.1
-A;Fólkaflokkurin;Conservative;FO;7.4;6.4;6.9;7.9
-B;Sambandsflokkurin;Conservative;FO;7.4;6.4;6.9;7.9
-C;Javnaðarflokkurin;Social Democracy;FO;3.3;3.5;3.5;8.1
-E;Tjóðveldi;Communist/Socialist;FO;1.3;1.4;3;3.3
+﻿Party;Full Name;Party Family;Colour;Origin;Left-Right;State-Market;Liberty-Authority;Anti-Pro EU
+IA;Inuit Ataqatigiit;Communist/Socialist;#AB2328;GL;1.3;1.4;3;3.3
+N;Naleraq;;#FF6900;GL;;;;
+NQ;Nunatta Qitornai;;#A1359B;GL;;;;
+SIU;Siumut;Social Democracy;#0385FF;GL;3.3;3.5;3.5;8.1
+A;Fólkaflokkurin;Conservative;#347235;FO;7.4;6.4;6.9;7.9
+B;Sambandsflokkurin;Conservative;#00008B;FO;7.4;6.4;6.9;7.9
+C;Javnaðarflokkurin;Social Democracy;#FF0000;FO;3.3;3.5;3.5;8.1
+E;Tjóðveldi;Communist/Socialist;#D2DD3D;FO;1.3;1.4;3;3.3

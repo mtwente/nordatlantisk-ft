@@ -32,6 +32,12 @@
 				"lang": "en"
 			},
 			{
+				"name": "Colour",
+				"dc:title": "Party Colour",
+				"description": "HEX Code of the main colour of the policial party, taken from Wikipedia",
+				"datatype": "string"
+			},
+			{
 				"name": "Origin",
 				"dc:title": "Origin",
 				"description": "Geographical origin of the political party",
