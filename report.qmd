@@ -168,24 +168,77 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 
 [^3]: Both parties have been formed quite recently -- Naleraq in 2014 and Nunatta Qitornai in 2017. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies.
 
-All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
-
 See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see @westSkipanarligarFortreytirOg2022 in Faroese and @westFaeroskPolitikMellem2020 in Danish.
+
+All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022]. @fig-party-timeline shows the allocation of Folketinget seats to political parties from Greenland and the Faroe Islands on a timeline.
 
 ```{r parties-list}
 #| echo: false
 #| message: false
 #| label: tbl-parties
-#| tbl-cap: List of political parties from Greenland and the Faroe Islands with a MP in Folketinget since 2004.
+#| tbl-cap: List of political parties from Greenland and the Faroe Islands with an MP in Folketinget since 2004.
 
-parties_gl <- subset(political_parties, Origin == "GL")[, !(names(political_parties) %in% "Origin")]
-parties_fo <- subset(political_parties, Origin == "FO")[, !(names(political_parties) %in% "Origin")]
+parties_gl <- subset(political_parties, Origin == "GL")[, !(names(political_parties) %in% c("Origin", "Colour"))]
+parties_fo <- subset(political_parties, Origin == "FO")[, !(names(political_parties) %in% c("Origin", "Colour"))]
 
 rownames(parties_gl) <- NULL
 rownames(parties_fo) <- NULL
 
 kable(parties_gl, caption = "Greenlandic Parties")
 kable(parties_fo, caption = "Faroese Parties")
+```
+
+```{r party-timeline}
+#| echo: false
+#| message: false
+#| label: fig-party-timeline
+#| fig-cap: Timeline of political parties from Greenland and the Faroe Islands with an MP in Folketinget since 2004.
+
+# collapse mandates into non-overlapping party intervals
+party_periods <- mandates %>%
+  select(party, origin, start, end) %>%
+  arrange(party, origin, start, end) %>%
+  group_by(party, origin)
+
+# join colours from political_parties
+party_periods <- party_periods %>%
+  left_join(political_parties %>% select("Party", "Full Name", "Colour"), by = c("party" = "Party"))
+
+# sort parties with start date
+  party_periods <- party_periods %>%
+  group_by(origin) %>%
+  mutate(party = factor(party, levels = rev(unique(party[order(start)])))) %>%
+  ungroup()
+
+# set party name labels including UF
+y_labels <- setNames(party_periods$`Full Name`, party_periods$party)
+y_labels <- c(y_labels, "UF" = "No Party Affiliation")
+
+# set UF colour to grey
+party_periods$Colour[party_periods$party == "UF"] <- "#777777"
+
+ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color = Colour)) +
+  geom_segment(linewidth = 8, lineend = "butt") +
+  scale_color_identity() +
+
+  scale_y_discrete(labels = y_labels) +
+  
+  # Elections
+  geom_vline(data = elections, aes(xintercept = as.Date(date), linetype = election),
+             color = "#000000", linewidth = 0.2) +
+  scale_linetype_manual(values = c("General Election" = "longdash"), name = "") +
+  
+  facet_grid(origin ~ ., scales = "free_y", space = "free_y",
+             labeller = labeller(origin = c("FO" = "Faroe Islands", "GL" = "Greenland"))) +
+  
+  coord_cartesian(xlim = c(min(northatlantic_ft$ballot_date), NA)) +
+  
+  theme_nordatlantisk_basis() +
+  theme(
+    legend.position = "right",
+    panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05),
+    panel.grid.minor.x = element_blank()
+  )
 ```
 
 ## Sample Plots
