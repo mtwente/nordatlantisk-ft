@@ -30,6 +30,12 @@
 				"datatype": { "base": "string", "format": "GL|FO" }
 			},
 			{
+				"name": "party",
+				"dc:title": "Political Party",
+				"dc:description": "Abbreviation of the Political Party the MP is a member of at the given time",
+				"datatype": "string"
+			},
+			{
 				"name": "start",
 				"dc:title": "Start Date",
 				"dc:description": "Date of the beginning of parliamentary membership",
