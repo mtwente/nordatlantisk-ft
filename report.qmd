@@ -252,9 +252,9 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
 
 ## Exploratory Plots
 
-The following sample plots were generated from using `ggplot2` with the data available on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`, covering voting behaviour from `r nrow(mp_names)` MPs. These visualizations make no distinction between directly elected MPs and substitute MPs.
+The following exploratory plots were generated using `ggplot2` with the data available on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`, covering voting behaviour from `r nrow(mp_names)` MPs. These visualizations make no distinction between directly elected MPs and substitute MPs.
 
-On a proposal, members can either vote `for`, `against` or vote neither for or against (`abstention`). Taking into account all ballots that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
+On a proposal, members can either vote `for`, `against` or neither for or against (`abstention`). Taking into account all ballots that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
 
 ::: {#fig-vote-share}
 <!-- in a fenced div because of the dynamically updating caption -->
@@ -302,7 +302,7 @@ ggplot(vote_props, aes(x = 1, y = share, fill = vote_type)) +
   )
 ```
 
-For `r mean(northatlantic_ft$vote_type_id == "3") %>% scales::percent(accuracy = 0.1)` of the ballots in this data set, Greenlandic and Faroese MPs are listed as absent.
+For `r mean(northatlantic_ft$vote_type_id == "3") %>% scales::percent(accuracy = 0.1)` of the observations in this data set, Greenlandic and Faroese MPs are listed as absent.
 :::
 
 ### Votes Per MP

@@ -94,16 +94,11 @@ All data is available in `rds` format that can be read in an R Session via `read
 
 ## File and Variable Descriptions {#file-and-variable-descriptions}
 
-The general structure of the data set and the files used in the workflow to compile the final `northatlantisk_ft` output is illustrated in @fig-datamodel.
+The general structure of the data used in the workflow to compile the final `northatlantisk_ft.csv` output is illustrated in @fig-datamodel.
 
 ```{mermaid datamodel}
 %%| label: fig-datamodel
-%%| fig-cap: Chart illustrating the files used to create the dataset including variable names and types.
----
-config:
-    class:
-      hideEmptyMembersBox: true
----
+%%| fig-cap: Chart illustrating the files used to create the dataset including variable names and types. Click on an element to jump to its description in the codebook.
 
 classDiagram
     direction LR
