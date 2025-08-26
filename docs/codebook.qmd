@@ -178,7 +178,7 @@ kable(parties_fo, caption = "Faroese Parties")
 
 #### MP_names\$substitute
 
-Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset. Data on membership periods is available in [`/assets/background_data/MP_dates.csv`](/assets/background_data/MP_dates.csv).
+Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset. Data on membership periods is available in [`/assets/background_data/MP_dates.csv`](/assets/background_data/MP_dates.csv).
 
 ```{r}
 summary(mp_names$substitute)
@@ -227,7 +227,7 @@ head(northatlantic_votes$vote_id)
 All votes cast in Folketinget are recorded using numeric values that correspond to the MP’s decision (see @tbl-typeid). All Vote Type IDs are stored as values of the type `r typeof(northatlantic_votes$vote_type_id)` as `r class(northatlantic_votes$vote_type_id)` variable.
 
 | ID | Result | English | n |
-|:-----------------|:-------------------|:-----------------|-----------------:|
+|:-----------------|:------------------|:-----------------|-----------------:|
 | 1 | for | for | `r length(northatlantic_votes$vote_type_id[northatlantic_votes$vote_type_id == "1"])` |
 | 2 | imod | against | `r length(northatlantic_votes$vote_type_id[northatlantic_votes$vote_type_id == "2"])` |
 | 3 | fravær | absence | `r length(northatlantic_votes$vote_type_id[northatlantic_votes$vote_type_id == "3"])` |
