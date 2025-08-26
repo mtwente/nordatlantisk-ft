@@ -25,6 +25,7 @@ library(readr)
 library(knitr)
 library(forcats)
 library(lubridate)
+library(scales)
 
 ## Read Data -----
 
@@ -55,11 +56,13 @@ mandates <- mandates %>%
 
 ## Manipulate Data -----
 
-### Subset only with votes that were actually cast
-plot_dataset_without_absences <- subset(plot_dataset, vote_type_id != 3)
-
 ### Order dataset by MP surnames for plotting
 plot_dataset_ordered <- plot_dataset %>%
+  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
+  mutate(vote_type_id = fct_relevel(vote_type_id, "1", "2", "4", "3"))
+
+### Subset only with votes that were actually cast
+plot_dataset_without_absences <- subset(plot_dataset_ordered, vote_type_id != 3) %>%
   mutate(surname = fct_reorder(surname, vote_type_id, .fun = length))
 
 ## Set Plotting Theme -----
@@ -108,8 +111,12 @@ MPs_fo <- mp_names %>%
   select(-origin, -start_date, -end_date) %>%
   arrange(surname)
 
-kable(MPs_gl, caption = "MPs from Greenlandic Parties")
-kable(MPs_fo, caption = "MPs from Faroese Parties")
+printable_names <- c("Surname(s)", "First Name(s)", "MP ID", "Party", "Substitute Member")
+
+kable(MPs_gl, caption = "MPs from Greenlandic Parties",
+              col.names = printable_names)
+kable(MPs_fo, caption = "MPs from Faroese Parties",
+              col.names = printable_names)
 ```
 
 As documented in the column `substitute`, some of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. @fig-mandates shows membership periods and substitions on a timeline for the duration that is covered by this data set[^2].
@@ -243,17 +250,70 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
   )
 ```
 
-## Sample Plots
+## Exploratory Plots
 
-The following sample plots were generated from using `ggplot2` with the data available on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`. The plots show the distribution of votes cast by each MP that is part of the dataset. MPs are grouped by whether they are representing Greenland or the Faroe Islands. This overview makes no distinction between directly elected MPs and substitute MPs.
+The following sample plots were generated from using `ggplot2` with the data available on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`, covering voting behaviour from `r nrow(mp_names)` MPs. These visualizations make no distinction between directly elected MPs and substitute MPs.
+
+On a proposal, members can either vote `for`, `against` or vote neither for or against (`abstention`). Taking into account all ballots that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
+
+::: {#fig-vote-share}
+<!-- in a fenced div because of the dynamically updating caption -->
+```{r overview}
+#| echo: false
+#| message: false
+#| fig-height: 1.2
+
+# Compute proportions of vote types
+vote_props <- northatlantic_ft %>%
+  count(vote_type_id) %>%
+  mutate(
+    share = n / sum(n),
+    vote_type = factor(vote_type_id,
+                       levels = c(3, 4, 2, 1),
+                       labels = c("absent", "abstention", "against", "for"))
+  )
+
+# Single horizontal bar plot
+ggplot(vote_props, aes(x = 1, y = share, fill = vote_type)) +
+  geom_col(width = 0.5) +
+  coord_flip() +
+  scale_fill_manual(
+    name = "Vote",
+    labels = c("for", "against", "abstention", "absent"),
+    values = c("#6195CF", "#F7CB45", "#777777", "#D1BBD7"),
+    breaks = c("for", "against", "abstention", "absent")
+  ) +
+
+  scale_y_continuous(labels = label_percent(),
+                     expand = expansion(mult = c(0, .015))
+                    ) +
+  
+  labs(x = NULL, y = NULL) +
+  theme_nordatlantisk_basis() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000", linewidth = 0.1),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    legend.position = "top"
+  )
+```
+
+For `r mean(northatlantic_ft$vote_type_id == "3") %>% scales::percent(accuracy = 0.1)` of the ballots in this data set, Greenlandic and Faroese MPs are listed as absent.
+
+:::
 
 ### Votes Per MP
+
+@fig-votes-per-mp visualizes the distribution of votes cast by each MP that is part of the dataset. MPs are grouped by whether they are representing Greenland or the Faroe Islands. As MPs are absent for most ballots, @fig-votes-per-mp-filtered shows the timeline only with votes that were actually cast.
 
 ```{r votes-per-mp}
 #| echo: false
 #| message: false
 #| label: fig-votes-per-mp
-#| fig-cap: Full voting records for each MP coded by the type of vote cast (for, against, absent, abstaining).
+#| fig-cap: Full voting records for each MP coded by the type of vote cast (for, against, abstaining, absent).
 
 plot_votes <- ggplot(plot_dataset_ordered, aes(y = surname, fill = vote_type_id)) +
   geom_bar() +
@@ -261,8 +321,9 @@ plot_votes <- ggplot(plot_dataset_ordered, aes(y = surname, fill = vote_type_id)
   scale_y_discrete() +
   scale_fill_manual(
     name = "Vote",
-    labels = c("for", "against", "absence", "abstention"),
-    values = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")
+    labels = c("for", "against", "abstention", "absent"),
+    values = c("#6195CF", "#F7CB45", "#777777", "#D1BBD7"),
+    breaks = c("1", "2", "4", "3")
   ) +
 
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
@@ -282,10 +343,7 @@ plot_votes
 #| label: fig-votes-per-mp-filtered
 #| fig-cap: Number of votes cast by each MP coded by the type of vote (for, against, abstaining). Only showing ballots when the MP is in attendance.
 
-plot_dataset_without_absences_ordered <- plot_dataset_without_absences %>%
-  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length))
-
-plot_votes_without_absences <- ggplot(plot_dataset_without_absences_ordered, aes(y = surname, fill = vote_type_id)) +
+plot_votes_without_absences <- ggplot(plot_dataset_without_absences, aes(y = surname, fill = vote_type_id)) +
   geom_bar() +
   scale_x_continuous(expand = expansion(mult = c(0, .05))) +
   scale_y_discrete() +
@@ -306,11 +364,13 @@ plot_votes_without_absences
 
 ### Votes Per MP Over Time
 
+The distribution of recorded votes by all MPs is displayed on a timeline in @fig-votes-timeline. Again, MPs are grouped by whether they are representing Greenland or the Faroe Islands. As MPs are absent for most ballots, @fig-votes-timeline-filtered shows the timeline only with votes that were actually cast.
+
 ```{r votes-over-time}
 #| echo: false
 #| message: false
 #| label: fig-votes-timeline
-#| fig-cap: Distribution of votes over time per MP (for, against, absent, abstaining). Because there are so many data points, vertical jittering is added to make it a little easier to get an overview of the available data.
+#| fig-cap: Distribution of votes over time per MP (for, against, abstaining, absent). Because there are so many data points, vertical jittering is added to make it a little easier to get an overview of the available data.
 
 plot_dataset <- plot_dataset %>%
   mutate(surname = factor(surname, levels = levels(mandates$surname)))
@@ -325,11 +385,12 @@ scatterplot <- ggplot(plot_dataset %>%
   
   scale_color_manual(
     name = "Vote",
-    labels = c("for", "against", "absence", "abstention"),
-    values = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")
+    labels = c("for", "against", "abstention", "absent"),
+    values = c("#6195CF", "#F7CB45", "#777777", "#D1BBD7"),
+    breaks = c("1", "2", "4", "3")
   ) +
 
-  guides(color = guide_legend(override.aes = list(fill = c("#6195CF", "#F7CB45", "#D1BBD7", "#777777")))) + 
+  guides(color = guide_legend(override.aes = list(fill = c("#6195CF", "#F7CB45", "#777777", "#D1BBD7")))) + 
 
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
         labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
