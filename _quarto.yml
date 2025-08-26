@@ -61,6 +61,8 @@ format:
     code-copy: true
     code-overflow: wrap
     link-external-newwindow: true
+    mermaid:
+      theme: neutral
 
 freeze: true
 

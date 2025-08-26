@@ -94,6 +94,166 @@ All data is available in `rds` format that can be read in an R Session via `read
 
 ## File and Variable Descriptions {#file-and-variable-descriptions}
 
+The general structure of the data set and the files used in the workflow to compile the final `northatlantisk_ft` output is illustrated in @fig-datamodel.
+
+```{mermaid datamodel}
+%%| label: fig-datamodel
+%%| fig-cap: Chart illustrating the files used to create the dataset including variable names and types.
+---
+config:
+    class:
+      hideEmptyMembersBox: true
+---
+
+classDiagram
+    direction LR
+
+    MP_dates -- MP_names
+    MP_dates .. election_dates
+    MP_dates .. political_parties
+
+    MP_names *-- northatlantic_ft
+
+    northatlantic_votes <|-- northatlantic_ft
+    ballot_results_ft <|-- northatlantic_ft
+    ballot_topics_raw <|-- northatlantic_ft
+
+    MP_names *-- northatlantic_votes_raw
+    northatlantic_votes_raw <|-- northatlantic_votes
+
+    ballot_info_raw <|-- ballot_results_ft
+
+    class northatlantic_ft {
+        ballot_id : int
+        MP_id : int
+        surname : string
+        party : string
+        vote_type_id : int
+        ballot_pass : bool
+        ft_process_step : string
+        ft_topic_id : int
+        ft_topic : string
+        ft_for : int
+        ft_against : int
+        ft_abstention : int
+        ft_absent : int
+        ballot_date : date
+        ballot_type_id : int
+        comment : string
+        ballot_result_string : int
+    }
+
+        class northatlantic_votes {
+        vote_id : int
+        vote_type_id : int
+        ballot_id : int
+        MP_id : int
+    }
+
+        class MP_dates {
+        surname : string
+        firstname : string
+        origin: string
+        party : string
+        start : date
+        end : date
+        substitute : bool
+    }
+
+    class election_dates {
+        election : string
+        date : date
+    }
+
+    class MP_names {
+        surname : string
+        first_name : string
+        MP_id : int
+        origin : string
+        party : string
+        substitute : bool
+        start_date : date
+        end_date : date
+    }
+
+    class ballot_results_ft {
+        ballot_id : int
+        meeting_id : int
+        ballot_pass : bool
+        ballot_date : date
+        ft_for : int
+        ft_against : int
+        ft_abstention : int
+        ft_absent : int
+        ft_process_id : int
+        ballot_nr : int
+        ballot_type_id : int
+        comment : string
+        ballot_result_string : string
+    }
+
+    class ballot_info_raw {
+        id : int
+        nummer : int
+        konklusion : string
+        vedtaget : bool
+        kommentar : string
+        mødeid : int
+        typeid : int
+        sagstrinid : int
+        opdateringsdato : date
+    }
+
+    class ballot_topics_raw {
+        ft_process_id : int
+        ft_process_step : string
+        ft_topic_id : int
+        ft_topic : string
+    }
+
+    class northatlantic_votes_raw {
+        id : int
+        typeid : int
+        afstemningid : int
+        aktørid : int
+        opdateringsdato : date
+    }
+
+    class political_parties {
+        Party : string
+        Full Name : string
+        Party Family : string
+        Colour : string
+        Origin : string
+        Left-Right : float
+        State-Market : float
+        Liberty-Authority : float
+        Anti-Pro EU : float
+    }
+
+style ballot_info_raw fill:#D1BBD7
+style ballot_results_ft fill:#D1BBD7
+
+style ballot_topics_raw fill:#253C78,color:#FFFFFF
+
+style northatlantic_ft fill:#F7CB45
+
+style northatlantic_votes_raw fill:#FFEAAE
+style northatlantic_votes fill:#FFEAAE
+
+style MP_names fill:#6195CF,color:#FFFFFF
+style MP_dates fill:#6195CF,color:#FFFFFF
+
+%% not implemented %% click MP_dates href "#mp_dates" "tooltip"
+click MP_names href "#mp_names" "tooltip"
+click northatlantic_votes_raw href "#northatlantic_votes_raw" "tooltip"
+click northatlantic_votes href "#northatlantic_votes" "tooltip"
+click ballot_info_raw href "#ballot_info_raw" "tooltip"
+click ballot_results_ft href "#ballot_results_ft" "tooltip"
+click ballot_topics_raw href "#ballot_topics_raw" "tooltip"
+click northatlantic_ft href "#northatlantic_ft" "tooltip"
+```
+
 ### MP_names {#mp_names}
 
 `MP_names` is provided in `csv` and `rds` formats in `/data/processed`. The `csv` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
