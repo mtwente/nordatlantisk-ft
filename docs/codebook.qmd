@@ -39,7 +39,7 @@ northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rd
 northatlantic_votes_raw <- read.csv(here("data", "raw", "northatlantic_votes_raw.csv"), check.names = FALSE)
 ballot_info_raw <- read.csv(here("data", "raw", "ballot_info_raw.csv"), check.names = FALSE)
 ballot_results_ft <- readRDS(here("data", "processed", "ballot_results_ft.rds"))
-ballot_topics <- read.csv(here("data", "raw", "ballot_topics.csv"), check.names = FALSE)
+ballot_topics_raw <- read.csv(here("data", "raw", "ballot_topics_raw.csv"), check.names = FALSE)
 
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
@@ -573,7 +573,7 @@ All legislative processes in Folketinget are assigned an ID by [Folketingets åb
 
 This variable corresponds to the [`sagstrinid`](#ballot_info_rawsagstrinid) variable and the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
 
-`ft_process_id` used to join [`ballot_topics`](#ballot_topics) to [`northatlantic_ft`](#northatlantic_ft).
+`ft_process_id` used to join [`ballot_topics_raw`](#ballot_topics_raw) to [`northatlantic_ft`](#northatlantic_ft).
 
 ```{r}
 head(ballot_results_ft$ft_process_id)
@@ -729,63 +729,63 @@ head(ballot_info_raw$opdateringsdato)
 
 ------------------------------------------------------------------------
 
-### ballot_topics {#ballot_topics}
+### ballot_topics_raw {#ballot_topics_raw}
 
-`ballot_topics` is provided as `csv` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics.csv"))$mtime, "%B %Y")`, `ballot_topics.csv` contains `r nrow(ballot_topics)` observations of `r ncol(ballot_topics)` variables.
+`ballot_topics_raw` is provided as `csv` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.csv"))$mtime, "%B %Y")`, `ballot_topics_raw.csv` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
 
 ```{r}
-head(ballot_topics)
+head(ballot_topics_raw)
 ```
 
-Descriptions of all variables in `ballot_topics` are provided in the following sections.
+Descriptions of all variables in `ballot_topics_raw` are provided in the following sections.
 
-#### ballot_topics\$ft_process_id
+#### ballot_topics_raw\$ft_process_id
 
-All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `r typeof(ballot_topics$ft_process_id)` as `r class(ballot_topics$ft_process_id)` variable.
+All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_process_id)` as `r class(ballot_topics_raw$ft_process_id)` variable.
 
 This variable corresponds to the [`sagstrinid`](#ballot_info_rawsagstrinid) variable and the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
 
-`ft_process_id` is used to join `ballot_topics` to [`northatlantic_ft`](#northatlantic_ft) based on matching with[`ballot_results_ft$ft_process_id`](#ballot_results_ftft_process_id).
+`ft_process_id` is used to join `ballot_topics_raw` to [`northatlantic_ft`](#northatlantic_ft) based on matching with[`ballot_results_ft$ft_process_id`](#ballot_results_ftft_process_id).
 
 ```{r}
-head(ballot_topics$ft_process_id)
+head(ballot_topics_raw$ft_process_id)
 ```
 
-#### ballot_topics\$ft_process_step {#ballot_topicsft_process_step}
+#### ballot_topics_raw\$ft_process_step {#ballot_topicsrawft_process_step}
 
-All legislative processes in Folketinget run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_topics$ft_process_step)` in Danish language.
+All legislative processes in Folketinget run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_topics_raw$ft_process_step)` in Danish language.
 
 This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
 
 ```{r}
-head(ballot_topics$ft_process_step)
+head(ballot_topics_raw$ft_process_step)
 ```
 
-#### ballot_topics\$ft_topic_id {#ballot_topicsft_topic_id}
+#### ballot_topics_raw\$ft_topic_id {#ballot_topicsrawft_topic_id}
 
-Each proposal that is being voted on in Folketinget is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data) based on the proposal's topic. Each topic ID is thus a unique identifier for one topic relating to several ballots and debates etc. in Folketinget. This identifier is stored in `ft_topic_id`. Topic IDs are stored as values of the type `r typeof(ballot_topics$ft_topic_id)` as `r class(ballot_topics$ft_topic_id)` variable.
+Each proposal that is being voted on in Folketinget is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data) based on the proposal's topic. Each topic ID is thus a unique identifier for one topic relating to several ballots and debates etc. in Folketinget. This identifier is stored in `ft_topic_id`. Topic IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_topic_id)`.
 
 This variable corresponds to the `id` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk).
 
 ```{r}
-head(ballot_topics$ft_topic_id)
+head(ballot_topics_raw$ft_topic_id)
 ```
 
-#### ballot_topics\$ft_topic {#ballot_topicsft_topic}
+#### ballot_topics_raw\$ft_topic {#ballot_topicsrawft_topic}
 
-Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_topics$ft_topic)` as `r class(ballot_topics$ft_topic)` variable.
+Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_topics_raw$ft_topic)`.
 
 This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk).
 
 ```{r}
-head(ballot_topics$ft_topic)
+head(ballot_topics_raw$ft_topic)
 ```
 
 ------------------------------------------------------------------------
 
 ### northatlantic_ft {#northatlantic_ft}
 
-`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes) and [`ballot_topics`](#ballot_topics). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
+`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes) and [`ballot_topics_raw`](#ballot_topics_raw). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
 
 ```{r}
 str(northatlantic_ft)
@@ -851,7 +851,7 @@ str(northatlantic_ft$ballot_pass)
 
 #### northatlantic_ft\$ft_process_step
 
-See [`ballot_topics$ft_process_step`](#ballot_topicsft_process_step).
+See [`ballot_topics_raw$ft_process_step`](#ballot_topics_rawft_process_step).
 
 ```{r}
 str(northatlantic_ft$ft_process_step)
@@ -859,7 +859,7 @@ str(northatlantic_ft$ft_process_step)
 
 #### northatlantic_ft\$ft_topic_id
 
-See [`ballot_topics$ft_topic_id`](#ballot_topicsft_topic_id).
+See [`ballot_topics_raw$ft_topic_id`](#ballot_topics_rawft_topic_id).
 
 ```{r}
 str(northatlantic_ft$ft_topic_id)
@@ -867,7 +867,7 @@ str(northatlantic_ft$ft_topic_id)
 
 #### northatlantic_ft\$ft_topic
 
-See [`ballot_topics$ft_topic`](#ballot_topicsft_topic).
+See [`ballot_topics_raw$ft_topic`](#ballot_topics_rawft_topic).
 
 ```{r}
 str(northatlantic_ft$ft_topic)
