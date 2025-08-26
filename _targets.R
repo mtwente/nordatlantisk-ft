@@ -88,7 +88,5 @@ tar_plan(
   ballot_topics = get_topics(cleaned_ballot_results),
   
   northatlantic_ft = join_results(cleaned_voting_records, cleaned_ballot_results,
-                                  ballot_topics, MP_names),
-  
-  #codebook = render_codebook()
-)
+                                  ballot_topics, MP_names)
+  )
