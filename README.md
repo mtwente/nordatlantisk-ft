@@ -15,7 +15,7 @@ This repository contains voting records of Greenlandic and Faroese Members of Pa
 The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) by [@maehr](https://github.com/maehr), follows the [Advanced Structure for Data Analysis](https://the-turing-way.netlify.app/project-design/project-repo/project-repo-advanced.html) of _The Turing Way_ and is organized as follows:
 
 - `analysis/`: scripts and notebooks used to analyze the data
-- `assets/`: images, logos, etc. used in the README and other documentation
+- `assets/`: images, background data, literature references etc. used in the README and other documentation
 - `build/`: built files, PDF outputs
 - `data/`: data files
 - `docs/`: documentation for the data and the repository
@@ -33,7 +33,7 @@ For all MPs that were elected in either Greenland or the Faroe Islands since 200
 
 In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
 
-Descriptions of all variables are provided in the [codebook](./docs/codebook.qmd). Take a [first glance](report.qmd).
+Descriptions of the workflow and all variables are provided in the [codebook](./docs/codebook.qmd). To get an impression of the available data, take a [first glance](report.qmd).
 
 ### Installation
 

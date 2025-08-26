@@ -177,7 +177,7 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 
 [^3]: Both parties have been formed quite recently -- Naleraq in 2014 and Nunatta Qitornai in 2017. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies.
 
-See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see @westSkipanarligarFortreytirOg2022 in Faroese and @westFaeroskPolitikMellem2020 in Danish.
+See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West [-@westSkipanarligarFortreytirOg2022 in Faroese; -@westFaeroskPolitikMellem2020 in Danish].
 
 All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022]. @fig-party-timeline shows the allocation of Folketinget seats to political parties from Greenland and the Faroe Islands on a timeline.
 
@@ -258,6 +258,7 @@ On a proposal, members can either vote `for`, `against` or vote neither for or a
 
 ::: {#fig-vote-share}
 <!-- in a fenced div because of the dynamically updating caption -->
+
 ```{r overview}
 #| echo: false
 #| message: false
@@ -302,7 +303,6 @@ ggplot(vote_props, aes(x = 1, y = share, fill = vote_type)) +
 ```
 
 For `r mean(northatlantic_ft$vote_type_id == "3") %>% scales::percent(accuracy = 0.1)` of the ballots in this data set, Greenlandic and Faroese MPs are listed as absent.
-
 :::
 
 ### Votes Per MP
