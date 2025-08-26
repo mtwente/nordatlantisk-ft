@@ -34,6 +34,14 @@ website:
   sidebar:
     contents:
       - section: nordatlantisk-ft
+        contents:
+          - text: Data Overview
+            href: report.qmd
+          - text: Codebook
+            href: docs/codebook.qmd
+          - text: Zotero
+            href: 'https://www.zotero.org/groups/5346749/nordatlantisk-ft'
+      - section: Repository
         href: index.qmd
         contents:
           - text: Changelog
@@ -48,8 +56,6 @@ website:
             href: LICENSE-AGPL.md
           - text: Security
             href: SECURITY.md
-      - href: report.qmd
-        contents: project-management/*
 
 format:
   html:
