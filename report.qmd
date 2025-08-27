@@ -173,7 +173,7 @@ ggplot(mandates, aes(x = start, xend = end, y = surname, yend = surname, color =
 
 ## Political Parties
 
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$Origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$Origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and joined two relatively young parties (Nunatta Qitornai and Naleraq[^3]).
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and joined two relatively young parties (Nunatta Qitornai and Naleraq[^3]).
 
 [^3]: Both parties have been formed quite recently -- Naleraq in 2014 and Nunatta Qitornai in 2017. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies.
 
@@ -187,14 +187,18 @@ All represented political parties are listed in @tbl-parties with additional inf
 #| label: tbl-parties
 #| tbl-cap: List of political parties from Greenland and the Faroe Islands with an MP in Folketinget since 2004.
 
-parties_gl <- subset(political_parties, Origin == "GL")[, !(names(political_parties) %in% c("Origin", "Colour"))]
-parties_fo <- subset(political_parties, Origin == "FO")[, !(names(political_parties) %in% c("Origin", "Colour"))]
+parties_gl <- subset(political_parties, origin == "GL")[, !(names(political_parties) %in% c("origin", "colour"))]
+parties_fo <- subset(political_parties, origin == "FO")[, !(names(political_parties) %in% c("origin", "colour"))]
 
 rownames(parties_gl) <- NULL
 rownames(parties_fo) <- NULL
 
-kable(parties_gl, caption = "Greenlandic Parties")
-kable(parties_fo, caption = "Faroese Parties")
+printable_names <- c("Party", "Full Name", "Party Family", "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU")
+
+kable(parties_gl, caption = "Greenlandic Parties",
+                  col.names = printable_names)
+kable(parties_fo, caption = "Faroese Parties",
+                  col.names = printable_names)
 ```
 
 ```{r party-timeline}
@@ -211,7 +215,7 @@ party_periods <- mandates %>%
 
 # join colours from political_parties
 party_periods <- party_periods %>%
-  left_join(political_parties %>% select("Party", "Full Name", "Colour"), by = c("party" = "Party"))
+  left_join(political_parties %>% select("party", "full_name", "colour"), by = "party")
 
 # sort parties with start date
   party_periods <- party_periods %>%
@@ -220,13 +224,13 @@ party_periods <- party_periods %>%
   ungroup()
 
 # set party name labels including UF
-y_labels <- setNames(party_periods$`Full Name`, party_periods$party)
+y_labels <- setNames(party_periods$full_name, party_periods$party)
 y_labels <- c(y_labels, "UF" = "No Party Affiliation")
 
 # set UF colour to grey
-party_periods$Colour[party_periods$party == "UF"] <- "#777777"
+party_periods$colour[party_periods$party == "UF"] <- "#777777"
 
-ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color = Colour)) +
+ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color = colour)) +
   geom_segment(linewidth = 8, lineend = "butt") +
   scale_color_identity() +
 

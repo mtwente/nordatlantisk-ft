@@ -215,15 +215,15 @@ classDiagram
     }
 
     class political_parties {
-        Party : string
-        Full Name : string
-        Party Family : string
-        Colour : string
-        Origin : string
-        Left-Right : float
-        State-Market : float
-        Liberty-Authority : float
-        Anti-Pro EU : float
+        party : string
+        full_name : string
+        party_family : string
+        colour : string
+        origin : string
+        left_right : float
+        state_market : float
+        liberty_authority : float
+        anti_pro_eu : float
     }
 
 style ballot_info_raw fill:#D1BBD7
@@ -311,7 +311,7 @@ summary(mp_names$party)
 
 All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
 
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$Origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$Origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq[^2]).
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq[^2]).
 
 [^2]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies.
 
@@ -321,14 +321,18 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 #| label: tbl-parties
 #| tbl-cap: List of political parties from Greenland and the Faroe Islands with a MP in Folketinget since 2004.
 
-parties_gl <- subset(political_parties, Origin == "GL")[, !(names(political_parties) %in% c("Origin", "Colour"))]
-parties_fo <- subset(political_parties, Origin == "FO")[, !(names(political_parties) %in% c("Origin", "Colour"))]
+parties_gl <- subset(political_parties, origin == "GL")[, !(names(political_parties) %in% c("origin", "colour"))]
+parties_fo <- subset(political_parties, origin == "FO")[, !(names(political_parties) %in% c("origin", "colour"))]
 
 rownames(parties_gl) <- NULL
 rownames(parties_fo) <- NULL
 
-kable(parties_gl, caption = "Greenlandic Parties")
-kable(parties_fo, caption = "Faroese Parties")
+printable_names <- c("Party", "Full Name", "Party Family", "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU")
+
+kable(parties_gl, caption = "Greenlandic Parties",
+                  col.names = printable_names)
+kable(parties_fo, caption = "Faroese Parties",
+                  col.names = printable_names)
 ```
 
 #### MP_names\$substitute
