@@ -1,0 +1,112 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "political_parties.csv",
+	"dc:title": "Political Parties",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2025-08-27",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"tableSchema": {
+		"aboutUrl": "/README.md",
+		"notes": "Table with names and policy positions of Northatlantic political parties that have been represented in Folketinget.",
+		"columns": [
+			{
+				"name": "party",
+				"dc:title": "Political Party",
+				"description": "Abbreviation for the political party",
+				"datatype": "string"
+			},
+			{
+				"name": "full_name",
+				"dc:title": "Full Name",
+				"description": "Full name of the political party",
+				"datatype": "string",
+				"lang": "kl|fo"
+			},
+			{
+				"name": "party_family",
+				"dc:title": "Party Family",
+				"description": "Title of the political party family the party is part of",
+				"datatype": "string",
+				"lang": "en"
+			},
+			{
+				"name": "colour",
+				"dc:title": "Party Colour",
+				"description": "HEX Code of the main colour of the policial party, taken from Wikipedia",
+				"datatype": "string"
+			},
+			{
+				"name": "origin",
+				"dc:title": "Origin",
+				"description": "Geographical origin of the political party",
+				"datatype": { "base": "string", "format": "GL|FO" }
+			},
+			{
+				"name": "left_right",
+				"dc:title": "Left-Right Position",
+				"description": "Placement on the Left-Right scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			},
+			{
+				"name": "state_market",
+				"dc:title": "State-Market Position",
+				"description": "Placement on the State-Market scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			},
+			{
+				"name": "liberty_authority",
+				"dc:title": "Liberty-Authority Position",
+				"description": "Placement on the Liberty-Authority scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			},
+			{
+				"name": "anti_pro_eu",
+				"dc:title": "Anti-Pro EU Position",
+				"description": "Placement on the Anti-Pro EU scale",
+				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+			}
+		],
+		"dialect": {
+			"delimiter": ";",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		},
+		"primaryKey": ["party"],
+		"foreignKeys": [
+			{
+				"columnReference": "left_right",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "left_right",
+					"dc:description": "0--10 scale mean value in left/right dimension with data from Castles/Mair 1983, Huber/Inglehart 1995, Benoit/Laver 2006 and CHES 2010"
+				}
+			},
+			{
+				"columnReference": "state_market",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "state_market",
+					"dc:description": "0--10 scale mean value in 'regulation of the economy' dimension with data from Benoit/Laver 2006 and CHES 2010"
+				}
+			},
+			{
+				"columnReference": "liberty_authority",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "liberty_authority",
+					"dc:description": "0--10 scale mean value in 'libertarian/authoritarian' dimension with data from Benoit/Laver 2006 and CHES 2010"
+				}
+			},
+			{
+				"columnReference": "anti_pro_eu",
+				"reference": {
+					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
+					"columnReference": "eu_anti_pro",
+					"dc:description": "0--10 scale mean value in 'EU integration' dimension with data from Ray 1999, Benoit/Laver 2006 and CHES 2010"
+				}
+			}
+		]
+	}
+}

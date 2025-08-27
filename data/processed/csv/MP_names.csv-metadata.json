@@ -3,19 +3,19 @@
 	"url": "MP_names.csv",
 	"dc:title": "MP Names",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2023-01-11",
+	"dc:updated": "2025-08-21",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
-	"dc:relation": "../../../src/create_MP_list.R",
+	"dc:relation": "/src/create_MP_list.R",
 	"tableSchema": {
-		"aboutUrl": "../../../README.md",
+		"aboutUrl": "/README.md",
 		"notes": "Table with names of members of Folketinget for which to get voting records",
 		"columns": [
 			{
 				"name": "surname",
-				"dc:title": "Surname",
-				"description": "Surname of the MP.",
+				"dc:title": "Surname(s)",
+				"description": "Surname(s) of the MP.",
 				"datatype": "string"
 			},
 			{
@@ -42,6 +42,12 @@
 				"dc:title": "Party Code",
 				"description": "Political party affiliation (abbreviated) of the MP.",
 				"datatype": "string"
+			},
+			{
+				"name": "substitute",
+				"dc:title": "Substitute",
+				"description": "Indicates whether the MP in question joined Folketinget as a substitute member (TRUE), replacing another MP who whent on leave.",
+				"datatype": "boolean"
 			},
 			{
 				"name": "start_date",

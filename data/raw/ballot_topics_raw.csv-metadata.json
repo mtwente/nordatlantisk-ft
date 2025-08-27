@@ -1,0 +1,49 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "ballot_topics_raw.csv",
+	"dc:title": "Ballot Topics",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2025-08-25",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:relation": "/src/targets/get_topics.R",
+	"tableSchema": {
+		"aboutUrl": "/README.md",
+		"notes": "List of proposals being debated and voted on in Folketing, with a description of each proposal's content in Danish.",
+		"columns": [
+			{
+				"name": "ft_process_id",
+				"dc:title": "ft_process_id",
+				"description": "Folketing ODA ID of the proposal workflow",
+				"datatype": "integer"
+			},
+			{
+				"name": "ft_process_step",
+				"dc:title": "ft_process_step",
+				"description": "Step within the parliamentary workflow that the proposal at hand is currently at, provided as a string in Danish.",
+				"datatype": "string",
+				"lang": "dk"
+			},
+			{
+				"name": "ft_topic_id",
+				"dc:title": "ft_topic_id",
+				"description": "Folketing ODA ID of the proposal",
+				"datatype": "integer"
+			},
+			{
+				"name": "ft_topic",
+				"dc:title": "ft_topic",
+				"description": "Description of the topic/the content of the proposal at hand, given as string in Danish.",
+				"datatype": "string",
+				"lang": "dk"
+			}
+		],
+		"dialect": {
+			"delimiter": ",",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		},
+		"primaryKey": ["ft_process_id"]
+	}
+}
