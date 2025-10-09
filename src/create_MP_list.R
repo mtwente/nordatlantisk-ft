@@ -11,14 +11,14 @@ library(here)
 
 ## Create Data -----
 
-MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johansen", "Kleist", "Rossen", "Henningsen Heilmann", "Nielsen", "Chemnitz", "Hammond", "Høegh-Dam", "Olsen"),
-                         first_name = c("Sara", "Johan", "Doris", "Lars-Emil", "Kuupik", "Sofia", "Juliane", "Nick", "Aaja", "Aleqa", "Aki-Matilda", "Markus E."),
-                         MP_id = factor(c(13, 277, 294, 670, 672, 1484, 6689, 14000, 15757, 15758, 18688, 20635)),
-                         origin = factor(rep("GL", 12)),
-                         party = factor(c("IA", "IA", "SIU", "SIU", "IA", "IA", "IA", "SIU", "IA", "SIU, NQ", "SIU, N", "SIU")),
-                         substitute = c(FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE),
-                         start_date = c(rep(NA, 12)),
-                         end_date = c(rep(NA, 12)))
+MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johansen", "Kleist", "Rossen", "Henningsen Heilmann", "Nielsen", "Chemnitz", "Hammond", "Høegh-Dam", "Olsen", "Kûitse"),
+                         first_name = c("Sara", "Johan", "Doris", "Lars-Emil", "Kuupik", "Sofia", "Juliane", "Nick", "Aaja", "Aleqa", "Aki-Matilda", "Markus E.", "Elvira"),
+                         MP_id = factor(c(13, 277, 294, 670, 672, 1484, 6689, 14000, 15757, 15758, 18688, 20635, 21206)),
+                         origin = factor(rep("GL", 13)),
+                         party = factor(c("IA", "IA", "SIU", "SIU", "IA", "IA", "IA", "SIU", "IA", "SIU, NQ", "SIU, N", "SIU", "N")),
+                         substitute = c(FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE),
+                         start_date = c(rep(NA, 13)),
+                         end_date = c(rep(NA, 13)))
 
 MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg"),
                           first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna"),
