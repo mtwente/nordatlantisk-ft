@@ -1,14 +1,14 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|2217a36d0d771b59|||||||||||||||
-ballot_info|stem|c8f91a29be2e3f73|c3177031d0f9a243|b4af8777fd74109a|-1356312050||t20370.9403668871s|d8c91138bc226ece|213598|rds|local|vector|||13.487||
-ballot_info_with_dates|stem|2fe620758767a4cb|c199bd9203f4720e|6573a3b757047336|-1538018715||t20370.9410369003s|bb0a152e40c2f044|235007|rds|local|vector|||57.844||
+.Random.seed|object|e903286b9cdb8b6b|||||||||||||||
+ballot_info|stem|80fd8eb3f7429785|c3177031d0f9a243|b4af8777fd74109a|-1356312050||t20423.6455604711s|cf9dd5e251d618a2|213970|rds|local|vector|||13.481||
+ballot_info_with_dates|stem|d1a38ad0618573f9|c199bd9203f4720e|0df5284fd784574a|-1538018715||t20423.6462258634s|3c9e3eeb67b2958c|235468|rds|local|vector|||57.433||
 ballot_results|stem|8d1750210e047b1d|6efabfa22b2b7d0e|d7b1e0640ad92fd3|1992756893||t19720.9153063949s|ca06277be079bbc9|222691|rds|local|vector|||459.526||
 ballot_results_with_topics|stem|9c5b1f46e472143e|dc8fb805ea9aec5d|52eb4c347fd896be|822781586||t20319.6031643917s|5cf73858a05ff67f|597396|rds|local|vector|||534.922||
-ballot_topics|stem|17960baeb75ac2d5|dc8fb805ea9aec5d|3838918f2e64ea8f|-271092198||t20370.9591010475s|b83ee7bdf6ae9e6d|597518|rds|local|vector|||1052.592||
+ballot_topics|stem|98d3913532884e64|dc8fb805ea9aec5d|74e0d69c7bab0e52|-271092198||t20423.6592231585s|55a08dc4395ab2c3|598675|rds|local|vector|||639.749||
 clean_ballot_results|function|78f7bbc6d23fe0e7|||||||||||||||
 clean_voting_records|function|b6b4c49a55d6c9e8|||||||||||||||
-cleaned_ballot_results|stem|8370811f955a9560|0717b24f8002e719|21529f9de3d27ee0|-1908955450||t20370.9469175795s|0ed1bb026491a7ba|262864|rds|local|vector|||0.159||
-cleaned_voting_records|stem|d349116086faec99|ad9405147657a520|5e88f141fc7dd2c3|1063931314||t20370.9376347962s|3603e8bf05795136|294693|rds|local|vector|||0.122||
+cleaned_ballot_results|stem|a8e0722ca0a41a14|0717b24f8002e719|2e87ff5b7ffc26a4|-1908955450||t20423.6518179236s|d8490a42ad374360|263434|rds|local|vector|||0.162||
+cleaned_voting_records|stem|5fe3b57777ce92b5|ad9405147657a520|7cfd1017922aa38f|1063931314||t20423.651815623s|88dc387f2f22185e|295072|rds|local|vector|||0.116||
 codebook|stem|d0ae3a1d17d62d65|1005ee0ab3e841f3|e11738939520571e|-2106169944||t19727.9633783945s|045b07e719c4cc68|120|rds|local|vector|||4.412|unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 556 is invalid. unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 556 is invalid. The file codebook.log is not encoded in UTF8. These lines contain invalid UTF8 characters 561. The file codebook.log is not encoded in UTF8. These lines contain invalid UTF8 characters 561. unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 561 is invalid|
 cue|stem||77364f0bc8f16811|ef46db3751d8e999|1566650647||t19720.8965934433s||0|rds|local|vector|||0.173||target cue attempted to run targetstar_exist_meta to during a pipeline, which is unsupported except when format in cfile, file_fast and repository  local, or if you are reading from a data store that does not belong to the current pipeline. This is because functions like tar_exist_meta attempt to access or modify the local data store, which may not exist or be properly synced in certain situations. Also, please be aware that some functions like tar_make and tar_destroy should never run inside a target. Please find a different workaround for your use case.
 get_ballot_info|function|173140e8f6ed2662|||||||||||||||
@@ -24,14 +24,14 @@ get_voting_records|function|34c4dc16c1bd04f8|||||||||||||||
 join_results|function|e8aea8f40762c4c9|||||||||||||||
 meeting_dates|stem|8a9919bc537c0756|c199bd9203f4720e|eef333682651bd94|642247789||t19720.909064753s|a117b83c5fa3383c|209318|rds|local|vector|||29.965||
 MP_names|stem|742990917846ba46|9114fb1216a41601|3ad4d03548d8dfb8|-136046039||t20370.9359079714s|5804f0d9761a796e|792|rds|local|vector|||0.001||
-MP_names_file|stem|742990917846ba46|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20370.9324164089s|5804f0d9761a796e|792|file|local|vector|||0.097||
+MP_names_file|stem|742990917846ba46|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20423.6434392928s|5804f0d9761a796e|792|file|local|vector|||0.097||
 MP_names_file_path|stem|24b4b40c1d8d7e93|dd33efc92ee2f645|ef46db3751d8e999|-2121344532|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20260.3508400771s|77f1a8cb303e5572|743|file|local|vector|||0.075||
 MP_names_RDS|stem|24b4b40c1d8d7e93|9114fb1216a41601|ecff70af28ed9e08|403381341||t20260.3613458462s|77f1a8cb303e5572|743|rds|local|vector|||0||
-northatlantic_ft|stem|19f3a0743940f548|a57c9ee76d2ed7ce|d6371a3c6e91dfdf|-955248254||t20370.9591109008s|25576b2832a7e833|2958525|rds|local|vector|||0.509||
+northatlantic_ft|stem|318456bbcafaed9d|a57c9ee76d2ed7ce|2af601c942ce61ac|-955248254||t20423.6592326685s|fc85c9e9d86fa704|2964218|rds|local|vector|||0.497||
 northatlantic_votes_raw|stem|b5d421a179ec69b2|706901400d0b71c3|847d7324c0552a6a|390780735||t19720.9099869671s|4a8c3bac8bfc04b8|417669|rds|local|vector|||79.561||
 print_test|stem|da6e0b1eb43cde3f|1cc02097f1123527|ef46db3751d8e999|58567252||t19720.8749633778s|93a4d4dc4116d568|64|rds|local|vector|||0.17||
-raw_ballot_results|stem|2dc3d41149e48067|b7ef26a6f737c918|5e7c6986e295a028|-710281401||t20370.9469152557s|c4aa3e1f6eedfbcc|248809|rds|local|vector|||507.838||
-raw_voting_records|stem|2b07f475d4ea448a|97d6902dc1bf00c2|0c3cbc04367ece11|-47314081||t20370.9376328826s|076db4dc2bd1585e|453740|rds|local|vector|||148.968||
+raw_ballot_results|stem|ea4509866b0acb30|b7ef26a6f737c918|096f073e4def351c|-710281401||t20423.6518137611s|010fa4976e1d78d3|249236|rds|local|vector|||382.686||
+raw_voting_records|stem|eeb0f95b2c7194e7|97d6902dc1bf00c2|0c3cbc04367ece11|-47314081||t20423.6473840002s|225ca97417322199|454237|rds|local|vector|||99.996||
 render_codebook|function|6c8990f3cd1e54d4|||||||||||||||
 results_with_meeting_dates|stem|8a9919bc537c0756|c199bd9203f4720e|eef333682651bd94|1808671628||t19721.6037192915s|a117b83c5fa3383c|209318|rds|local|vector|||32.517||
 round_to_hundred|function|e83e6c687e98a356|||||||||||||||
