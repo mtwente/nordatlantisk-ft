@@ -331,18 +331,42 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 #| label: tbl-parties
 #| tbl-cap: List of political parties from Greenland and the Faroe Islands with a MP in Folketinget since 2004.
 
-parties_gl <- subset(political_parties, origin == "GL")[, !(names(political_parties) %in% c("origin", "colour"))]
-parties_fo <- subset(political_parties, origin == "FO")[, !(names(political_parties) %in% c("origin", "colour"))]
+political_parties <- political_parties |>
+  mutate(
+    full_name_linked = ifelse(
+      is.na(wikidata_id) | wikidata_id == "",
+      full_name,
+      paste0("[", full_name, "](https://wikidata.org/wiki/", wikidata_id, ")")
+    )
+  )
 
-rownames(parties_gl) <- NULL
-rownames(parties_fo) <- NULL
+parties_gl <- political_parties |>
+  filter(origin == "GL") |>
+  select(party, full_name_linked, party_family,
+         left_right, state_market, liberty_authority, anti_pro_eu)
 
-printable_names <- c("Party", "Full Name", "Party Family", "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU")
+parties_fo <- political_parties |>
+  filter(origin == "FO") |>
+  select(party, full_name_linked, party_family,
+         left_right, state_market, liberty_authority, anti_pro_eu)
 
-kable(parties_gl, caption = "Greenlandic Parties",
-                  col.names = printable_names)
-kable(parties_fo, caption = "Faroese Parties",
-                  col.names = printable_names)
+printable_names <- c(
+  "Party", "Full Name", "Party Family",
+  "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU"
+)
+
+kable(
+  parties_gl,
+  caption = "Greenlandic Parties",
+  col.names = printable_names,
+  escape = FALSE
+)
+
+kable(
+  parties_fo,
+  caption = "Faroese Parties",
+  col.names = printable_names,
+  escape = FALSE)
 ```
 
 #### MP_names\$substitute
