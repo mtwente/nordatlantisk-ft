@@ -164,6 +164,7 @@ classDiagram
         surname : string
         first_name : string
         MP_id : int
+        wikidata_id : string
         origin : string
         party : string
         substitute : bool
@@ -217,6 +218,7 @@ classDiagram
     class political_parties {
         party : string
         full_name : string
+        wikidata_id : string
         party_family : string
         colour : string
         origin : string
@@ -293,6 +295,14 @@ head(mp_names$MP_id)
 
 This variable corresponds to the `aktørid` variable and the `Aktør` resource in [the Folketing online database](https://oda.ft.dk). Note that in Folketinget’s data model, ministries, parliamentary commissions, NGOs etc. are also listed as `Aktør` with their resp. `aktørid`.
 
+#### MP_names\$wikidata_id {#mp_nameswikidata_id}
+
+Apart from [`MP_names$MP_id`](#MP_names_MP_id), each MP's Wikidata QID is stored in `MP_names` for further processing options. This identifier can be used to query Wikidata to supplement the dataset with further information. At the moment, this identifier is not used in any step of the processing pipeline.
+
+```{r}
+head(mp_names$wikidata_id)
+```
+
 #### MP_names\$origin
 
 `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mp_names$origin)` as `r class(mp_names$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
@@ -321,18 +331,42 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 #| label: tbl-parties
 #| tbl-cap: List of political parties from Greenland and the Faroe Islands with a MP in Folketinget since 2004.
 
-parties_gl <- subset(political_parties, origin == "GL")[, !(names(political_parties) %in% c("origin", "colour"))]
-parties_fo <- subset(political_parties, origin == "FO")[, !(names(political_parties) %in% c("origin", "colour"))]
+political_parties <- political_parties |>
+  mutate(
+    full_name_linked = ifelse(
+      is.na(wikidata_id) | wikidata_id == "",
+      full_name,
+      paste0("[", full_name, "](https://wikidata.org/wiki/", wikidata_id, ")")
+    )
+  )
 
-rownames(parties_gl) <- NULL
-rownames(parties_fo) <- NULL
+parties_gl <- political_parties |>
+  filter(origin == "GL") |>
+  select(party, full_name_linked, party_family,
+         left_right, state_market, liberty_authority, anti_pro_eu)
 
-printable_names <- c("Party", "Full Name", "Party Family", "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU")
+parties_fo <- political_parties |>
+  filter(origin == "FO") |>
+  select(party, full_name_linked, party_family,
+         left_right, state_market, liberty_authority, anti_pro_eu)
 
-kable(parties_gl, caption = "Greenlandic Parties",
-                  col.names = printable_names)
-kable(parties_fo, caption = "Faroese Parties",
-                  col.names = printable_names)
+printable_names <- c(
+  "Party", "Full Name", "Party Family",
+  "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU"
+)
+
+kable(
+  parties_gl,
+  caption = "Greenlandic Parties",
+  col.names = printable_names,
+  escape = FALSE
+)
+
+kable(
+  parties_fo,
+  caption = "Faroese Parties",
+  col.names = printable_names,
+  escape = FALSE)
 ```
 
 #### MP_names\$substitute

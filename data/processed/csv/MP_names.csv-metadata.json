@@ -3,7 +3,7 @@
 	"url": "MP_names.csv",
 	"dc:title": "MP Names",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2025-08-21",
+	"dc:updated": "2025-12-01",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -30,6 +30,12 @@
 				"description": "Folketinget ODA ID assigned to the MP.",
 				"datatype": { "base": "integer", "minimum": "1" },
 				"required": true
+			},
+			{
+				"name": "wikidata_id",
+				"dc:title": "Wikidata QID",
+				"description": "Wikidata QID assigned to the MP.",
+				"datatype": "string"
 			},
 			{
 				"name": "origin",

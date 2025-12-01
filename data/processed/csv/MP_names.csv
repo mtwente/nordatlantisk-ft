@@ -1,22 +1,23 @@
-"surname","first_name","MP_id","origin","party","substitute","start_date","end_date"
-"Olsvig","Sara","13","GL","IA",FALSE,NA,NA
-"Lund Olsen","Johan","277","GL","IA",TRUE,NA,NA
-"Jakobsen","Doris","294","GL","SIU",FALSE,NA,NA
-"Johansen","Lars-Emil","670","GL","SIU",FALSE,NA,NA
-"Kleist","Kuupik","672","GL","IA",FALSE,NA,NA
-"Rossen","Sofia","1484","GL","IA",TRUE,NA,NA
-"Henningsen Heilmann","Juliane","6689","GL","IA",FALSE,NA,NA
-"Nielsen","Nick","14000","GL","SIU",TRUE,NA,NA
-"Chemnitz","Aaja","15757","GL","IA",FALSE,NA,NA
-"Hammond","Aleqa","15758","GL","SIU, NQ",FALSE,NA,NA
-"Høegh-Dam","Aki-Matilda","18688","GL","SIU, N",FALSE,NA,NA
-"Olsen","Markus E.","20635","GL","SIU",TRUE,NA,NA
-"Joensen","Edmund","247","FO","B",FALSE,NA,NA
-"Petersen","Lisbeth","918","FO","B",FALSE,NA,NA
-"Arge","Magni","15881","FO","E",FALSE,NA,NA
-"Hoydal","Høgni","1833","FO","E",FALSE,NA,NA
-"Johannesen","Aksel","12283","FO","C",TRUE,NA,NA
-"Skaale","Sjúrður","262","FO","C",FALSE,NA,NA
-"á Fríðriksmørk","Annita","6684","FO","E",TRUE,NA,NA
-"Kallsberg","Anfinn","3093","FO","A",FALSE,NA,NA
-"Falkenberg","Anna","20349","FO","B",FALSE,NA,NA
+"surname","first_name","MP_id","wikidata_id","origin","party","substitute","start_date","end_date"
+"Olsvig","Sara","13","Q8084240","GL","IA",FALSE,NA,NA
+"Lund Olsen","Johan","277","Q5965473","GL","IA",TRUE,NA,NA
+"Jakobsen","Doris","294","Q12308847","GL","SIU",FALSE,NA,NA
+"Johansen","Lars-Emil","670","Q468034","GL","SIU",FALSE,NA,NA
+"Kleist","Kuupik","672","Q317400","GL","IA",FALSE,NA,NA
+"Rossen","Sofia","1484","Q86523542","GL","IA",TRUE,NA,NA
+"Henningsen Heilmann","Juliane","6689","Q533361","GL","IA",FALSE,NA,NA
+"Nielsen","Nick","14000","Q16064655","GL","SIU",TRUE,NA,NA
+"Chemnitz","Aaja","15757","Q20199803","GL","IA",FALSE,NA,NA
+"Hammond","Aleqa","15758","Q1796195","GL","SIU, NQ",FALSE,NA,NA
+"Høegh-Dam","Aki-Matilda","18688","Q64415132","GL","SIU, N",FALSE,NA,NA
+"Olsen","Markus E.","20635","Q122762872","GL","SIU",TRUE,NA,NA
+"Kûitse","Elvira","21206","Q136486981","GL","N",TRUE,NA,NA
+"Joensen","Edmund","247","Q678236","FO","B",FALSE,NA,NA
+"Petersen","Lisbeth","918","Q544116","FO","B",FALSE,NA,NA
+"Arge","Magni","15881","Q16167420","FO","E",FALSE,NA,NA
+"Hoydal","Høgni","1833","Q567780","FO","E",FALSE,NA,NA
+"Johannesen","Aksel","12283","Q556712","FO","C",TRUE,NA,NA
+"Skaale","Sjúrður","262","Q845278","FO","C",FALSE,NA,NA
+"á Fríðriksmørk","Annita","6684","Q466097","FO","E",TRUE,NA,NA
+"Kallsberg","Anfinn","3093","Q529900","FO","A",FALSE,NA,NA
+"Falkenberg","Anna","20349","Q114967087","FO","B",FALSE,NA,NA

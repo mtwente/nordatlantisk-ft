@@ -93,7 +93,7 @@ See the [Codebook](docs/codebook.qmd) for details and refer to @berntzenParliame
 
 ## MPs
 
-This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties. See @harderSupplerendeMaterialeFaeroske2022 for a list of all Greenlandic and Faroese MPs and their party association(s) going back until 1953.
+This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties. For MPs representing Greenland resp. the Faroe Islands in election periods earlier than `r format(min(northatlantic_ft$ballot_date), "%B %Y")`, see the list going back to 1953 provided by @harderSupplerendeMaterialeFaeroske2022.
 
 ```{r mp-list}
 #| echo: false
@@ -103,12 +103,12 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(
 
 MPs_gl <- mp_names %>%
   filter(origin == "GL") %>%
-  select(-origin, -start_date, -end_date) %>%
+  select(-wikidata_id, -origin, -start_date, -end_date) %>%
   arrange(surname)
 
 MPs_fo <- mp_names %>%
   filter(origin == "FO") %>%
-  select(-origin, -start_date, -end_date) %>%
+  select(-wikidata_id, -origin, -start_date, -end_date) %>%
   arrange(surname)
 
 printable_names <- c("Surname(s)", "First Name(s)", "MP ID", "Party", "Substitute Member")
@@ -123,7 +123,7 @@ As documented in the column `substitute`, some of the politicians that are part 
 
 [^1]: Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset.
 
-[^2]: Previous terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`.
+[^2]: Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. See @harderSupplerendeMaterialeFaeroske2022 for a full timeline.
 
 ```{r timeline-mandates}
 #| echo: false
@@ -187,18 +187,42 @@ All represented political parties are listed in @tbl-parties with additional inf
 #| label: tbl-parties
 #| tbl-cap: List of political parties from Greenland and the Faroe Islands with an MP in Folketinget since 2004.
 
-parties_gl <- subset(political_parties, origin == "GL")[, !(names(political_parties) %in% c("origin", "colour"))]
-parties_fo <- subset(political_parties, origin == "FO")[, !(names(political_parties) %in% c("origin", "colour"))]
+political_parties <- political_parties |>
+  mutate(
+    full_name_linked = ifelse(
+      is.na(wikidata_id) | wikidata_id == "",
+      full_name,
+      paste0("[", full_name, "](https://wikidata.org/wiki/", wikidata_id, ")")
+    )
+  )
 
-rownames(parties_gl) <- NULL
-rownames(parties_fo) <- NULL
+parties_gl <- political_parties |>
+  filter(origin == "GL") |>
+  select(party, full_name_linked, party_family,
+         left_right, state_market, liberty_authority, anti_pro_eu)
 
-printable_names <- c("Party", "Full Name", "Party Family", "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU")
+parties_fo <- political_parties |>
+  filter(origin == "FO") |>
+  select(party, full_name_linked, party_family,
+         left_right, state_market, liberty_authority, anti_pro_eu)
 
-kable(parties_gl, caption = "Greenlandic Parties",
-                  col.names = printable_names)
-kable(parties_fo, caption = "Faroese Parties",
-                  col.names = printable_names)
+printable_names <- c(
+  "Party", "Full Name", "Party Family",
+  "Left–Right", "State–Market", "Liberty–Authority", "Anti–Pro-EU"
+)
+
+kable(
+  parties_gl,
+  caption = "Greenlandic Parties",
+  col.names = printable_names,
+  escape = FALSE
+)
+
+kable(
+  parties_fo,
+  caption = "Faroese Parties",
+  col.names = printable_names,
+  escape = FALSE)
 ```
 
 ```{r party-timeline}
