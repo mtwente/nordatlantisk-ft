@@ -164,6 +164,7 @@ classDiagram
         surname : string
         first_name : string
         MP_id : int
+        wikidata_id : string
         origin : string
         party : string
         substitute : bool
@@ -217,6 +218,7 @@ classDiagram
     class political_parties {
         party : string
         full_name : string
+        wikidata_id : string
         party_family : string
         colour : string
         origin : string
@@ -292,6 +294,14 @@ head(mp_names$MP_id)
 ```
 
 This variable corresponds to the `aktørid` variable and the `Aktør` resource in [the Folketing online database](https://oda.ft.dk). Note that in Folketinget’s data model, ministries, parliamentary commissions, NGOs etc. are also listed as `Aktør` with their resp. `aktørid`.
+
+#### MP_names\$wikidata_id {#mp_nameswikidata_id}
+
+Apart from [`MP_names$MP_id`](#MP_names_MP_id), each MP's Wikidata QID is stored in `MP_names` for further processing options. This identifier can be used to query Wikidata to supplement the dataset with further information. At the moment, this identifier is not used in any step of the processing pipeline.
+
+```{r}
+head(mp_names$wikidata_id)
+```
 
 #### MP_names\$origin
 

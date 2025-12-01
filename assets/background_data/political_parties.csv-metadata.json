@@ -3,7 +3,7 @@
 	"url": "political_parties.csv",
 	"dc:title": "Political Parties",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2025-08-27",
+	"dc:updated": "2025-12-01",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -23,6 +23,12 @@
 				"description": "Full name of the political party",
 				"datatype": "string",
 				"lang": "kl|fo"
+			},
+			{
+				"name": "wikidata_id",
+				"dc:title": "Wikidata QID",
+				"description": "Wikidata QID assigned to the political party",
+				"datatype": "string"
 			},
 			{
 				"name": "party_family",
