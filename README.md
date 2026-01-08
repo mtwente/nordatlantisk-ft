@@ -96,11 +96,9 @@ This project is maintained by [@mtwente](https://github.com/mtwente). Please und
 
 ## Roadmap
 
-- implement links to MPs' Wikidata Objects, perhaps using [P10207](https://www.wikidata.org/wiki/Property:P10207)
 - implement [gittargets](https://github.com/ropensci/gittargets)
 - implement [frictionless-r](https://github.com/frictionlessdata/frictionless-r)
 - implement tests
-- in addition to the [Zotero Group](https://www.zotero.org/groups/5346749/nordatlantisk-ft), provide bibliography for scientific literature on Northatlantic MPs as BibTeX file.
 
 ## Contributing
 
