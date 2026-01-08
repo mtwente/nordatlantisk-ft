@@ -64,6 +64,7 @@ format:
       - brand
       - cosmo
     css: styles.css
+    mainfont: Jost
     code-copy: true
     code-overflow: wrap
     link-external-newwindow: true
