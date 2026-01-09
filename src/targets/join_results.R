@@ -3,6 +3,9 @@
 library(dplyr)
 library(here)
 
+## External Functions -----
+source(here("src", "match_party_affiliation.R"), local = TRUE)
+
 # Definition -----
 
 join_results <- function(voting_records, ballot_results, ballot_topics, MP_names) {
@@ -18,12 +21,13 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
     
     left_join(ballot_topics %>% select(ft_process_id, ft_process_step,
                                        ft_topic_id, ft_topic),
-              by = "ft_process_id"
-              )
+              by = "ft_process_id") %>%
+    
+    match_party_affiliation()
   
   # Clean Up Data Frame Columns  -----
   
-  col_order <- c("ballot_id", "MP_id", "surname", "vote_type_id", "vote_id",
+  col_order <- c("ballot_id", "MP_id", "surname", "party", "vote_type_id", "vote_id",
                  "ballot_pass", "ft_process_step", "ft_topic_id", "ft_topic",
                  "ft_for", "ft_against", "ft_abstention", "ft_absent",
                  "ballot_date", "ballot_type_id", "comment", "ballot_result_string")
