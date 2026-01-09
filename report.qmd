@@ -242,7 +242,7 @@ party_periods <- party_periods %>%
   left_join(political_parties %>% select("party", "full_name", "colour"), by = "party")
 
 # sort parties with start date
-  party_periods <- party_periods %>%
+party_periods <- party_periods %>%
   group_by(origin) %>%
   mutate(party = factor(party, levels = rev(unique(party[order(start)])))) %>%
   ungroup()
@@ -260,7 +260,7 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
 
   scale_y_discrete(labels = y_labels) +
   
-  # Elections
+  # add Election dates
   geom_vline(data = elections, aes(xintercept = as.Date(date), linetype = election),
              color = "#000000", linewidth = 0.2) +
   scale_linetype_manual(values = c("General Election" = "longdash"), name = "") +
@@ -334,6 +334,57 @@ ggplot(vote_props, aes(x = 1, y = share, fill = vote_type)) +
 
 For `r mean(northatlantic_ft$vote_type_id == "3") %>% scales::percent(accuracy = 0.1)` of the observations in this data set, Greenlandic/Faroese MPs are listed as absent.
 :::
+
+### Share of Votes Cast Per Year
+
+@fig-vote-share-per-year displays the share of records in which a vote is actually cast (for, against, or abstaining) for each year covered by the dataset. A quick glance shows very low proportions overall, with an increasing share of votes cast among MPs from the Faroe Islands in recent years (2023, 2025) and a peak in 2015 for Greenlandic MPs.
+
+```{r vote-share-per-year}
+#| echo: false
+#| message: false
+#| label: fig-vote-share-per-year
+#| fig-cap: Share of non-absent records per year (for, against, abstaining).
+
+votes_per_year_origin <- plot_dataset %>%
+  mutate(year = lubridate::year(ballot_date)) %>%
+  group_by(origin, year) %>%
+  summarise(
+    share_present = mean(vote_type_id != 3),
+    .groups = "drop"
+  )
+
+# compute global maximum for y-axis
+y_max <- max(votes_per_year_origin$share_present, na.rm = TRUE) + 0.001 
+
+# faceted bar plots
+ggplot(
+  votes_per_year_origin,
+  aes(x = factor(year), y = share_present)) +
+
+  geom_col(width = 0.7, fill = "#6195CF") +
+  
+  scale_y_continuous(
+    limits = c(0, y_max),
+    labels = scales::label_percent(accuracy = 1),
+    expand = expansion(mult = c(0, 0.01))
+  ) +
+  
+  facet_grid(
+    origin ~ .,
+    scales = "fixed",
+    space = "fixed",
+    labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.ticks.x = element_blank(),
+    axis.line.y.left = element_blank(),
+    panel.spacing.y = unit(1, "lines"),
+    panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05)
+  )
+```
 
 ### Votes Per MP
 
