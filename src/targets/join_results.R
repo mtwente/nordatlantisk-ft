@@ -30,12 +30,7 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
   
   voting_records <- voting_records[, col_order]
   
-  # Export -----
-  
-  write.csv(voting_records, file = here("data", "processed", "csv", "northatlantic_ft.csv"),
-            row.names = FALSE)
-  
-  saveRDS(voting_records, here("data", "processed", "northatlantic_ft.rds"))
+  # Return -----
   
   return(voting_records)
   
