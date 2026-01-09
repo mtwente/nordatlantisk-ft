@@ -103,12 +103,12 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(
 
 MPs_gl <- mp_names %>%
   filter(origin == "GL") %>%
-  select(-wikidata_id, -origin, -start_date, -end_date) %>%
+  select(-wikidata_id, -origin) %>%
   arrange(surname)
 
 MPs_fo <- mp_names %>%
   filter(origin == "FO") %>%
-  select(-wikidata_id, -origin, -start_date, -end_date) %>%
+  select(-wikidata_id, -origin) %>%
   arrange(surname)
 
 printable_names <- c("Surname(s)", "First Name(s)", "MP ID", "Party", "Substitute Member")
