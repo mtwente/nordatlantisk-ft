@@ -17,9 +17,8 @@ MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johan
                          wikidata_id = factor(c("Q8084240", "Q5965473", "Q12308847", "Q468034", "Q317400", "Q86523542", "Q533361", "Q16064655", "Q20199803", "Q1796195", "Q64415132", "Q122762872", "Q136486981")),
                          origin = factor(rep("GL", 13)),
                          party = factor(c("IA", "IA", "SIU", "SIU", "IA", "IA", "IA", "SIU", "IA", "SIU, NQ", "SIU, N", "SIU", "N")),
-                         substitute = c(FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE),
-                         start_date = c(rep(NA, 13)),
-                         end_date = c(rep(NA, 13)))
+                         substitute = c(FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE)
+                         )
 
 MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg"),
                           first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna"),
@@ -27,9 +26,8 @@ MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", 
                           wikidata_id = factor(c("Q678236", "Q544116", "Q16167420", "Q567780", "Q556712", "Q845278", "Q466097", "Q529900", "Q114967087")),
                           origin = factor(rep("FO", 9)),
                           party = factor(c("B", "B", "E", "E", "C", "C", "E", "A", "B")),
-                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE),
-                          start_date = c(rep(NA, 9)),
-                          end_date = c(rep(NA, 9)))
+                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE)
+                          )
 
 MP_names <- rbind(MP_names_GL, MP_names_FO)
 

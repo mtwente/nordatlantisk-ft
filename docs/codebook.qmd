@@ -168,8 +168,6 @@ classDiagram
         origin : string
         party : string
         substitute : bool
-        start_date : date
-        end_date : date
     }
 
     class ballot_results_ft {
@@ -313,7 +311,7 @@ summary(mp_names$origin)
 
 #### MP_names\$party {#mp_namesparty}
 
-The political party that each MP belongs to is stored as value of the type `r typeof(mp_names$party)` as `r class(mp_names$party)` variable. As per January 2024, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties. For now, the `MP_names` data frame does not include information on membership periods etc., see [`MP_names$start_date`](#mp_namesstart_date). At the moment, these two cases are therefore stored with a single string without distinguishing between membership periods.
+The political party that each MP belongs to is stored as value of the type `r typeof(mp_names$party)` as `r class(mp_names$party)` variable. As per January 2024, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties. For now, the `MP_names` data frame does not include information on membership periods etc. At the moment, these two cases are therefore stored with a single string without distinguishing between membership periods.
 
 ```{r}
 summary(mp_names$party)
@@ -375,22 +373,6 @@ Some of the politicians that are part of this data set joined Folketinget in the
 
 ```{r}
 summary(mp_names$substitute)
-```
-
-#### MP_names\$start_date {#mp_namesstart_date}
-
-For now, `start_date` is an empty placeholder variable. Its purpose is to provide information on which date the MPs joined Folketinget. Since the terms served by MPs do rarely just have one start and one end date -- but instead include breaks, or are split in multiple terms -- this information is instead stored in a separate data set [`/assets/background_data/MP_dates.csv`](/assets/background_data/MP_dates.csv).
-
-```{r}
-head(mp_names$start_date)
-```
-
-#### MP_names\$end_date
-
-For now, `end_date` is an empty placeholder variable. Its purpose is to provide information on which date the MPs left Folketinget. Since the terms served by MPs do rarely just have one start and one end date -- but instead include breaks, or are split in multiple terms -- this information is instead stored in a separate data set [`/assets/background_data/MP_dates.csv`](/assets/background_data/MP_dates.csv).
-
-```{r}
-head(mp_names$end_date)
 ```
 
 ------------------------------------------------------------------------
