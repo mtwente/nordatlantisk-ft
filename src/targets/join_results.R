@@ -13,7 +13,7 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
                                            ballot_type_id, comment, ballot_result_string, ft_process_id),
               by = "ballot_id") %>%
     
-    left_join(MP_names %>% select(MP_id, surname, party),
+    left_join(MP_names %>% select(MP_id, surname),
               by = "MP_id") %>%
     
     left_join(ballot_topics %>% select(ft_process_id, ft_process_step,
@@ -23,7 +23,7 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
   
   # Clean Up Data Frame Columns  -----
   
-  col_order <- c("ballot_id", "MP_id", "surname", "party", "vote_type_id", "vote_id",
+  col_order <- c("ballot_id", "MP_id", "surname", "vote_type_id", "vote_id",
                  "ballot_pass", "ft_process_step", "ft_topic_id", "ft_topic",
                  "ft_for", "ft_against", "ft_abstention", "ft_absent",
                  "ballot_date", "ballot_type_id", "comment", "ballot_result_string")
