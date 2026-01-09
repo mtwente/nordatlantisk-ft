@@ -12,7 +12,7 @@ This repository contains voting records of Greenlandic and Faroese Members of Pa
 
 ## Repository Structure
 
-The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) by [@maehr](https://github.com/maehr), follows the [Advanced Structure for Data Analysis](https://the-turing-way.netlify.app/project-design/project-repo/project-repo-advanced.html) of _The Turing Way_ and is organized as follows:
+The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) by [@maehr](https://github.com/maehr), follows the [Advanced Structure for Data Analysis](https://book.the-turing-way.org/project-design/pd-overview/project-repo/project-repo-advanced/) of _The Turing Way_ and is organized as follows:
 
 - `analysis/`: scripts and notebooks used to analyze the data
 - `assets/`: images, background data, literature references etc. used in the README and other documentation
@@ -20,7 +20,6 @@ The structure of this repository is based on the [Open Research Data Template](h
 - `data/`: data files
 - `docs/`: documentation for the data and the repository
 - `src/`: source code for the data (e.g., scripts used to collect or process the data)
-- `test/`: tests for the data and source code
 - `report.qmd`: a report with basic insights into the data set
 
 Additionally, there is a [Zotero group library](https://www.zotero.org/groups/5346749/nordatlantisk-ft) with a collection of scientific articles and news reports that are of relevance for studying the Northatlantic MPs' work in Folketinget.

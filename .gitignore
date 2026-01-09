@@ -242,3 +242,5 @@ $RECYCLE.BIN/
 .quarto/
 _site/
 /.quarto/
+_freeze/
+**/*.quarto_ipynb
