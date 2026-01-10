@@ -20,13 +20,13 @@ MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johan
                          substitute = c(FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE)
                          )
 
-MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg", "Jacobsen"),
-                          first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna", "Tórbjørn"),
-                          MP_id = factor(c(247, 918, 15881, 1833, 12283, 262, 6684, 3093, 20349, 9780)),
-                          wikidata_id = factor(c("Q678236", "Q544116", "Q16167420", "Q567780", "Q556712", "Q845278", "Q466097", "Q529900", "Q114967087", "Q331736")),
-                          origin = factor(rep("FO", 10)),
-                          party = factor(c("B", "B", "E", "E", "C", "C", "E", "A", "B", "E")),
-                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE)
+MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg", "Jacobsen", "Old", "Johannesen", "Rasmussen", "Abrahamsen", "Apol"),
+                          first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna", "Tórbjørn", "Henrik", "Kaj Leo", "Magnus", "Helgi", "Barbara Gaardlykke"),
+                          MP_id = factor(c(247, 918, 15881, 1833, 12283, 262, 6684, 3093, 20349, 9780, 18545, 6687, 19461, 19996, 19142)),
+                          wikidata_id = factor(c("Q678236", "Q544116", "Q16167420", "Q567780", "Q556712", "Q845278", "Q466097", "Q529900", "Q114967087", "Q331736", "Q3818072", "Q331786", "Q17106707", "Q754881", "Q102501785")),
+                          origin = factor(rep("FO", 15)),
+                          party = factor(c("B", "B", "E", "E", "C", "C", "E", "A", "B", "E", "C", "B", "B", "B", "C")),
+                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
                           )
 
 MP_names <- rbind(MP_names_GL, MP_names_FO)
