@@ -148,6 +148,7 @@ classDiagram
         class MP_dates {
         surname : string
         firstname : string
+        MP_id: int
         origin: string
         party : string
         start : date
