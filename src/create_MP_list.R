@@ -20,13 +20,13 @@ MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johan
                          substitute = c(FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE)
                          )
 
-MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg"),
-                          first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna"),
-                          MP_id = factor(c(247, 918, 15881, 1833, 12283, 262, 6684, 3093, 20349)),
-                          wikidata_id = factor(c("Q678236", "Q544116", "Q16167420", "Q567780", "Q556712", "Q845278", "Q466097", "Q529900", "Q114967087")),
-                          origin = factor(rep("FO", 9)),
-                          party = factor(c("B", "B", "E", "E", "C", "C", "E", "A", "B")),
-                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE)
+MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg", "Jacobsen"),
+                          first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna", "Tórbjørn"),
+                          MP_id = factor(c(247, 918, 15881, 1833, 12283, 262, 6684, 3093, 20349, 9780)),
+                          wikidata_id = factor(c("Q678236", "Q544116", "Q16167420", "Q567780", "Q556712", "Q845278", "Q466097", "Q529900", "Q114967087", "Q331736")),
+                          origin = factor(rep("FO", 10)),
+                          party = factor(c("B", "B", "E", "E", "C", "C", "E", "A", "B", "E")),
+                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE)
                           )
 
 MP_names <- rbind(MP_names_GL, MP_names_FO)
