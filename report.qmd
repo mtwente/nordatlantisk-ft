@@ -146,8 +146,8 @@ mandates <- mandates %>%
 mandates$origin <- factor(mandates$origin, levels = c("GL", "FO"))
 
 ggplot(mandates, aes(x = start, xend = end, y = surname, yend = surname, color = substitute)) +
-  geom_segment(linewidth = 6, lineend = "butt") +
-  scale_color_manual(values = c("FALSE" = "#6195CF", "TRUE" = "#F7CB45"), labels = c("Regular", "Substitute")) +
+  geom_segment(linewidth = 4, lineend = "butt") +
+  scale_color_manual(values = c("FALSE" = "#6195CF", "TRUE" = "#777777"), labels = c("Regular", "Substitute")) +
   labs(
     color = "Membership"
   ) +
