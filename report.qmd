@@ -39,7 +39,7 @@ political_parties <- read.csv(here("assets", "background_data", "political_parti
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
 plot_dataset <- northatlantic_ft %>%
-  left_join(mp_names %>% select(surname, origin), by = "surname")
+  left_join(mp_names %>% select(MP_id, origin), by = "MP_id")
 
 ### Timeline of Mandates -----
 mandates <- read.delim(here("assets", "background_data", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
