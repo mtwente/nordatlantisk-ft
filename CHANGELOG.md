@@ -1,3 +1,70 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased](https://github.com/mtwente/nordatlantisk-ft/compare/...HEAD)
+
+### Bug Fixes
+
+- Remove deprecated columns from report code
+- Fix file path
+- Add MP_id to data model figure
+- Add missing FO substitute MPs
+- Update setup instructions
+- Fix join by using numerical ID instead of surname
+- Fix footnote numbering
+- Fix typo
+- Fix footnote referencing
+
+### Documentation
+
+- Add Zenodo DOI
+- Remove unnecessary information from codebook_references.bib
+- Update roadmap
+- Add literature reference on Folketinget Open Data
+- Update literature references formatting
+- Fix document section hierarchy
+- Add statement about stedfortræder membership periods
+- Move report qmd file to docs subfolder
+
+### Features
+
+- Remove datetime info from MP_names data frame
+- Remove party information from join
+- Move final data export to separate target
+- Add MP_id to MP_dates.csv
+- Add calculated party membership again
+- Add T. Jacobsen, suppleant FO
+- Add voting records for T. Jacobsen #22
+- Add records for temporary MPs
+- Add FO temporary MP Rigmor Dam #22
+- Add voting records for Rigmor Dam
+- Add voting records for Bjarni Hammer #22
+- Improve readability of membership status
+- Add update about Nunatta Qitornai dissolving
+- Update FO replacement memberships timeline data
+
+### Miscellaneous Tasks
+
+- Bump braces from 3.0.2 to 3.0.3 (#8)
+- Update dependencies
+
+### Refactor
+
+- Move party matching to separate function
+
+### Styling
+
+- Shorten URL to Zotero group badge
+- Add markdown formatting
+
+## [0.1.0-alpha] - 2024-01-16
+
+### Documentation
+
 - Update CHANGELOG.md
 - Update CHANGELOG.md
 - Fix inline section links with anchors in github-flavored markdown
@@ -8,6 +75,8 @@
 - Delete .Rmd version of codebook
 - Update CHANGELOG.md
 - Minor wording changes in README.md
+- Update CHANGELOG.md
+- Add information about Fortran compiler on newer Mac OS
 
 ### Features
 
