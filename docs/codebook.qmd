@@ -61,12 +61,35 @@ mandates <- mandates %>%
 
 ## Manipulate Data -----
 
-### Subset only with votes that were actually cast
-plot_dataset_without_absences <- subset(plot_dataset, vote_type_id != 3)
+### Avoid confusing MPs with the same last name
+mandates <- mandates %>%
+  mutate(
+    plotting_name = case_when(
+      MP_id == "12283" ~ "A. V. Johannesen",
+      MP_id == "6687"  ~ "K. L. Johannesen",
+      TRUE             ~ surname
+    )
+  )
+
+plot_dataset <- plot_dataset %>%
+  mutate(
+    plotting_name = case_when(
+      MP_id == "12283" ~ "A. V. Johannesen",
+      MP_id == "6687"  ~ "K. L. Johannesen",
+      TRUE             ~ surname
+    )
+  )
 
 ### Order dataset by MP surnames for plotting
 plot_dataset_ordered <- plot_dataset %>%
-  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length))
+  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
+  mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length)) %>%
+  mutate(vote_type_id = fct_relevel(vote_type_id, "1", "2", "4", "3"))
+
+### Subset only with votes that were actually cast
+plot_dataset_without_absences <- subset(plot_dataset_ordered, vote_type_id != 3) %>%
+  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
+  mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length))
 
 ## Set Plotting Theme -----
 
@@ -264,7 +287,7 @@ Descriptions of all variables in `MP_names` are provided in the following sectio
 
 #### MP_names\$surname {#mp_namessurname}
 
-All surname(s) are stored as values of the type `r typeof(mp_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
+All surname(s) are stored as values of the type `r typeof(mp_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
 
 This column is not necessary for successfully executing the workflow pipeline, but it is used to map MP names to the corresponding IDs for increased readability of resulting plots.
 
