@@ -25,7 +25,7 @@ website:
         url: https://github.com/mtwente/nordatlantisk-ft/
     left:
       - text: Data Overview
-        href: report.qmd
+        href: docs/report.qmd
       - text: Codebook
         href: docs/codebook.qmd
       - text: Bibliography
@@ -36,7 +36,7 @@ website:
       - section: nordatlantisk-ft
         contents:
           - text: Data Overview
-            href: report.qmd
+            href: docs/report.qmd
           - text: Codebook
             href: docs/codebook.qmd
           - text: Zotero

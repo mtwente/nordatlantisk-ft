@@ -20,7 +20,6 @@ The structure of this repository is based on the [Open Research Data Template](h
 - `data/`: data files
 - `docs/`: documentation for the data and the repository
 - `src/`: source code for the data (e.g., scripts used to collect or process the data)
-- `report.qmd`: a report with basic insights into the data set
 
 Additionally, there is a [Zotero group library](https://www.zotero.org/groups/5346749/nordatlantisk-ft) with a collection of scientific articles and news reports that are of relevance for studying the Northatlantic MPs' work in Folketinget.
 
@@ -32,7 +31,7 @@ For all MPs that were elected in either Greenland or the Faroe Islands since 200
 
 In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
 
-Descriptions of the workflow and all variables are provided in the [codebook](./docs/codebook.qmd). To get an impression of the available data, take a [first glance](report.qmd).
+Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
 
 ### Installation
 
@@ -56,7 +55,7 @@ Running `tar_make()` will execute the workflow as defined in [`_targets.R`](./_t
 
 The targets pipeline is set to check for new voting records **every twelve weeks only**. To force running the scripts with the most recent data available, remove the `cue` arguments from the targets `ballot_info` and `raw_voting_records` in `_targets.R`.
 
-You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add the IDs to the column `MP_names$MP_id` in the file available at [`./data/processed/csv/MP_names.csv`](./data/processed/csv/MP_names.csv) and then run `targets::tar_make()`.
+You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add the IDs to the column(s) `MP_id` in the data frame created in [`src/create_MP_list.R`](/src/create_MP_list.R) and then run `targets::tar_make()`.
 
 ## Use
 

@@ -3,7 +3,7 @@
 	"url": "MP_names.csv",
 	"dc:title": "MP Names",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2025-12-01",
+	"dc:updated": "2026-01-11",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -54,20 +54,6 @@
 				"dc:title": "Substitute",
 				"description": "Indicates whether the MP in question joined Folketinget as a substitute member (TRUE), replacing another MP who whent on leave.",
 				"datatype": "boolean"
-			},
-			{
-				"name": "start_date",
-				"dc:title": "Start Date",
-				"description": "Start date of the MP's term.",
-				"null": "NA",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
-			},
-			{
-				"name": "end_date",
-				"dc:title": "End Date",
-				"description": "End date of the MP's term.",
-				"null": "NA",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
 			}
 		],
 		"dialect": {

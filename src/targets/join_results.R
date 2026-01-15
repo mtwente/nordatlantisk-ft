@@ -3,6 +3,9 @@
 library(dplyr)
 library(here)
 
+## External Functions -----
+source(here("src", "match_party_affiliation.R"), local = TRUE)
+
 # Definition -----
 
 join_results <- function(voting_records, ballot_results, ballot_topics, MP_names) {
@@ -13,13 +16,14 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
                                            ballot_type_id, comment, ballot_result_string, ft_process_id),
               by = "ballot_id") %>%
     
-    left_join(MP_names %>% select(MP_id, surname, party),
+    left_join(MP_names %>% select(MP_id, surname),
               by = "MP_id") %>%
     
     left_join(ballot_topics %>% select(ft_process_id, ft_process_step,
                                        ft_topic_id, ft_topic),
-              by = "ft_process_id"
-              )
+              by = "ft_process_id") %>%
+    
+    match_party_affiliation()
   
   # Clean Up Data Frame Columns  -----
   
@@ -30,12 +34,7 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
   
   voting_records <- voting_records[, col_order]
   
-  # Export -----
-  
-  write.csv(voting_records, file = here("data", "processed", "csv", "northatlantic_ft.csv"),
-            row.names = FALSE)
-  
-  saveRDS(voting_records, here("data", "processed", "northatlantic_ft.rds"))
+  # Return -----
   
   return(voting_records)
   
