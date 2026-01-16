@@ -61,12 +61,35 @@ mandates <- mandates %>%
 
 ## Manipulate Data -----
 
-### Subset only with votes that were actually cast
-plot_dataset_without_absences <- subset(plot_dataset, vote_type_id != 3)
+### Avoid confusing MPs with the same last name
+mandates <- mandates %>%
+  mutate(
+    plotting_name = case_when(
+      MP_id == "12283" ~ "A. V. Johannesen",
+      MP_id == "6687"  ~ "K. L. Johannesen",
+      TRUE             ~ surname
+    )
+  )
+
+plot_dataset <- plot_dataset %>%
+  mutate(
+    plotting_name = case_when(
+      MP_id == "12283" ~ "A. V. Johannesen",
+      MP_id == "6687"  ~ "K. L. Johannesen",
+      TRUE             ~ surname
+    )
+  )
 
 ### Order dataset by MP surnames for plotting
 plot_dataset_ordered <- plot_dataset %>%
-  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length))
+  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
+  mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length)) %>%
+  mutate(vote_type_id = fct_relevel(vote_type_id, "1", "2", "4", "3"))
+
+### Subset only with votes that were actually cast
+plot_dataset_without_absences <- subset(plot_dataset_ordered, vote_type_id != 3) %>%
+  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
+  mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length))
 
 ## Set Plotting Theme -----
 
@@ -252,9 +275,9 @@ click northatlantic_ft href "#northatlantic_ft" "tooltip"
 
 ### MP_names {#mp_names}
 
-`MP_names` is provided in `csv` and `rds` formats in `/data/processed`. The `csv` file serves as starting point for building the data set, as the workflow pipeline[^workflow] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
+`MP_names` is provided in `csv` and `rds` formats in `/data/processed`. The `csv` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
 
-[^workflow]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
+[^1]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
 
 ```{r}
 head(mp_names)
@@ -264,7 +287,7 @@ Descriptions of all variables in `MP_names` are provided in the following sectio
 
 #### MP_names\$surname {#mp_namessurname}
 
-All surname(s) are stored as values of the type `r typeof(mp_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
+All surname(s) are stored as values of the type `r typeof(mp_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
 
 This column is not necessary for successfully executing the workflow pipeline, but it is used to map MP names to the corresponding IDs for increased readability of resulting plots.
 
@@ -320,9 +343,9 @@ summary(mp_names$party)
 
 All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
 
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq[^parties]).
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq[^2]).
 
-[^parties]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
+[^2]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
 
 ```{r parties-list}
 #| echo: false
