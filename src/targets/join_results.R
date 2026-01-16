@@ -5,6 +5,7 @@ library(here)
 
 ## External Functions -----
 source(here("src", "match_party_affiliation.R"), local = TRUE)
+source(here("src", "match_governing_coalition.R"), local = TRUE)
 
 # Definition -----
 
@@ -23,13 +24,14 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
                                        ft_topic_id, ft_topic),
               by = "ft_process_id") %>%
     
-    match_party_affiliation()
+    match_party_affiliation() %>%
+    match_governing_coalition()
   
   # Clean Up Data Frame Columns  -----
   
-  col_order <- c("ballot_id", "MP_id", "surname", "origin", "party", "vote_type_id", "vote_id",
-                 "ballot_pass", "ft_process_step", "ft_topic_id", "ft_topic",
-                 "ft_for", "ft_against", "ft_abstention", "ft_absent",
+  col_order <- c("ballot_id", "MP_id", "surname", "origin", "party", "governing_party_at_home",
+                 "vote_type_id", "vote_id", "ballot_pass", "ft_process_step", "ft_topic_id",
+                 "ft_topic", "ft_for", "ft_against", "ft_abstention", "ft_absent",
                  "ballot_date", "ballot_type_id", "comment", "ballot_result_string")
   
   voting_records <- voting_records[, col_order]
