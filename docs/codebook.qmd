@@ -46,9 +46,10 @@ northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 plot_dataset <- northatlantic_ft %>%
   left_join(mp_names %>% select(MP_id, origin), by = "MP_id")
 
-### Timeline of Mandates -----
+### Timeline of Mandates and Cabinets -----
 mandates <- read.delim(here("assets", "background_data", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
 elections <- read.delim(here("assets", "background_data", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+cabinets_fo_gl <- read.delim(here("assets", "background_data", "cabinets_fo_gl.csv"), sep = ";", stringsAsFactors = FALSE)
 
 #### Convert dates
 mandates <- mandates %>%
@@ -58,6 +59,13 @@ mandates <- mandates %>%
     # Replace NA in "end" with today's date
     end   = if_else(is.na(end), Sys.Date(), end)
   )
+
+cabinets_fo_gl <- cabinets_fo_gl %>%
+    mutate(
+      start = ymd(start),
+      end   = ymd(end),
+      end   = coalesce(end, Sys.Date())
+    )
 
 ## Manipulate Data -----
 
@@ -141,11 +149,15 @@ classDiagram
 
     ballot_info_raw <|-- ballot_results_ft
 
+    cabinets_fo_gl <|-- northatlantic_ft
+
     class northatlantic_ft {
         ballot_id : int
         MP_id : int
         surname : string
+        origin: string
         party : string
+        governing_party_at_home: bool
         vote_type_id : int
         ballot_pass : bool
         ft_process_step : string
@@ -250,6 +262,16 @@ classDiagram
         anti_pro_eu : float
     }
 
+    class cabinets_fo_gl {
+      cabinet: string
+      wikidata_id: string
+      location: string
+      start: date
+      end: date
+      GL_&ast;: bool
+      FO_&ast;: bool
+    }
+
 style ballot_info_raw fill:#D1BBD7
 style ballot_results_ft fill:#D1BBD7
 
@@ -270,6 +292,7 @@ click northatlantic_votes href "#northatlantic_votes" "tooltip"
 click ballot_info_raw href "#ballot_info_raw" "tooltip"
 click ballot_results_ft href "#ballot_results_ft" "tooltip"
 click ballot_topics_raw href "#ballot_topics_raw" "tooltip"
+click cabinets_fo_gl href "#cabinets_fo_gl" "tooltip"
 click northatlantic_ft href "#northatlantic_ft" "tooltip"
 ```
 
@@ -822,9 +845,21 @@ head(ballot_topics_raw$ft_topic)
 
 ------------------------------------------------------------------------
 
+### cabinets_fo_gl {#cabinets_fo_gl}
+
+`cabinets_fo_gl` is provided as `csv` file in `/assets/background_data/`. It contains information on the coalition governments of Greenland (Naalakersuisut) and the Faroe Islands (Landsstýri), in particular a timeline of cabinets including the parties that are part of each cabinet. As per `r format(file.info(here("assets", "background_data", "cabinets_fo_gl.csv"))$mtime, "%B %Y")`, `cabinets_fo_gl` contains information on `r nrow(cabinets_fo_gl)` cabinets stored in `r ncol(cabinets_fo_gl)` variables. On this list of cabinets are `r sum(cabinets_fo_gl$location == "GL", na.rm = TRUE)` Greenlandic and `r sum(cabinets_fo_gl$location == "FO", na.rm = TRUE)` Faroese cabinets.
+
+```{r}
+head(cabinets_fo_gl)
+```
+
+Descriptions of all variables in `cabinets_fo_gl` are provided in the following sections.
+
+------------------------------------------------------------------------
+
 ### northatlantic_ft {#northatlantic_ft}
 
-`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes) and [`ballot_topics_raw`](#ballot_topics_raw). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
+`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes), [`ballot_topics_raw`](#ballot_topics_raw) and [`cabinets_fo_gl`](#cabinets_fo_gl). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
 
 ```{r}
 str(northatlantic_ft)
@@ -856,12 +891,29 @@ str(northatlantic_ft$MP_id)
 str(northatlantic_ft$surname)
 ```
 
+#### northatlantic_ft\$origin
+
+`origin` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$origin`](#mp_namesorigin).
+
+```{r}
+summary(northatlantic_ft$origin)
+```
+
+
 #### northatlantic_ft\$party
 
 `party` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$party`](#mp_namesparty).
 
 ```{r}
 str(northatlantic_ft$party)
+```
+
+#### northatlantic_ft\$governing_party_at_home
+
+`governing_party_at_home` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, `MP_names` and `cabinets_fo_gl`, indicating whether the MP is a member of a political party that is part of the governing Naalakkersuisut (GL) resp. Landsstýri (FO) at the time. See [`cabinets_fo_gl`](#cabinets_fo_gl).
+
+```{r}
+summary(northatlantic_ft$governing_party_at_home)
 ```
 
 #### northatlantic_ft\$vote_type_id
