@@ -3,7 +3,7 @@
 	"url": "northatlantic_ft.csv",
 	"dc:title": "nordatlantisk ft",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2025-12-01",
+	"dc:updated": "2026-01-16",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -31,10 +31,22 @@
 				"datatype": "string"
 			},
 			{
+				"name": "origin",
+				"dc:title": "Origin",
+				"description": "Geographical origin of the MP.",
+				"datatype": { "base": "string", "format": "GL|FO" }
+			},
+			{
 				"name": "party",
 				"dc:title": "Party",
 				"dc:description": "Political Party the MP is member of",
 				"datatype": "string"
+			},
+			{
+				"name": "governing_party_at_home",
+				"dc:title": "Governing Party at Home",
+				"dc:description": "Boolean indicating if the party the MP belongs to is part of the governing coalition in Greenland or Faroe Islands at the time of the vote.",
+				"datatype": { "base": "boolean", "format": "TRUE|FALSE" }
 			},
 			{
 				"name": "vote_type_id",
