@@ -19,7 +19,7 @@ match_party_affiliation <- function(input_df,
     ) %>%
     select(MP_id, start, end, party)
   
-  input_df <- input_df %>%
+  output_df <- input_df %>%
     mutate(
       MP_id = as.factor(MP_id),
       ballot_date = as.Date(ballot_date)
@@ -29,5 +29,5 @@ match_party_affiliation <- function(input_df,
     select(-start, -end) %>%
     relocate(party, .after = surname)
   
-  return (input_df)
+  return (output_df)
 }
