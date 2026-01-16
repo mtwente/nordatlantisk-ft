@@ -38,8 +38,8 @@ political_parties <- read.csv(here("assets", "background_data", "political_parti
 ### Voting Records Database -----
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
-plot_dataset <- northatlantic_ft %>%
-  left_join(mp_names %>% select(MP_id, origin), by = "MP_id")
+#northatlantic_ft <- northatlantic_ft %>%
+#  left_join(mp_names %>% select(MP_id, origin), by = "MP_id")
 
 ### Timeline of Mandates -----
 mandates <- read.delim(here("assets", "background_data", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
@@ -66,7 +66,7 @@ mandates <- mandates %>%
     )
   )
 
-plot_dataset <- plot_dataset %>%
+northatlantic_ft <- northatlantic_ft %>%
   mutate(
     plotting_name = case_when(
       MP_id == "12283" ~ "A. V. Johannesen",
@@ -76,13 +76,13 @@ plot_dataset <- plot_dataset %>%
   )
 
 ### Order dataset by MP surnames for plotting
-plot_dataset_ordered <- plot_dataset %>%
+northatlantic_ft_ordered <- northatlantic_ft %>%
   mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
   mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length)) %>%
   mutate(vote_type_id = fct_relevel(vote_type_id, "1", "2", "4", "3"))
 
 ### Subset only with votes that were actually cast
-plot_dataset_without_absences <- subset(plot_dataset_ordered, vote_type_id != 3) %>%
+northatlantic_ft_without_absences <- subset(northatlantic_ft_ordered, vote_type_id != 3) %>%
   mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
   mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length))
 
@@ -368,7 +368,7 @@ For `r mean(northatlantic_ft$vote_type_id == "3") %>% scales::percent(accuracy =
 #| label: fig-vote-share-per-year
 #| fig-cap: Share of non-absent records per year (for, against, abstaining).
 
-votes_per_year_origin <- plot_dataset %>%
+votes_per_year_origin <- northatlantic_ft %>%
   mutate(year = lubridate::year(ballot_date)) %>%
   group_by(origin, year) %>%
   summarise(
@@ -419,7 +419,7 @@ ggplot(
 #| label: fig-votes-per-mp
 #| fig-cap: Full voting records for each MP coded by the type of vote cast (for, against, abstaining, absent).
 
-plot_votes <- ggplot(plot_dataset_ordered, aes(y = plotting_name, fill = vote_type_id)) +
+plot_votes <- ggplot(northatlantic_ft_ordered, aes(y = plotting_name, fill = vote_type_id)) +
   geom_bar() +
   scale_x_continuous(expand = expansion(mult = c(0, .05))) +
   scale_y_discrete() +
@@ -447,7 +447,7 @@ plot_votes
 #| label: fig-votes-per-mp-filtered
 #| fig-cap: Number of votes cast by each MP coded by the type of vote (for, against, abstaining). Only showing ballots when the MP is in attendance.
 
-plot_votes_without_absences <- ggplot(plot_dataset_without_absences, aes(y = plotting_name, fill = vote_type_id)) +
+plot_votes_without_absences <- ggplot(northatlantic_ft_without_absences, aes(y = plotting_name, fill = vote_type_id)) +
   geom_bar() +
   scale_x_continuous(expand = expansion(mult = c(0, .05))) +
   scale_y_discrete() +
@@ -476,10 +476,10 @@ The distribution of recorded votes by all MPs is displayed on a timeline in @fig
 #| label: fig-votes-timeline
 #| fig-cap: Distribution of votes over time per MP (for, against, abstaining, absent). Because there are so many data points, vertical jittering is added to make it a little easier to get an overview of the available data.
 
-plot_dataset <- plot_dataset %>%
+northatlantic_ft <- northatlantic_ft %>%
   mutate(plotting_name = factor(plotting_name, levels = levels(mandates$plotting_name)))
 
-scatterplot <- ggplot(plot_dataset %>%
+scatterplot <- ggplot(northatlantic_ft %>%
                         arrange(desc(vote_type_id)),
                       aes(x = ballot_date, y = plotting_name, color = vote_type_id)) +
 
@@ -516,10 +516,10 @@ scatterplot
 #| label: fig-votes-timeline-filtered
 #| fig-cap: Distribution of votes over time per MP (for, against, abstaining). Only showing ballots when the MP is in attendance. Because there are so many data points, vertical and horizontal jittering is added to make it a little easier to get an overview of the available data.
 
-plot_dataset_without_absences <- plot_dataset_without_absences %>%
+northatlantic_ft_without_absences <- northatlantic_ft_without_absences %>%
   mutate(plotting_name = factor(plotting_name, levels = levels(mandates$plotting_name)))
 
-scatterplot_without_absences <- ggplot(plot_dataset_without_absences %>% 
+scatterplot_without_absences <- ggplot(northatlantic_ft_without_absences %>% 
                                         arrange(vote_type_id),
                                       aes(x = ballot_date, y = plotting_name, color = vote_type_id)) +
 
