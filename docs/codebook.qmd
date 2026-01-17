@@ -32,7 +32,7 @@ library(lubridate)
 mp_names <- readRDS(here("data", "processed", "MP_names.rds"))
 
 ### List of political parties -----
-political_parties <- read.csv(here("assets", "background_data", "political_parties.csv"), sep = ";", check.names = FALSE)
+political_parties <- read.csv(here("data", "static", "political_parties.csv"), sep = ";", check.names = FALSE)
 
 ### Voting Records Database -----
 northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rds"))
@@ -47,9 +47,9 @@ plot_dataset <- northatlantic_ft %>%
   left_join(mp_names %>% select(MP_id, origin), by = "MP_id")
 
 ### Timeline of Mandates and Cabinets -----
-mandates <- read.delim(here("assets", "background_data", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
-elections <- read.delim(here("assets", "background_data", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
-cabinets_fo_gl <- read.delim(here("assets", "background_data", "cabinets_fo_gl.csv"), sep = ";", stringsAsFactors = FALSE)
+mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+elections <- read.delim(here("data", "static", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+cabinets_fo_gl <- read.delim(here("data", "static", "cabinets_fo_gl.csv"), sep = ";", stringsAsFactors = FALSE)
 
 #### Convert dates
 mandates <- mandates %>%
@@ -348,7 +348,7 @@ Apart from [`MP_names$MP_id`](#MP_names_MP_id), each MP's Wikidata QID is stored
 head(mp_names$wikidata_id)
 ```
 
-#### MP_names\$origin
+#### MP_names\$origin {#mp_namesorigin}
 
 `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mp_names$origin)` as `r class(mp_names$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
 
@@ -416,7 +416,7 @@ kable(
 
 #### MP_names\$substitute
 
-Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset. Data on membership periods is available in [`/assets/background_data/MP_dates.csv`](/assets/background_data/MP_dates.csv).
+Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset. Data on membership periods is available in [`/data/static/MP_dates.csv`](/data/static/MP_dates.csv).
 
 ```{r}
 summary(mp_names$substitute)
@@ -847,7 +847,7 @@ head(ballot_topics_raw$ft_topic)
 
 ### cabinets_fo_gl {#cabinets_fo_gl}
 
-`cabinets_fo_gl` is provided as `csv` file in `/assets/background_data/`. It contains information on the coalition governments of Greenland (Naalakersuisut) and the Faroe Islands (Landsstýri), in particular a timeline of cabinets including the parties that are part of each cabinet. As per `r format(file.info(here("assets", "background_data", "cabinets_fo_gl.csv"))$mtime, "%B %Y")`, `cabinets_fo_gl` contains information on `r nrow(cabinets_fo_gl)` cabinets stored in `r ncol(cabinets_fo_gl)` variables. On this list of cabinets are `r sum(cabinets_fo_gl$location == "GL", na.rm = TRUE)` Greenlandic and `r sum(cabinets_fo_gl$location == "FO", na.rm = TRUE)` Faroese cabinets.
+`cabinets_fo_gl` is provided as `csv` file in `/data/static/`. It contains information on the coalition governments of Greenland (Naalakersuisut) and the Faroe Islands (Landsstýri), in particular a timeline of cabinets including the parties that are part of each cabinet. As per `r format(file.info(here("data", "static", "cabinets_fo_gl.csv"))$mtime, "%B %Y")`, `cabinets_fo_gl` contains information on `r nrow(cabinets_fo_gl)` cabinets stored in `r ncol(cabinets_fo_gl)` variables. On this list of cabinets are `r sum(cabinets_fo_gl$location == "GL", na.rm = TRUE)` Greenlandic and `r sum(cabinets_fo_gl$location == "FO", na.rm = TRUE)` Faroese cabinets.
 
 ```{r}
 head(cabinets_fo_gl)
@@ -898,7 +898,6 @@ str(northatlantic_ft$surname)
 ```{r}
 summary(northatlantic_ft$origin)
 ```
-
 
 #### northatlantic_ft\$party
 

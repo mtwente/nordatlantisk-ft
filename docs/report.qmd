@@ -33,17 +33,14 @@ library(scales)
 mp_names <- readRDS(here("data", "processed", "MP_names.rds"))
 
 ### List of political parties -----
-political_parties <- read.csv(here("assets", "background_data", "political_parties.csv"), sep = ";", check.names = FALSE)
+political_parties <- read.csv(here("data", "static", "political_parties.csv"), sep = ";", check.names = FALSE)
 
 ### Voting Records Database -----
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
-#northatlantic_ft <- northatlantic_ft %>%
-#  left_join(mp_names %>% select(MP_id, origin), by = "MP_id")
-
 ### Timeline of Mandates -----
-mandates <- read.delim(here("assets", "background_data", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
-elections <- read.delim(here("assets", "background_data", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+elections <- read.delim(here("data", "static", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
 
 #### Convert dates
 mandates <- mandates %>%
