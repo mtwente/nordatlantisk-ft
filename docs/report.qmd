@@ -111,7 +111,11 @@ See the [Codebook](codebook.qmd) for details and refer to @berntzenParliamentary
 
 ## MPs
 
-This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties. For MPs representing Greenland resp. the Faroe Islands in election periods earlier than `r format(min(northatlantic_ft$ballot_date), "%B %Y")`, see the list going back to 1953 provided by @harderSupplerendeMaterialeFaeroske2022.
+This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties.
+
+`r sum(mp_names$substitute == TRUE)` of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for one of the `r sum(mp_names$substitute == FALSE)` originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. 
+
+[^1]: Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. In this overview, they are listed as full members for now.
 
 ```{r mp-list}
 #| echo: false
@@ -124,26 +128,45 @@ MPs_gl <- mp_names %>%
   select(-wikidata_id, -origin) %>%
   arrange(surname)
 
+MPs_gl_regular<- MPs_gl %>%
+  filter(substitute == FALSE) %>%
+  select(-substitute)
+
+MPs_gl_substitute <- MPs_gl %>%
+  filter(substitute == TRUE) %>%
+  select(-substitute)
+
 MPs_fo <- mp_names %>%
   filter(origin == "FO") %>%
   select(-wikidata_id, -origin) %>%
   arrange(surname)
 
-printable_names <- c("Surname(s)", "First Name(s)", "MP ID", "Party", "Substitute Member")
+MPs_fo_regular <- MPs_fo %>%
+  filter(substitute == FALSE) %>%
+  select(-substitute)
 
-kable(MPs_gl, caption = "MPs from Greenlandic Parties",
+MPs_fo_substitute <- MPs_fo %>%
+  filter(substitute == TRUE) %>%
+  select(-substitute)
+
+printable_names <- c("Surname(s)", "First Name(s)", "MP ID", "Party")
+
+kable(MPs_gl_regular, caption = "Directly elected MPs from Greenlandic Parties",
               col.names = printable_names)
-kable(MPs_fo, caption = "MPs from Faroese Parties",
+kable(MPs_gl_substitute, caption = "Temporary Substitute MPs from Greenlandic Parties",
+              col.names = printable_names)
+kable(MPs_fo_regular, caption = "Directly elected MPs from Faroese Parties",
+              col.names = printable_names)
+kable(MPs_fo_substitute, caption = "Temporary Substitute MPs from Faroese Parties",
               col.names = printable_names)
 ```
 
-As documented in the column `substitute`, some of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. @fig-mandates shows membership periods[^2] and substitions on a timeline for the duration that is covered by this data set[^3].
-
-[^1]: Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset.
+@fig-mandates shows membership periods[^2] and substitute members on a timeline for the duration that is covered by this data set.
 
 [^2]: Note that the data for membership periods is taken from Folketinget's member biographies website. There, membership periods and temporary replacement members are given as written text and are mostly specified to the day. However, in some cases, the exact timeline of replacements seems not to be complete -- e.g., when there is a timeframe listed with a temporary MP being active, but the information on the MP that is being replaced does not correspond to the specified period. This seems mostly to be an issue of keeping the free-text biographies up to date and in sync.
 
-[^3]: Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. See @harderSupplerendeMaterialeFaeroske2022 for a full timeline.
+Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. For MPs representing Greenland resp. the Faroe Islands in election periods earlier than `r format(min(northatlantic_ft$ballot_date), "%B %Y")`, see the full timeline -- going back to 1953 -- provided by @harderSupplerendeMaterialeFaeroske2022.
+
 
 ```{r timeline-mandates}
 #| echo: false
