@@ -50,6 +50,7 @@ plot_dataset <- northatlantic_ft %>%
 mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
 elections <- read.delim(here("data", "static", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
 cabinets_fo_gl <- read.delim(here("data", "static", "cabinets_fo_gl.csv"), sep = ";", stringsAsFactors = FALSE)
+cabinets_dk <- read.delim(here("data", "static", "cabinets_dk.csv"), sep = ";", stringsAsFactors = FALSE)
 
 #### Convert dates
 mandates <- mandates %>%
@@ -61,6 +62,13 @@ mandates <- mandates %>%
   )
 
 cabinets_fo_gl <- cabinets_fo_gl %>%
+    mutate(
+      start = ymd(start),
+      end   = ymd(end),
+      end   = coalesce(end, Sys.Date())
+    )
+
+cabinets_dk <- cabinets_dk %>%
     mutate(
       start = ymd(start),
       end   = ymd(end),
@@ -150,6 +158,7 @@ classDiagram
     ballot_info_raw <|-- ballot_results_ft
 
     cabinets_fo_gl <|-- northatlantic_ft
+    cabinets_dk <|-- northatlantic_ft
 
     class northatlantic_ft {
         ballot_id : int
@@ -169,6 +178,8 @@ classDiagram
         ft_absent : int
         ballot_date : date
         ballot_type_id : int
+        gvt_type_dk : string
+        gvt_bloc_dk : string
         comment : string
         ballot_result_string : int
     }
@@ -272,6 +283,16 @@ classDiagram
       FO_&ast;: bool
     }
 
+    class cabinets_dk {
+      cabinet: string
+      wikidata_id: string
+      bloc: string
+      type: string
+      start: date
+      end: date
+      DK_&ast;: bool
+    }
+
 style ballot_info_raw fill:#D1BBD7
 style ballot_results_ft fill:#D1BBD7
 
@@ -293,6 +314,7 @@ click ballot_info_raw href "#ballot_info_raw" "tooltip"
 click ballot_results_ft href "#ballot_results_ft" "tooltip"
 click ballot_topics_raw href "#ballot_topics_raw" "tooltip"
 click cabinets_fo_gl href "#cabinets_fo_gl" "tooltip"
+click cabinets_dk href "#cabinets_dk" "tooltip"
 click northatlantic_ft href "#northatlantic_ft" "tooltip"
 ```
 
@@ -847,13 +869,25 @@ head(ballot_topics_raw$ft_topic)
 
 ### cabinets_fo_gl {#cabinets_fo_gl}
 
-`cabinets_fo_gl` is provided as `csv` file in `/data/static/`. It contains information on the coalition governments of Greenland (Naalakersuisut) and the Faroe Islands (Landsstýri), in particular a timeline of cabinets including the parties that are part of each cabinet. As per `r format(file.info(here("data", "static", "cabinets_fo_gl.csv"))$mtime, "%B %Y")`, `cabinets_fo_gl` contains information on `r nrow(cabinets_fo_gl)` cabinets stored in `r ncol(cabinets_fo_gl)` variables. On this list of cabinets are `r sum(cabinets_fo_gl$location == "GL", na.rm = TRUE)` Greenlandic and `r sum(cabinets_fo_gl$location == "FO", na.rm = TRUE)` Faroese cabinets.
+`cabinets_fo_gl` is provided as `csv` file in `/data/static/`. It contains information on the coalition governments of Greenland (Naalakersuisut) and the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "static", "cabinets_fo_gl.csv"))$mtime, "%B %Y")`, `cabinets_fo_gl` contains information on `r nrow(cabinets_fo_gl)` cabinets stored in `r ncol(cabinets_fo_gl)` variables. On this list of cabinets are `r sum(cabinets_fo_gl$location == "GL", na.rm = TRUE)` Greenlandic and `r sum(cabinets_fo_gl$location == "FO", na.rm = TRUE)` Faroese cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 ```{r}
 head(cabinets_fo_gl)
 ```
 
 Descriptions of all variables in `cabinets_fo_gl` are provided in the following sections.
+
+------------------------------------------------------------------------
+
+### cabinets_dk {#cabinets_dk}
+
+`cabinets_dk` is provided as `csv` file in `/data/static/`. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "static", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+
+```{r}
+head(cabinets_dk)
+```
+
+Descriptions of all variables in `cabinets_dk` are provided in the following sections.
 
 ------------------------------------------------------------------------
 
@@ -904,7 +938,7 @@ summary(northatlantic_ft$origin)
 `party` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$party`](#mp_namesparty).
 
 ```{r}
-str(northatlantic_ft$party)
+summary(northatlantic_ft$party)
 ```
 
 #### northatlantic_ft\$gvt_party_at_home
@@ -1009,6 +1043,22 @@ See [`ballot_results_ft$ballot_type_id`](#ballot_results_ftballot_type_id).
 
 ```{r}
 str(northatlantic_ft$ballot_type_id)
+```
+
+#### northatlantic_ft\$gvt_type_dk
+
+`gvt_type_dk` is created by using [`join_results()`](/src/targets/join_results.R) on `cabinets_dk`, indicating whether the Danish government is a coalition or a single-party government at the time of the observation. See [`cabinets_dk`](#cabinets_dk).
+
+```{r}
+summary(northatlantic_ft$gvt_type_dk)
+```
+
+#### northatlantic_ft\$gvt_bloc_dk
+
+`gvt_bloc_dk` is created by using [`join_results()`](/src/targets/join_results.R) on `cabinets_dk`, indicating the political bloc (left/red, right/blue or across) the Danish government belongs to at the time of the observation. See [`cabinets_dk`](#cabinets_dk).
+
+```{r}
+summary(northatlantic_ft$gvt_bloc_dk)
 ```
 
 #### northatlantic_ft\$comment
