@@ -49,7 +49,7 @@ plot_dataset <- northatlantic_ft %>%
 ### Timeline of Mandates and Cabinets -----
 mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
 elections <- read.delim(here("data", "static", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
-cabinets_fo_gl <- read.delim(here("data", "static", "cabinets_fo_gl.csv"), sep = ";", stringsAsFactors = FALSE)
+cabinets_fo_gl <- readRDS(here("data", "processed", "cabinets_fo_gl.rds"))
 cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
 
 #### Convert dates
@@ -1114,7 +1114,6 @@ Note that a `single_party` cabinet does not necessarily have the majority of sea
 ```{r}
 table(cabinets_dk$type)
 ```
-
 
 #### cabinets_dk\$start {#cabinets_dkstart}
 
