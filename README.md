@@ -30,7 +30,7 @@ For all MPs that were elected in either Greenland or the Faroe Islands since 200
 
 In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
 
-Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
+For each recorded vote, the database contains additional metadata such as statements on the MP's party membership, the overall ballot result in parliament or the topic of the vote. Additionally included is basic information on the cabinets governing in Denmark, Greenland and the Faroe Islands at the time of each record. Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
 
 ### Installation
 
