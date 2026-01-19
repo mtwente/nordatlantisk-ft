@@ -26,7 +26,7 @@ match_danish_government <- function(
   output_df <- input_df %>%
     rowwise() %>%
     mutate(
-      gvt_dk_bloc = {
+      gvt_bloc_dk = {
         cab <- cabinets_dk %>%
           filter(
             ballot_date >= start,
@@ -40,7 +40,7 @@ match_danish_government <- function(
         }
       },
       
-      gvt_dk_type = {
+      gvt_type_dk = {
         cab <- cabinets_dk %>%
           filter(
             ballot_date >= start,
@@ -58,8 +58,8 @@ match_danish_government <- function(
     
     # Convert to factors
     mutate(
-      gvt_dk_bloc = factor(gvt_dk_bloc),
-      gvt_dk_type = factor(gvt_dk_type)
+      gvt_bloc_dk = factor(gvt_bloc_dk),
+      gvt_type_dk = factor(gvt_type_dk)
     )
   
   return(output_df)
