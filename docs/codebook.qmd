@@ -877,15 +877,203 @@ head(cabinets_fo_gl)
 
 Descriptions of all variables in `cabinets_fo_gl` are provided in the following sections.
 
-::: {.callout-warning}
-TODO
-:::
+#### cabinets_fo_gl\$cabinet {#cabinets_fo_glcabinet}
+
+Each cabinet formed in Greenland (Naalakkersuisut) or in the Faroe Islands (Landsstýri) is assigned a human-readable identifier. The cabinets are usually named after the head of government, using their surname(s), followed by an integer number for multiple cabinets headed by the same person. Because in the timeframe covered by this data set, there have been two Faroese governments with a PM named Johannesen, the first letter of their first name is also appended to the `cabinet` variable. This variable is stored as value of the type `r typeof(cabinets_fo_gl$cabinet)` as `r class(cabinets_fo_gl$cabinet)` variable.
+
+```{r}
+head(cabinets_fo_gl$cabinet)
+```
+
+#### cabinets_fo_gl\$wikidata_id {#cabinets_fo_glwikidata_id}
+
+The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the cabinet in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(cabinets_fo_gl$wikidata_id)` as `r class(cabinets_fo_gl$wikidata_id)` variable.
+
+```{r}
+head(cabinets_fo_gl$wikidata_id)
+```
+
+#### cabinets_fo_gl\$location {#cabinets_fo_gllocation}
+
+`location` indicates whether a cabinet is formed in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(cabinets_fo_gl$location)` as `r class(cabinets_fo_gl$location)` variable. This might be helpful to distinguish between the different political parties, some of which share a common abbreviation across regions.
+
+```{r}
+table(cabinets_fo_gl$location)
+```
+
+#### cabinets_fo_gl\$start {#cabinets_fo_glstart}
+
+The date on which each cabinet is formed is stored as `r class(cabinets_fo_gl$start)` variable of the type `r typeof(cabinets_fo_gl$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_fo_gl$start), "%B %d, %Y")` (`r min(cabinets_fo_gl$start)`) and the most recent entry from `r format(max(cabinets_fo_gl$start), "%B %d, %Y")` (`r max(cabinets_fo_gl$start)`) as of `r format(file.info(here("data", "static", "cabinets_fo_gl.csv"))$mtime, "%B %Y")`.
+
+```{r}
+head(cabinets_fo_gl$start)
+```
+
+#### cabinets_fo_gl\$end {#cabinets_fo_glend}
+
+The date on which each cabinet is succeeded by the next one is stored as `r class(cabinets_fo_gl$end)` variable of the type `r typeof(cabinets_fo_gl$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_fo_gl$end), "%B %d, %Y")` (`r min(cabinets_fo_gl$end)`) as of `r format(file.info(here("data", "static", "cabinets_fo_gl.csv"))$mtime, "%B %Y")`.
+
+Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
+
+```{r}
+head(cabinets_fo_gl$start)
+```
+
+#### cabinets_fo_gl\$GL_A {#cabinets_fo_glgla}
+
+`GL_A` indicates whether the Greenlandic political party **Atassut** (`A`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_A)` as `r class(cabinets_fo_gl$GL_A)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_A` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_A)
+```
+
+#### cabinets_fo_gl\$GL_D {#cabinets_fo_glgld}
+
+`GL_D` indicates whether the Greenlandic political party **Demokraatit** (`D`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_D)` as `r class(cabinets_fo_gl$GL_D)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_D` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_D)
+```
+
+#### cabinets_fo_gl\$GL_IA {#cabinets_fo_glglia}
+
+`GL_IA` indicates whether the Greenlandic political party **Inuit Ataqatigiit** (`IA`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_IA)` as `r class(cabinets_fo_gl$GL_IA)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_IA` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_IA)
+```
+
+#### cabinets_fo_gl\$GL_KP {#cabinets_fo_glglkp}
+
+`GL_KP` indicates whether the Greenlandic political party **Kattusseqatigiit Partiiat** (`KP`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_KP)` as `r class(cabinets_fo_gl$GL_KP)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_KP` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_KP)
+```
+
+#### cabinets_fo_gl\$GL_N {#cabinets_fo_glgln}
+
+`GL_N` indicates whether the Greenlandic political party **Naleraq** (`N`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_N)` as `r class(cabinets_fo_gl$GL_N)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_N` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_N)
+```
+
+#### cabinets_fo_gl\$GL_NQ {#cabinets_fo_glglnq}
+
+`GL_NQ` indicates whether the Greenlandic political party **Nunatta Qitornai** (`NQ`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_NQ)` as `r class(cabinets_fo_gl$GL_NQ)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_NQ` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_NQ)
+```
+
+#### cabinets_fo_gl\$GL_PI {#cabinets_fo_glglpi}
+
+`GL_PI` indicates whether the Greenlandic political party **Partii Inuit** (`PI`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_PI)` as `r class(cabinets_fo_gl$GL_PI)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_PI` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_PI)
+```
+
+#### cabinets_fo_gl\$GL_SIU {#cabinets_fo_glglsiu}
+
+`GL_SIU` indicates whether the Greenlandic political party **Siumut** (`SIU`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$GL_SIU)` as `r class(cabinets_fo_gl$GL_SIU)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_SIU` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$GL_SIU)
+```
+
+#### cabinets_fo_gl\$FO_A {#cabinets_fo_glfoa}
+
+`FO_A` indicates whether the Faroese political party **Fólkaflokkurin** (`A`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$FO_A)` as `r class(cabinets_fo_gl$FO_A)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_A` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$FO_A)
+```
+
+#### cabinets_fo_gl\$FO_B {#cabinets_fo_glfob}
+
+`FO_B` indicates whether the Faroese political party **Sambandsflokkurin** (`B`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$FO_B)` as `r class(cabinets_fo_gl$FO_B)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_B` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$FO_B)
+```
+
+#### cabinets_fo_gl\$FO_C {#cabinets_fo_glfoc}
+
+`FO_C` indicates whether the Faroese political party **Javnaðarflokkurin** (`C`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$FO_C)` as `r class(cabinets_fo_gl$FO_C)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_C` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$FO_C)
+```
+
+#### cabinets_fo_gl\$FO_D {#cabinets_fo_glfod}
+
+`FO_D` indicates whether the Faroese political party **Sjálvstýri** (`D`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$FO_D)` as `r class(cabinets_fo_gl$FO_D)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_D` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$FO_D)
+```
+
+#### cabinets_fo_gl\$FO_E {#cabinets_fo_glfoe}
+
+`FO_E` indicates whether the Faroese political party **Tjóðveldi** (`E`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$FO_E)` as `r class(cabinets_fo_gl$FO_E)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_E` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$FO_E)
+```
+
+#### cabinets_fo_gl\$FO_F {#cabinets_fo_glfof}
+
+`FO_F` indicates whether the Faroese political party **Framsókn** (`F`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$FO_F)` as `r class(cabinets_fo_gl$FO_F)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_F` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$FO_F)
+```
+
+#### cabinets_fo_gl\$FO_H {#cabinets_fo_glfoh}
+
+`FO_H` indicates whether the Faroese political party **Miðflokkurin** (`H`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo_gl$FO_H)` as `r class(cabinets_fo_gl$FO_H)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_H` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_fo_gl$FO_H)
+```
 
 ------------------------------------------------------------------------
 
 ### cabinets_dk {#cabinets_dk}
 
-`cabinets_dk` is provided as `csv` file in `/data/static/`. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "static", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+`cabinets_dk` is provided as `csv` and `rds` file in `/data/processed/`. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "static", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 ```{r}
 head(cabinets_dk)
@@ -893,9 +1081,128 @@ head(cabinets_dk)
 
 Descriptions of all variables in `cabinets_dk` are provided in the following sections.
 
-::: {.callout-warning}
-TODO
-:::
+#### cabinets_dk\$cabinet {#cabinets_dkcabinet}
+
+Each cabinet formed in Denmark is assigned a human-readable identifier. The cabinets are usually named after the head of government, using their surname(s), followed by an integer number for multiple cabinets headed by the same person. Because in the timeframe covered by this data set, there have been two Danish governments with a PM named Rasmussen, the first letter of their first name is also appended to the `cabinet` variable. This variable is stored as value of the type `r typeof(cabinets_dk$cabinet)` as `r class(cabinets_dk$cabinet)` variable.
+
+```{r}
+head(cabinets_dk$cabinet)
+```
+
+#### cabinets_dk\$wikidata_id {#cabinets_dkwikidata_id}
+
+The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the cabinet in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(cabinets_dk$wikidata_id)` as `r class(cabinets_dk$wikidata_id)` variable.
+
+```{r}
+head(cabinets_dk$wikidata_id)
+```
+
+#### cabinets_dk\$bloc {#cabinets_dkbloc}
+
+`bloc` indicates whether a cabinet belongs to either the red/left or blue/right section of the political spectrum or if it is formed across both blocs. This variable is stored as value of the type `r typeof(cabinets_dk$bloc)` as `r class(cabinets_dk$bloc)` variable.
+
+```{r}
+table(cabinets_dk$bloc)
+```
+
+#### cabinets_dk\$type {#cabinets_dktype}
+
+`type` indicates whether a cabinet is formed by a single politial party or if it is a coalition government. This variable is stored as value of the type `r typeof(cabinets_dk$type)` as `r class(cabinets_dk$type)` variable.
+
+Note that a `single_party` cabinet does not necessarily have the majority of seats in parliament. The cabinet in question may instead rely on informal support agreements with other political parties that are not officially part of the cabinet.
+
+```{r}
+table(cabinets_dk$type)
+```
+
+
+#### cabinets_dk\$start {#cabinets_dkstart}
+
+The date on which each cabinet is formed is stored as `r class(cabinets_dk$start)` variable of the type `r typeof(cabinets_dk$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_dk$start), "%B %d, %Y")` (`r min(cabinets_dk$start)`) and the most recent entry from `r format(max(cabinets_dk$start), "%B %d, %Y")` (`r max(cabinets_dk$start)`) as of `r format(file.info(here("data", "static", "cabinets_dk.csv"))$mtime, "%B %Y")`.
+
+```{r}
+head(cabinets_dk$start)
+```
+
+#### cabinets_dk\$end {#cabinets_dkend}
+
+The date on which each cabinet is succeeded by the next one is stored as `r class(cabinets_dk$end)` variable of the type `r typeof(cabinets_dk$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_dk$end), "%B %d, %Y")` (`r min(cabinets_dk$end)`) as of `r format(file.info(here("data", "static", "cabinets_dk.csv"))$mtime, "%B %Y")`.
+
+Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
+
+```{r}
+head(cabinets_dk$start)
+```
+
+#### cabinets_dk\$DK_A {#cabinets_dkdka}
+
+`DK_A` indicates whether the Danish political party **Socialdemokratiet** (`A`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_A)` as `r class(cabinets_dk$DK_A)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_A` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_dk$DK_A)
+```
+
+#### cabinets_dk\$DK_B {#cabinets_dkdkb}
+
+`DK_B` indicates whether the Danish political party **Radikale Venstre** (`B`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_B)` as `r class(cabinets_dk$DK_B)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_B` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_dk$DK_B)
+```
+
+#### cabinets_dk\$DK_C {#cabinets_dkdkc}
+
+`DK_C` indicates whether the Danish political party **Det Konservative Folkeparti** (`C`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_C)` as `r class(cabinets_dk$DK_C)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_C` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_dk$DK_C)
+```
+
+#### cabinets_dk\$DK_F {#cabinets_dkdkf}
+
+`DK_F` indicates whether the Danish political party **Socialistisk Folkeparti** (`F`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_F)` as `r class(cabinets_dk$DK_F)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_F` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_dk$DK_F)
+```
+
+#### cabinets_dk\$DK_I {#cabinets_dkdki}
+
+`DK_I` indicates whether the Danish political party **Liberal Alliance** (`I`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_I)` as `r class(cabinets_dk$DK_I)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_I` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_dk$DK_I)
+```
+
+#### cabinets_dk\$DK_M {#cabinets_dkdkm}
+
+`DK_M` indicates whether the Danish political party **Moderaterne** (`M`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_M)` as `r class(cabinets_dk$DK_M)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_M` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_dk$DK_M)
+```
+
+#### cabinets_dk\$DK_V {#cabinets_dkdkv}
+
+`DK_V` indicates whether the Danish political party **Venstre** (`V`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_V)` as `r class(cabinets_dk$DK_V)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_V` which only stores statements on official cabinet membership.
+
+```{r}
+summary(cabinets_dk$DK_V)
+```
 
 ------------------------------------------------------------------------
 
@@ -1063,7 +1370,7 @@ summary(northatlantic_ft$gvt_type_dk)
 
 #### northatlantic_ft\$gvt_bloc_dk
 
-`gvt_bloc_dk` is created by using [`join_results()`](/src/targets/join_results.R) on `cabinets_dk`, indicating the political bloc (left/red, right/blue or across) the Danish government belongs to at the time of the observation. See [`cabinets_dk`](#cabinets_dk).
+`gvt_bloc_dk` is created by using [`join_results()`](/src/targets/join_results.R) on `cabinets_dk`, indicating the political bloc (left/red, right/blue or across) the Danish government belongs to at the time of the observation. See [`cabinets_dk`](#cabinets_dkbloc).
 
 ```{r}
 summary(northatlantic_ft$gvt_bloc_dk)
