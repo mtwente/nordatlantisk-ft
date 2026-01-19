@@ -113,7 +113,7 @@ See the [Codebook](codebook.qmd) for details and refer to @berntzenParliamentary
 
 This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties.
 
-`r sum(mp_names$substitute == TRUE)` of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for one of the `r sum(mp_names$substitute == FALSE)` originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. 
+`r sum(mp_names$substitute == TRUE)` of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for one of the `r sum(mp_names$substitute == FALSE)` originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13].
 
 [^1]: Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. In this overview, they are listed as full members for now.
 
@@ -167,7 +167,6 @@ kable(MPs_fo_substitute, caption = "Temporary Substitute MPs from Faroese Partie
 
 Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. For MPs representing Greenland resp. the Faroe Islands in election periods earlier than `r format(min(northatlantic_ft$ballot_date), "%B %Y")`, see the full timeline -- going back to 1953 -- provided by @harderSupplerendeMaterialeFaeroske2022.
 
-
 ```{r timeline-mandates}
 #| echo: false
 #| message: false
@@ -216,9 +215,9 @@ ggplot(mandates, aes(x = start, xend = end, y = plotting_name, yend = plotting_n
 
 ## Political Parties
 
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and joined two relatively young parties (Nunatta Qitornai and Naleraq[^4]).
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and joined two relatively young parties (Nunatta Qitornai and Naleraq[^3]).
 
-[^4]: Both parties have been formed quite recently -- Naleraq in 2014 and Nunatta Qitornai in 2017. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
+[^3]: Both parties have been formed quite recently -- Naleraq in 2014 and Nunatta Qitornai in 2017. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
 
 See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West [-@westSkipanarligarFortreytirOg2022 in Faroese; -@westFaeroskPolitikMellem2020 in Danish].
 
