@@ -167,8 +167,8 @@ classDiagram
 
     ballot_info_raw <|-- ballot_results_ft
 
-    cabinets_fo <|-- northatlantic_ft
-    cabinets_gl <|-- northatlantic_ft
+    cabinets_fo .. cabinets_gl
+    cabinets_gl .. cabinets_dk
     cabinets_dk <|-- northatlantic_ft
 
     class northatlantic_ft {
