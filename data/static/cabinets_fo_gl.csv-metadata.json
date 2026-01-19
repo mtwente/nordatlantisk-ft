@@ -14,7 +14,7 @@
 			{
 				"name": "cabinet",
 				"dc:title": "Cabinet Name",
-				"description": "ID for the cabinet, usually named af the head of government",
+				"description": "ID for the cabinet, usually named after the head of government",
 				"datatype": "string"
 			},
 			{
