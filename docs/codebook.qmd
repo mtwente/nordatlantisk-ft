@@ -877,6 +877,10 @@ head(cabinets_fo_gl)
 
 Descriptions of all variables in `cabinets_fo_gl` are provided in the following sections.
 
+::: {.callout-warning}
+TODO
+:::
+
 ------------------------------------------------------------------------
 
 ### cabinets_dk {#cabinets_dk}
@@ -888,6 +892,10 @@ head(cabinets_dk)
 ```
 
 Descriptions of all variables in `cabinets_dk` are provided in the following sections.
+
+::: {.callout-warning}
+TODO
+:::
 
 ------------------------------------------------------------------------
 
