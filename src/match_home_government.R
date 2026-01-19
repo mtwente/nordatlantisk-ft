@@ -5,7 +5,7 @@ library(dplyr)
 # Definition -----
 
 match_home_government <- function(input_df,
-                                  cabinets_fo_path = here("data", "processed", "csv", "cabinets_fo_gl.csv"),
+                                  cabinets_fo_path = here("data", "processed", "csv", "cabinets_fo.csv"),
                                   cabinets_gl_path = here("data", "processed", "csv", "cabinets_gl.csv")) {
   
   # Load cabinet data
