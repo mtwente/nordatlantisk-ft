@@ -50,7 +50,7 @@ plot_dataset <- northatlantic_ft %>%
 mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
 elections <- read.delim(here("data", "static", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
 cabinets_fo_gl <- read.delim(here("data", "static", "cabinets_fo_gl.csv"), sep = ";", stringsAsFactors = FALSE)
-cabinets_dk <- read.delim(here("data", "static", "cabinets_dk.csv"), sep = ";", stringsAsFactors = FALSE)
+cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
 
 #### Convert dates
 mandates <- mandates %>%

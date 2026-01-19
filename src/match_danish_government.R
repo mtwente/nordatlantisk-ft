@@ -9,7 +9,7 @@ library(here)
 
 match_danish_government <- function(
     input_df,
-    cabinets_dk_path = here("data", "static", "cabinets_dk.csv")
+    cabinets_dk_path = here("data", "processed", "csv", "cabinets_dk.csv")
 ) {
   
   # Load Danish cabinet timeline
