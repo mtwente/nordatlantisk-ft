@@ -1,11 +1,10 @@
 # Setup -----
 ## Packages -----
-
 library(here)
 
 ## Create Data -----
 
-cabinets <- data.frame(
+cabinets_dk <- data.frame(
   cabinet = c(
     "rasmussen-a-f_1",
     "rasmussen-a-f_2",
