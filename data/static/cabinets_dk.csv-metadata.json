@@ -30,6 +30,12 @@
 				"datatype": "string"
 			},
 			{
+				"name": "type",
+				"dc:title": "Cabinet Type",
+				"description": "String identifying whether the government is a single-party government (single_party) or a coalition government (coalition)",
+				"datatype": "string"
+			},
+			{
 				"name": "start",
 				"dc:title": "Start Date",
 				"description": "Date the coalition took office",
