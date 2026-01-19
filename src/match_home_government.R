@@ -5,10 +5,14 @@ library(dplyr)
 # Definition -----
 
 match_home_government <- function(input_df,
-                                  cabinets_fo_gl_path = here("data", "processed", "csv", "cabinets_fo_gl.csv")) {
+                                  cabinets_fo_path = here("data", "processed", "csv", "cabinets_fo_gl.csv"),
+                                  cabinets_gl_path = here("data", "processed", "csv", "cabinets_gl.csv")) {
   
-  # Load cabinet dates
-  cabinets_fo_gl <- read_delim(cabinets_fo_gl_path)
+  # Load cabinet data
+  cabinets_gl <- read_delim(cabinets_gl_path)
+  cabinets_fo <- read_delim(cabinets_fo_path)
+
+  cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
   
   # Prepare cabinet timeline
   cabinets_fo_gl <- cabinets_fo_gl %>%
