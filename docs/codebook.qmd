@@ -157,7 +157,7 @@ classDiagram
         surname : string
         origin: string
         party : string
-        governing_party_at_home: bool
+        gvt_party_at_home: bool
         vote_type_id : int
         ballot_pass : bool
         ft_process_step : string
@@ -907,12 +907,12 @@ summary(northatlantic_ft$origin)
 str(northatlantic_ft$party)
 ```
 
-#### northatlantic_ft\$governing_party_at_home
+#### northatlantic_ft\$gvt_party_at_home
 
-`governing_party_at_home` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, `MP_names` and `cabinets_fo_gl`, indicating whether the MP is a member of a political party that is part of the governing Naalakkersuisut (GL) resp. Landsstýri (FO) at the time. See [`cabinets_fo_gl`](#cabinets_fo_gl).
+`gvt_party_at_home` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, `MP_names` and `cabinets_fo_gl`, indicating whether the MP is a member of a political party that is part of the governing Naalakkersuisut (GL) resp. Landsstýri (FO) at the time. See [`cabinets_fo_gl`](#cabinets_fo_gl).
 
 ```{r}
-summary(northatlantic_ft$governing_party_at_home)
+summary(northatlantic_ft$gvt_party_at_home)
 ```
 
 #### northatlantic_ft\$vote_type_id

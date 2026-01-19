@@ -21,7 +21,7 @@ match_governing_coalition <- function(input_df,
   output_df <- input_df %>%
     rowwise() %>%
     mutate(
-      governing_party_at_home = {
+      gvt_party_at_home = {
         
         cab <- cabinets_fo_gl %>%
           filter(
