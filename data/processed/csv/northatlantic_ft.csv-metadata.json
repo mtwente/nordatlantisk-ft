@@ -3,7 +3,7 @@
 	"url": "northatlantic_ft.csv",
 	"dc:title": "nordatlantisk ft",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2025-12-01",
+	"dc:updated": "2026-01-19",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -31,10 +31,22 @@
 				"datatype": "string"
 			},
 			{
+				"name": "origin",
+				"dc:title": "Origin",
+				"description": "Geographical origin of the MP.",
+				"datatype": { "base": "string", "format": "GL|FO" }
+			},
+			{
 				"name": "party",
 				"dc:title": "Party",
 				"dc:description": "Political Party the MP is member of",
 				"datatype": "string"
+			},
+			{
+				"name": "gvt_party_at_home",
+				"dc:title": "Governing Party at Home",
+				"dc:description": "Boolean indicating if the party the MP belongs to is part of the governing coalition in Greenland or Faroe Islands at the time of the vote.",
+				"datatype": { "base": "boolean", "format": "TRUE|FALSE" }
 			},
 			{
 				"name": "vote_type_id",
@@ -109,6 +121,20 @@
 				"dc:title": "Ballot Type ID",
 				"dc:description": "ID assigned to the ballot type.",
 				"datatype": { "base": "integer", "minimum": "1", "maximum": "4" }
+			},
+			{
+				"name": "gvt_type_dk",
+				"dc:title": "Type of Government in Denmark",
+				"dc:description": "Indicates the type of cabinet governing in Denmark at the time of observation",
+				"datatype": "string",
+				"lang": "en"
+			},
+			{
+				"name": "gvt_bloc_dk",
+				"dc:title": "Political Bloc of the Danish Government",
+				"dc:description": "Indicates the political bloc of the cabinet governing in Denmark at the time of observation (red/left, blue/right or across)",
+				"datatype": "string",
+				"lang": "en"
 			},
 			{
 				"name": "comment",

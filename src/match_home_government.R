@@ -1,0 +1,53 @@
+# Setup -----
+## Packages -----
+library(dplyr)
+
+# Definition -----
+
+match_home_government <- function(input_df,
+                                  cabinets_fo_path = here("data", "processed", "csv", "cabinets_fo.csv"),
+                                  cabinets_gl_path = here("data", "processed", "csv", "cabinets_gl.csv")) {
+  
+  # Load cabinet data
+  cabinets_gl <- read_delim(cabinets_gl_path)
+  cabinets_fo <- read_delim(cabinets_fo_path)
+
+  cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
+  
+  # Prepare cabinet timeline
+  cabinets_fo_gl <- cabinets_fo_gl %>%
+    mutate(
+      start = ymd(start),
+      end   = ymd(end),
+      end   = coalesce(end, Sys.Date())
+    )
+  
+  output_df <- input_df %>%
+    rowwise() %>%
+    mutate(
+      gvt_party_at_home = {
+        
+        cab <- cabinets_fo_gl %>%
+          filter(
+            location == origin,
+            ballot_date >= start,
+            ballot_date <= end
+          )
+        
+        if (nrow(cab) == 0) {
+          FALSE
+        } else {
+          party_col <- paste0(origin, "_", party)
+          
+          if (!party_col %in% names(cab)) {
+            FALSE
+          } else {
+            isTRUE(cab[[party_col]][1])
+          }
+        }
+      }
+    ) %>%
+    ungroup()
+
+  return(output_df)
+}

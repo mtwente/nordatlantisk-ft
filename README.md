@@ -14,7 +14,6 @@ This repository contains voting records of Greenlandic and Faroese Members of Pa
 
 The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) by [@maehr](https://github.com/maehr), follows the [Advanced Structure for Data Analysis](https://book.the-turing-way.org/project-design/pd-overview/project-repo/project-repo-advanced/) of _The Turing Way_ and is organized as follows:
 
-- `analysis/`: scripts and notebooks used to analyze the data
 - `assets/`: images, background data, literature references etc. used in the README and other documentation
 - `build/`: built files, PDF outputs
 - `data/`: data files
@@ -31,7 +30,7 @@ For all MPs that were elected in either Greenland or the Faroe Islands since 200
 
 In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
 
-Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
+For each recorded vote, the database contains additional metadata such as statements on the MP's party membership, the overall ballot result in parliament or the topic of the vote. Additionally included is basic information on the cabinets governing in Denmark, Greenland and the Faroe Islands at the time of each record. Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
 
 ### Installation
 
@@ -67,10 +66,7 @@ The following citation formats are also available through _Zenodo_:
 - [CSL](https://zenodo.org/record/10517955/export/csl)
 - [DataCite](https://zenodo.org/record/10517955/export/dcite4)
 - [Dublin Core](https://zenodo.org/record/10517955/export/xd)
-- [DCAT](https://zenodo.org/record/10517955/export/dcat)
 - [JSON](https://zenodo.org/record/10517955/export/json)
-- [JSON-LD](https://zenodo.org/record/10517955/export/schemaorg_jsonld)
-- [GeoJSON](https://zenodo.org/record/10517955/export/geojson)
 - [MARCXML](https://zenodo.org/record/10517955/export/xm)
 
 _Zenodo_ provides an [API (REST & OAI-PMH)](https://developers.zenodo.org/) to access the data. For example, the following command will return the metadata for the most recent version of the data

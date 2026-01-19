@@ -5,7 +5,7 @@ library(here)
 library(readr)
 
 match_party_affiliation <- function(input_df,
-                                  mp_dates_path = here("assets", "background_data", "MP_dates.csv")) {
+                                  mp_dates_path = here("data", "static", "MP_dates.csv")) {
   
   # Load MP_dates
   MP_dates <- read_delim(mp_dates_path)
@@ -19,7 +19,7 @@ match_party_affiliation <- function(input_df,
     ) %>%
     select(MP_id, start, end, party)
   
-  input_df <- input_df %>%
+  output_df <- input_df %>%
     mutate(
       MP_id = as.factor(MP_id),
       ballot_date = as.Date(ballot_date)
@@ -27,7 +27,8 @@ match_party_affiliation <- function(input_df,
     left_join(MP_dates, by = "MP_id") %>%
     filter(ballot_date >= start & ballot_date <= end) %>%
     select(-start, -end) %>%
+    mutate(party = factor(party)) %>%
     relocate(party, .after = surname)
   
-  return (input_df)
+  return (output_df)
 }

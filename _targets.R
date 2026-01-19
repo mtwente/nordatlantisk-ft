@@ -9,7 +9,7 @@ library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble", "dplyr", "ggplot2", "here", "httr", "magrittr", "purrr", "strex", "rmarkdown") # packages that your targets need to run
+  packages = c("tibble", "dplyr", "ggplot2", "here", "httr", "magrittr", "purrr", "strex", "rmarkdown", "lubridate") # packages that your targets need to run
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # For distributed computing in tar_make(), supply a {crew} controller

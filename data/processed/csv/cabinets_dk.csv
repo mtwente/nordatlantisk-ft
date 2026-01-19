@@ -1,0 +1,11 @@
+"cabinet","wikidata_id","bloc","type","start","end","DK_A","DK_B","DK_C","DK_F","DK_I","DK_M","DK_V"
+"rasmussen-a-f_1","Q1549269","right","coalition",2001-11-27,2005-02-18,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE
+"rasmussen-a-f_2","Q2137611","right","coalition",2005-02-18,2007-11-23,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE
+"rasmussen-a-f_3","Q1890260","right","coalition",2007-11-23,2009-04-05,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE
+"rasmussen-l-l_1","Q1485892","right","coalition",2009-04-05,2011-10-03,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE
+"thorning-schmidt_1","Q283704","left","coalition",2011-10-03,2014-02-03,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE
+"thorning-schmidt_2","Q15707210","left","coalition",2014-02-03,2015-06-28,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"rasmussen-l-l_2","Q20451905","right","single_party",2015-06-28,2016-11-28,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"rasmussen-l-l_3","Q27924454","right","coalition",2016-11-28,2019-06-27,FALSE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE
+"frederiksen_1","Q64831553","left","single_party",2019-06-27,2022-12-15,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+"frederiksen_2","Q115694681","across","coalition",2022-12-15,NA,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE

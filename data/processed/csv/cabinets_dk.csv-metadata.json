@@ -1,0 +1,100 @@
+{
+	"@context": "https://www.w3.org/ns/csvw",
+	"url": "cabinets_dk.csv",
+	"dc:title": "List of Danish Governments",
+	"dc:publisher": "Moritz Twente",
+	"dc:updated": "2026-01-19",
+	"dc:type": "Dataset",
+	"dc:format": "text/csv",
+	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"tableSchema": {
+		"aboutUrl": "README.md",
+		"notes": "Table with a list of all government coalitions in Danmark for the time frame covered by the nordatlantisk-ft dataset (starting 2004).",
+		"columns": [
+			{
+				"name": "cabinet",
+				"dc:title": "Cabinet Name",
+				"description": "ID for the cabinet, usually named after the head of government",
+				"datatype": "string"
+			},
+			{
+				"name": "wikidata_id",
+				"dc:title": "Cabinet Wikidata ID",
+				"description": "Wikidata Identifier for the entity representing each cabinet",
+				"datatype": "string"
+			},
+			{
+				"name": "bloc",
+				"dc:title": "Political Bloc",
+				"description": "String identifying whether the government coalition belongs to the left (red) or right (blue) bloc of Danish politics, or is formed across blocs (across)",
+				"datatype": "string"
+			},
+			{
+				"name": "type",
+				"dc:title": "Cabinet Type",
+				"description": "String identifying whether the government is a single-party government (single_party) or a coalition government (coalition)",
+				"datatype": "string"
+			},
+			{
+				"name": "start",
+				"dc:title": "Start Date",
+				"description": "Date the coalition took office",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			},
+			{
+				"name": "end",
+				"dc:title": "End Date",
+				"description": "Date the coalition left office",
+				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+			},
+			{
+				"name": "DK_A",
+				"dc:title": "Socialdemokratiet (A) Party Coalition Membership",
+				"description": "Boolean indicator whether Socialdemokratiet (A) was part of the coalition government",
+				"datatype": "boolean"
+			},
+			{
+				"name": "DK_B",
+				"dc:title": "Radikale Venstre (B) Party Coalition Membership",
+				"description": "Boolean indicator whether Radikale Venstre (B) was part of the coalition government",
+				"datatype": "boolean"
+			},
+			{
+				"name": "DK_C",
+				"dc:title": "Det Konservative Folkeparti (C) Party Coalition Membership",
+				"description": "Boolean indicator whether Det Konservative Folkeparti (C) was part of the coalition government",
+				"datatype": "boolean"
+			},
+			{
+				"name": "DK_F",
+				"dc:title": "Socialistisk Folkeparti (F) Party Coalition Membership",
+				"description": "Boolean indicator whether Socialistisk Folkeparti (F) was part of the coalition government",
+				"datatype": "boolean"
+			},
+			{
+				"name": "DK_I",
+				"dc:title": "Liberal Alliance (I) Party Coalition Membership",
+				"description": "Boolean indicator whether Liberal Alliance (I) was part of the coalition government",
+				"datatype": "boolean"
+			},
+			{
+				"name": "DK_M",
+				"dc:title": "Moderaterne (M) Party Coalition Membership",
+				"description": "Boolean indicator whether Moderaterne (M) were part of the coalition government",
+				"datatype": "boolean"
+			},
+			{
+				"name": "DK_V",
+				"dc:title": "Venstre (V) Party Coalition Membership",
+				"description": "Boolean indicator whether Venstre (V) was part of the coalition government",
+				"datatype": "boolean"
+			}
+		],
+		"dialect": {
+			"delimiter": ";",
+			"quoteChar": "\"",
+			"encoding": "UTF-8"
+		},
+		"primaryKey": ["cabinet"]
+	}
+}
