@@ -3,7 +3,7 @@
 	"url": "cabinets_fo_gl.csv",
 	"dc:title": "List of Greenlandic and Faroese Governments",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-16",
+	"dc:updated": "2026-01-19",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -18,7 +18,7 @@
 				"datatype": "string"
 			},
 			{
-				"name": "wikidata_ID",
+				"name": "wikidata_id",
 				"dc:title": "Cabinet Wikidata ID",
 				"description": "Wikidata Identifier for the entity representing each cabinet",
 				"datatype": "string"
