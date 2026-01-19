@@ -54,7 +54,13 @@ match_danish_government <- function(
         }
       }
     ) %>%
-    ungroup()
+    ungroup() %>%
+    
+    # Convert to factors
+    mutate(
+      gvt_dk_bloc = factor(gvt_dk_bloc),
+      gvt_dk_type = factor(gvt_dk_type)
+    )
   
   return(output_df)
 }
