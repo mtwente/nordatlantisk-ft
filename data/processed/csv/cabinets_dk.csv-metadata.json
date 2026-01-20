@@ -3,7 +3,7 @@
 	"url": "cabinets_dk.csv",
 	"dc:title": "List of Danish Governments",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-19",
+	"dc:updated": "2026-01-20",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -91,7 +91,7 @@
 			}
 		],
 		"dialect": {
-			"delimiter": ";",
+			"delimiter": ",",
 			"quoteChar": "\"",
 			"encoding": "UTF-8"
 		},
