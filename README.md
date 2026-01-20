@@ -34,6 +34,12 @@ For each recorded vote, the database contains additional metadata such as statem
 
 ### Installation
 
+Install Node.js, Quarto and R. Run the following commands in the root directory of the repository:
+
+```bash
+npm install
+```
+
 Use the [renv package](https://rstudio.github.io/renv/index.html) to install all dependencies and set up a reproducible environment within the R project. To see which packages are loaded with renv for the workflow before installing them to the project library, run `renv::dependencies()`.
 
 ```r
@@ -57,6 +63,36 @@ The targets pipeline is set to check for new voting records **every twelve weeks
 You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add the IDs to the column(s) `MP_id` in the data frame created in [`src/create_MP_list.R`](/src/create_MP_list.R) and then run `targets::tar_make()`.
 
 ## Use
+
+Check that all files are properly formatted.
+
+```bash
+npm run check
+```
+
+Format all files.
+
+```bash
+npm run format
+```
+
+Run the wizard to write meaningful commit messages.
+
+```bash
+npm run commit
+```
+
+Run the wizard to create a CHANGELOG.md.
+
+```bash
+npm run changelog
+```
+
+Preview the documentation.
+
+```bash
+quarto preview
+```
 
 This data is openly available to everyone and can be used for any research or educational purpose. If you use this data in your research, please cite as specified in [CITATION.cff](CITATION.cff).
 
