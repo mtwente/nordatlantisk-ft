@@ -48,7 +48,7 @@ plot_dataset <- northatlantic_ft %>%
 
 ### Timeline of Mandates and Cabinets -----
 mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
-elections <- read.delim(here("data", "static", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+elections <- readRDS(here("data", "processed", "election_dates.rds"))
 cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
 
 cabinets_fo <- readRDS(here("data", "processed", "cabinets_fo.rds"))
