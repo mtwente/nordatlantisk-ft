@@ -91,7 +91,7 @@
 			}
 		],
 		"dialect": {
-			"delimiter": ";",
+			"delimiter": ",",
 			"quoteChar": "\"",
 			"encoding": "UTF-8"
 		},

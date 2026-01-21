@@ -3,7 +3,7 @@
 	"url": "election_dates.csv",
 	"dc:title": "Folketinget Election Dates",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2025-08-22",
+	"dc:updated": "2026-01-20",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -26,7 +26,7 @@
 			}
 		],
 		"dialect": {
-			"delimiter": ";",
+			"delimiter": ",",
 			"quoteChar": "\"",
 			"encoding": "UTF-8"
 		},

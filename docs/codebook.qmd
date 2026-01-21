@@ -48,12 +48,11 @@ plot_dataset <- northatlantic_ft %>%
 
 ### Timeline of Mandates and Cabinets -----
 mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
-elections <- read.delim(here("data", "static", "election_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+elections <- readRDS(here("data", "processed", "election_dates.rds"))
 cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
 
 cabinets_fo <- readRDS(here("data", "processed", "cabinets_fo.rds"))
 cabinets_gl <- readRDS(here("data", "processed", "cabinets_gl.rds"))
-cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
 
 #### Convert dates
 mandates <- mandates %>%
@@ -84,6 +83,8 @@ cabinets_dk <- cabinets_dk %>%
       end   = ymd(end),
       end   = coalesce(end, Sys.Date())
     )
+
+cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
 
 ## Manipulate Data -----
 
@@ -340,7 +341,7 @@ click northatlantic_ft href "#northatlantic_ft" "tooltip"
 
 ### MP_names {#mp_names}
 
-`MP_names` is provided in `csv` and `rds` formats in `/data/processed`. The `csv` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
+`MP_names` is provided in `csv` and `rds` formats in `/data/processed`. The `csv` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
 
 [^1]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
 
@@ -374,7 +375,7 @@ head(mp_names$first_name)
 
 Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(mp_names$MP_id)` as `r class(mp_names$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
 
-`MP_id` is the only necessary column in `MP_names` for successfully executing the workflow pipeline.
+`MP_id` is the only necessary column in `MP_names` for retrieving voting records. Most of the other variables are somehow used in post-processing, though.
 
 ```{r}
 head(mp_names$MP_id)
@@ -571,7 +572,7 @@ head(northatlantic_votes_raw$aktørid)
 
 #### northatlantic_votes_raw\$opdateringsdato
 
-For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its last update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(northatlantic_votes_raw$opdateringsdato)`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
+For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its most recent update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(northatlantic_votes_raw$opdateringsdato)`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
 
 This variable is eliminated from [`northatlantic_votes`](#northatlantic_votes) as a result of data processing.
 
@@ -823,7 +824,7 @@ head(ballot_info_raw$sagstrinid)
 
 #### ballot_info_raw\$opdateringsdato
 
-For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its last update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(ballot_info_raw$opdateringsdato)`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
+For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its most recent update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(ballot_info_raw$opdateringsdato)`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
 
 This variable is eliminated from [`ballot_results_ft`](#ballot_results_ft) as a result of data processing.
 
@@ -889,7 +890,7 @@ head(ballot_topics_raw$ft_topic)
 
 ### cabinets_fo {#cabinets_fo}
 
-`cabinets_fo` is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+`cabinets_fo` is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 See also [cabinets_gl](#cabinets_gl) and [cabinets_dk](#cabinets_dk).
 
@@ -1016,7 +1017,7 @@ summary(cabinets_fo$FO_H)
 
 ### cabinets_gl {#cabinets_gl}
 
-`cabinets_gl` is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+`cabinets_gl` is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 See also [cabinets_fo](#cabinets_fo) and [cabinets_dk](#cabinets_dk).
 
@@ -1152,7 +1153,7 @@ summary(cabinets_gl$GL_SIU)
 
 ### cabinets_dk {#cabinets_dk}
 
-`cabinets_dk` is provided as `csv` and `rds` file in `/data/processed/`. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the last update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+`cabinets_dk` is provided as `csv` and `rds` file in `/data/processed/`. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 See also [cabinets_fo](#cabinets_fo) and [cabinets_gl](#cabinets_gl).
 
@@ -1288,7 +1289,7 @@ summary(cabinets_dk$DK_V)
 
 ### northatlantic_ft {#northatlantic_ft}
 
-`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes), [`ballot_topics_raw`](#ballot_topics_raw) and [`cabinets_fo_gl`](#cabinets_fo_gl). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
+`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. It contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes), [`ballot_topics_raw`](#ballot_topics_raw) as well as information on cabinets in [`cabinets_fo`](#cabinets_fo), [`cabinets_gl`](#cabinets_gl) and [`cabinets_dk`](#cabinets_dk). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
 
 ```{r}
 str(northatlantic_ft)
