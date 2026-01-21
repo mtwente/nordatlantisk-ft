@@ -144,7 +144,7 @@ We use [SemVer](http://semver.org/) for versioning. The available versions are l
 
 See also the list of [contributors](https://github.com/mtwente/nordatlantisk-ft/graphs/contributors) who contributed to this project.
 
-Voting records and ballot results were retrieved from [Folketinget's open data service](https://oda.ft.dk/) under [Folketinget's terms of service](https://www.ft.dk/dokumenter/aabne_data).
+Voting records and ballot results were retrieved from [Folketinget's open data service](https://oda.ft.dk/) under [Folketinget's terms of service](https://www.ft.dk/dokumenter/aabne_data). Some additional metadata on party positions used in the documentation is incorporated from [ParlGov](https://doi.org/10.7910/DVN/UKILBE).
 
 ## License
 
