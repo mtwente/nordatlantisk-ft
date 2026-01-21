@@ -1083,7 +1083,7 @@ The date on which each cabinet is succeeded by the next one is stored as `r clas
 Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
 
 ```{r}
-head(cabinets_fo$start)
+head(cabinets_fo$end)
 ```
 
 #### cabinets_fo\$FO_A {#cabinets_fofoa}
@@ -1209,7 +1209,7 @@ The date on which each cabinet is succeeded by the next one is stored as `r clas
 Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
 
 ```{r}
-head(cabinets_gl$start)
+head(cabinets_gl$end)
 ```
 
 #### cabinets_gl\$GL_A {#cabinets_glgla}
@@ -1355,7 +1355,7 @@ The date on which each cabinet is succeeded by the next one is stored as `r clas
 Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
 
 ```{r}
-head(cabinets_dk$start)
+head(cabinets_dk$end)
 ```
 
 #### cabinets_dk\$DK_A {#cabinets_dkdka}
