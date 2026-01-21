@@ -375,7 +375,7 @@ head(mp_names$first_name)
 
 Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(mp_names$MP_id)` as `r class(mp_names$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
 
-`MP_id` is the only necessary column in `MP_names` for successfully executing the workflow pipeline.
+`MP_id` is the only necessary column in `MP_names` for retrieving voting records. Most of the other variables are somehow used in post-processing, though.
 
 ```{r}
 head(mp_names$MP_id)
