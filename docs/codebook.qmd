@@ -86,54 +86,6 @@ cabinets_dk <- cabinets_dk %>%
 
 cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
 
-## Manipulate Data -----
-
-### Avoid confusing MPs with the same last name
-mandates <- mandates %>%
-  mutate(
-    plotting_name = case_when(
-      MP_id == "12283" ~ "A. V. Johannesen",
-      MP_id == "6687"  ~ "K. L. Johannesen",
-      TRUE             ~ surname
-    )
-  )
-
-plot_dataset <- plot_dataset %>%
-  mutate(
-    plotting_name = case_when(
-      MP_id == "12283" ~ "A. V. Johannesen",
-      MP_id == "6687"  ~ "K. L. Johannesen",
-      TRUE             ~ surname
-    )
-  )
-
-### Order dataset by MP surnames for plotting
-plot_dataset_ordered <- plot_dataset %>%
-  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
-  mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length)) %>%
-  mutate(vote_type_id = fct_relevel(vote_type_id, "1", "2", "4", "3"))
-
-### Subset only with votes that were actually cast
-plot_dataset_without_absences <- subset(plot_dataset_ordered, vote_type_id != 3) %>%
-  mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
-  mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length))
-
-## Set Plotting Theme -----
-
-theme_nordatlantisk_basis <- function(){
-  
-  theme_grey() %+replace%
-    theme(axis.title = element_blank(),
-          axis.ticks.y = element_blank(),
-          panel.background = element_blank(),
-          panel.grid.major.x = element_line(color = "#000000", linewidth = 0.1),
-          panel.grid.minor.x = element_line(color = "#000000", linewidth = 0.1),
-          panel.grid.major.y = element_blank(),
-          panel.grid.minor.y = element_blank(),
-          axis.ticks.x = element_line(color = "#000000", linewidth = 0.1),
-          axis.line.y.left = element_line(color = "#000000", linewidth = 0.1))
-}
-
 ```
 
 ## Introduction {#introduction}
