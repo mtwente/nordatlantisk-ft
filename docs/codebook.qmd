@@ -278,7 +278,7 @@ style northatlantic_votes fill:#FFEAAE
 style MP_names fill:#6195CF,color:#FFFFFF
 style MP_dates fill:#6195CF,color:#FFFFFF
 
-%% not implemented %% click MP_dates href "#mp_dates" "tooltip"
+click MP_dates href "#mp_dates" "tooltip"
 click election_dates href "#election_dates" "tooltip"
 click political_parties href "#political_parties" "tooltip"
 click MP_names href "#mp_names" "tooltip"
@@ -423,6 +423,86 @@ summary(mp_names$substitute)
 
 ------------------------------------------------------------------------
 
+### MP_dates {#mp_dates}
+
+`MP_dates` is provided as `csv` file in `/data/static`. 
+
+... `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
+
+... orlov: refer to @harderFaeroskeOgGronlandske2022 [12-13].
+
+```{r}
+head(mandates)
+```
+
+Descriptions of all variables in `MP_dates` are provided in the following sections.
+
+#### MP_dates\$surname {#mp_datessurname}
+
+All surname(s) are stored as values of the type `r typeof(mandates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification. See also [`MP_names$surname`](#mp_namessurname).
+
+```{r}
+str(mandates$surname)
+```
+
+#### MP_dates\$firstname {#mp_datesfirstname}
+
+All first names are stored as values of the type `r typeof(mandates$firstname)`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification. See also [`MP_names$first_name`](#mp_namesfirst_name).
+
+```{r}
+str(mandates$firstname)
+```
+
+#### MP_dates\$MP_id {#mp_datesmpid}
+
+TODO
+
+```{r}
+str(mandates$MP_id)
+```
+
+#### MP_dates\$origin {#mp_datesorigin}
+
+TODO
+
+```{r}
+table(mandates$origin)
+```
+
+#### MP_dates\$party {#mp_datesparty}
+
+TODO
+
+```{r}
+table(mandates$party)
+```
+
+#### MP_dates\$start {#mp_datesstart}
+
+TODO
+
+```{r}
+str(mandates$start)
+```
+
+#### MP_dates\$end {#mp_datesend}
+
+TODO
+
+```{r}
+str(mandates$end)
+```
+
+#### MP_dates\$substitute {#mp_datessubstitute}
+
+TODO
+
+```{r}
+table(mandates$substitute)
+```
+
+------------------------------------------------------------------------
+
 ### election_dates {#election_dates}
 
 This repository is shipped with a list of all elections to the parliaments in Denmark (Folketing), Greenland (Inatsisartut) and the Faroe Islands (Løgting) that led to the formation of the parliaments in session during the time period covered by this data set. This translates to `r nrow(election_dates[election_dates$election == "Folketing Election",])` elections to Folketing, `r nrow(election_dates[election_dates$election == "Inatsisartut Election",])` elections to Inatsisartut, and `r nrow(election_dates[election_dates$election == "Løgting Election",])` elections to Løgting. The earliest election included is the one held on `r format(min(election_dates$date), "%B %d, %Y")`, while the most recent election included was held on `r format(max(election_dates$date), "%B %d, %Y")`.
@@ -463,7 +543,7 @@ This repository is shipped with a list of political parties that have been repre
 
 The contents of `election_dates` is not used during the workflow to compile the final `northatlantik_ft` data set, but is used as secondary data for visualisation purposes.
 
-`political_parties` is provided as `csv` file in `data/static`. Metadata for the `csv` file is provided in an accompanying `json` metadata file.
+`political_parties` is provided as `csv` file in `data/static`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. See also [`MP_names$party`](#mp_namesparty).
 
 ```{r}
 str(political_parties)
