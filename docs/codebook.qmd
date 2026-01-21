@@ -355,17 +355,19 @@ summary(mp_names$origin)
 
 #### MP_names\$party {#mp_namesparty}
 
-The political party that each MP belongs to is stored as value of the type `r typeof(mp_names$party)` as `r class(mp_names$party)` variable. As per January 2024, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties. For now, the `MP_names` data frame does not include information on membership periods etc. At the moment, these two cases are therefore stored with a single string without distinguishing between membership periods.
+The political party that each MP belongs to is stored as value of the type `r typeof(mp_names$party)` as `r class(mp_names$party)` variable.
+
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, as per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties (Nunatta Qitornai and Naleraq[^2]).
+
+[^2]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
+
+For now, the `MP_names` data frame does not include information on membership periods etc. At the moment, these two cases are therefore stored with a single string without distinguishing between membership periods. Instead, a timeline of party membership(s) can be inferred using the information available in [`MP_dates`](#mp_dates). See also [`political_parties`](#political_parties).
 
 ```{r}
 summary(mp_names$party)
 ```
 
 All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
-
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and became members of newly formed parties (Nunatta Qitornai and Naleraq[^2]).
-
-[^2]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
 
 ```{r parties-list}
 #| echo: false
@@ -473,7 +475,7 @@ Descriptions of all variables in `political_parties` are provided in the followi
 
 The `party` variable of `political_parties` stores the common abbreviation for each party. All entries are stored as values of the type `r typeof(political_parties$party)` as `r class(political_parties$party)` variable.
 
-Note that while political parties in Greenland are abbreviated using letters actually corresponding to (at least a part of) their official names, this is not the case for parties in Denmark and and the Faroe Islands. Here, parties are often referred to by their one-letter reference code ([*Bogstavsbetegnelser*](https://www.valg.im.dk/partier-og-kandidater/partiernes-bogstavbetegnelser)). This code does not necessarily correspond to any part of the party's official name, but is simply a commonly used shorthand for the party. For example, the Faroese Social Democratic Party (Javnaðarflokkurin) is commonly labelled as `C`, even though the letter does not appear anywhere in the party's name.
+Note that while political parties in Greenland are abbreviated using letters actually corresponding to their official names, this is not the case for parties in Denmark and and the Faroe Islands. Here, parties are often referred to by their one-letter reference code ([*Bogstavsbetegnelser*](https://www.valg.im.dk/partier-og-kandidater/partiernes-bogstavbetegnelser)). This code does not necessarily correspond to any part of the party's official name, but is simply a commonly used shorthand for the party. For example, the Faroese Social Democratic Party (Javnaðarflokkurin) is commonly labelled as `C`, even though the letter does not appear anywhere in the party's name.
 
 ```{r}
 str(political_parties$party)
@@ -755,6 +757,7 @@ In `ft_abstention`, the number of abstaining votes is stored as `r class(ballot_
 The maximum value stored in `ft_abstention` is `r max(ballot_results_ft$ft_abstention, na.rm = TRUE)` and the minimum value stored in `ft_abstention` is `r min(ballot_results_ft$ft_abstention, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_abstention` cannot be greater than `179`.
 
 ```{r}
+summary(ballot_results_ft$ft_abstention)
 ```
 
 #### ballot_results_ft\$ft_absent {#ballot_results_ftft_absent}
