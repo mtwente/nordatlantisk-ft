@@ -83,6 +83,11 @@ northatlantic_ft_without_absences <- subset(northatlantic_ft_ordered, vote_type_
   mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
   mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length))
 
+### Subset Election Dates for Folketinget only
+
+elections_ft <- elections %>%
+  filter(election == "Folketing Election")
+
 ## Set Plotting Theme -----
 
 theme_nordatlantisk_basis <- function(){
@@ -194,12 +199,12 @@ ggplot(mandates, aes(x = start, xend = end, y = plotting_name, yend = plotting_n
     color = "Membership"
   ) +
   
-  # Folketing Elections
-  geom_vline(data = elections, aes(xintercept = as.Date(date), linetype = election),
+  # add Folketing Election dates
+  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election),
     color = "#000000",
     linewidth = 0.2
   ) +
-  scale_linetype_manual(values = c("General Election" = "longdash"), name = "") +
+  scale_linetype_manual(values = c("Folketing Election" = "longdash"), name = "") +
   
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
              labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
@@ -302,10 +307,10 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
 
   scale_y_discrete(labels = y_labels) +
   
-  # add Election dates
-  geom_vline(data = elections, aes(xintercept = as.Date(date), linetype = election),
+  # add Folketing Election dates
+  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election),
              color = "#000000", linewidth = 0.2) +
-  scale_linetype_manual(values = c("General Election" = "longdash"), name = "") +
+  scale_linetype_manual(values = c("Folketing Election" = "longdash"), name = "") +
   
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
              labeller = labeller(origin = c("FO" = "Faroe Islands", "GL" = "Greenland"))) +
