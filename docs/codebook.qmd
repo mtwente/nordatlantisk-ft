@@ -645,7 +645,7 @@ head(northatlantic_votes_raw$id)
 See [`northatlantic_votes$vote_type_id`](#northatlantic_votesvote_type_id). In the raw data, `typeid` is stored as `r typeof(northatlantic_votes_raw$typeid)` value.
 
 ```{r}
-head(northatlantic_votes_raw$typeid)
+table(northatlantic_votes_raw$typeid)
 ```
 
 #### northatlantic_votes_raw\$afstemningid
@@ -715,7 +715,7 @@ The result of all ballots in Folketinget is stored in `ballot_pass` as `r typeof
 This variable corresponds to the [`vedtaget`](#ballot_info_rawvedtaget) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk).
 
 ```{r}
-head(ballot_results_ft$ballot_pass)
+summary(ballot_results_ft$ballot_pass)
 ```
 
 #### ballot_results_ft\$ballot_date {#ballot_results_ftballot_date}
@@ -735,7 +735,7 @@ In `ft_for`, the number of votes cast in favor of a proposal is stored as `r cla
 The maximum value stored in `ft_for` is `r max(ballot_results_ft$ft_for, na.rm = TRUE)` and the minimum value stored in `ft_for` is `r min(ballot_results_ft$ft_for, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_for` cannot be greater than `179`.
 
 ```{r}
-head(ballot_results_ft$ft_for)
+summary(ballot_results_ft$ft_for)
 ```
 
 #### ballot_results_ft\$ft_against {#ballot_results_ftft_against}
@@ -745,7 +745,7 @@ In `ft_against`, the number of votes cast against a proposal is stored as `r cla
 The maximum value stored in `ft_against` is `r max(ballot_results_ft$ft_against, na.rm = TRUE)` and the minimum value stored in `ft_against` is `r min(ballot_results_ft$ft_against, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_against` cannot be greater than `179`.
 
 ```{r}
-head(ballot_results_ft$ft_against)
+summary(ballot_results_ft$ft_against)
 ```
 
 #### ballot_results_ft\$ft_abstention {#ballot_results_ftft_abstention}
@@ -755,7 +755,6 @@ In `ft_abstention`, the number of abstaining votes is stored as `r class(ballot_
 The maximum value stored in `ft_abstention` is `r max(ballot_results_ft$ft_abstention, na.rm = TRUE)` and the minimum value stored in `ft_abstention` is `r min(ballot_results_ft$ft_abstention, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_abstention` cannot be greater than `179`.
 
 ```{r}
-head(ballot_results_ft$ft_abstention)
 ```
 
 #### ballot_results_ft\$ft_absent {#ballot_results_ftft_absent}
@@ -765,7 +764,7 @@ In `ft_absent`, the number of MPs who were absent for each ballot is stored as `
 The maximum value stored in `ft_absent` is `89` and the minimum value stored in `ft_absent` is `r min(ballot_results_ft$ft_absent, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_absent` cannot be greater than `179`.
 
 ```{r}
-head(ballot_results_ft$ft_absent)
+summary(ballot_results_ft$ft_absent)
 ```
 
 #### ballot_results_ft\$ft_process_id {#ballot_results_ftft_process_id}
@@ -806,7 +805,7 @@ All ballot procedures in Folketinget are categorised using numeric values that c
 This variable corresponds to `typeid` variable in [`ballot_info_raw`](#ballot_info_rawtypeid) and the `type` variable in the `Afstemningstype` resource in [the Folketing online database](https://oda.ft.dk).
 
 ```{r}
-head(ballot_results_ft$ballot_type_id)
+table(ballot_results_ft$ballot_type_id)
 ```
 
 #### ballot_results_ft\$comment {#ballot_results_ftcomment}
@@ -839,7 +838,7 @@ In `ballot_result_string`, ballot results are stored as values of the type `r ty
 As per `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(ballot_results_ft$ballot_result_string))` observations with result character strings (total number of observations: `r nrow(ballot_results_ft)`). For the observations where `ballot_result_string` is not `NA`, the values are used to calculate [`ft_for`](#ballot_results_ftft_for), [`ft_against`](#ballot_results_ftft_against) and [`ft_abstention`](#ballot_results_ftft_abstention). Information on absent MPs is not provided in `ballot_result_string` but [can be inferred from the other values](#ballot_results_ftft_absent).
 
 ```{r}
-str(ballot_results_ft$ballot_result_string)
+head(ballot_results_ft$ballot_result_string)
 ```
 
 ------------------------------------------------------------------------
@@ -883,7 +882,7 @@ head(ballot_info_raw$konklusion)
 See [ballot_results_ft\$ballot_pass](#ballot_results_ftballot_pass). In the raw data, `vedtaget` is stored as `r typeof(ballot_info_raw$vedtaget)` value.
 
 ```{r}
-head(ballot_info_raw$vedtaget)
+summary(ballot_info_raw$vedtaget)
 ```
 
 #### ballot_info_raw\$kommentar
@@ -907,7 +906,7 @@ head(ballot_info_raw$mødeid)
 See [ballot_results_ft\$ballot_type_id](#ballot_results_ftballot_type_id). In the raw data, `typeid` is stored as `r typeof(ballot_info_raw$typeid)` value.
 
 ```{r}
-head(ballot_info_raw$typeid)
+table(ballot_info_raw$typeid)
 ```
 
 #### ballot_info_raw\$sagstrinid {#ballot_info_rawsagstrinid}
@@ -1445,7 +1444,7 @@ summary(northatlantic_ft$gvt_party_at_home)
 `northatlantic_ft` is a result of [`join_results()`](/src/targets/join_results.R) in which `vote_type_id` is joined from `northatlantic_votes$vote_type_id`. See [`northatlantic_votes$vote_type_id`](#northatlantic_votesvote_type_id).
 
 ```{r}
-str(northatlantic_ft$vote_type_id)
+table(northatlantic_ft$vote_type_id)
 ```
 
 #### northatlantic_ft\$vote_id
@@ -1461,7 +1460,7 @@ str(northatlantic_ft$vote_id)
 See [`ballot_results_ft$ballot_pass`](#ballot_results_ftballot_pass).
 
 ```{r}
-str(northatlantic_ft$ballot_pass)
+summary(northatlantic_ft$ballot_pass)
 ```
 
 #### northatlantic_ft\$ft_process_step
@@ -1477,7 +1476,7 @@ str(northatlantic_ft$ft_process_step)
 See [`ballot_topics_raw$ft_topic_id`](#ballot_topics_rawft_topic_id).
 
 ```{r}
-str(northatlantic_ft$ft_topic_id)
+head(northatlantic_ft$ft_topic_id)
 ```
 
 #### northatlantic_ft\$ft_topic
@@ -1493,7 +1492,7 @@ str(northatlantic_ft$ft_topic)
 See [`ballot_results_ft$ft_for`](#ballot_results_ftft_for).
 
 ```{r}
-str(northatlantic_ft$ft_for)
+summary(northatlantic_ft$ft_for)
 ```
 
 #### northatlantic_ft\$ft_against
@@ -1501,7 +1500,7 @@ str(northatlantic_ft$ft_for)
 See [`ballot_results_ft$ft_against`](#ballot_results_ftft_against).
 
 ```{r}
-str(northatlantic_ft$ft_against)
+summary(northatlantic_ft$ft_against)
 ```
 
 #### northatlantic_ft\$ft_abstention
@@ -1509,7 +1508,7 @@ str(northatlantic_ft$ft_against)
 See [`ballot_results_ft$ft_abstention`](#ballot_results_ftft_abstention).
 
 ```{r}
-str(northatlantic_ft$ft_abstention)
+summary(northatlantic_ft$ft_abstention)
 ```
 
 #### northatlantic_ft\$ft_absent
@@ -1517,7 +1516,7 @@ str(northatlantic_ft$ft_abstention)
 See [`ballot_results_ft$ft_absent`](#ballot_results_ftft_absent).
 
 ```{r}
-str(northatlantic_ft$ft_absent)
+summary(northatlantic_ft$ft_absent)
 ```
 
 #### northatlantic_ft\$ballot_date
@@ -1533,7 +1532,7 @@ str(northatlantic_ft$ballot_date)
 See [`ballot_results_ft$ballot_type_id`](#ballot_results_ftballot_type_id).
 
 ```{r}
-str(northatlantic_ft$ballot_type_id)
+table(northatlantic_ft$ballot_type_id)
 ```
 
 #### northatlantic_ft\$gvt_type_dk
