@@ -300,7 +300,7 @@ click northatlantic_ft href "#northatlantic_ft" "tooltip"
 [^1]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
 
 ```{r}
-head(mp_names)
+str(mp_names)
 ```
 
 Descriptions of all variables in `MP_names` are provided in the following sections. The only variable necessary to execute the workflow is stored as [`MP_names$MP_id`](#mp_namesmp_id).
@@ -432,7 +432,7 @@ summary(mp_names$substitute)
 ... orlov: refer to @harderFaeroskeOgGronlandske2022 [12-13].
 
 ```{r}
-head(mandates)
+str(mandates)
 ```
 
 Descriptions of all variables in `MP_dates` are provided in the following sections.
@@ -650,7 +650,7 @@ head(political_parties$anti_pro_eu)
 `northatlantic_votes` is provided as `rds` file in `/data/processed/`. After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#northatlantic_votes_raw) is available as `csv` file in `/data/raw/`. As per `r format(file.info(here("data", "processed", "northatlantic_votes.rds"))$mtime, "%B %Y")`, `northatlantic_votes.rds` contains `r nrow(northatlantic_votes)` observations of `r ncol(northatlantic_votes)` variables.
 
 ```{r}
-head(northatlantic_votes)
+str(northatlantic_votes)
 ```
 
 Descriptions of all variables in `northatlantic_votes` are provided in the following sections.
@@ -709,7 +709,7 @@ head(northatlantic_votes$MP_id)
 `northatlantic_votes_raw` is provided as `csv` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#northatlantic_votes) is available as `rds` file in `/data/processed`. As of `r format(file.info(here("data", "raw", "northatlantic_votes_raw.csv"))$mtime, "%B %Y")`, `northatlantic_votes_raw.csv` contains `r nrow(northatlantic_votes_raw)` observations of `r ncol(northatlantic_votes_raw)` variables.
 
 ```{r}
-head(northatlantic_votes_raw)
+str(northatlantic_votes_raw)
 ```
 
 Descriptions of all variables in `northatlantic_votes_raw` are provided in the following sections.
@@ -931,7 +931,7 @@ head(ballot_results_ft$ballot_result_string)
 `ballot_info_raw` is provided as `csv` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#ballot_results_ft) is available as `rds` file in `/data/processed`. As per `r format(file.info(here("data", "processed", "northatlantic_votes.rds"))$mtime, "%B %Y")`, `ballot_info_raw.csv` contains `r nrow(ballot_info_raw)` observations of `r ncol(ballot_info_raw)` variables.
 
 ```{r}
-head(ballot_info_raw)
+str(ballot_info_raw)
 ```
 
 Descriptions of all variables in `ballot_info_raw` are provided in the following sections.
@@ -1017,7 +1017,7 @@ head(ballot_info_raw$opdateringsdato)
 `ballot_topics_raw` is provided as `csv` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.csv"))$mtime, "%B %Y")`, `ballot_topics_raw.csv` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
 
 ```{r}
-head(ballot_topics_raw)
+str(ballot_topics_raw)
 ```
 
 Descriptions of all variables in `ballot_topics_raw` are provided in the following sections.
@@ -1073,7 +1073,7 @@ head(ballot_topics_raw$ft_topic)
 See also [cabinets_gl](#cabinets_gl) and [cabinets_dk](#cabinets_dk).
 
 ```{r}
-head(cabinets_fo)
+str(cabinets_fo)
 ```
 
 Descriptions of all variables in `cabinets_fo` are provided in the following sections.
@@ -1199,7 +1199,7 @@ summary(cabinets_fo$FO_H)
 See also [cabinets_fo](#cabinets_fo) and [cabinets_dk](#cabinets_dk).
 
 ```{r}
-head(cabinets_gl)
+str(cabinets_gl)
 ```
 
 Descriptions of all variables in `cabinets_gl` are provided in the following sections.
@@ -1335,7 +1335,7 @@ summary(cabinets_gl$GL_SIU)
 See also [cabinets_fo](#cabinets_fo) and [cabinets_gl](#cabinets_gl).
 
 ```{r}
-head(cabinets_dk)
+str(cabinets_dk)
 ```
 
 Descriptions of all variables in `cabinets_dk` are provided in the following sections.
