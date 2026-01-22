@@ -1515,7 +1515,7 @@ summary(northatlantic_ft$origin)
 
 #### northatlantic_ft\$party
 
-`party` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$party`](#mp_namesparty).
+`party` is created by using [`match_party_affiliation()`](/src/match_party_affiliation.R) during [`join_results()`](/src/targets/join_results.R), combining [`northatlantic_ft$ballot_date`](#northatlantic_ftballot_date) and [`MP_dates`](#mp_dates). This way, changes in party affiliations are reflected in `northatlantic_ft$party` as well.
 
 ```{r}
 summary(northatlantic_ft$party)
@@ -1523,7 +1523,7 @@ summary(northatlantic_ft$party)
 
 #### northatlantic_ft\$gvt_party_at_home
 
-`gvt_party_at_home` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, `MP_names` and `cabinets_fo` resp. `cabinets_gl`, indicating whether the MP is a member of a political party that is part of the governing Naalakkersuisut (GL) resp. Landsstýri (FO) at the time. See [`cabinets_fo`](#cabinets_fo) and [`cabinets_gl`](#cabinets_gl).
+`gvt_party_at_home` is created by using [`match_home_government()`](/src/match_home_government.R) during [`join_results()`](/src/targets/join_results.R) on `northatlantic_ft`, and `cabinets_fo` resp. `cabinets_gl`, indicating whether the MP is a member of a political party that is part of the governing Naalakkersuisut (GL) resp. Landsstýri (FO) at the time. See [`cabinets_fo`](#cabinets_fo) and [`cabinets_gl`](#cabinets_gl).
 
 ```{r}
 summary(northatlantic_ft$gvt_party_at_home)
@@ -1627,7 +1627,7 @@ table(northatlantic_ft$ballot_type_id)
 
 #### northatlantic_ft\$gvt_type_dk
 
-`gvt_type_dk` is created by using [`join_results()`](/src/targets/join_results.R) on `cabinets_dk`, indicating whether the Danish government is a coalition or a single-party government at the time of the observation. See [`cabinets_dk$type`](#cabinets_dktype).
+`gvt_type_dk` is created by using [`match_danish_government()`](/src/match_danish_government.R) on [`cabinets_dk`](#cabinets_dk) during [`join_results()`](/src/targets/join_results.R), indicating whether the Danish government is a coalition or a single-party government at the time of the observation. See [`cabinets_dk$type`](#cabinets_dktype).
 
 ```{r}
 summary(northatlantic_ft$gvt_type_dk)
@@ -1635,7 +1635,7 @@ summary(northatlantic_ft$gvt_type_dk)
 
 #### northatlantic_ft\$gvt_bloc_dk
 
-`gvt_bloc_dk` is created by using [`join_results()`](/src/targets/join_results.R) on `cabinets_dk`, indicating the political bloc (left/red, right/blue or across) the Danish government belongs to at the time of the observation. See [`cabinets_dk$bloc`](#cabinets_dkbloc).
+`gvt_bloc_dk` is created by using [`match_danish_government()`](/src/match_danish_government.R) on [`cabinets_dk`](#cabinets_dk) during [`join_results()`](/src/targets/join_results.R), indicating the political bloc (left/red, right/blue or across) the Danish government belongs to at the time of the observation. See [`cabinets_dk$bloc`](#cabinets_dkbloc).
 
 ```{r}
 summary(northatlantic_ft$gvt_bloc_dk)
