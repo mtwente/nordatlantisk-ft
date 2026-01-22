@@ -7,13 +7,7 @@ library(here)
 
 # Definition -----
 
-match_danish_government <- function(
-    input_df,
-    cabinets_dk_path = here("data", "processed", "csv", "cabinets_dk.csv")
-) {
-  
-  # Load Danish cabinet timeline
-  cabinets_dk <- read_delim(cabinets_dk_path)
+match_danish_government <- function(input_df, cabinets_dk) {
   
   # Prepare cabinet timeline
   cabinets_dk <- cabinets_dk %>%

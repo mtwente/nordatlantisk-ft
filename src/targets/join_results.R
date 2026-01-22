@@ -3,9 +3,6 @@
 library(dplyr)
 library(here)
 
-## External Functions -----
-source(here("src", "match_danish_government.R"), local = TRUE)
-
 # Definition -----
 
 join_results <- function(voting_records, ballot_results, ballot_topics, MP_names) {
@@ -21,10 +18,6 @@ join_results <- function(voting_records, ballot_results, ballot_topics, MP_names
     
     left_join(ballot_topics %>% select(ft_process_id, ft_process_step,
                                        ft_topic_id, ft_topic),
-              by = "ft_process_id") %>%
-    
-    match_danish_government()
-  
               by = "ft_process_id")
 
   # Return -----
