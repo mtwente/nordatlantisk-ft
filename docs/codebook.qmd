@@ -415,7 +415,7 @@ kable(
 
 #### MP_names\$substitute
 
-Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in this dataset. Data on membership periods is available in [`/data/static/MP_dates.csv`](/data/static/MP_dates.csv).
+Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in `MP_names`. More detailed data on membership periods is available in [`MP_dates`](#mp_dates).
 
 ```{r}
 summary(mp_names$substitute)
@@ -425,11 +425,7 @@ summary(mp_names$substitute)
 
 ### MP_dates {#mp_dates}
 
-`MP_dates` is provided as `csv` file in `/data/static`. 
-
-... `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
-
-... orlov: refer to @harderFaeroskeOgGronlandske2022 [12-13].
+`MP_dates` is provided as `csv` file in `/data/static`. This dataset includes detailed information on membership timelines of MPs in Folketinget. Because a substantial share of MPs from Greenland and the Faroe Islands were absent for a longer period [@harderFaeroskeOgGronlandske2022, 12-13], there have been a number of substitute MPs (stedfortræder) replacing the originally elected politicians during their time(s) of absence. Those MPs are listed here as well. As of `r format(file.info(here("data", "static", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `MP_dates` includes `r nrow(mandates)` observations of `r ncol(mandates)` variables.
 
 ```{r}
 str(mandates)
@@ -455,7 +451,8 @@ str(mandates$firstname)
 
 #### MP_dates\$MP_id {#mp_datesmpid}
 
-TODO
+Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(mandates$MP_id)` as `r class(mandates$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207). See also [`MP_names$mP_id`](#mp_namesmp_id).
+
 
 ```{r}
 str(mandates$MP_id)
@@ -463,7 +460,7 @@ str(mandates$MP_id)
 
 #### MP_dates\$origin {#mp_datesorigin}
 
-TODO
+`origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mandates$origin)` as `r class(mandates$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
 
 ```{r}
 table(mandates$origin)
@@ -471,31 +468,41 @@ table(mandates$origin)
 
 #### MP_dates\$party {#mp_datesparty}
 
-TODO
+The political party that each MP belongs to is stored as value of the type `r typeof(mandates$party)` as `r class(mandates$party)` variable. See [`MP_names$party`](#mp_namesparty) and [`political_parties`](#political_parties) for more information. In contrast to those, `MP_dates$party` actually provides information on changing party membership(s) since membership entries are split up on a timeline. This way, it's possible to match each recorded vote to the valid party membership at a specific point in time.
+
+Note that the value `UF` means that the MP is not a member of a political group/party at the time ("uden for folketingsgrupperne").
 
 ```{r}
-table(mandates$party)
+unique(mandates$party)
 ```
 
 #### MP_dates\$start {#mp_datesstart}
 
-TODO
+The date on which each membership period begins is stored as `r class(mandates$start)` variable of the type `r typeof(mandates$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(mandates$start), "%B %d, %Y")` (`r min(mandates$start)`) and the most recent entry from `r format(max(mandates$start), "%B %d, %Y")` (`r max(mandates$start)`) as of `r format(file.info(here("data", "static", "MP_dates.csv"))$mtime, "%B %Y")`.
+
+In this data set, a membership period is either starting when a politicians joins Folketinget for the first time, if the MP in question is re-joining after being replaced by a temporary substitute member or if there is a change in party affiliation.
 
 ```{r}
-str(mandates$start)
+head(mandates$start)
 ```
 
 #### MP_dates\$end {#mp_datesend}
 
-TODO
+The date on which each membership period ends is stored as `r class(mandates$end)` variable of the type `r typeof(mandates$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(mandates$end), "%B %d, %Y")` (`r min(mandates$end)`) as of `r format(file.info(here("data", "static", "MP_dates.csv"))$mtime, "%B %Y")`.
+
+In this data set, a membership period ends either when a politicians leaves Folketinget for good, if the MP in question is temporarily being replaced by a temporary substitute member or if there is a change in party affiliation.
 
 ```{r}
-str(mandates$end)
+head(mandates$end)
 ```
 
 #### MP_dates\$substitute {#mp_datessubstitute}
 
-TODO
+Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. In contrast to the data in [`MP_names$substitute`](#mp_namessubstitute), the data available in `MP_dates$substitute` also distinguishes between MPs that first joined as substitute MPs but became regular MPs at a later date.
+
+As per `r format(file.info(here("data", "static", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `r length(unique(mandates$MP_id[mandates$substitute]))` substitute MPs have joined Folketinget in total.
+
+`r sum(mp_names$substitute == TRUE)` of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for one of the `r sum(mp_names$substitute == FALSE)` originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13].
 
 ```{r}
 table(mandates$substitute)
