@@ -4,7 +4,7 @@ library(here)
 
 ## Create Data -----
 
-elections <- data.frame(
+election_dates <- data.frame(
   election = factor(c(
     rep("Folketing Election", 7),
     rep("Inatsisartut Election", 8),
@@ -45,12 +45,12 @@ elections <- data.frame(
 ## Export -----
 
 write.csv(
-  elections,
+  election_dates,
   here("data", "processed", "csv", "election_dates.csv"),
   row.names = FALSE
 )
 
 saveRDS(
-  elections,
+  election_dates,
   here("data", "processed", "election_dates.rds")
 )
