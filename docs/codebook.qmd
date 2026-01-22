@@ -32,7 +32,7 @@ library(lubridate)
 mp_names <- readRDS(here("data", "processed", "MP_names.rds"))
 
 ### List of political parties -----
-political_parties <- read.csv(here("data", "static", "political_parties.csv"), sep = ";", check.names = FALSE)
+political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 
 ### Voting Records Database -----
 northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rds"))
@@ -403,6 +403,7 @@ kable(
   parties_gl_printable,
   caption = "Greenlandic Parties",
   col.names = printable_names,
+  row.names = FALSE,
   escape = FALSE
 )
 
@@ -410,6 +411,7 @@ kable(
   parties_fo_printable,
   caption = "Faroese Parties",
   col.names = printable_names,
+  row.names = FALSE,
   escape = FALSE)
 ```
 
@@ -546,11 +548,11 @@ str(election_dates$date)
 
 ### political_parties {#political_parties}
 
-This repository is shipped with a list of political parties that have been represented in Folketinget during the time period covered by this data set. This list was most recently updated on `r format(file.info(here("data", "static", "political_parties.csv"))$mtime, "%B %d, %Y")` and includes `r nrow(political_parties)` political parties. From these parties, `r nrow(political_parties[political_parties$origin == "GL", ])` are from Greenland and `r nrow(political_parties[political_parties$origin == "FO", ])` from the Faroe Islands.
+This repository is shipped with a list of political parties that have been represented in Folketinget during the time period covered by this data set. This list was most recently updated on `r format(file.info(here("data", "processed", "csv", "political_parties.csv"))$mtime, "%B %d, %Y")` and includes `r nrow(political_parties)` political parties. From these parties, `r nrow(political_parties[political_parties$origin == "GL", ])` are from Greenland and `r nrow(political_parties[political_parties$origin == "FO", ])` from the Faroe Islands.
 
 The contents of `election_dates` is not used during the workflow to compile the final `northatlantik_ft` data set, but is used as secondary data for visualisation purposes.
 
-`political_parties` is provided as `csv` file in `data/static`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. See also [`MP_names$party`](#mp_namesparty).
+`political_parties` is provided is provided in `csv` and `rds` formats in `/data/processed`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. See also [`MP_names$party`](#mp_namesparty).
 
 ```{r}
 str(political_parties)
@@ -604,7 +606,7 @@ head(political_parties$colour)
 
 #### political_parties\$origin
 
-`origin` indicates whether a party stands for election in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(political_parties$origin)` as `r class(political_parties$origin)` variable. As per `r format(file.info(here("data", "static", "political_parties.csv"))$mtime, "%B %Y")`, `political_parties` lists `r nrow(political_parties[political_parties$origin == "GL", ])` Greenlandic and `r nrow(political_parties[political_parties$origin == "FO", ])` Faroese parties.
+`origin` indicates whether a party stands for election in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(political_parties$origin)` as `r class(political_parties$origin)` variable. As per `r format(file.info(here("data", "processed", "csv", "political_parties.csv"))$mtime, "%B %Y")`, `political_parties` lists `r nrow(political_parties[political_parties$origin == "GL", ])` Greenlandic and `r nrow(political_parties[political_parties$origin == "FO", ])` Faroese parties.
 
 ```{r}
 table(political_parties$origin)
