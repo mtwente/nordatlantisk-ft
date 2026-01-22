@@ -39,7 +39,8 @@ political_parties <- read.csv(here("data", "static", "political_parties.csv"), s
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
 ### Timeline of Mandates -----
-mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+#mandates <- read.delim(here("data", "processed", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+mandates <- readRDS(here("data", "processed", "MP_dates.rds"))
 elections <- readRDS(here("data", "processed", "election_dates.rds"))
 
 #### Convert dates
@@ -262,6 +263,7 @@ kable(
   parties_gl,
   caption = "Greenlandic Parties",
   col.names = printable_names,
+  row.names = FALSE,
   escape = FALSE
 )
 
@@ -269,6 +271,7 @@ kable(
   parties_fo,
   caption = "Faroese Parties",
   col.names = printable_names,
+  row.names = FALSE,
   escape = FALSE)
 ```
 

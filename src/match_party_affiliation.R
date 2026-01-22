@@ -5,10 +5,10 @@ library(here)
 library(readr)
 
 match_party_affiliation <- function(input_df,
-                                  mp_dates_path = here("data", "static", "MP_dates.csv")) {
+                                  mp_dates_path = here("data", "processed", "MP_dates.rds")) {
   
   # Load MP_dates
-  MP_dates <- read_delim(mp_dates_path)
+  MP_dates <- readRDS(mp_dates_path)
   
   # Prepare MP_dates
   MP_dates <- MP_dates %>%
