@@ -9,7 +9,7 @@ clean_voting_records <- function(raw_votes) {
   
   # Manipulate Data -----
   
-  raw_votes <- raw_votes[, -5] # removes opdateringsdato
+  raw_votes <- subset(raw_votes, select = -opdateringsdato)
   
   colnames(raw_votes) <- c("vote_id", "vote_type_id", "ballot_id", "MP_id")
   
