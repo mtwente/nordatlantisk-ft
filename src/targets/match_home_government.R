@@ -4,14 +4,9 @@ library(dplyr)
 
 # Definition -----
 
-match_home_government <- function(input_df,
-                                  cabinets_fo_path = here("data", "processed", "csv", "cabinets_fo.csv"),
-                                  cabinets_gl_path = here("data", "processed", "csv", "cabinets_gl.csv")) {
+match_home_government <- function(input_df, cabinets_fo, cabinets_gl) {
   
-  # Load cabinet data
-  cabinets_gl <- read_delim(cabinets_gl_path)
-  cabinets_fo <- read_delim(cabinets_fo_path)
-
+  # Combine cabinet data
   cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
   
   # Prepare cabinet timeline
