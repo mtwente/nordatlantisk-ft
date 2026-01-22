@@ -33,13 +33,14 @@ library(scales)
 mp_names <- readRDS(here("data", "processed", "MP_names.rds"))
 
 ### List of political parties -----
-political_parties <- read.csv(here("data", "static", "political_parties.csv"), sep = ";", check.names = FALSE)
+political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 
 ### Voting Records Database -----
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
 ### Timeline of Mandates -----
-mandates <- read.delim(here("data", "static", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+#mandates <- read.delim(here("data", "processed", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
+mandates <- readRDS(here("data", "processed", "MP_dates.rds"))
 elections <- readRDS(here("data", "processed", "election_dates.rds"))
 
 #### Convert dates
@@ -82,6 +83,11 @@ northatlantic_ft_ordered <- northatlantic_ft %>%
 northatlantic_ft_without_absences <- subset(northatlantic_ft_ordered, vote_type_id != 3) %>%
   mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
   mutate(plotting_name = fct_reorder(plotting_name, vote_type_id, .fun = length))
+
+### Subset Election Dates for Folketinget only
+
+elections_ft <- elections %>%
+  filter(election == "Folketing Election")
 
 ## Set Plotting Theme -----
 
@@ -194,12 +200,12 @@ ggplot(mandates, aes(x = start, xend = end, y = plotting_name, yend = plotting_n
     color = "Membership"
   ) +
   
-  # Folketing Elections
-  geom_vline(data = elections, aes(xintercept = as.Date(date), linetype = election),
+  # add Folketing Election dates
+  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election),
     color = "#000000",
     linewidth = 0.2
   ) +
-  scale_linetype_manual(values = c("General Election" = "longdash"), name = "") +
+  scale_linetype_manual(values = c("Folketing Election" = "longdash"), name = "") +
   
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
              labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
@@ -257,6 +263,7 @@ kable(
   parties_gl,
   caption = "Greenlandic Parties",
   col.names = printable_names,
+  row.names = FALSE,
   escape = FALSE
 )
 
@@ -264,6 +271,7 @@ kable(
   parties_fo,
   caption = "Faroese Parties",
   col.names = printable_names,
+  row.names = FALSE,
   escape = FALSE)
 ```
 
@@ -302,10 +310,10 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
 
   scale_y_discrete(labels = y_labels) +
   
-  # add Election dates
-  geom_vline(data = elections, aes(xintercept = as.Date(date), linetype = election),
+  # add Folketing Election dates
+  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election),
              color = "#000000", linewidth = 0.2) +
-  scale_linetype_manual(values = c("General Election" = "longdash"), name = "") +
+  scale_linetype_manual(values = c("Folketing Election" = "longdash"), name = "") +
   
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
              labeller = labeller(origin = c("FO" = "Faroe Islands", "GL" = "Greenland"))) +

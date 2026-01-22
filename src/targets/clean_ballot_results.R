@@ -24,7 +24,7 @@ clean_ballot_results <- function(input_df) {
   
   ## Clean and Format Data Frame -----
   
-  input_df <- input_df[, -9] # removes opdateringsdato
+  input_df <- subset(input_df, select = -opdateringsdato)
   
   input_df <- input_df %>%
     mutate(kommentar = ifelse(kommentar == "", NA, kommentar),

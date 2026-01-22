@@ -3,7 +3,7 @@
 	"url": "political_parties.csv",
 	"dc:title": "Political Parties",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2025-12-01",
+	"dc:updated": "2026-01-22",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -75,7 +75,7 @@
 			}
 		],
 		"dialect": {
-			"delimiter": ";",
+			"delimiter": ",",
 			"quoteChar": "\"",
 			"encoding": "UTF-8"
 		},

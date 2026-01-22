@@ -3,18 +3,18 @@
 	"url": "election_dates.csv",
 	"dc:title": "Folketinget Election Dates",
 	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-20",
+	"dc:updated": "2026-01-21",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
 	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
 	"tableSchema": {
 		"aboutUrl": "/README.md",
-		"notes": "Table with dates of general Folketinget elections since 2001.",
+		"notes": "Table with dates of elections to Folketinget, Inatsisartut and Løgting relevant for the timeframe covered by this dataset (starting 2004).",
 		"columns": [
 			{
 				"name": "election",
 				"dc:title": "Election",
-				"description": "Type of election",
+				"description": "Type of election (Folketing, Inatsisartut, Løgting)",
 				"datatype": "string"
 			},
 
