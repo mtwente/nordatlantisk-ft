@@ -90,12 +90,12 @@ cabinets_dk <- data.frame(
 ## Export -----
 
 write.csv(
-  cabinets,
+  cabinets_dk,
   here("data", "processed", "csv", "cabinets_dk.csv"),
   row.names = FALSE
 )
 
 saveRDS(
-  cabinets,
+  cabinets_dk,
   here("data", "processed", "cabinets_dk.rds")
 )
