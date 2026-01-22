@@ -51,14 +51,44 @@ tar_source(files = "src/targets")
 
 tar_plan(
   
+  ## Read files with base data
   tar_target(
     MP_names_file,
     here("data", "processed", "MP_names.rds"),
     format = "file"
   ),
   
-  MP_names = readRDS(MP_names_file),
+  tar_target(
+    MP_dates_file,
+    here("data", "processed", "MP_dates.rds"),
+    format = "file"
+  ),
   
+  tar_target(
+    cabinets_fo_file,
+    here("data", "processed", "cabinets_fo.rds"),
+    format = "file"
+  ),
+  
+  tar_target(
+    cabinets_gl_file,
+    here("data", "processed", "cabinets_gl.rds"),
+    format = "file"
+  ),
+  
+  tar_target(
+    cabinets_dk_file,
+    here("data", "processed", "cabinets_dk.rds"),
+    format = "file"
+  ),
+  
+  MP_names = readRDS(MP_names_file),
+  MP_dates = readRDS(MP_dates_file),
+  cabinets_fo = readRDS(cabinets_fo_file),
+  cabinets_gl = readRDS(cabinets_gl_file),
+  cabinets_dk = readRDS(cabinets_dk_file),
+
+  ## targets to add voting records to dataset
   tar_target(
     name = raw_voting_records,
     command = get_voting_records(MP_names),
@@ -70,6 +100,7 @@ tar_plan(
   
   cleaned_voting_records = clean_voting_records(raw_voting_records),
   
+  ## targets to add ballot information to dataset
   tar_target(
     name = ballot_info,
     command = get_ballot_info(),
@@ -87,8 +118,15 @@ tar_plan(
   
   ballot_topics = get_topics(cleaned_ballot_results),
   
-  northatlantic_ft = join_results(cleaned_voting_records, cleaned_ballot_results,
+  records_with_ballot_info = join_results(cleaned_voting_records, cleaned_ballot_results,
                                   ballot_topics, MP_names),
+  
+  ## targets to add non-voting-related metadata to dataset
+  records_with_parties = match_party_affiliation(records_with_ballot_info, MP_dates),
+  
+  records_with_home_gvt = match_home_government(records_with_parties, cabinets_fo, cabinets_gl),
+  
+  northatlantic_ft = match_danish_government(records_with_home_gvt, cabinets_dk),
   
   export = export_dataset(northatlantic_ft)
   )
