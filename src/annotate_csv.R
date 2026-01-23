@@ -4,6 +4,7 @@ library(lubridate)
 
 annotate <- function(
     data,
+    primary_key = names(data)[1],
     column_description,
     column_datatype,
     license = "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -81,7 +82,7 @@ annotate <- function(
     tableSchema = list(
       aboutUrl = about_url,
       columns = columns,
-      primaryKey = names(data)[1]
+      primaryKey = primary_key
     ),
     dialect = list(
       delimiter = ",",
