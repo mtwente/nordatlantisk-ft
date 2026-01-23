@@ -1,7 +1,9 @@
 # Setup -----
 ## Packages -----
-
 library(here)
+
+## External Functions -----
+source(here("src", "annotate_csv.R"), local = TRUE)
 
 ## Define MP timeline -----
 
@@ -142,3 +144,30 @@ saveRDS(
   MP_dates,
   here("data", "processed", "MP_dates.rds")
 )
+
+## Metadata -----
+
+annotate(MP_dates,
+         dataset_description = "MP_dates is provided in csv and rds formats in /data/processed. This dataset includes detailed information on membership timelines of MPs in Folketinget. Refer to the documentation for more details.",
+         column_title = c(
+           "Membership Period ID",
+           "Surname(s)",
+           "First Name(s)",
+           "MP ID",
+           "Origin",
+           "Party",
+           "Start Date",
+           "End Date",
+           "Substitute MP"
+           ),
+         column_description = c(
+           "Unique identifier for each membership period",
+           "Surname(s) of the MP. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
+           "First Name(s) of the MP. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
+           "Each MP is assigned an ID by Folketingets åbne data service (ODA). Each MP_id thus is a unique identifier for one member of Folketinget",
+           "Geographical origin of the MP, using ISO 3166-2 codes",
+           "Political Party the MP is member of at the time of this vote, using the common abbreviation for Greenlandic Parties and the party letter code (Bogstavsbetegnelse) for Faroese parties",
+           "Date of the beginning of a parliamentary membership period",
+           "Date of the end of parliamentary membership period",
+           "Boolean indicating whether the MP served Folketinget as a substitute member for another MP who went on leave"
+           ))

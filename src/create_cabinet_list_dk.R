@@ -2,6 +2,9 @@
 ## Packages -----
 library(here)
 
+## External Functions -----
+source(here("src", "annotate_csv.R"), local = TRUE)
+
 ## Create Data -----
 
 cabinets_dk <- data.frame(
@@ -99,3 +102,40 @@ saveRDS(
   cabinets_dk,
   here("data", "processed", "cabinets_dk.rds")
 )
+
+## Metadata -----
+
+annotate(cabinets_dk,
+         dataset_description = "cabinets_dk is provided as csv and rds file in /data/processed/. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
+         primary_key = "cabinet",
+         lang = list("en"),
+         column_title = c(
+           "Cabinet Name",
+           "Wikidata ID",
+           "Party Bloc",
+           "Cabinet Type",
+           "Start Date",
+           "End Date",
+           "Socialdemokratiet (A) Party Coalition Membership",
+           "Radikale Venstre (B) Party Coalition Membership",
+           "Det Konservative Folkeparti (C) Party Coalition Membership",
+           "Socialistisk Folkeparti (F) Party Coalition Membership",
+           "Liberal Alliance (I) Party Coalition Membership",
+           "Moderaterne (M) Party Coalition Membership",
+           "Venstre (V) Party Coalition Membership"
+           ),
+         column_description = c(
+           "ID for the cabinet, usually named after the head of government",
+           "Wikidata Identifier for the entity representing each cabinet",
+           "String identifying whether the government coalition belongs to the left (red) or right (blue) bloc of Danish politics, or is formed across blocs (across)",
+           "String identifying whether the government is a single-party government (single_party) or a coalition government (coalition)",
+           "Date the coalition took office",
+           "Date the coalition left office",
+           "Boolean indicating whether Socialdemokratiet (A) was part of the cabinet",
+           "Boolean indicating whether Radikale Venstre (B) was part of the cabinet",
+           "Boolean indicating whether Det Konservative Folkeparti (C) was part of the cabinet",
+           "Boolean indicating whether Socialistisk Folkeparti (F) was part of the cabinet",
+           "Boolean indicating whether Liberal Alliance (I) was part of the cabinet",
+           "Boolean indicating whether Moderaterne (M) were part of the cabinet",
+           "Boolean indicating whether Venstre (V) was part of the cabinet"
+           ))

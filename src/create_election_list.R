@@ -2,6 +2,9 @@
 ## Packages -----
 library(here)
 
+## External Functions -----
+source(here("src", "annotate_csv.R"), local = TRUE)
+
 ## Create Data -----
 
 election_dates <- data.frame(
@@ -66,3 +69,18 @@ saveRDS(
   election_dates,
   here("data", "processed", "election_dates.rds")
 )
+
+## Metadata -----
+
+annotate(election_dates,
+         dataset_description = "This repository is shipped with a list of all elections to the parliaments in Denmark (Folketinget), Greenland (Inatsisartut) and the Faroe Islands (Løgtingið) that led to the formation of the parliaments in session during the time period covered by this data set. Refer to the documentation for more details.",
+         column_title = c(
+           "Election",
+           "Type of Election",
+           "Date of Election"
+           ),
+         column_description = c(
+           "Each recorded election can be reliably identified by using the unique `election` variable",
+           "The `election_dates` dataset includes elections to three different parliaments: Danish Folketinget, Greenlandic Inatsisartut and Faroese Løgtingið. To distinguish between elections, the type of election is stored in `election_dates$election_type`.",
+           "The date of each election is stored in `election_dates$date`, indicating the day of voting")
+         )

@@ -1,7 +1,9 @@
 # Setup -----
 ## Packages -----
-
 library(here)
+
+## External Functions -----
+source(here("src", "annotate_csv.R"), local = TRUE)
 
 ## Define Column Names -----
 
@@ -70,3 +72,32 @@ saveRDS(
   political_parties,
   here("data", "processed", "political_parties.rds")
 )
+
+## Metadata -----
+
+annotate(political_parties,
+         dataset_description = "This repository is shipped with a list of political parties that have been represented in Folketinget during the time period covered by this data set. political_parties is provided is provided in csv and rds formats in /data/processed. Refer to the documentation for more details.",
+         column_title = c(
+           "Abbreviation",
+           "Name",
+           "Wikidata ID",
+           "Party Family",
+           "Colour",
+           "Origin",
+           "Left-Right Position",
+           "State-Market Position",
+           "Liberty-Authority Position",
+           "Anti-Pro EU Position"),
+         column_description = c(
+                            "Code for the political party, using the common abbreviation for Greenlandic Parties and the party letter code (Bogstavsbetegnelse) for Faroese parties",
+                            "Name of the political party. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
+                            "Wikidata Identifier for the entity representing each party",
+                            "Title of the political party family the party is part of, taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+                            "HEX Code of the main colour associated with the policial party, taken from Wikipedia",
+                            "Geographical origin of the party, using ISO 3166-2 codes",
+                            "left_right indicates where a party’s positions are located on a scale from 0 (left) to 10 (right), taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+                            "state_market indicates where a party’s positions on regulating the economy are located on a scale from 0 (preferring state regulations) to 10 (preferring unregulated markets), taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+                            "liberty_authority indicates indicates a party’s position on a scale from 0 (libertarian) to 10 (authoritarian), taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+                            "anti_pro_eu indicates a party’s position towards EU integration on a scale from 0 (in favor of EU integration) to 10 (against EU integration), taken from the ParlGov database (Döring, Huber, and Manow 2022)"
+                            )
+         )
