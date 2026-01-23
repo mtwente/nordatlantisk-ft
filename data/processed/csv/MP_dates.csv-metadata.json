@@ -1,69 +1,101 @@
 {
-	"@context": "https://www.w3.org/ns/csvw",
+	"@context": [
+		"http://www.w3.org/ns/csvw",
+		{
+			"@language": "en"
+		}
+	],
 	"url": "MP_dates.csv",
-	"dc:title": "Calendar Information on Membership Terms",
-	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-22",
+	"dc:title": "MP_dates",
+	"dc:isPartOf": "nordatlantisk-ft",
+	"dc:creator": {
+		"name": "Moritz Twente",
+		"email": "mtwente@protonmail.com",
+		"orcid": "0009-0005-7187-9774"
+	},
+	"dc:description": "MP_dates is provided in csv and rds formats in /data/processed. This dataset includes detailed information on membership timelines of MPs in Folketinget. Refer to the documentation for more details.",
+	"dc:modified": {
+		"@value": "2026-01-23T17:13:44+0100",
+		"@type": "xs:dateTime"
+	},
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
-	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:license": {
+		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+	},
 	"tableSchema": {
 		"aboutUrl": "/README.md",
-		"notes": "Dataset with information on the beginning and end of Folketinget memberships per MPs.",
 		"columns": [
+			{
+				"name": "period_id",
+				"dc:title": "Membership Period ID",
+				"dc:description": "Unique identifier for each membership period",
+				"datatype": "factor"
+			},
 			{
 				"name": "surname",
 				"dc:title": "Surname(s)",
-				"dc:description": "Surname(s) of the MP",
+				"dc:description": "Surname(s) of the MP. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
 				"datatype": "string"
 			},
 			{
 				"name": "firstname",
 				"dc:title": "First Name(s)",
-				"dc:description": "First Name(s) of the MP",
+				"dc:description": "First Name(s) of the MP. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
 				"datatype": "string"
 			},
 			{
 				"name": "MP_id",
 				"dc:title": "MP ID",
-				"dc:description": "Unique Identifier for each MP, taken from Folketingets Open Data",
-				"datatype": "integer"
+				"dc:description": "Each MP is assigned an ID by Folketingets åbne data service (ODA). Each MP_id thus is a unique identifier for one member of Folketinget",
+				"datatype": "factor"
 			},
 			{
 				"name": "origin",
 				"dc:title": "Origin",
-				"description": "Geographical origin of the MP.",
-				"datatype": { "base": "string", "format": "GL|FO" }
+				"dc:description": "Geographical origin of the MP, using ISO 3166-2 codes",
+				"datatype": "factor"
 			},
 			{
 				"name": "party",
-				"dc:title": "Political Party",
-				"dc:description": "Abbreviation of the Political Party the MP is a member of at the given time",
-				"datatype": "string"
+				"dc:title": "Party",
+				"dc:description": "Political Party the MP is member of at the time of this vote, using the common abbreviation for Greenlandic Parties and the party letter code (Bogstavsbetegnelse) for Faroese parties",
+				"datatype": "factor"
 			},
 			{
 				"name": "start",
 				"dc:title": "Start Date",
-				"dc:description": "Date of the beginning of parliamentary membership",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date of the beginning of a parliamentary membership period",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "1988-10-06",
+					"maximum": "2025-11-14"
+				}
 			},
 			{
 				"name": "end",
 				"dc:title": "End Date",
-				"dc:description": "Date of the end of parliamentary membership",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date of the end of parliamentary membership period",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "1988-10-19",
+					"maximum": "2025-11-14"
+				}
 			},
 			{
 				"name": "substitute",
-				"dc:title": "Substitute Membership",
-				"description": "Information whether the MP served Folketinget as a substitute member for another MP who went on leave",
+				"dc:title": "Substitute MP",
+				"dc:description": "Boolean indicating whether the MP served Folketinget as a substitute member for another MP who went on leave",
 				"datatype": "boolean"
 			}
 		],
-		"dialect": {
-			"delimiter": ",",
-			"quoteChar": "\"",
-			"encoding": "UTF-8"
-		}
+		"primaryKey": "period_id"
+	},
+	"dialect": {
+		"delimiter": ",",
+		"quoteChar": "\"",
+		"encoding": "UTF-8"
 	}
 }
