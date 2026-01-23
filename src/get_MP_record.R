@@ -41,7 +41,7 @@ get_MP_record <- function(MP_id, existing_path, existing_records = NULL) {
   }
   
   # ---- Local count ----
-  existing_count <- get_local_vote_count(MP_id, existing_df)
+  existing_count <- get_local_vote_count(MP_id, existing_records)
   
   # ---- Timestamp check for newest updates ----
   ordered_first_page <- paste0(ordered_url, 0) %>%
@@ -109,10 +109,10 @@ get_MP_record <- function(MP_id, existing_path, existing_records = NULL) {
   }
   
   # ---- Check for Duplicated Vote IDs ----
-  if (!is.null(existing_df)) {
+  if (!is.null(existing_records)) {
     all_MP_votes <- anti_join(
       all_MP_votes,
-      existing_df,
+      existing_records,
       by = "id"
     )
   }
