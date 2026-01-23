@@ -117,7 +117,7 @@ MP_dates <- as.data.frame(MP_dates, stringsAsFactors = FALSE)
 
 colnames(MP_dates) <- c(
   "period_id",
-  "surname", "firstname", "MP_id",
+  "surname", "first_name", "MP_id",
   "origin", "party",
   "start", "end",
   "substitute"

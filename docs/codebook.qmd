@@ -158,7 +158,7 @@ classDiagram
         class MP_dates {
         period_id : string
         surname : string
-        firstname : string
+        first_name : string
         MP_id: int
         origin: string
         party : string
@@ -453,12 +453,12 @@ All surname(s) are stored as values of the type `r typeof(mandates$surname)`. Na
 str(mandates$surname)
 ```
 
-#### MP_dates\$firstname {#mp_datesfirstname}
+#### MP_dates\$first_name {#mp_datesfirst_name}
 
-All first names are stored as values of the type `r typeof(mandates$firstname)`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification. See also [`MP_names$first_name`](#mp_namesfirst_name).
+All first names are stored as values of the type `r typeof(mandates$first_name)`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification. See also [`MP_names$first_name`](#mp_namesfirst_name).
 
 ```{r}
-str(mandates$firstname)
+str(mandates$first_name)
 ```
 
 #### MP_dates\$MP_id {#mp_datesmpid}
