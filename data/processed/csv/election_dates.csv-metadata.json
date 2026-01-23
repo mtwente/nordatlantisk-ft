@@ -6,7 +6,7 @@
 	"dc:updated": "2026-01-21",
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
-	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:license": "https://creativecommons.org/licenses/by-sa/4.0/",
 	"tableSchema": {
 		"aboutUrl": "/README.md",
 		"notes": "Table with dates of elections to Folketinget, Inatsisartut and Løgting relevant for the timeframe covered by this dataset (starting 2004).",

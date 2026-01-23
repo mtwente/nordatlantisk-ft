@@ -6,7 +6,7 @@ annotate <- function(
     data,
     column_description,
     column_datatype,
-    license = "https://creativecommons.org/licenses/by/4.0/",
+    license = "https://creativecommons.org/licenses/by-sa/4.0/",
     about_url = "/README.md",
     lang = "en"
 ) {
