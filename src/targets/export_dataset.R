@@ -1,3 +1,10 @@
+# Setup -----
+## Packages -----
+library(here)
+
+## External Functions -----
+source(here("src", "annotate_csv.R"), local = TRUE)
+
 # Definition -----
 
 export_dataset <- function(input_df) {
