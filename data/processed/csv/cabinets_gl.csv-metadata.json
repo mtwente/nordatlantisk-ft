@@ -1,100 +1,125 @@
 {
-	"@context": "https://www.w3.org/ns/csvw",
+	"@context": [
+		"http://www.w3.org/ns/csvw",
+		{
+			"@language": "en"
+		}
+	],
 	"url": "cabinets_gl.csv",
-	"dc:title": "List of Greenlandic Governments",
-	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-20",
+	"dc:title": "cabinets_gl",
+	"dc:isPartOf": "nordatlantisk-ft",
+	"dc:creator": {
+		"name": "Moritz Twente",
+		"email": "mtwente@protonmail.com",
+		"orcid": "0009-0005-7187-9774"
+	},
+	"dc:description": "cabinets_gl is provided as csv and rds file in /data/processed/. It contains information on coalition governments of Greenland, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
+	"dc:modified": {
+		"@value": "2026-01-23T17:13:39+0100",
+		"@type": "xs:dateTime"
+	},
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
-	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:license": {
+		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+	},
 	"tableSchema": {
-		"aboutUrl": "README.md",
-		"notes": "Table with a list of all governments in Greenland (Naalakkersuisut) for the time frame covered by the nordatlantisk-ft dataset (starting 2004).",
+		"aboutUrl": "/README.md",
 		"columns": [
 			{
 				"name": "cabinet",
 				"dc:title": "Cabinet Name",
-				"description": "ID for the cabinet, usually named after the head of government",
+				"dc:description": "ID for the cabinet, usually named after the head of government",
 				"datatype": "string"
 			},
 			{
 				"name": "wikidata_id",
-				"dc:title": "Cabinet Wikidata ID",
-				"description": "Wikidata Identifier for the entity representing each cabinet",
-				"datatype": "string"
+				"dc:title": "Wikidata ID",
+				"dc:description": "Wikidata Identifier for the entity representing each cabinet",
+				"datatype": "factor"
 			},
 			{
 				"name": "location",
 				"dc:title": "Location",
-				"description": "Identifier whether this cabinet is from Greenland or the Faroe Islands.",
-				"datatype": "string"
+				"dc:description": "Identifier whether this cabinet is from Greenland or the Faroe Islands",
+				"datatype": "factor"
 			},
 			{
 				"name": "start",
 				"dc:title": "Start Date",
-				"description": "Date the coalition took office",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date the coalition took office",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "2003-09-13",
+					"maximum": "2025-04-07"
+				}
 			},
 			{
 				"name": "end",
 				"dc:title": "End Date",
-				"description": "Date the coalition left office",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date the coalition left office",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "2005-12-01",
+					"maximum": "2025-04-07"
+				}
 			},
 			{
 				"name": "GL_A",
 				"dc:title": "Atassut (A) Party Coalition Membership",
-				"description": "Boolean indicator whether Atassut (A) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Atassut (A) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "GL_D",
 				"dc:title": "Demokraatit (D) Party Coalition Membership",
-				"description": "Boolean indicator whether Demokraatit (D) were part of the coalition government",
+				"dc:description": "Boolean indicating whether Demokraatit (D) were part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "GL_IA",
 				"dc:title": "Inuit Ataqatigiit (IA) Party Coalition Membership",
-				"description": "Boolean indicator whether Inuit Ataqatigiit (IA) were part of the coalition government",
+				"dc:description": "Boolean indicating whether Inuit Ataqatigiit (IA) were part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "GL_KP",
 				"dc:title": "Kattusseqatigiit Partiiat (KP) Party Coalition Membership",
-				"description": "Boolean indicator whether Kattusseqatigiit Partiiat (KP) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Kattusseqatigiit Partiiat (KP) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "GL_N",
 				"dc:title": "Naleraq (N) Party Coalition Membership",
-				"description": "Boolean indicator whether Naleraq (N) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Naleraq (N) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "GL_NQ",
 				"dc:title": "Nunatta Qitornai (NQ) Party Coalition Membership",
-				"description": "Boolean indicator whether Nunatta Qitornai (NQ) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Nunatta Qitornai (NQ) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "GL_PI",
 				"dc:title": "Partii Inuit (PI) Party Coalition Membership",
-				"description": "Boolean indicator whether Partii Inuit (PI) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Partii Inuit (PI) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "GL_SIU",
 				"dc:title": "Siumut (SIU) Party Coalition Membership",
-				"description": "Boolean indicator whether Siumut (SIU) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Siumut (SIU) was part of the cabinet",
 				"datatype": "boolean"
 			}
 		],
-		"dialect": {
-			"delimiter": ",",
-			"quoteChar": "\"",
-			"encoding": "UTF-8"
-		},
-		"primaryKey": ["cabinet"]
+		"primaryKey": "cabinet"
+	},
+	"dialect": {
+		"delimiter": ",",
+		"quoteChar": "\"",
+		"encoding": "UTF-8"
 	}
 }
