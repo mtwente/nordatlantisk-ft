@@ -105,7 +105,7 @@ The general structure of the data used in the workflow to compile the final `nor
 classDiagram
     direction LR
 
-    MP_dates -- MP_names
+    MP_dates .. MP_names
     MP_dates .. election_dates
     MP_dates .. political_parties
 
@@ -123,6 +123,8 @@ classDiagram
     cabinets_fo .. cabinets_gl
     cabinets_gl .. cabinets_dk
     cabinets_dk <|-- northatlantic_ft
+
+    MP_dates <|-- northatlantic_ft
 
     class northatlantic_ft {
         ballot_id : int
