@@ -87,7 +87,7 @@ northatlantic_ft_without_absences <- subset(northatlantic_ft_ordered, vote_type_
 ### Subset Election Dates for Folketinget only
 
 elections_ft <- elections %>%
-  filter(election == "Folketing Election")
+  filter(election_type == "Folketing Election")
 
 ## Set Plotting Theme -----
 
@@ -201,7 +201,7 @@ ggplot(mandates, aes(x = start, xend = end, y = plotting_name, yend = plotting_n
   ) +
   
   # add Folketing Election dates
-  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election),
+  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election_type),
     color = "#000000",
     linewidth = 0.2
   ) +
@@ -311,7 +311,7 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
   scale_y_discrete(labels = y_labels) +
   
   # add Folketing Election dates
-  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election),
+  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election_type),
              color = "#000000", linewidth = 0.2) +
   scale_linetype_manual(values = c("Folketing Election" = "longdash"), name = "") +
   
