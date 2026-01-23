@@ -1,94 +1,119 @@
 {
-	"@context": "https://www.w3.org/ns/csvw",
+	"@context": [
+		"http://www.w3.org/ns/csvw",
+		{
+			"@language": "en"
+		}
+	],
 	"url": "cabinets_fo.csv",
-	"dc:title": "List of Faroese Governments",
-	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-20",
+	"dc:title": "cabinets_fo",
+	"dc:isPartOf": "nordatlantisk-ft",
+	"dc:creator": {
+		"name": "Moritz Twente",
+		"email": "mtwente@protonmail.com",
+		"orcid": "0009-0005-7187-9774"
+	},
+	"dc:description": "cabinets_fo is provided as csv and rds file in /data/processed/. It contains information on coalition governments of the Faroe Islands, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
+	"dc:modified": {
+		"@value": "2026-01-23T17:13:23+0100",
+		"@type": "xs:dateTime"
+	},
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
-	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:license": {
+		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+	},
 	"tableSchema": {
-		"aboutUrl": "README.md",
-		"notes": "Table with a list of all governments the Faroe Islands (Landsstýri) for the time frame covered by the nordatlantisk-ft dataset (starting 2004).",
+		"aboutUrl": "/README.md",
 		"columns": [
 			{
 				"name": "cabinet",
 				"dc:title": "Cabinet Name",
-				"description": "ID for the cabinet, usually named after the head of government",
+				"dc:description": "ID for the cabinet, usually named after the head of government",
 				"datatype": "string"
 			},
 			{
 				"name": "wikidata_id",
-				"dc:title": "Cabinet Wikidata ID",
-				"description": "Wikidata Identifier for the entity representing each cabinet",
-				"datatype": "string"
+				"dc:title": "Wikidata ID",
+				"dc:description": "Wikidata Identifier for the entity representing each cabinet",
+				"datatype": "factor"
 			},
 			{
 				"name": "location",
 				"dc:title": "Location",
-				"description": "Identifier whether this cabinet is from Greenland or the Faroe Islands.",
-				"datatype": "string"
+				"dc:description": "Identifier whether this cabinet is from Greenland or the Faroe Islands",
+				"datatype": "factor"
 			},
 			{
 				"name": "start",
 				"dc:title": "Start Date",
-				"description": "Date the coalition took office",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date the coalition took office",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "2002-06-06",
+					"maximum": "2022-12-22"
+				}
 			},
 			{
 				"name": "end",
 				"dc:title": "End Date",
-				"description": "Date the coalition left office",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date the coalition left office",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "2004-02-03",
+					"maximum": "2022-12-22"
+				}
 			},
 			{
 				"name": "FO_A",
 				"dc:title": "Fólkaflokkurin (A) Party Coalition Membership",
-				"description": "Boolean indicator whether Fólkaflokkurin (A) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Fólkaflokkurin (A) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "FO_B",
 				"dc:title": "Sambandsflokkurin (B) Party Coalition Membership",
-				"description": "Boolean indicator whether Sambandsflokkurin (B) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Sambandsflokkurin (B) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "FO_C",
 				"dc:title": "Javnaðarflokkurin (C) Party Coalition Membership",
-				"description": "Boolean indicator whether Javnaðarflokkurin (C) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Javnaðarflokkurin (C) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "FO_D",
 				"dc:title": "Sjálvstýri (D) Party Coalition Membership",
-				"description": "Boolean indicator whether Sjálvstýri (D) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Sjálvstýri (D) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "FO_E",
 				"dc:title": "Tjóðveldi (E) Party Coalition Membership",
-				"description": "Boolean indicator whether Tjóðveldi (E) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Tjóðveldi (E) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "FO_F",
 				"dc:title": "Framsókn (F) Party Coalition Membership",
-				"description": "Boolean indicator whether Framsókn (F) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Framsókn (F) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "FO_H",
 				"dc:title": "Miðflokkurin (H) Party Coalition Membership",
-				"description": "Boolean indicator whether Miðflokkurin (H) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Miðflokkurin (H) was part of the cabinet",
 				"datatype": "boolean"
 			}
 		],
-		"dialect": {
-			"delimiter": ",",
-			"quoteChar": "\"",
-			"encoding": "UTF-8"
-		},
-		"primaryKey": ["cabinet"]
+		"primaryKey": "cabinet"
+	},
+	"dialect": {
+		"delimiter": ",",
+		"quoteChar": "\"",
+		"encoding": "UTF-8"
 	}
 }

@@ -1,6 +1,6 @@
 # Voting Records of Greenlandic and Faroese MPs in Folketinget
 
-This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketing, the Parliament of Denmark. The data in nordatlantisk-ft is openly available to everyone and is intended to support reproducible research.
+This repository contains voting records of Greenlandic and Faroese Members of Parliament (MPs) in Folketinget, the Parliament of Denmark. The data in nordatlantisk-ft is openly available to everyone and is intended to support reproducible research.
 
 [![GitHub issues](https://img.shields.io/github/issues/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/issues)
 [![GitHub forks](https://img.shields.io/github/forks/mtwente/nordatlantisk-ft.svg)](https://github.com/mtwente/nordatlantisk-ft/network)
@@ -60,7 +60,7 @@ Running `tar_make()` will execute the workflow as defined in [`_targets.R`](./_t
 
 The targets pipeline is set to check for new voting records **every twelve weeks only**. To force running the scripts with the most recent data available, remove the `cue` arguments from the targets `ballot_info` and `raw_voting_records` in `_targets.R`.
 
-You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add the IDs to the column(s) `MP_id` in the data frame created in [`src/create_MP_list.R`](/src/create_MP_list.R) and then run `targets::tar_make()`.
+You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add the IDs to the column(s) `MP_id` in the data frame created in [`src/create_MP_list.R`](/src/create_MP_list.R) and other metadata, if necessary, to [`src/create_MP_dates.R`](/src/create_MP_dates.R) and [`src/create_party_list.R`](/src/create_party_list.R). Then run `targets::tar_make()`.
 
 ## Use
 

@@ -1,7 +1,9 @@
 # Setup -----
 ## Packages -----
-
 library(here)
+
+## External Functions -----
+source(here("src", "annotate_csv.R"), local = TRUE)
 
 ## Template -----
 
@@ -37,3 +39,27 @@ write.csv(MP_names, here("data", "processed", "csv", "MP_names.csv"),
           row.names = FALSE)
 
 saveRDS(MP_names, here("data", "processed", "MP_names.rds"))
+
+## Metadata -----
+
+annotate_csv(MP_names,
+         dataset_description = "MP_names is provided in csv and rds formats in /data/processed. The csv file serves as starting point for building the data set, as the workflow pipeline1 retrieves data from Folketingets Open Data Portal based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from October 07, 2004 until the most recent update of this data set. Refer to the documentation for more details.",
+         primary_key = "MP_id",
+         column_title = c(
+           "Surname(s)",
+           "First Name(s)",
+           "MP ID",
+           "Wikidata ID",
+           "Origin",
+           "Party Affiliation",
+           "Substitute Membership"
+           ),
+         column_description = c(
+           "Surname(s) of the MP. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
+           "First Name(s) of the MP. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
+           "Each MP is assigned an ID by Folketingets åbne data service (ODA). Each MP_id thus is a unique identifier for one member of Folketinget",
+           "Wikidata Identifier for the entity representing each MP",
+           "Geographical origin of the MP, using ISO 3166-2 codes",
+           "Political Party the MP is member of, using the common abbreviation for Greenlandic Parties and the party letter code (Bogstavsbetegnelse) for Faroese parties. Note that some MPs belonged to several parties during their time in office. For more detailed membership information, see MP_dates.csv",
+           "Boolean indicating whether the MP served Folketinget as a substitute member for another MP who went on leave"
+           ))

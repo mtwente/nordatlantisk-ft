@@ -1,100 +1,125 @@
 {
-	"@context": "https://www.w3.org/ns/csvw",
+	"@context": [
+		"http://www.w3.org/ns/csvw",
+		{
+			"@language": ["en"]
+		}
+	],
 	"url": "cabinets_dk.csv",
-	"dc:title": "List of Danish Governments",
-	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-20",
+	"dc:title": "cabinets_dk",
+	"dc:isPartOf": "nordatlantisk-ft",
+	"dc:creator": {
+		"name": "Moritz Twente",
+		"email": "mtwente@protonmail.com",
+		"orcid": "0009-0005-7187-9774"
+	},
+	"dc:description": "cabinets_dk is provided as csv and rds file in /data/processed/. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
+	"dc:modified": {
+		"@value": "2026-01-23T17:13:14+0100",
+		"@type": "xs:dateTime"
+	},
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
-	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:license": {
+		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+	},
 	"tableSchema": {
-		"aboutUrl": "README.md",
-		"notes": "Table with a list of all government coalitions in Danmark for the time frame covered by the nordatlantisk-ft dataset (starting 2004).",
+		"aboutUrl": "/README.md",
 		"columns": [
 			{
 				"name": "cabinet",
 				"dc:title": "Cabinet Name",
-				"description": "ID for the cabinet, usually named after the head of government",
+				"dc:description": "ID for the cabinet, usually named after the head of government",
 				"datatype": "string"
 			},
 			{
 				"name": "wikidata_id",
-				"dc:title": "Cabinet Wikidata ID",
-				"description": "Wikidata Identifier for the entity representing each cabinet",
-				"datatype": "string"
+				"dc:title": "Wikidata ID",
+				"dc:description": "Wikidata Identifier for the entity representing each cabinet",
+				"datatype": "factor"
 			},
 			{
 				"name": "bloc",
-				"dc:title": "Political Bloc",
-				"description": "String identifying whether the government coalition belongs to the left (red) or right (blue) bloc of Danish politics, or is formed across blocs (across)",
-				"datatype": "string"
+				"dc:title": "Party Bloc",
+				"dc:description": "String identifying whether the government coalition belongs to the left (red) or right (blue) bloc of Danish politics, or is formed across blocs (across)",
+				"datatype": "factor"
 			},
 			{
 				"name": "type",
 				"dc:title": "Cabinet Type",
-				"description": "String identifying whether the government is a single-party government (single_party) or a coalition government (coalition)",
-				"datatype": "string"
+				"dc:description": "String identifying whether the government is a single-party government (single_party) or a coalition government (coalition)",
+				"datatype": "factor"
 			},
 			{
 				"name": "start",
 				"dc:title": "Start Date",
-				"description": "Date the coalition took office",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date the coalition took office",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "2001-11-27",
+					"maximum": "2022-12-15"
+				}
 			},
 			{
 				"name": "end",
 				"dc:title": "End Date",
-				"description": "Date the coalition left office",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date the coalition left office",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "2005-02-18",
+					"maximum": "2022-12-15"
+				}
 			},
 			{
 				"name": "DK_A",
 				"dc:title": "Socialdemokratiet (A) Party Coalition Membership",
-				"description": "Boolean indicator whether Socialdemokratiet (A) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Socialdemokratiet (A) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "DK_B",
 				"dc:title": "Radikale Venstre (B) Party Coalition Membership",
-				"description": "Boolean indicator whether Radikale Venstre (B) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Radikale Venstre (B) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "DK_C",
 				"dc:title": "Det Konservative Folkeparti (C) Party Coalition Membership",
-				"description": "Boolean indicator whether Det Konservative Folkeparti (C) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Det Konservative Folkeparti (C) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "DK_F",
 				"dc:title": "Socialistisk Folkeparti (F) Party Coalition Membership",
-				"description": "Boolean indicator whether Socialistisk Folkeparti (F) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Socialistisk Folkeparti (F) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "DK_I",
 				"dc:title": "Liberal Alliance (I) Party Coalition Membership",
-				"description": "Boolean indicator whether Liberal Alliance (I) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Liberal Alliance (I) was part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "DK_M",
 				"dc:title": "Moderaterne (M) Party Coalition Membership",
-				"description": "Boolean indicator whether Moderaterne (M) were part of the coalition government",
+				"dc:description": "Boolean indicating whether Moderaterne (M) were part of the cabinet",
 				"datatype": "boolean"
 			},
 			{
 				"name": "DK_V",
 				"dc:title": "Venstre (V) Party Coalition Membership",
-				"description": "Boolean indicator whether Venstre (V) was part of the coalition government",
+				"dc:description": "Boolean indicating whether Venstre (V) was part of the cabinet",
 				"datatype": "boolean"
 			}
 		],
-		"dialect": {
-			"delimiter": ",",
-			"quoteChar": "\"",
-			"encoding": "UTF-8"
-		},
-		"primaryKey": ["cabinet"]
+		"primaryKey": "cabinet"
+	},
+	"dialect": {
+		"delimiter": ",",
+		"quoteChar": "\"",
+		"encoding": "UTF-8"
 	}
 }

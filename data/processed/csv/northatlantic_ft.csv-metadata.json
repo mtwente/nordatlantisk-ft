@@ -1,28 +1,42 @@
 {
-	"@context": "https://www.w3.org/ns/csvw",
+	"@context": [
+		"http://www.w3.org/ns/csvw",
+		{
+			"@language": ["en", "da"]
+		}
+	],
 	"url": "northatlantic_ft.csv",
-	"dc:title": "nordatlantisk ft",
-	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-19",
+	"dc:title": "northatlantic_ft",
+	"dc:isPartOf": "nordatlantisk-ft",
+	"dc:creator": {
+		"name": "Moritz Twente",
+		"email": "mtwente@protonmail.com",
+		"orcid": "0009-0005-7187-9774"
+	},
+	"dc:description": "nordatlantisk-ft is compiled from data available on Folketingets Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each ballot – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
+	"dc:modified": {
+		"@value": "2026-01-23T18:26:17+0100",
+		"@type": "xs:dateTime"
+	},
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
-	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
-	"dc:relation": "/src/targets/join_results.R",
+	"dc:license": {
+		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+	},
 	"tableSchema": {
 		"aboutUrl": "/README.md",
-		"notes": "Data Set with Voting Records of Greenlandic and Faroese MPs in Folketinget",
 		"columns": [
 			{
 				"name": "ballot_id",
 				"dc:title": "Ballot ID",
 				"dc:description": "ID assigned to the ballot in Folketinget records",
-				"datatype": { "base": "integer", "minimum": "1" }
+				"datatype": "factor"
 			},
 			{
 				"name": "MP_id",
 				"dc:title": "MP ID",
 				"dc:description": "Folketinget ODA ID assigned to the MP",
-				"datatype": { "base": "integer", "minimum": "1" }
+				"datatype": "factor"
 			},
 			{
 				"name": "surname",
@@ -33,131 +47,146 @@
 			{
 				"name": "origin",
 				"dc:title": "Origin",
-				"description": "Geographical origin of the MP.",
-				"datatype": { "base": "string", "format": "GL|FO" }
+				"dc:description": "Geographical origin of the MP, using ISO 3166-2 codes",
+				"datatype": "factor"
 			},
 			{
 				"name": "party",
 				"dc:title": "Party",
-				"dc:description": "Political Party the MP is member of",
-				"datatype": "string"
+				"dc:description": "Political Party the MP is member of at the time of this vote, using the common abbreviation for Greenlandic Parties and the party letter code (Bogstavsbetegnelse) for Faroese parties",
+				"datatype": "factor"
 			},
 			{
 				"name": "gvt_party_at_home",
-				"dc:title": "Governing Party at Home",
-				"dc:description": "Boolean indicating if the party the MP belongs to is part of the governing coalition in Greenland or Faroe Islands at the time of the vote.",
-				"datatype": { "base": "boolean", "format": "TRUE|FALSE" }
+				"dc:title": "Party Governing at Home",
+				"dc:description": "Boolean indicating if the party the MP belongs to is part of the governing coalition in Greenland or Faroe Islands at the time of the vote",
+				"datatype": "boolean"
 			},
 			{
 				"name": "vote_type_id",
 				"dc:title": "Vote Type ID",
-				"dc:description": "Folketinget ODA ID assigned to the vote type.",
-				"datatype": { "base": "integer", "minimum": "1", "maximum": "4" }
+				"dc:description": "Folketinget ODA ID assigned to the vote type",
+				"datatype": "factor"
 			},
 			{
 				"name": "vote_id",
 				"dc:title": "Vote ID",
-				"dc:description": "Folketinget ODA ID assigned to the vote.",
-				"datatype": { "base": "integer", "minimum": "1" }
+				"dc:description": "Folketinget ODA ID assigned to the vote",
+				"datatype": "factor"
 			},
 			{
 				"name": "ballot_pass",
-				"dc:title": "Ballot Pass",
-				"dc:description": "Boolean indicating if the ballot passed.",
-				"datatype": { "base": "boolean", "format": "TRUE|FALSE" }
+				"dc:title": "Ballot Passing",
+				"dc:description": "Boolean indicating if the ballot passed",
+				"datatype": "boolean"
 			},
 			{
 				"name": "ft_process_step",
-				"dc:title": "Folketinget Process Step",
-				"dc:description": "Stage of the parliamentary process the ballot is part of",
-				"datatype": "string",
-				"lang": "dk"
+				"dc:title": "Process Step",
+				"dc:description": "Stage of the parliamentary process the ballot is part of (in Danish)",
+				"datatype": "string"
 			},
 			{
 				"name": "ft_topic_id",
 				"dc:title": "Topic ID",
 				"dc:description": "Folketinget ODA ID assigned to the parliamentary process the ballot is part of",
-				"datatype": { "base": "integer", "minimum": "1" }
+				"datatype": {
+					"base": "integer"
+				}
 			},
 			{
 				"name": "ft_topic",
 				"dc:title": "Ballot Topic",
-				"dc:description": "Description of the topic the proposal on the ballot is about",
-				"datatype": "string",
-				"lang": "dk"
+				"dc:description": "Description of the topic the proposal on the ballot is about (in Danish)",
+				"datatype": "string"
 			},
 			{
 				"name": "ft_for",
-				"dc:title": "For Votes",
-				"dc:description": "Number of votes in favor of the proposal.",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
+				"dc:title": "Vote Count: In Favor",
+				"dc:description": "Number of votes in favor of the proposal",
+				"datatype": {
+					"base": "number",
+					"minimum": 0,
+					"maximum": 162
+				}
 			},
 			{
 				"name": "ft_against",
-				"dc:title": "Against Votes",
-				"dc:description": "Number of votes against the proposal.",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
+				"dc:title": "Vote Count: Against",
+				"dc:description": "Number of votes against the proposal",
+				"datatype": {
+					"base": "number",
+					"minimum": 0,
+					"maximum": 124
+				}
 			},
 			{
 				"name": "ft_abstention",
-				"dc:title": "Abstention Votes",
-				"dc:description": "Number of abstention votes.",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
+				"dc:title": "Vote Count: Abstaining",
+				"dc:description": "Number of abstention votes",
+				"datatype": {
+					"base": "number",
+					"minimum": 0,
+					"maximum": 160
+				}
 			},
 			{
 				"name": "ft_absent",
-				"dc:title": "Absent Votes",
-				"dc:description": "Number of absent MPs.",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "179" }
+				"dc:title": "Vote Count: Absentees",
+				"dc:description": "Number of absent MPs",
+				"datatype": {
+					"base": "number",
+					"minimum": 0,
+					"maximum": 89
+				}
 			},
 			{
 				"name": "ballot_date",
 				"dc:title": "Ballot Date",
-				"dc:description": "Date of the ballot.",
-				"datatype": { "base": "date", "format": "yyyy-MM-dd" }
+				"dc:description": "Date of the ballot",
+				"datatype": {
+					"base": "date",
+					"format": "yyyy-MM-dd",
+					"minimum": "2004-10-07",
+					"maximum": "2026-01-22"
+				}
 			},
 			{
 				"name": "ballot_type_id",
 				"dc:title": "Ballot Type ID",
-				"dc:description": "ID assigned to the ballot type.",
-				"datatype": { "base": "integer", "minimum": "1", "maximum": "4" }
+				"dc:description": "Folketinget ODA ID assigned to the ballot type",
+				"datatype": "factor"
 			},
 			{
 				"name": "gvt_type_dk",
 				"dc:title": "Type of Government in Denmark",
 				"dc:description": "Indicates the type of cabinet governing in Denmark at the time of observation",
-				"datatype": "string",
-				"lang": "en"
+				"datatype": "factor"
 			},
 			{
 				"name": "gvt_bloc_dk",
 				"dc:title": "Political Bloc of the Danish Government",
 				"dc:description": "Indicates the political bloc of the cabinet governing in Denmark at the time of observation (red/left, blue/right or across)",
-				"datatype": "string",
-				"lang": "en"
+				"datatype": "factor"
 			},
 			{
 				"name": "comment",
 				"dc:title": "Comment",
-				"dc:description": "Additional comments about the ballot.",
-				"null": "NA",
-				"datatype": "string",
-				"lang": "dk"
+				"dc:description": "Additional comments about the ballot (in Danish)",
+				"datatype": "string"
 			},
 			{
 				"name": "ballot_result_string",
 				"dc:title": "Ballot Result String",
-				"dc:description": "String describing the ballot result.",
-				"null": "NA",
-				"datatype": "string",
-				"lang": "dk"
+				"dc:description": "Description of the result (in Danish)",
+				"datatype": "string"
 			}
 		],
-		"dialect": {
-			"delimiter": ",",
-			"quoteChar": "\"",
-			"encoding": "UTF-8"
-		},
-		"primaryKey": ["vote_id"]
+		"primaryKey": "vote_id"
+	},
+	"dialect": {
+		"delimiter": ",",
+		"quoteChar": "\"",
+		"encoding": "UTF-8"
 	}
 }
