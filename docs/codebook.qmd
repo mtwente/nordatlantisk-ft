@@ -156,6 +156,7 @@ classDiagram
     }
 
         class MP_dates {
+        period_id : string
         surname : string
         firstname : string
         MP_id: int
@@ -436,9 +437,17 @@ str(mandates)
 
 Descriptions of all variables in `MP_dates` are provided in the following sections.
 
+#### MP_dates\$period_id {#mp_datesperiod_id}
+
+Each recorded membership period can be reliably identified by using the `period_id` variable, allowing to distinguish between multiple membership periods of the same politician(s). All Period IDs are stored as values of the type `r typeof(mandates$period_id)`.
+
+```{r}
+str(mandates$surname)
+```
+
 #### MP_dates\$surname {#mp_datessurname}
 
-All surname(s) are stored as values of the type `r typeof(mandates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification. See also [`MP_names$surname`](#mp_namessurname).
+All surname(s) are stored as values of the type `r typeof(mandates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification of each MP and to [`MP_dates$period_id`](#mp_datesperiod_id) for reliable identification of membership periods. See also [`MP_names$surname`](#mp_namessurname).
 
 ```{r}
 str(mandates$surname)
@@ -530,7 +539,7 @@ Descriptions of all variables in `election_dates` are provided in the following 
 
 #### election_dates\$election
 
-Each recorded election can be reliably identified by using the unique `election` variable. All entries are stored as values of the type `r typeof(election_dates$election)` as `r class(election_dates$election)` variable.
+Each recorded election can be reliably identified by using the `election` variable. All entries are stored as values of the type `r typeof(election_dates$election)` as `r class(election_dates$election)` variable.
 
 ```{r}
 head(election_dates$election)

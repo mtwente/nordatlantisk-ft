@@ -1,72 +1,72 @@
-"surname","firstname","MP_id","origin","party","start","end","substitute"
-"Olsvig","Sara","13","GL","IA",2011-09-15,2013-09-08,FALSE
-"Olsvig","Sara","13","GL","IA",2013-09-14,2013-10-01,FALSE
-"Olsvig","Sara","13","GL","IA",2013-11-19,2014-03-21,FALSE
-"Olsvig","Sara","13","GL","IA",2014-04-25,2014-09-15,FALSE
-"Olsvig","Sara","13","GL","IA",2015-05-27,2015-06-18,FALSE
-"Lund Olsen","Johan","277","GL","IA",2013-09-08,2013-09-14,TRUE
-"Lund Olsen","Johan","277","GL","IA",2013-10-01,2013-11-19,TRUE
-"Lund Olsen","Johan","277","GL","IA",2014-03-21,2014-04-25,TRUE
-"Lund Olsen","Johan","277","GL","IA",2014-09-15,2015-05-27,TRUE
-"Jakobsen","Doris","294","GL","SIU",2009-10-08,2009-11-30,TRUE
-"Jakobsen","Doris","294","GL","SIU",2011-09-15,2014-12-16,FALSE
-"Jakobsen","Doris","294","GL","SIU",2015-02-11,2015-06-18,FALSE
-"Johansen","Lars-Emil","670","GL","SIU",2001-11-20,2009-10-08,FALSE
-"Johansen","Lars-Emil","670","GL","SIU",2009-11-30,2011-09-15,FALSE
-"Kleist","Kuupik","672","GL","IA",2001-11-20,2007-04-10,FALSE
-"Kleist","Kuupik","672","GL","IA",2007-06-01,2007-11-13,FALSE
-"Rossen","Sofia","1484","GL","IA",2007-04-10,2007-06-01,TRUE
-"Rossen","Sofia","1484","GL","IA",2010-01-12,2010-10-04,TRUE
-"Henningsen Heilmann","Juliane","6689","GL","IA",2007-11-13,2010-01-12,FALSE
-"Henningsen Heilmann","Juliane","6689","GL","IA",2010-10-04,2011-09-15,FALSE
-"Nielsen","Nick","14000","GL","SIU",2014-12-16,2015-02-11,TRUE
-"Chemnitz","Aaja","15757","GL","IA",2015-06-18,NA,FALSE
-"Hammond","Aleqa","15758","GL","SIU",2015-06-18,2016-08-22,FALSE
-"Hammond","Aleqa","15758","GL","UF",2016-08-23,2018-04-24,FALSE
-"Hammond","Aleqa","15758","GL","NQ",2018-04-25,2019-06-05,FALSE
-"Høegh-Dam","Aki-Matilda","18688","GL","SIU",2019-06-05,2023-09-22,FALSE
-"Høegh-Dam","Aki-Matilda","18688","GL","SIU",2023-10-06,2025-02-07,FALSE
-"Høegh-Dam","Aki-Matilda","18688","GL","UF",2025-02-08,2025-02-10,FALSE
-"Høegh-Dam","Aki-Matilda","18688","GL","N",2025-02-11,2025-09-19,FALSE
-"Høegh-Dam","Aki-Matilda","18688","GL","N",2025-11-14,NA,FALSE
-"Olsen","Markus E.","20635","GL","SIU",2023-09-22,2023-10-06,TRUE
-"Kûitse","Elvira","21206","GL","N",2025-09-19,2025-11-14,TRUE
-"Joensen","Edmund","247","FO","B",1994-09-21,1998-03-11,FALSE
-"Joensen","Edmund","247","FO","B",2007-11-13,2007-12-04,FALSE
-"Joensen","Edmund","247","FO","B",2007-12-14,2015-06-18,FALSE
-"Joensen","Edmund","247","FO","B",2019-06-05,2020-11-03,FALSE
-"Joensen","Edmund","247","FO","B",2020-11-10,2021-12-07,FALSE
-"Joensen","Edmund","247","FO","B",2021-12-14,2022-11-01,FALSE
-"Petersen","Lisbeth","918","FO","B",1988-10-06,1988-10-19,TRUE
-"Petersen","Lisbeth","918","FO","B",2001-11-20,2005-02-08,FALSE
-"Arge","Magni","15881","FO","E",2015-07-28,2016-10-17,TRUE
-"Arge","Magni","15881","FO","E",2016-12-31,2017-12-10,TRUE
-"Arge","Magni","15881","FO","E",2017-12-11,2019-06-05,FALSE
-"Hoydal","Høgni","1833","FO","E",2001-11-20,2001-12-13,FALSE
-"Hoydal","Høgni","1833","FO","E",2004-02-18,2008-02-19,FALSE
-"Hoydal","Høgni","1833","FO","E",2008-10-24,2011-09-15,FALSE
-"Hoydal","Høgni","1833","FO","E",2015-06-18,2015-07-28,FALSE
-"Johannesen","Aksel","12283","FO","C",2012-04-20,2012-05-20,TRUE
-"Skaale","Sjúrður","262","FO","E",2008-02-19,2008-09-09,TRUE
-"Skaale","Sjúrður","262","FO","C",2011-09-15,2012-04-20,FALSE
-"Skaale","Sjúrður","262","FO","C",2012-05-20,2018-05-07,FALSE
-"Skaale","Sjúrður","262","FO","C",2018-05-13,2019-01-15,FALSE
-"Skaale","Sjúrður","262","FO","C",2019-01-24,2019-02-28,FALSE
-"Skaale","Sjúrður","262","FO","C",2019-03-07,2020-03-17,FALSE
-"Skaale","Sjúrður","262","FO","C",2020-03-24,2021-05-16,FALSE
-"Skaale","Sjúrður","262","FO","C",2021-05-23,2024-03-05,FALSE
-"Skaale","Sjúrður","262","FO","C",2024-03-25,NA,FALSE
-"á Fríðriksmørk","Annita","6684","FO","E",2008-09-09,2008-10-24,TRUE
-"Kallsberg","Anfinn","3093","FO","A",2005-02-08,2007-11-13,FALSE
-"Falkenberg","Anna","20349","FO","B",2022-11-01,NA,FALSE
-"Jacobsen","Tórbjørn","9780","FO","E",2001-12-14,2004-02-17,TRUE
-"Jacobsen","Tórbjørn","9780","FO","E",2016-10-18,2016-12-31,TRUE
-"Old","Henrik","18545","FO","C",2019-01-15,2019-01-24,TRUE
-"Johannesen","Kaj Leo","6687","FO","B",2007-12-04,2007-12-14,TRUE
-"Apol","Barbara Gaardlykke","19142","FO","C",2020-03-17,2020-03-24,TRUE
-"Apol","Barbara Gaardlykke","19142","FO","C",2021-05-16,2021-05-23,TRUE
-"Apol","Barbara Gaardlykke","19142","FO","C",2024-03-05,2024-03-25,TRUE
-"Rasmussen","Magnus","19461","FO","B",2020-11-03,2020-11-10,TRUE
-"Abrahamsen","Helgi","19996","FO","B",2021-12-07,2021-12-14,TRUE
-"Dam","Rigmor","18614","FO","C",2019-02-28,2019-03-07,TRUE
-"Hammer","Bjarni","17988","FO","C",2018-05-07,2018-05-13,TRUE
+"period_id","surname","firstname","MP_id","origin","party","start","end","substitute"
+"olsvig_1","Olsvig","Sara","13","GL","IA",2011-09-15,2013-09-08,FALSE
+"olsvig_2","Olsvig","Sara","13","GL","IA",2013-09-14,2013-10-01,FALSE
+"olsvig_3","Olsvig","Sara","13","GL","IA",2013-11-19,2014-03-21,FALSE
+"olsvig_4","Olsvig","Sara","13","GL","IA",2014-04-25,2014-09-15,FALSE
+"olsvig_5","Olsvig","Sara","13","GL","IA",2015-05-27,2015-06-18,FALSE
+"lund-olsen_1","Lund Olsen","Johan","277","GL","IA",2013-09-08,2013-09-14,TRUE
+"lund-olsen_2","Lund Olsen","Johan","277","GL","IA",2013-10-01,2013-11-19,TRUE
+"lund-olsen_3","Lund Olsen","Johan","277","GL","IA",2014-03-21,2014-04-25,TRUE
+"lund-olsen_4","Lund Olsen","Johan","277","GL","IA",2014-09-15,2015-05-27,TRUE
+"jakobsen_1","Jakobsen","Doris","294","GL","SIU",2009-10-08,2009-11-30,TRUE
+"jakobsen_2","Jakobsen","Doris","294","GL","SIU",2011-09-15,2014-12-16,FALSE
+"jakobsen_3","Jakobsen","Doris","294","GL","SIU",2015-02-11,2015-06-18,FALSE
+"johansen_1","Johansen","Lars-Emil","670","GL","SIU",2001-11-20,2009-10-08,FALSE
+"johansen_2","Johansen","Lars-Emil","670","GL","SIU",2009-11-30,2011-09-15,FALSE
+"kleist_1","Kleist","Kuupik","672","GL","IA",2001-11-20,2007-04-10,FALSE
+"kleist_2","Kleist","Kuupik","672","GL","IA",2007-06-01,2007-11-13,FALSE
+"rossen_1","Rossen","Sofia","1484","GL","IA",2007-04-10,2007-06-01,TRUE
+"rossen_2","Rossen","Sofia","1484","GL","IA",2010-01-12,2010-10-04,TRUE
+"henningsen-heilmann_1","Henningsen Heilmann","Juliane","6689","GL","IA",2007-11-13,2010-01-12,FALSE
+"henningsen-heilmann_2","Henningsen Heilmann","Juliane","6689","GL","IA",2010-10-04,2011-09-15,FALSE
+"nielsen_1","Nielsen","Nick","14000","GL","SIU",2014-12-16,2015-02-11,TRUE
+"chemnitz_1","Chemnitz","Aaja","15757","GL","IA",2015-06-18,NA,FALSE
+"hammond_1","Hammond","Aleqa","15758","GL","SIU",2015-06-18,2016-08-22,FALSE
+"hammond_2","Hammond","Aleqa","15758","GL","UF",2016-08-23,2018-04-24,FALSE
+"hammond_3","Hammond","Aleqa","15758","GL","NQ",2018-04-25,2019-06-05,FALSE
+"hoegh-dam_1","Høegh-Dam","Aki-Matilda","18688","GL","SIU",2019-06-05,2023-09-22,FALSE
+"hoegh-dam_2","Høegh-Dam","Aki-Matilda","18688","GL","SIU",2023-10-06,2025-02-07,FALSE
+"hoegh-dam_3","Høegh-Dam","Aki-Matilda","18688","GL","UF",2025-02-08,2025-02-10,FALSE
+"hoegh-dam_4","Høegh-Dam","Aki-Matilda","18688","GL","N",2025-02-11,2025-09-19,FALSE
+"hoegh-dam_5","Høegh-Dam","Aki-Matilda","18688","GL","N",2025-11-14,NA,FALSE
+"olsen_1","Olsen","Markus E.","20635","GL","SIU",2023-09-22,2023-10-06,TRUE
+"kuitse_1","Kûitse","Elvira","21206","GL","N",2025-09-19,2025-11-14,TRUE
+"joensen_1","Joensen","Edmund","247","FO","B",1994-09-21,1998-03-11,FALSE
+"joensen_2","Joensen","Edmund","247","FO","B",2007-11-13,2007-12-04,FALSE
+"joensen_3","Joensen","Edmund","247","FO","B",2007-12-14,2015-06-18,FALSE
+"joensen_4","Joensen","Edmund","247","FO","B",2019-06-05,2020-11-03,FALSE
+"joensen_5","Joensen","Edmund","247","FO","B",2020-11-10,2021-12-07,FALSE
+"joensen_6","Joensen","Edmund","247","FO","B",2021-12-14,2022-11-01,FALSE
+"petersen_1","Petersen","Lisbeth","918","FO","B",1988-10-06,1988-10-19,TRUE
+"petersen_2","Petersen","Lisbeth","918","FO","B",2001-11-20,2005-02-08,FALSE
+"arge_1","Arge","Magni","15881","FO","E",2015-07-28,2016-10-17,TRUE
+"arge_2","Arge","Magni","15881","FO","E",2016-12-31,2017-12-10,TRUE
+"arge_3","Arge","Magni","15881","FO","E",2017-12-11,2019-06-05,FALSE
+"hoydal_1","Hoydal","Høgni","1833","FO","E",2001-11-20,2001-12-13,FALSE
+"hoydal_2","Hoydal","Høgni","1833","FO","E",2004-02-18,2008-02-19,FALSE
+"hoydal_3","Hoydal","Høgni","1833","FO","E",2008-10-24,2011-09-15,FALSE
+"hoydal_4","Hoydal","Høgni","1833","FO","E",2015-06-18,2015-07-28,FALSE
+"johannesen-a_1","Johannesen","Aksel","12283","FO","C",2012-04-20,2012-05-20,TRUE
+"skaale_1","Skaale","Sjúrður","262","FO","E",2008-02-19,2008-09-09,TRUE
+"skaale_2","Skaale","Sjúrður","262","FO","C",2011-09-15,2012-04-20,FALSE
+"skaale_3","Skaale","Sjúrður","262","FO","C",2012-05-20,2018-05-07,FALSE
+"skaale_4","Skaale","Sjúrður","262","FO","C",2018-05-13,2019-01-15,FALSE
+"skaale_5","Skaale","Sjúrður","262","FO","C",2019-01-24,2019-02-28,FALSE
+"skaale_6","Skaale","Sjúrður","262","FO","C",2019-03-07,2020-03-17,FALSE
+"skaale_7","Skaale","Sjúrður","262","FO","C",2020-03-24,2021-05-16,FALSE
+"skaale_8","Skaale","Sjúrður","262","FO","C",2021-05-23,2024-03-05,FALSE
+"skaale_9","Skaale","Sjúrður","262","FO","C",2024-03-25,NA,FALSE
+"a-fridriksmork_1","á Fríðriksmørk","Annita","6684","FO","E",2008-09-09,2008-10-24,TRUE
+"kallsberg_1","Kallsberg","Anfinn","3093","FO","A",2005-02-08,2007-11-13,FALSE
+"falkenberg_1","Falkenberg","Anna","20349","FO","B",2022-11-01,NA,FALSE
+"jacobsen_1","Jacobsen","Tórbjørn","9780","FO","E",2001-12-14,2004-02-17,TRUE
+"jacobsen_2","Jacobsen","Tórbjørn","9780","FO","E",2016-10-18,2016-12-31,TRUE
+"old_1","Old","Henrik","18545","FO","C",2019-01-15,2019-01-24,TRUE
+"johannesen-k-l_1","Johannesen","Kaj Leo","6687","FO","B",2007-12-04,2007-12-14,TRUE
+"apol_1","Apol","Barbara Gaardlykke","19142","FO","C",2020-03-17,2020-03-24,TRUE
+"apol_2","Apol","Barbara Gaardlykke","19142","FO","C",2021-05-16,2021-05-23,TRUE
+"apol_3","Apol","Barbara Gaardlykke","19142","FO","C",2024-03-05,2024-03-25,TRUE
+"rasmussen_1","Rasmussen","Magnus","19461","FO","B",2020-11-03,2020-11-10,TRUE
+"abrahamsen_1","Abrahamsen","Helgi","19996","FO","B",2021-12-07,2021-12-14,TRUE
+"dam_1","Dam","Rigmor","18614","FO","C",2019-02-28,2019-03-07,TRUE
+"hammer_1","Hammer","Bjarni","17988","FO","C",2018-05-07,2018-05-13,TRUE
