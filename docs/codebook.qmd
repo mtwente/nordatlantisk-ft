@@ -168,6 +168,7 @@ classDiagram
 
     class election_dates {
         election : string
+        election_type : string
         date : date
     }
 
@@ -514,7 +515,7 @@ table(mandates$substitute)
 
 ### election_dates {#election_dates}
 
-This repository is shipped with a list of all elections to the parliaments in Denmark (Folketing), Greenland (Inatsisartut) and the Faroe Islands (Løgting) that led to the formation of the parliaments in session during the time period covered by this data set. This translates to `r nrow(election_dates[election_dates$election == "Folketing Election",])` elections to Folketing, `r nrow(election_dates[election_dates$election == "Inatsisartut Election",])` elections to Inatsisartut, and `r nrow(election_dates[election_dates$election == "Løgting Election",])` elections to Løgting. The earliest election included is the one held on `r format(min(election_dates$date), "%B %d, %Y")`, while the most recent election included was held on `r format(max(election_dates$date), "%B %d, %Y")`.
+This repository is shipped with a list of all elections to the parliaments in Denmark (Folketing), Greenland (Inatsisartut) and the Faroe Islands (Løgting) that led to the formation of the parliaments in session during the time period covered by this data set. This translates to `r nrow(election_dates[election_dates$election_type == "Folketing Election",])` elections to Folketing, `r nrow(election_dates[election_dates$election_type == "Inatsisartut Election",])` elections to Inatsisartut, and `r nrow(election_dates[election_dates$election_type == "Løgting Election",])` elections to Løgting. The earliest election included is the one held on `r format(min(election_dates$date), "%B %d, %Y")`, while the most recent election included was held on `r format(max(election_dates$date), "%B %d, %Y")`.
 
 The contents of `election_dates` is not used during the workflow to compile the final `northatlantik_ft` data set, but is used as secondary data for visualisation purposes.
 
@@ -528,10 +529,18 @@ Descriptions of all variables in `election_dates` are provided in the following 
 
 #### election_dates\$election
 
-The `election_dates` dataset includes elections to three different parliaments: Danish Folketinget, Greenlandic Inatsisartut and Faroese Løgtingið. To distinguish between elections, the type of election is stored in `election_dates$election`. All entries are stored as values of the type `r typeof(election_dates$election)` as `r class(election_dates$election)` variable.
+Each recorded election can be reliably identified by using the unique `election` variable. All entries are stored as values of the type `r typeof(election_dates$election)` as `r class(election_dates$election)` variable.
 
 ```{r}
-table(election_dates$election)
+head(election_dates$election)
+```
+
+#### election_dates\$election_type
+
+The `election_dates` dataset includes elections to three different parliaments: Danish Folketinget, Greenlandic Inatsisartut and Faroese Løgtingið. To distinguish between elections, the type of election is stored in `election_dates$election_type`. All entries are stored as values of the type `r typeof(election_dates$election_type)` as `r class(election_dates$election_type)` variable.
+
+```{r}
+table(election_dates$election_type)
 ```
 
 #### election_dates\$date

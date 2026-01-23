@@ -5,7 +5,19 @@ library(here)
 ## Create Data -----
 
 election_dates <- data.frame(
-  election = factor(c(
+  
+  election = c(
+    "ft_2001", "ft_2005", "ft_2007", "ft_2011",
+    "ft_2015", "ft_2019", "ft_2022",
+    
+    "ina_2002", "ina_2005", "ina_2009", "ina_2013",
+    "ina_2014", "ina_2018", "ina_2021", "ina_2025",
+    
+    "lt_2004", "lt_2008", "lt_2011", "lt_2015",
+    "lt_2019", "lt_2022"
+  ),
+  
+  election_type = factor(c(
     rep("Folketing Election", 7),
     rep("Inatsisartut Election", 8),
     rep("Løgting Election", 6)
