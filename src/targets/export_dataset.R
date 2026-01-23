@@ -7,7 +7,7 @@ source(here("src", "annotate_csv.R"), local = TRUE)
 
 # Definition -----
 
-export_dataset <- function(input_df) {
+export_dataset <- function(northatlantic_ft) {
   
   # Clean Up Data Frame Columns  -----
   
@@ -17,18 +17,18 @@ export_dataset <- function(input_df) {
                  "ballot_date", "ballot_type_id", "gvt_type_dk", "gvt_bloc_dk",
                  "comment", "ballot_result_string")
   
-  input_df <- input_df[, col_order]
+  northatlantic_ft <- northatlantic_ft[, col_order]
   
   # Export as CSV and RDS -----
   
-  write.csv(input_df, file = here("data", "processed", "csv", "northatlantic_ft.csv"),
+  write.csv(northatlantic_ft, file = here("data", "processed", "csv", "northatlantic_ft.csv"),
             row.names = FALSE)
   
-  saveRDS(input_df, here("data", "processed", "northatlantic_ft.rds"))
+  saveRDS(northatlantic_ft, here("data", "processed", "northatlantic_ft.rds"))
   
   # CSV Metadata -----
   
-  annotate_csv(input_df,
+  annotate_csv(northatlantic_ft,
            dataset_description = "nordatlantisk-ft is compiled from data available on Folketingets Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each ballot – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
            primary_key = "vote_id",
            lang = list("en", "da"),
@@ -79,6 +79,6 @@ export_dataset <- function(input_df) {
              "Additional comments about the ballot (in Danish)",
              "Description of the result (in Danish)"))
   
-  return(input_df)
+  return(northatlantic_ft)
   
 }
