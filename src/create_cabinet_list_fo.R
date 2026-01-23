@@ -57,7 +57,7 @@ saveRDS(
 
 ## Metadata -----
 
-annotate(cabinets_fo,dataset_description = "cabinets_fo is provided as csv and rds file in /data/processed/. It contains information on coalition governments of the Faroe Islands, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
+annotate_csv(cabinets_fo,dataset_description = "cabinets_fo is provided as csv and rds file in /data/processed/. It contains information on coalition governments of the Faroe Islands, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
          primary_key = "cabinet",
          column_title = c(
            "Cabinet Name",

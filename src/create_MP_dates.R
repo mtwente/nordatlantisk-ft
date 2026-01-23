@@ -147,7 +147,7 @@ saveRDS(
 
 ## Metadata -----
 
-annotate(MP_dates,
+annotate_csv(MP_dates,
          dataset_description = "MP_dates is provided in csv and rds formats in /data/processed. This dataset includes detailed information on membership timelines of MPs in Folketinget. Refer to the documentation for more details.",
          column_title = c(
            "Membership Period ID",

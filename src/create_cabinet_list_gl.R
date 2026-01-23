@@ -65,7 +65,7 @@ saveRDS(
 
 ## Metadata -----
 
-annotate(cabinets_gl,
+annotate_csv(cabinets_gl,
          dataset_description = "cabinets_gl is provided as csv and rds file in /data/processed/. It contains information on coalition governments of Greenland, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
          column_title = c(
            "Cabinet Name",

@@ -72,7 +72,7 @@ saveRDS(
 
 ## Metadata -----
 
-annotate(election_dates,
+annotate_csv(election_dates,
          dataset_description = "This repository is shipped with a list of all elections to the parliaments in Denmark (Folketinget), Greenland (Inatsisartut) and the Faroe Islands (Løgtingið) that led to the formation of the parliaments in session during the time period covered by this data set. Refer to the documentation for more details.",
          column_title = c(
            "Election",

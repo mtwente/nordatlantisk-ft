@@ -2,7 +2,7 @@ library(jsonlite)
 library(here)
 library(lubridate)
 
-annotate <- function(
+annotate_csv <- function(
     data,
     dataset_description,
     primary_key = names(data)[1],

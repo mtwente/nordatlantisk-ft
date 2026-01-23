@@ -75,7 +75,7 @@ saveRDS(
 
 ## Metadata -----
 
-annotate(political_parties,
+annotate_csv(political_parties,
          dataset_description = "This repository is shipped with a list of political parties that have been represented in Folketinget during the time period covered by this data set. political_parties is provided is provided in csv and rds formats in /data/processed. Refer to the documentation for more details.",
          column_title = c(
            "Abbreviation",
