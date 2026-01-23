@@ -39,7 +39,8 @@ political_parties <- rbind(
 
 political_parties <- as.data.frame(
   political_parties,
-  stringsAsFactors = FALSE
+  stringsAsFactors = FALSE,
+  row.names = FALSE
 )
 
 ### Apply pre-defined names -----
