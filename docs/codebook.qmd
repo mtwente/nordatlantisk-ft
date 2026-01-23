@@ -348,7 +348,7 @@ head(mp_names$wikidata_id)
 
 #### MP_names\$origin {#mp_namesorigin}
 
-`origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mp_names$origin)` as `r class(mp_names$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
+Using `ISO 3166-2` codes, `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mp_names$origin)` as `r class(mp_names$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
 
 ```{r}
 summary(mp_names$origin)
@@ -462,7 +462,7 @@ str(mandates$MP_id)
 
 #### MP_dates\$origin {#mp_datesorigin}
 
-`origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mandates$origin)` as `r class(mandates$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
+Using `ISO 3166-2` codes, `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mandates$origin)` as `r class(mandates$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
 
 ```{r}
 table(mandates$origin)
@@ -616,7 +616,7 @@ head(political_parties$colour)
 
 #### political_parties\$origin
 
-`origin` indicates whether a party stands for election in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(political_parties$origin)` as `r class(political_parties$origin)` variable. As per `r format(file.info(here("data", "processed", "csv", "political_parties.csv"))$mtime, "%B %Y")`, `political_parties` lists `r nrow(political_parties[political_parties$origin == "GL", ])` Greenlandic and `r nrow(political_parties[political_parties$origin == "FO", ])` Faroese parties.
+Using `ISO 3166-2` codes, `origin` indicates whether a party stands for election in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(political_parties$origin)` as `r class(political_parties$origin)` variable. As per `r format(file.info(here("data", "processed", "csv", "political_parties.csv"))$mtime, "%B %Y")`, `political_parties` lists `r nrow(political_parties[political_parties$origin == "GL", ])` Greenlandic and `r nrow(political_parties[political_parties$origin == "FO", ])` Faroese parties.
 
 ```{r}
 table(political_parties$origin)
