@@ -21,7 +21,7 @@ export_dataset <- function(input_df) {
   
   # CSV Metadata -----
   
-  annotate(northatlantic_ft,
+  annotate(input_df,
            dataset_description = "nordatlantisk-ft is compiled from data available on Folketingets Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each ballot – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
            primary_key = "vote_id",
            lang = list("en", "da"),
