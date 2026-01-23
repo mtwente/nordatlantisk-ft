@@ -1,118 +1,113 @@
 {
-	"@context": "https://www.w3.org/ns/csvw",
+	"@context": [
+		"http://www.w3.org/ns/csvw",
+		{
+			"@language": "en"
+		}
+	],
 	"url": "political_parties.csv",
-	"dc:title": "Political Parties",
-	"dc:publisher": "Moritz Twente",
-	"dc:updated": "2026-01-22",
+	"dc:title": "political_parties",
+	"dc:isPartOf": "nordatlantisk-ft",
+	"dc:creator": {
+		"name": "Moritz Twente",
+		"email": "mtwente@protonmail.com",
+		"orcid": "0009-0005-7187-9774"
+	},
+	"dc:description": "This repository is shipped with a list of political parties that have been represented in Folketinget during the time period covered by this data set. political_parties is provided is provided in csv and rds formats in /data/processed. Refer to the documentation for more details.",
+	"dc:modified": {
+		"@value": "2026-01-23T17:13:48+0100",
+		"@type": "xs:dateTime"
+	},
 	"dc:type": "Dataset",
 	"dc:format": "text/csv",
-	"dc:license": "https://creativecommons.org/licenses/by/4.0/",
+	"dc:license": {
+		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+	},
 	"tableSchema": {
 		"aboutUrl": "/README.md",
-		"notes": "Table with names and policy positions of Northatlantic political parties that have been represented in Folketinget.",
 		"columns": [
 			{
 				"name": "party",
-				"dc:title": "Political Party",
-				"description": "Abbreviation for the political party",
-				"datatype": "string"
+				"dc:title": "Abbreviation",
+				"dc:description": "Code for the political party, using the common abbreviation for Greenlandic Parties and the party letter code (Bogstavsbetegnelse) for Faroese parties",
+				"datatype": "factor"
 			},
 			{
 				"name": "full_name",
-				"dc:title": "Full Name",
-				"description": "Full name of the political party",
-				"datatype": "string",
-				"lang": "kl|fo"
+				"dc:title": "Name",
+				"dc:description": "Name of the political party. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case",
+				"datatype": "string"
 			},
 			{
 				"name": "wikidata_id",
-				"dc:title": "Wikidata QID",
-				"description": "Wikidata QID assigned to the political party",
-				"datatype": "string"
+				"dc:title": "Wikidata ID",
+				"dc:description": "Wikidata Identifier for the entity representing each party",
+				"datatype": "factor"
 			},
 			{
 				"name": "party_family",
 				"dc:title": "Party Family",
-				"description": "Title of the political party family the party is part of",
-				"datatype": "string",
-				"lang": "en"
+				"dc:description": "Title of the political party family the party is part of, taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+				"datatype": "factor"
 			},
 			{
 				"name": "colour",
-				"dc:title": "Party Colour",
-				"description": "HEX Code of the main colour of the policial party, taken from Wikipedia",
+				"dc:title": "Colour",
+				"dc:description": "HEX Code of the main colour associated with the policial party, taken from Wikipedia",
 				"datatype": "string"
 			},
 			{
 				"name": "origin",
 				"dc:title": "Origin",
-				"description": "Geographical origin of the political party",
-				"datatype": { "base": "string", "format": "GL|FO" }
+				"dc:description": "Geographical origin of the party, using ISO 3166-2 codes",
+				"datatype": "factor"
 			},
 			{
 				"name": "left_right",
 				"dc:title": "Left-Right Position",
-				"description": "Placement on the Left-Right scale",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+				"dc:description": "left_right indicates where a party’s positions are located on a scale from 0 (left) to 10 (right), taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+				"datatype": {
+					"base": "number",
+					"minimum": 1.3,
+					"maximum": 7.4
+				}
 			},
 			{
 				"name": "state_market",
 				"dc:title": "State-Market Position",
-				"description": "Placement on the State-Market scale",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+				"dc:description": "state_market indicates where a party’s positions on regulating the economy are located on a scale from 0 (preferring state regulations) to 10 (preferring unregulated markets), taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+				"datatype": {
+					"base": "number",
+					"minimum": 1.4,
+					"maximum": 6.4
+				}
 			},
 			{
 				"name": "liberty_authority",
 				"dc:title": "Liberty-Authority Position",
-				"description": "Placement on the Liberty-Authority scale",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+				"dc:description": "liberty_authority indicates indicates a party’s position on a scale from 0 (libertarian) to 10 (authoritarian), taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+				"datatype": {
+					"base": "number",
+					"minimum": 3,
+					"maximum": 6.9
+				}
 			},
 			{
 				"name": "anti_pro_eu",
 				"dc:title": "Anti-Pro EU Position",
-				"description": "Placement on the Anti-Pro EU scale",
-				"datatype": { "base": "integer", "minimum": "0", "maximum": "10" }
+				"dc:description": "anti_pro_eu indicates a party’s position towards EU integration on a scale from 0 (in favor of EU integration) to 10 (against EU integration), taken from the ParlGov database (Döring, Huber, and Manow 2022)",
+				"datatype": {
+					"base": "number",
+					"minimum": 3.3,
+					"maximum": 8.1
+				}
 			}
 		],
-		"dialect": {
-			"delimiter": ",",
-			"quoteChar": "\"",
-			"encoding": "UTF-8"
-		},
-		"primaryKey": ["party"],
-		"foreignKeys": [
-			{
-				"columnReference": "left_right",
-				"reference": {
-					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
-					"columnReference": "left_right",
-					"dc:description": "0--10 scale mean value in left/right dimension with data from Castles/Mair 1983, Huber/Inglehart 1995, Benoit/Laver 2006 and CHES 2010"
-				}
-			},
-			{
-				"columnReference": "state_market",
-				"reference": {
-					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
-					"columnReference": "state_market",
-					"dc:description": "0--10 scale mean value in 'regulation of the economy' dimension with data from Benoit/Laver 2006 and CHES 2010"
-				}
-			},
-			{
-				"columnReference": "liberty_authority",
-				"reference": {
-					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
-					"columnReference": "liberty_authority",
-					"dc:description": "0--10 scale mean value in 'libertarian/authoritarian' dimension with data from Benoit/Laver 2006 and CHES 2010"
-				}
-			},
-			{
-				"columnReference": "anti_pro_eu",
-				"reference": {
-					"resource": "Döring, Holger; Huber, Constantin; Manow, Philip, 2022, 'ParlGov 2022 Release', https://doi.org/10.7910/DVN/UKILBE, Harvard Dataverse, V1; parlgov-stable.xlsx [fileName]",
-					"columnReference": "eu_anti_pro",
-					"dc:description": "0--10 scale mean value in 'EU integration' dimension with data from Ray 1999, Benoit/Laver 2006 and CHES 2010"
-				}
-			}
-		]
+		"primaryKey": "party"
+	},
+	"dialect": {
+		"delimiter": ",",
+		"quoteChar": "\"",
+		"encoding": "UTF-8"
 	}
 }
