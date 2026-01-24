@@ -21,7 +21,7 @@ get_MP_record <- function(MP_id, existing_path, existing_records = NULL) {
   
   local_count <- get_local_vote_count(MP_id, existing_records)
   
-  # Compare local/online data
+  # ---- Compare local/online data ----
   update_check <- check_for_updates(
     count_url = paste0(base_url, "0"),
     ordered_url = paste0(
