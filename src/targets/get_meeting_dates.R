@@ -5,7 +5,7 @@ library(magrittr)
 library(here)
 
 ## External Functions -----
-source(here("src", "get_content.R"), local = TRUE)
+source(here("src", "utils", "get_content.R"), local = TRUE)
 
 # Definition -----
 

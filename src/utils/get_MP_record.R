@@ -5,10 +5,10 @@ library(magrittr)
 library(purrr)
 
 ## External Functions -----
-source(here("src", "get_max_page_number.R"))
-source(here("src", "get_content.R"))
-source(here("src", "get_local_vote_count.R"))
-source(here("src", "check_for_updates.R"))
+source(here("src", "utils", "get_max_page_number.R"))
+source(here("src", "utils", "get_content.R"))
+source(here("src", "utils", "get_local_vote_count.R"))
+source(here("src", "utils", "check_for_updates.R"))
 
 # Definition -----
 

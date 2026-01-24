@@ -5,9 +5,9 @@ library(magrittr)
 library(here)
 
 ## External Functions -----
-source(here("src", "get_content.R"), local = TRUE)
-source(here("src", "get_max_page_number.R"), local = TRUE)
-source(here("src", "check_for_updates.R"))
+source(here("src", "utils", "get_content.R"), local = TRUE)
+source(here("src", "utils", "get_max_page_number.R"), local = TRUE)
+source(here("src", "utils", "check_for_updates.R"))
 
 # Definition -----
 

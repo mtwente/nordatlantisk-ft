@@ -4,7 +4,7 @@ library(httr)
 library(magrittr)
 
 ## External Functions -----
-source(here("src", "get_max_skip_index.R"))
+source(here("src", "utils", "get_max_skip_index.R"))
 
 # Definition -----
 
