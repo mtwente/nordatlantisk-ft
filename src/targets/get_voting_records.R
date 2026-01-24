@@ -4,17 +4,35 @@ library(purrr)
 library(here)
 
 ## External Functions -----
-source(here("src", "get_MP_record.R"), local = TRUE)
+source(here("src", "utils", "get_MP_record.R"), local = TRUE)
 
 # Definition -----
 
 get_voting_records <- function(input_df) {
   MP_names <- as.data.frame(input_df)
   
-  northatlantic_votes <- map_dfr(MP_names$MP_id, get_MP_record)
+  ## read pre-existing dataset to avoid duplicate downloads
+  existing_path <- here("data", "raw", "northatlantic_votes_raw.csv")
   
-  write.csv(northatlantic_votes, file = here("data", "raw", "northatlantic_votes_raw.csv"),
-            row.names = FALSE)
+  existing_records <- if (file.exists(existing_path)) {
+    read.csv(existing_path, stringsAsFactors = FALSE)
+  } else { NULL }
   
-  return(northatlantic_votes)
+  ## download new voting records only
+  new_records <- map_dfr(
+    MP_names$MP_id,
+    get_MP_record,
+    existing_path = existing_path,
+    existing_records = existing_records
+  )
+  
+  ## combine data and sort after MP and vote ID
+  combined_votes <- bind_rows(existing_records, new_records) %>%
+    distinct(id, .keep_all = TRUE) %>%
+    arrange(aktørid, id)
+  
+  ## export/return data
+  write.csv(combined_votes, file = existing_path, row.names = FALSE)
+  
+  combined_votes
 }

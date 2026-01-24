@@ -94,7 +94,7 @@ tar_plan(
     command = get_voting_records(MP_names),
     cue = tar_cue_age(
       name = cleaned_voting_records,
-      age = as.difftime(12, units = "weeks")
+      age = as.difftime(1, units = "weeks")
     )
   ),
   
@@ -106,7 +106,7 @@ tar_plan(
     command = get_ballot_info(),
     cue = tar_cue_age(
       name = cleaned_ballot_results,
-      age = as.difftime(12, units = "weeks")
+      age = as.difftime(1, units = "weeks")
     )
   ),
 
