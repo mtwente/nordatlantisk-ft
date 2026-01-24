@@ -7,54 +7,50 @@ library(here)
 ## External Functions -----
 source(here("src", "get_content.R"), local = TRUE)
 source(here("src", "get_max_page_number.R"), local = TRUE)
-source(here("src", "check_ballot_updates.R"), local = TRUE)
+source(here("src", "check_for_updates.R"))
 
 # Definition -----
 
 get_ballot_info <- function() {
   
-  data_path <- here("data", "raw", "ballot_info_raw.csv")
-  
   # ---- Read existing data ----
-  existing_df <- if (file.exists(data_path)) {
-    read.csv(data_path, stringsAsFactors = FALSE)
+  local_path <- here("data", "raw", "ballot_info_raw.csv")
+  
+  existing_records <- if (file.exists(local_path)) {
+    read.csv(local_path, stringsAsFactors = FALSE)
   } else {
     data.frame()
   }
   
-  existing_count <- nrow(existing_df)
+  local_count <- nrow(existing_records)
   
-  # ---- Online count ----
-  first_page <- get_content(
-    "https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$skip=0"
+  # ---- Compare local/online data ----
+  update_check <- check_for_updates(
+    count_url   = "https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$skip=0",
+    ordered_url = "https://oda.ft.dk/api/Afstemning?$orderby=opdateringsdato%20desc&$top=1",
+    local_count = local_count,
+    data_path   = local_path
   )
   
-  total_count <- as.integer(first_page[["odata.count"]])
-  
-  # ---- Timestamp check ----
-  needs_update <- needs_update_ballot_info(data_path)
-  
-  if (!needs_update && existing_count == total_count) {
-    
-    mod_date <- file.info(data_path)$mtime
+  if (!update_check$needs_update) {
     
     message(
-      "Ballot info: No new records since last update (",
-      format(mod_date, "%Y-%m-%d %H:%M:%S"),
+      "Ballot Data: No new records since last update (",
+      format(update_check$mod_date, "%Y-%m-%d %H:%M:%S"),
       ")"
     )
     
-    return(existing_df)
+    return(existing_records)
   }
   
   message(
-    "Ballot info: downloading ",
-    total_count - existing_count,
+    "Ballot Data: downloading ",
+    update_check$total_count - local_count,
     " new or updated records"
   )
   
   # ---- Paging ----
-  start_skip <- (existing_count %/% 100) * 100
+  start_skip <- (local_count %/% 100) * 100
   max_skip   <- ((total_count - 1) %/% 100) * 100
   
   temp_downloaded_ballot_results <- data.frame()
@@ -87,13 +83,13 @@ get_ballot_info <- function() {
   }
   
   # ---- Combine, deduplicate, sort ----
-  combined_df <- bind_rows(existing_df, temp_downloaded_ballot_results) %>%
+  combined_df <- bind_rows(existing_records, temp_downloaded_ballot_results) %>%
     distinct(id, .keep_all = TRUE) %>%
     arrange(id)
   
   write.csv(
     combined_df,
-    file = data_path,
+    file = local_path,
     row.names = FALSE
   )
   
