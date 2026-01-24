@@ -1,53 +1,32 @@
 # Setup -----
 ## Packages -----
-library(httr)
+library(purrr)
 library(dplyr)
 library(here)
 
 ## External Functions -----
-source(here("src", "utils", "get_content.R"), local = TRUE)
-source(here("src", "utils", "get_max_page_number.R"), local = TRUE)
+source(here("src", "utils", "get_vote_type_distribution.R"), local = TRUE)
 
 # Definition -----
 
 get_missing_info <- function(input_df) {
   
-  missing_results_df <- input_df %>%
-    filter(konklusion == "")
-  
-  input_df <- input_df %>%
-    mutate(ft_for = 0, ft_imod = 0, ft_hverken = 0)
-  
-  input_df$ft_for[input_df$konklusion != ""] <- NA
-  input_df$ft_imod[input_df$konklusion != ""] <- NA
-  input_df$ft_hverken[input_df$konklusion != ""] <- NA
-  
-  for (p in seq_len(nrow(missing_results_df))) {
-    
-    temp_NAafst_id <- missing_results_df$id[p]
-    
-    for (q in seq(0, 100, 100)) { # captures all 179 votes spread out on two pages with max. 100 entries each
-      temp_NAcontent_results <- paste0("https://oda.ft.dk/api/Afstemning(", temp_NAafst_id, ")/Stemme?$inlinecount=allpages&$skip=", q) %>%
-        get_content()
+  vote_counts <- purrr::map_dfr(
+    input_df$id,
+    function(ballot_id) {
       
-      for (z in seq_along(temp_NAcontent_results[[3]])) {
-        vote <- temp_NAcontent_results[[3]][[z]]
-        
-        if (!is.list(vote) || length(vote) < 2) {
-          warning("Skipping malformed vote entry at z = ", z, " for Afstemning ID = ", temp_NAafst_id)
-          next
-        }
-        
-        vote_type_id <- vote[[2]]
-        
-        switch(vote_type_id,
-               "1" = {input_df[input_df$id == temp_NAafst_id, "ft_for"] <- input_df[input_df$id == temp_NAafst_id, "ft_for"] + 1},
-               "2" = {input_df[input_df$id == temp_NAafst_id, "ft_imod"] <- input_df[input_df$id == temp_NAafst_id, "ft_imod"] + 1},
-               #"3" = { temp_sum_fravaer <- temp_sum_fravaer + 1 }, implemented in clean_ballot_results(), since this detail is not included in this particular list
-               "4" = {input_df[input_df$id == temp_NAafst_id, "ft_hverken"] <- input_df[input_df$id == temp_NAafst_id, "ft_hverken"] + 1}
-        )
-      }
+      dist <- get_vote_type_distribution(ballot_id)
+      
+      tibble(
+        id = ballot_id,
+        ft_for        = dist$n[dist$typeid == 1] %||% 0L,
+        ft_against    = dist$n[dist$typeid == 2] %||% 0L,
+        ft_abstention = dist$n[dist$typeid == 4] %||% 0L, #obs
+        ft_absent     = dist$n[dist$typeid == 3] %||% 0L
+      )
     }
-  }
-  return(input_df)
+  )
+  
+  input_df %>%
+    left_join(vote_counts, by = "id")
 }
