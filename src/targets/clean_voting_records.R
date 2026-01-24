@@ -22,9 +22,6 @@ clean_voting_records <- function(raw_votes) {
   
   # Export -----
   
-  #write.csv(raw_votes, here("data", "processed", "csv", "northatlantic_votes.csv"),
-  #          row.names = FALSE)
-  
   saveRDS(raw_votes, here("data", "processed", "northatlantic_votes.rds"))
   
   return(raw_votes)
