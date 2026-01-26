@@ -60,7 +60,7 @@ Running `tar_make()` will execute the workflow as defined in [`_targets.R`](./_t
 
 The targets pipeline is set to check for new voting records **once a week only**. To force running the scripts with the most recent data available, change the `cue` arguments from the targets `ballot_info` and `raw_voting_records` in `_targets.R`.
 
-You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add the IDs to the column(s) `MP_id` in the data frame created in [`src/create_MP_list.R`](/src/create_MP_list.R) and other metadata, if necessary, to [`src/create_MP_dates.R`](/src/create_MP_dates.R) and [`src/create_party_list.R`](/src/create_party_list.R). Then run `targets::tar_make()`.
+You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add it to the data frame created in [`src/create_MP_list.R`](/src/create_MP_list.R). Supply other metadata to [`src/create_MP_dates.R`](/src/create_MP_dates.R) and, if necessary, to [`src/create_party_list.R`](/src/create_party_list.R). Then run `targets::tar_make()`.
 
 ## Use
 
