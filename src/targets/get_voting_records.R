@@ -11,10 +11,10 @@ source(here("src", "utils", "get_MP_record.R"), local = TRUE)
 get_voting_records <- function(input_df) {
 
   ## read pre-existing dataset to avoid duplicate downloads
-  existing_path <- here("data", "raw", "northatlantic_votes_raw.csv")
+  existing_path <- here("data", "raw", "northatlantic_votes_raw.rds")
   
   existing_records <- if (file.exists(existing_path)) {
-    read.csv(existing_path, stringsAsFactors = FALSE)
+    readRDS(existing_path)
   } else {
     existing_records <- data.frame(
       id = numeric(0),
@@ -39,16 +39,16 @@ get_voting_records <- function(input_df) {
   existing_records$opdateringsdato <- as.Date(existing_records$opdateringsdato)
   new_records$opdateringsdato <- as.Date(new_records$opdateringsdato)
   
-  combined_votes <- bind_rows(existing_records, new_records) %>%
+  updated_votes <- bind_rows(existing_records, new_records) %>%
     distinct(id, .keep_all = TRUE) %>%
     arrange(aktørid, id)
   
   # Keep only MPs present in input_df
-  combined_votes <- combined_votes %>%
+  updated_votes <- updated_votes %>%
     filter(aktørid %in% input_df$MP_id)
   
   ## export/return data
-  write.csv(combined_votes, file = existing_path, row.names = FALSE)
+  saveRDS(updated_votes, file = existing_path)
   
-  combined_votes
+  updated_votes
 }
