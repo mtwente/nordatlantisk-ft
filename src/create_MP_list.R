@@ -5,33 +5,64 @@ library(here)
 ## External Functions -----
 source(here("src", "utils", "annotate_csv.R"), local = TRUE)
 
-## Template -----
-
-#MP_names <- data.frame(surname = c("Name1", "Name2", "Name3", "Name4", "Name5", ...),
-#                       MP_id = factor(c(1,2,3,4,5, ...)),
-#                       ...)
-
 ## Create Data -----
 
-MP_names_GL <- data.frame(surname = c("Olsvig", "Lund Olsen", "Jakobsen", "Johansen", "Kleist", "Rossen", "Henningsen Heilmann", "Nielsen", "Chemnitz", "Hammond", "Høegh-Dam", "Olsen", "Kûitse"),
-                         first_name = c("Sara", "Johan", "Doris", "Lars-Emil", "Kuupik", "Sofia", "Juliane", "Nick", "Aaja", "Aleqa", "Aki-Matilda", "Markus E.", "Elvira"),
-                         MP_id = factor(c(13, 277, 294, 670, 672, 1484, 6689, 14000, 15757, 15758, 18688, 20635, 21206)),
-                         wikidata_id = factor(c("Q8084240", "Q5965473", "Q12308847", "Q468034", "Q317400", "Q86523542", "Q533361", "Q16064655", "Q20199803", "Q1796195", "Q64415132", "Q122762872", "Q136486981")),
-                         origin = factor(rep("GL", 13)),
-                         party = factor(c("IA", "IA", "SIU", "SIU", "IA", "IA", "IA", "SIU", "IA", "SIU, NQ", "SIU, N", "SIU", "N")),
-                         substitute = c(FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE)
-                         )
+named_columns <- c(
+  "surname", "first_name", "MP_id",
+  "wikidata_id", "origin", "party", "substitute"
+)
 
-MP_names_FO <-  data.frame(surname = c("Joensen", "Petersen", "Arge", "Hoydal", "Johannesen", "Skaale", "á Fríðriksmørk", "Kallsberg", "Falkenberg", "Jacobsen", "Old", "Johannesen", "Rasmussen", "Abrahamsen", "Apol", "Dam", "Hammer"),
-                          first_name = c("Edmund", "Lisbeth", "Magni", "Høgni", "Aksel", "Sjúrður", "Annita", "Anfinn", "Anna", "Tórbjørn", "Henrik", "Kaj Leo", "Magnus", "Helgi", "Barbara Gaardlykke", "Rigmor", "Bjarni"),
-                          MP_id = factor(c(247, 918, 15881, 1833, 12283, 262, 6684, 3093, 20349, 9780, 18545, 6687, 19461, 19996, 19142, 18614, 17988)),
-                          wikidata_id = factor(c("Q678236", "Q544116", "Q16167420", "Q567780", "Q556712", "Q845278", "Q466097", "Q529900", "Q114967087", "Q331736", "Q3818072", "Q331786", "Q17106707", "Q754881", "Q102501785", "Q15633676", "Q20900614")),
-                          origin = factor(rep("FO", 17)),
-                          party = factor(c("B", "B", "E", "E", "C", "C", "E", "A", "B", "E", "C", "B", "B", "B", "C", "C", "C")),
-                          substitute = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
-                          )
+rows <- list(
+  ## Greenland -----
+  c("Olsvig", "Sara", 13, "Q8084240", "GL", "IA", FALSE),
+  c("Lund Olsen", "Johan", 277, "Q5965473", "GL", "IA", TRUE),
+  c("Jakobsen", "Doris", 294, "Q12308847", "GL", "SIU", FALSE),
+  c("Johansen", "Lars-Emil", 670, "Q468034", "GL", "SIU", FALSE),
+  c("Kleist", "Kuupik", 672, "Q317400", "GL", "IA", FALSE),
+  c("Rossen", "Sofia", 1484, "Q86523542", "GL", "IA", TRUE),
+  c("Henningsen Heilmann", "Juliane", 6689, "Q533361", "GL", "IA", FALSE),
+  c("Nielsen", "Nick", 14000, "Q16064655", "GL", "SIU", TRUE),
+  c("Chemnitz", "Aaja", 15757, "Q20199803", "GL", "IA", FALSE),
+  c("Hammond", "Aleqa", 15758, "Q1796195", "GL", "SIU, NQ", FALSE),
+  c("Høegh-Dam", "Aki-Matilda", 18688, "Q64415132", "GL", "SIU, N", FALSE),
+  c("Olsen", "Markus E.", 20635, "Q122762872","GL", "SIU", TRUE),
+  c("Kûitse", "Elvira", 21206, "Q136486981","GL", "N", TRUE),
+  
+  ## Faroe Islands -----
+  c("Joensen", "Edmund", 247, "Q678236", "FO", "B", FALSE),
+  c("Petersen", "Lisbeth", 918, "Q544116", "FO", "B", FALSE),
+  c("Arge", "Magni", 15881, "Q16167420","FO", "E", FALSE),
+  c("Hoydal", "Høgni", 1833,  "Q567780", "FO", "E", FALSE),
+  c("Johannesen", "Aksel", 12283, "Q556712", "FO", "C", TRUE),
+  c("Skaale", "Sjúrður", 262, "Q845278", "FO", "C", FALSE),
+  c("á Fríðriksmørk", "Annita", 6684, "Q466097", "FO", "E", TRUE),
+  c("Kallsberg", "Anfinn", 3093, "Q529900", "FO", "A", FALSE),
+  c("Falkenberg", "Anna", 20349, "Q114967087","FO","B", FALSE),
+  c("Jacobsen", "Tórbjørn", 9780, "Q331736", "FO", "E", TRUE),
+  c("Old", "Henrik", 18545, "Q3818072","FO", "C", TRUE),
+  c("Johannesen", "Kaj Leo", 6687, "Q331786", "FO", "B", TRUE),
+  c("Rasmussen", "Magnus", 19461, "Q17106707","FO","B", TRUE),
+  c("Abrahamsen", "Helgi", 19996, "Q754881", "FO", "B", TRUE),
+  c("Apol", "Barbara Gaardlykke",19142, "Q102501785","FO","C", TRUE),
+  c("Dam", "Rigmor", 18614, "Q15633676","FO","C", TRUE),
+  c("Hammer", "Bjarni", 17988, "Q20900614","FO","C", TRUE)
+)
 
-MP_names <- rbind(MP_names_GL, MP_names_FO)
+MP_names <- do.call(rbind, rows) |>
+  as.data.frame(stringsAsFactors = FALSE,
+                row.names = FALSE)
+
+### Apply pre-defined names -----
+colnames(MP_names) <- named_columns
+
+## Coerce column types -----
+
+MP_names$substitute   <- as.logical(MP_names$substitute)
+
+MP_names$MP_id        <- factor(MP_names$MP_id)
+MP_names$wikidata_id  <- factor(MP_names$wikidata_id)
+MP_names$origin       <- factor(MP_names$origin)
+MP_names$party        <- factor(MP_names$party)
 
 # Export -----
 
