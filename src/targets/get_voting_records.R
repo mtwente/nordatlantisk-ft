@@ -15,8 +15,16 @@ get_voting_records <- function(input_df) {
   
   existing_records <- if (file.exists(existing_path)) {
     read.csv(existing_path, stringsAsFactors = FALSE)
-  } else { NULL }
-  
+  } else {
+    existing_records <- data.frame(
+      id = numeric(0),
+      typeid = numeric(0),
+      afstemningid = numeric(0),
+      aktørid = numeric(0),
+      opdateringsdato = as.Date(character(0)),
+      stringsAsFactors = FALSE
+    )
+  }
   
   ## download new voting records only
   new_records <- map_dfr(
