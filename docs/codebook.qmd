@@ -36,7 +36,7 @@ political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 
 ### Voting Records Database -----
 northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rds"))
-northatlantic_votes_raw <- read.csv(here("data", "raw", "northatlantic_votes_raw.csv"), check.names = FALSE)
+northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
 ballot_info_raw <- read.csv(here("data", "raw", "ballot_info_raw.csv"), check.names = FALSE)
 ballot_results_ft <- readRDS(here("data", "processed", "ballot_results_ft.rds"))
 ballot_topics_raw <- read.csv(here("data", "raw", "ballot_topics_raw.csv"), check.names = FALSE)
@@ -736,7 +736,7 @@ head(northatlantic_votes$MP_id)
 
 ### northatlantic_votes_raw {#northatlantic_votes_raw}
 
-`northatlantic_votes_raw` is provided as `csv` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#northatlantic_votes) is available as `rds` file in `/data/processed`. As of `r format(file.info(here("data", "raw", "northatlantic_votes_raw.csv"))$mtime, "%B %Y")`, `northatlantic_votes_raw.csv` contains `r nrow(northatlantic_votes_raw)` observations of `r ncol(northatlantic_votes_raw)` variables.
+`northatlantic_votes_raw` is provided as `rds` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#northatlantic_votes) is available as `rds` file in `/data/processed`. As of `r format(file.info(here("data", "raw", "northatlantic_votes_raw.rds"))$mtime, "%B %Y")`, `northatlantic_votes_raw.rds` contains `r nrow(northatlantic_votes_raw)` observations of `r ncol(northatlantic_votes_raw)` variables.
 
 ```{r}
 str(northatlantic_votes_raw)
@@ -780,7 +780,7 @@ head(northatlantic_votes_raw$aktørid)
 
 #### northatlantic_votes_raw\$opdateringsdato
 
-For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its most recent update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(northatlantic_votes_raw$opdateringsdato)`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
+For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its most recent update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(northatlantic_votes_raw$opdateringsdato)`. The time stamps are originally formatted as `%Y-%m-%dT%T`, with some values even at split second level, but simplified to `%Y-%m-%d` after downloading.
 
 This variable is eliminated from [`northatlantic_votes`](#northatlantic_votes) as a result of data processing.
 
