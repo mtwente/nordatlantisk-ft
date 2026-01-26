@@ -792,7 +792,7 @@ head(northatlantic_votes_raw$opdateringsdato)
 
 ### ballot_results_ft {#ballot_results_ft}
 
-`ballot_results_ft` is provided as `rds` file in `/data/processed/`. After all ballots are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#ballot_info_raw) is available as `csv` file in `/data/raw/`. As of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, `ballot_results_ft.rds` contains `r nrow(ballot_results_ft)` observations of `r ncol(ballot_results_ft)` variables.
+`ballot_results_ft` is provided as `rds` file in `/data/processed/`. After all ballots are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#ballot_info_raw) is available as `rds` file in `/data/raw/`. As of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, `ballot_results_ft.rds` contains `r nrow(ballot_results_ft)` observations of `r ncol(ballot_results_ft)` variables.
 
 ```{r}
 str(ballot_results_ft)
@@ -958,7 +958,7 @@ head(ballot_results_ft$ballot_result_string)
 
 ### ballot_info_raw {#ballot_info_raw}
 
-`ballot_info_raw` is provided as `csv` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#ballot_results_ft) is available as `rds` file in `/data/processed`. As per `r format(file.info(here("data", "processed", "northatlantic_votes.rds"))$mtime, "%B %Y")`, `ballot_info_raw.csv` contains `r nrow(ballot_info_raw)` observations of `r ncol(ballot_info_raw)` variables.
+`ballot_info_raw` is provided as `rds` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#ballot_results_ft) is available as `rds` file in `/data/processed`. As per `r format(file.info(here("data", "raw", "ballot_info_raw.rds"))$mtime, "%B %Y")`, `ballot_info_raw.rds` contains `r nrow(ballot_info_raw)` observations of `r ncol(ballot_info_raw)` variables.
 
 ```{r}
 str(ballot_info_raw)
