@@ -3,6 +3,7 @@
 library(httr)
 library(magrittr)
 library(here)
+library(purrr)
 
 ## External Functions -----
 source(here("src", "utils", "get_content.R"), local = TRUE)
@@ -13,22 +14,27 @@ get_meeting_dates <- function(input_df, input_col) {
   
   temp_mødeid_df <- as.data.frame(unique(input_df[[input_col]]))
 
-  temp_dato_df <- data.frame()
+  temp_dato_df <- map_dfr(
+    temp_mødeid_df[[1]],
+    function(temp_mødeid) {
+      resp <- paste0(
+        "https://oda.ft.dk/api/M%C3%B8de(",
+        temp_mødeid,
+        ")?$select=dato"
+      ) %>% get_content()
+      
+      tibble::tibble(
+        mødeid = temp_mødeid,
+        dato   = resp$dato
+      )
+    }
+  )
   
-  for (k in 1:nrow(temp_mødeid_df)) {
-    temp_mødeid <- temp_mødeid_df[k, 1]
-    
-    temp_content_møde <- paste0("https://oda.ft.dk/api/M%C3%B8de(", temp_mødeid,")") %>%
-      get_content()
-    
-    temp_dato_df <- bind_rows(temp_dato_df, temp_content_møde[9])
-  }
+  møder_df <- temp_dato_df %>%
+    distinct(mødeid, .keep_all = TRUE)
   
-  møder_df <- cbind("mødeid" = temp_mødeid_df, "dato" = temp_dato_df) %>%
-    set_colnames(c("mødeid", "dato"))
-  
-  result_df <- merge(input_df, møder_df,
-                             by = "mødeid")
+  result_df <- input_df %>%
+    left_join(møder_df, by = "mødeid")
   
   return(result_df)
 }
