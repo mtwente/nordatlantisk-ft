@@ -1,64 +1,73 @@
 # Setup -----
 ## Packages -----
-library(here)
 library(httr)
-library(tibble)
 library(dplyr)
+library(purrr)
+library(tibble)
+library(here)
 library(readr)
+
+## External helpers -----
+source(here("src", "utils", "get_content.R"))
 
 # Definition -----
 get_topics <- function(ballot_results) {
   
-  # Step 1: collect unique ft_process_ids
-  unique_ft_process_ids <- unique(ballot_results$ft_process_id)
-  unique_ft_process_ids <- unique_ft_process_ids[!is.na(unique_ft_process_ids) & unique_ft_process_ids != ""]
+  # ---- Step 1: collect unique process IDs (as integer) ----
+  process_ids <- unique(ballot_results$ft_process_id)
+  process_ids <- process_ids[!is.na(process_ids) & process_ids != ""]
+
+  # ---- Step 2: load existing cache if available ----
+  cache_file <- here("data", "raw", "ballot_topics_raw.csv")
   
-  # Step 2: fetch Sagstrin data once per ft_process_id
-  sagstrin_lookup <- purrr::map_dfr(unique_ft_process_ids, function(id) {
-    sagstrin_url <- paste0("https://oda.ft.dk/api/Sagstrin(", id, ")")
-    resp <- tryCatch({
-      httr::GET(sagstrin_url) %>% httr::content(as = "parsed", encoding = "UTF-8")
-    }, error = function(e) NULL)
+  if (file.exists(cache_file)) {
+    topics_cache <- readr::read_csv(cache_file, show_col_types = FALSE) %>%
+      mutate(ft_process_id = as.factor(ft_process_id),
+             ft_topic_id = as.factor(ft_topic_id))
+  } else {
+    topics_cache <- tibble(
+      ft_process_id   = factor(),
+      ft_process_step = character(),
+      ft_topic_id = factor(),
+      ft_topic        = character(),
+    )
+  }
+  
+  # ---- Step 3: identify missing process_ids ----
+  missing_ids <- setdiff(process_ids, topics_cache$ft_process_id)
+  
+  if (length(missing_ids) > 0) {
+    message("Fetching ", length(missing_ids), " new topics from API...")
     
-    if (is.null(resp)) {
-      tibble::tibble(ft_process_id = id, sagstrin = NA_character_, sagid = NA_integer_)
-    } else {
-      tibble::tibble(
-        ft_process_id = id,
-        sagstrin   = resp$titel %||% NA_character_,
-        sagid      = resp$sagid %||% NA_integer_
-      )
-    }
-  })
-  
-  # Step 3: fetch Sag data once per sagid
-  unique_sagids <- unique(sagstrin_lookup$sagid)
-  unique_sagids <- unique_sagids[!is.na(unique_sagids)]
-  
-  sag_lookup <- purrr::map_dfr(unique_sagids, function(id) {
-    sag_url <- paste0("https://oda.ft.dk/api/Sag(", id, ")")
-    resp <- tryCatch({
-      httr::GET(sag_url) %>% httr::content(as = "parsed", encoding = "UTF-8")
-    }, error = function(e) NULL)
+    new_topics <- map_dfr(missing_ids, function(id) {
+      url <- paste0("https://oda.ft.dk/api/Sagstrin(", id, ")?$expand=Sag")
+      
+      resp <- tryCatch({
+        httr::GET(url) %>% httr::content(as = "parsed", encoding = "UTF-8")
+      }, error = function(e) NULL)
+      
+      if (is.null(resp)) {
+        tibble(
+          ft_process_id   = as.integer(id),
+          ft_topic        = NA_character_,
+        )
+      } else {
+        tibble(
+          ft_process_id   = as.integer(id),
+          ft_topic_id     = as.factor(resp$id),
+          ft_topic        = resp$titel %||% NA_character_
+        )
+      }
+    })
     
-    if (is.null(resp)) {
-      tibble::tibble(sagid = id, sag_titel = NA_character_)
-    } else {
-      tibble::tibble(
-        sagid      = id,
-        sag_titel  = resp$titel %||% NA_character_
-      )
-    }
-  })
+    # ---- Step 4: merge with existing cache ----
+    topics_cache <- bind_rows(topics_cache, new_topics) %>%
+      distinct(ft_process_id, .keep_all = TRUE)
+    
+    # ---- Step 5: save updated cache ----
+    readr::write_csv(topics_cache, cache_file)
+  }
   
-  # Step 4: combine everything into one lookup
-  ballot_topic <- sagstrin_lookup %>%
-    dplyr::left_join(sag_lookup, by = "sagid")
-  
-  colnames(ballot_topic) <- c("ft_process_id", "ft_process_step", "ft_topic_id", "ft_topic")
-  
-  # Save
-  readr::write_csv(ballot_topic, here::here("data", "raw", "ballot_topics_raw.csv"))
-  
-  return(ballot_topic)
+  # ---- Return ----
+  return(topics_cache)
 }
