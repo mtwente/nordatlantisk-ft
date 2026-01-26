@@ -1,36 +1,41 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|b37cfbb89543473d|||||||||||||||
+.Random.seed|object|f56e06175629f7bd|||||||||||||||
+"%||%"|function|176c749ab515e6f3|||||||||||||||
 annotate_csv|function|92d46a5c59b862b0|||||||||||||||
-ballot_info|stem|8aa71e2d5e25c5b7|c3177031d0f9a243|8eec3a4c5de8e93f|-1356312050||t20476.98532337s|7c5ba670b646ef34|209411|rds|local|vector|||3.199||
-ballot_info_with_dates|stem|f199e59addb97b97|c199bd9203f4720e|229a34153621391e|-1538018715||t20476.9865263238s|86ba31eb5a153e38|228665|rds|local|vector|||103.871||
+ballot_info|stem|8aa71e2d5e25c5b7|c3177031d0f9a243|e897e80b9a46ebe4|-1356312050||t20478.4382998399s|7c5ba670b646ef34|209411|rds|local|vector|||0.554||
+ballot_info_with_counts|stem|c03710ca85765284|1ca13ab48561b771|dbc793f4bee0b297|1293345458||t20478.9904888318s|8fbc1391822e03a7|259970|rds|local|vector|||1484.87||
+ballot_info_with_dates|stem|eea3efb9c111fed2|c199bd9203f4720e|4bae2b6359b02271|-1538018715||t20478.4738897278s|83a83e21cd419b3b|216495|rds|local|vector|||56.098||
 ballot_results|stem|8d1750210e047b1d|6efabfa22b2b7d0e|d7b1e0640ad92fd3|1992756893||t19720.9153063949s|ca06277be079bbc9|222691|rds|local|vector|||459.526||
 ballot_results_with_topics|stem|9c5b1f46e472143e|dc8fb805ea9aec5d|52eb4c347fd896be|822781586||t20319.6031643917s|5cf73858a05ff67f|597396|rds|local|vector|||534.922||
-ballot_topics|stem|d84ed72e540ffcb8|dc8fb805ea9aec5d|45fbdee566be6d1e|-271092198||t20477.0023524378s|6a3be38e4a8c3ae8|603605|rds|local|vector|||921.86||
+ballot_topics|stem|442b6c1abe512abd|dc8fb805ea9aec5d|78eeab4a043f2193|-271092198||t20478.999607703s|6d3b720dddd3dd59|600862|rds|local|vector|||787.687||
 cabinets_dk|stem|132eef548021fa2a|cc7e7878665e6200|5533078bbdb1f2cb|-1800804569||t20475.6917941476s|8ea15fe19e9b2e93|571|rds|local|vector|||0||
 cabinets_dk_file|stem|132eef548021fa2a|2bfa081e8ed03036|ef46db3751d8e999|-2107389882|/Users/mtwente/github/nordatlantisk-ft/data/processed/cabinets_dk.rds|t20476.6758588519s|8ea15fe19e9b2e93|571|file|local|vector|||0.148||
 cabinets_fo|stem|c5106c769b968288|cd0dc3a9a759d225|4adbac5091fc5f3a|99384006||t20475.686060458s|6faf7cd00812f2b4|516|rds|local|vector|||0.001||
 cabinets_fo_file|stem|c5106c769b968288|b42062d67bc69796|ef46db3751d8e999|-1869846759|/Users/mtwente/github/nordatlantisk-ft/data/processed/cabinets_fo.rds|t20476.6759698725s|6faf7cd00812f2b4|516|file|local|vector|||0||
 cabinets_gl|stem|6f734cb98866553e|1a65357f3608ca58|9d0ff365321aaad8|-157967025||t20475.6860604354s|dbed3970883e696d|668|rds|local|vector|||0||
 cabinets_gl_file|stem|6f734cb98866553e|3fbb69c9e2c04f3d|ef46db3751d8e999|1488048270|/Users/mtwente/github/nordatlantisk-ft/data/processed/cabinets_gl.rds|t20476.6761465123s|dbed3970883e696d|668|file|local|vector|||0.098||
-clean_ballot_results|function|32427b96d4b6fb30|||||||||||||||
+check_for_updates|function|821f23a86f63114c|||||||||||||||
+clean_ballot_results|function|8fac0629bd102ab8|||||||||||||||
 clean_voting_records|function|c6e7da41e47c7dfb|||||||||||||||
-cleaned_ballot_results|stem|a252cdbc78fa0454|0717b24f8002e719|68a7e64baa88f24b|-1908955450||t20476.9916820612s|4a9b6da088a4a54c|253854|rds|local|vector|||0.117||
-cleaned_voting_records|stem|cfcb575e206151fe|ad9405147657a520|c57f4a7ea19b9843|1063931314||t20476.9645215029s|a5ba575508a55fbb|258019|rds|local|vector|||0.047||
+cleaned_ballot_results|stem|2fd62019e4a3bb38|57a4c476ee51d2ff|7ba925ea04c9a0d7|-1908955450||t20478.9904902369s|b60933f3cd3d530e|241034|rds|local|vector|||0.077||
+cleaned_voting_records|stem|cfcb575e206151fe|ad9405147657a520|c57f4a7ea19b9843|1063931314||t20477.5419550016s|a5ba575508a55fbb|258019|rds|local|vector|||0.047||
 codebook|stem|d0ae3a1d17d62d65|1005ee0ab3e841f3|e11738939520571e|-2106169944||t19727.9633783945s|045b07e719c4cc68|120|rds|local|vector|||4.412|unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 556 is invalid. unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 556 is invalid. The file codebook.log is not encoded in UTF8. These lines contain invalid UTF8 characters 561. The file codebook.log is not encoded in UTF8. These lines contain invalid UTF8 characters 561. unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 561 is invalid|
 cue|stem||77364f0bc8f16811|ef46db3751d8e999|1566650647||t19720.8965934433s||0|rds|local|vector|||0.173||target cue attempted to run targetstar_exist_meta to during a pipeline, which is unsupported except when format in cfile, file_fast and repository  local, or if you are reading from a data store that does not belong to the current pipeline. This is because functions like tar_exist_meta attempt to access or modify the local data store, which may not exist or be properly synced in certain situations. Also, please be aware that some functions like tar_make and tar_destroy should never run inside a target. Please find a different workaround for your use case.
-export|stem|5e4ae670c6239707|8684a434b42518b1|eaa321ee286e1e6a|-1361306371||t20477.0028776843s|b8228497b1cc3569|2936777|rds|local|vector|||0.504||
+export|stem|97febd40dc8ba5d2|8684a434b42518b1|b6a0a35d767213b1|-1361306371||t20479.000174205s|1b12e1bddd226130|2936238|rds|local|vector|||0.525||
 export_dataset|function|aa232b4c5158c91c|||||||||||||||
-get_ballot_info|function|db33c32d3be698b8|||||||||||||||
+get_ballot_info|function|98a4573a245bf5e6|||||||||||||||
 get_content|function|848c18fb0b8218c4|||||||||||||||
 get_local_vote_count|function|39622b64531735ec|||||||||||||||
 get_max_page_number|function|24dbaf74ef9cc085|||||||||||||||
 get_max_skip_index|function|a5ef2fc242fdffd8|||||||||||||||
-get_meeting_dates|function|6dff7eea218b6005|||||||||||||||
-get_missing_info|function|30506597563bc174|||||||||||||||
-get_MP_record|function|3d321ac90fe4312c|||||||||||||||
+get_meeting_dates|function|7e3614ecd520ff7c|||||||||||||||
+get_missing_ballot_counts|function|64625e3398b8a9f1|||||||||||||||
+get_missing_info|function|0a299775ce183bad|||||||||||||||
+get_MP_record|function|32714756d4168c7d|||||||||||||||
 get_MP_records|function|5ab3ddde9f272a9b|||||||||||||||
-get_topics|function|4b24b8d570ae2ccf|||||||||||||||
-get_voting_records|function|99956c9e19893587|||||||||||||||
+get_topics|function|8f09f4b9fdc199d1|||||||||||||||
+get_vote_type_distribution|function|63d448ff9e1b440e|||||||||||||||
+get_voting_records|function|3c089335dff3ff72|||||||||||||||
 join_results|function|102421083afe9368|||||||||||||||
 joined_results|stem|25cdbcf79f214635|a57c9ee76d2ed7ce|170082b8912df63d|306905367||t20475.6795691427s|f19898aa3b2fa9ca|3087881|rds|local|vector|||0.035||
 match_danish_government|function|b7cc84784fa27bc5|||||||||||||||
@@ -40,20 +45,20 @@ match_party_affiliation|function|002606504c082d10|||||||||||||||
 meeting_dates|stem|8a9919bc537c0756|c199bd9203f4720e|eef333682651bd94|642247789||t19720.909064753s|a117b83c5fa3383c|209318|rds|local|vector|||29.965||
 MP_dates|stem|a3c520fb1d050c70|ecfc86a82792dbb5|e7bccbe709ee65bb|1731631693||t20476.9630532785s|cdb9a12b35d17c7c|1885|rds|local|vector|||0||
 MP_dates_file|stem|a3c520fb1d050c70|9a6dec680ddcc990|ef46db3751d8e999|358077025|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_dates.rds|t20476.9499079956s|cdb9a12b35d17c7c|1885|file|local|vector|||0||
-MP_names|stem|c8e37dbf3d2ba93a|9114fb1216a41601|699e8ae579d6c0e5|-136046039||t20475.6540812825s|aaae1b0dd12cd3f3|1198|rds|local|vector|||0||
-MP_names_file|stem|c8e37dbf3d2ba93a|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20476.9178670476s|aaae1b0dd12cd3f3|1198|file|local|vector|||0.149||
+MP_names|stem|c8e37dbf3d2ba93a|9114fb1216a41601|699e8ae579d6c0e5|-136046039||t20477.5418477322s|aaae1b0dd12cd3f3|1198|rds|local|vector|||0||
+MP_names_file|stem|c8e37dbf3d2ba93a|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20477.4983533439s|aaae1b0dd12cd3f3|1198|file|local|vector|||0.149||
 MP_names_file_path|stem|24b4b40c1d8d7e93|dd33efc92ee2f645|ef46db3751d8e999|-2121344532|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20260.3508400771s|77f1a8cb303e5572|743|file|local|vector|||0.075||
 MP_names_RDS|stem|24b4b40c1d8d7e93|9114fb1216a41601|ecff70af28ed9e08|403381341||t20260.3613458462s|77f1a8cb303e5572|743|rds|local|vector|||0||
 MP_timeline|stem||ecfc86a82792dbb5|5a9fa473b6374bdd|1283382744||t20475.651129471s||0|rds|local|vector|||0.003||bad file argument
 needs_update_ballot_info|function|4702749cf38232ac|||||||||||||||
-northatlantic_ft|stem|8cbc18b5c04eb14e|7c9ffe1c45d39155|e8887c54879297ca|-955248254||t20477.0028681385s|6d81a905859fed60|3000846|rds|local|vector|||26.893||
+northatlantic_ft|stem|0ecc5d8238d4882a|7c9ffe1c45d39155|bd3bfa090871f233|-955248254||t20479.0001642289s|ac44295113102271|3000185|rds|local|vector|||28.88||
 northatlantic_votes_raw|stem|b5d421a179ec69b2|706901400d0b71c3|847d7324c0552a6a|390780735||t19720.9099869671s|4a8c3bac8bfc04b8|417669|rds|local|vector|||79.561||
 print_test|stem|da6e0b1eb43cde3f|1cc02097f1123527|ef46db3751d8e999|58567252||t19720.8749633778s|93a4d4dc4116d568|64|rds|local|vector|||0.17||
 raw_ballot_results|stem|66ca957e0eaf7bf0|b7ef26a6f737c918|ac7ba217aebfde6b|-710281401||t20476.9916802104s|3819279967f7de53|242024|rds|local|vector|||445.228||
-raw_voting_records|stem|312d4c59ff8fa565|97d6902dc1bf00c2|9296fdc7d733ede6|-47314081||t20476.9645205253s|4d755c05983f3ca7|377055|rds|local|vector|||10.736||
-records_with_ballot_info|stem|a608f875cf375ee8|a57c9ee76d2ed7ce|a8d867721e4b080a|-1473261242||t20477.0023567432s|05943368a76e76df|3010409|rds|local|vector|||0.027||
-records_with_home_gvt|stem|209aa2732bc325f7|b69e95e99dd6a796|f7d938bacdae6573|1912220421||t20477.0025530962s|52bbafb1c1f5dd24|2999409|rds|local|vector|||16.163||
-records_with_parties|stem|dc6a5e49a450e0fa|0b44ed4e3beddd29|420447d9a3468ced|72161659||t20477.002362189s|be7ea1deb1573473|2998132|rds|local|vector|||0.147|Detected an unexpected manytomany relationship between x and y.ℹ Row 1 of x matches multiple rows in y.ℹ Row 1 of y matches multiple rows in x.ℹ If a manytomany relationship is expected, set relationship   manytomany to silence this warning.|
+raw_voting_records|stem|312d4c59ff8fa565|97d6902dc1bf00c2|1e990bfa9fe37d60|-47314081||t20478.4384005564s|4d755c05983f3ca7|377055|rds|local|vector|||8.65||
+records_with_ballot_info|stem|e12b2ffb1011055c|a57c9ee76d2ed7ce|ffe6d1b81d2471f5|-1473261242||t20478.9996132721s|cce184c8d2922f58|3009880|rds|local|vector|||0.142||
+records_with_home_gvt|stem|df833a5dbe335b3b|b69e95e99dd6a796|5eb33cd9451ee727|1912220421||t20478.9998259873s|c2d690de1d9785a3|2998761|rds|local|vector|||17.662||
+records_with_parties|stem|68e251c226b8d6b0|0b44ed4e3beddd29|de3c126964573047|72161659||t20478.9996176772s|c184ce4f882128a1|2997490|rds|local|vector|||0.055|Detected an unexpected manytomany relationship between x and y.ℹ Row 1 of x matches multiple rows in y.ℹ Row 1 of y matches multiple rows in x.ℹ If a manytomany relationship is expected, set relationship   manytomany to silence this warning.|
 render_codebook|function|6c8990f3cd1e54d4|||||||||||||||
 results_with_meeting_dates|stem|8a9919bc537c0756|c199bd9203f4720e|eef333682651bd94|1808671628||t19721.6037192915s|a117b83c5fa3383c|209318|rds|local|vector|||32.517||
 results_with_parties|stem|e35b52d488b2d435|eafd76f3f2eab7bc|4789eaaecebc5438|1205797589||t20475.6860681651s|aa42a979962d6be7|3073775|rds|local|vector|||0.095|Detected an unexpected manytomany relationship between x and y.ℹ Row 1 of x matches multiple rows in y.ℹ Row 1 of y matches multiple rows in x.ℹ If a manytomany relationship is expected, set relationship   manytomany to silence this warning.|

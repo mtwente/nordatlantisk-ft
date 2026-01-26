@@ -15,7 +15,7 @@
 	},
 	"dc:description": "nordatlantisk-ft is compiled from data available on Folketingets Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each ballot – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-01-24T01:04:07+0100",
+		"@value": "2026-01-26T01:00:14+0100",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",
@@ -127,7 +127,7 @@
 				"datatype": {
 					"base": "number",
 					"minimum": 0,
-					"maximum": 160
+					"maximum": 56
 				}
 			},
 			{
@@ -136,8 +136,8 @@
 				"dc:description": "Number of absent MPs",
 				"datatype": {
 					"base": "number",
-					"minimum": 0,
-					"maximum": 89
+					"minimum": 7,
+					"maximum": 160
 				}
 			},
 			{
