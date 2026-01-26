@@ -37,7 +37,7 @@ political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 ### Voting Records Database -----
 northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rds"))
 northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
-ballot_info_raw <- read.csv(here("data", "raw", "ballot_info_raw.csv"), check.names = FALSE)
+ballot_info_raw <- readRDS(here("data", "raw", "ballot_info_raw.rds"))
 ballot_results_ft <- readRDS(here("data", "processed", "ballot_results_ft.rds"))
 ballot_topics_raw <- read.csv(here("data", "raw", "ballot_topics_raw.csv"), check.names = FALSE)
 
