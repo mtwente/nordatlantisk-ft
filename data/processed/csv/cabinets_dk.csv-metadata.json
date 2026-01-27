@@ -15,7 +15,7 @@
 	},
 	"dc:description": "cabinets_dk is provided as csv and rds file in /data/processed/. It contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-01-23T17:13:14+0100",
+		"@value": "2026-01-27T17:24:29+0100",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",
@@ -24,7 +24,6 @@
 		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
 	},
 	"tableSchema": {
-		"aboutUrl": "/README.md",
 		"columns": [
 			{
 				"name": "cabinet",

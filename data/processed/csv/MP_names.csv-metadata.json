@@ -15,7 +15,7 @@
 	},
 	"dc:description": "MP_names is provided in csv and rds formats in /data/processed. The csv file serves as starting point for building the data set, as the workflow pipeline1 retrieves data from Folketingets Open Data Portal based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from October 07, 2004 until the most recent update of this data set. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-01-26T22:15:56+0100",
+		"@value": "2026-01-27T17:24:45+0100",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",
@@ -24,7 +24,6 @@
 		"@id": "https://creativecommons.org/licenses/by-sa/4.0/"
 	},
 	"tableSchema": {
-		"aboutUrl": "/README.md",
 		"columns": [
 			{
 				"name": "surname",

@@ -9,7 +9,6 @@ annotate_csv <- function(
     column_title,
     column_description,
     license = "https://creativecommons.org/licenses/by-sa/4.0/",
-    about_url = "/README.md",
     lang = "en"
     ) {
   
@@ -144,7 +143,6 @@ annotate_csv <- function(
     `dc:format` = "text/csv",
     `dc:license` = list(`@id` = license),
     tableSchema = list(
-      aboutUrl = about_url,
       columns = columns,
       primaryKey = primary_key
     ),
