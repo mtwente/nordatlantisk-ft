@@ -13,7 +13,7 @@ source(here("src", "utils", "get_content.R"))
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
 # Definition -----
-get_missing_ballot_counts <- function(input_df) {
+add_ft_results <- function(input_df) {
   
   # ---- Ensure correct columns exist ----
   stopifnot(all(c(
