@@ -1088,7 +1088,7 @@ head(ballot_topics_raw$ft_topic_id)
 
 Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_topics_raw$ft_topic)`.
 
-This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk).
+This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable).
 
 ```{r}
 head(ballot_topics_raw$ft_topic)
