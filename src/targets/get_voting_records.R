@@ -11,10 +11,10 @@ source(here("src", "utils", "get_MP_record.R"), local = TRUE)
 get_voting_records <- function(input_df) {
 
   ## read pre-existing dataset to avoid duplicate downloads
-  existing_path <- here("data", "raw", "northatlantic_votes_raw.rds")
+  local_path <- here("data", "raw", "northatlantic_votes_raw.rds")
   
-  existing_records <- if (file.exists(existing_path)) {
-    readRDS(existing_path)
+  existing_records <- if (file.exists(local_path)) {
+    readRDS(local_path)
   } else {
     existing_records <- data.frame(
       id = numeric(0),
@@ -30,7 +30,7 @@ get_voting_records <- function(input_df) {
   new_records <- map_dfr(
     input_df$MP_id,
     get_MP_record,
-    existing_path = existing_path,
+    existing_path = local_path,
     existing_records = existing_records
   )
   
@@ -48,7 +48,7 @@ get_voting_records <- function(input_df) {
     filter(aktørid %in% input_df$MP_id)
   
   ## export/return data
-  saveRDS(updated_votes, file = existing_path)
+  saveRDS(updated_votes, file = local_path)
   
   updated_votes
 }
