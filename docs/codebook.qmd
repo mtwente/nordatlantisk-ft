@@ -1066,7 +1066,7 @@ head(ballot_topics_raw$ft_process_id)
 
 #### ballot_topics_raw\$ft_process_step {#ballot_topicsrawft_process_step}
 
-All legislative processes in Folketinget run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_topics_raw$ft_process_step)` in Danish language.
+All legislative processes in Folketinget run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_topics_raw$ft_process_step)` in Danish language as `r class(ballot_topics_raw$ft_process_step)` variable.
 
 This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
 
@@ -1076,7 +1076,7 @@ head(ballot_topics_raw$ft_process_step)
 
 #### ballot_topics_raw\$ft_topic_id {#ballot_topicsrawft_topic_id}
 
-Each proposal that is being voted on in Folketinget is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data) based on the proposal's topic. Each topic ID is thus a unique identifier for one topic relating to several ballots and debates etc. in Folketinget. This identifier is stored in `ft_topic_id`. Topic IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_topic_id)`.
+Each proposal that is being voted on in Folketinget is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data) based on the proposal's topic. Each topic ID is thus a unique identifier for one topic relating to several ballots and debates etc. in Folketinget. This identifier is stored in `ft_topic_id`. Topic IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_topic_id)` as `r class(ballot_topics_raw$ft_topic_id)` variable.
 
 This variable corresponds to the `id` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk).
 
