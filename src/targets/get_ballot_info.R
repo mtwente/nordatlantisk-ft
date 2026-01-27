@@ -17,7 +17,7 @@ get_ballot_info <- function() {
   local_path <- here("data", "raw", "ballot_info_raw.rds")
   
   existing_records <- if (file.exists(local_path)) {
-    read.csv(local_path, stringsAsFactors = FALSE)
+    readRDS(local_path)
   } else {
     existing_records <- data.frame(
       id = character(0),

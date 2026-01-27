@@ -1,13 +1,13 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|6738046e4727121c|||||||||||||||
+.Random.seed|object|5463a9ad91a35dfc|||||||||||||||
 "%||%"|function|176c749ab515e6f3|||||||||||||||
 annotate_csv|function|92d46a5c59b862b0|||||||||||||||
-ballot_info|stem|0286a5adfd946fbf|c3177031d0f9a243|a729ca66543e6dc9|-1356312050||t20479.9156473565s|68dd269e308adedc|232972|rds|local|vector|||13.426||
+ballot_info|stem|0286a5adfd946fbf|c3177031d0f9a243|65159d2c6ba444cb|-1356312050||t20480.0066277656s|68dd269e308adedc|232972|rds|local|vector|||55.969||
 ballot_info_with_counts|stem|d9a73f79b2d247df|1ca13ab48561b771|d54cf82cac31c667|1293345458||t20479.924470589s|0eac7992418e20a5|287204|rds|local|vector|||704.322||
 ballot_info_with_dates|stem|0b99fb1807036d05|c199bd9203f4720e|a740271c03585c4e|-1538018715||t20479.9163180991s|0826a47b7457a3fa|243518|rds|local|vector|||57.903||
 ballot_results|stem|8d1750210e047b1d|6efabfa22b2b7d0e|d7b1e0640ad92fd3|1992756893||t19720.9153063949s|ca06277be079bbc9|222691|rds|local|vector|||459.526||
 ballot_results_with_topics|stem|9c5b1f46e472143e|dc8fb805ea9aec5d|52eb4c347fd896be|822781586||t20319.6031643917s|5cf73858a05ff67f|597396|rds|local|vector|||534.922||
-ballot_topics|stem|d428cc93f6b5f22a|dc8fb805ea9aec5d|879392e98a9cb5e7|-271092198||t20479.9244739981s|e79065da50aab35b|617838|rds|local|vector|||0.098||
+ballot_topics|stem|37b79a779128957b|dc8fb805ea9aec5d|2abb3489e5c06fe6|-271092198||t20480.0162480654s|d3a1517c57f58a68|622238|rds|local|vector|||795.346||
 cabinets_dk|stem|132eef548021fa2a|cc7e7878665e6200|5533078bbdb1f2cb|-1800804569||t20475.6917941476s|8ea15fe19e9b2e93|571|rds|local|vector|||0||
 cabinets_dk_file|stem|132eef548021fa2a|2bfa081e8ed03036|ef46db3751d8e999|-2107389882|/Users/mtwente/github/nordatlantisk-ft/data/processed/cabinets_dk.rds|t20476.6758588519s|8ea15fe19e9b2e93|571|file|local|vector|||0.148||
 cabinets_fo|stem|c5106c769b968288|cd0dc3a9a759d225|4adbac5091fc5f3a|99384006||t20475.686060458s|6faf7cd00812f2b4|516|rds|local|vector|||0.001||
@@ -21,9 +21,9 @@ cleaned_ballot_results|stem|d442fe5d64b43277|57a4c476ee51d2ff|c465d8118ecfc8ec|-
 cleaned_voting_records|stem|68ff3027e9e1fe5a|ad9405147657a520|50bba6276ac8e6fc|1063931314||t20479.8862555419s|71e1b6434c64f120|278806|rds|local|vector|||0.104||
 codebook|stem|d0ae3a1d17d62d65|1005ee0ab3e841f3|e11738939520571e|-2106169944||t19727.9633783945s|045b07e719c4cc68|120|rds|local|vector|||4.412|unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 556 is invalid. unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 556 is invalid. The file codebook.log is not encoded in UTF8. These lines contain invalid UTF8 characters 561. The file codebook.log is not encoded in UTF8. These lines contain invalid UTF8 characters 561. unable to translate \T1lmrmn10 Javnaf0ar  to a wide string. input string 561 is invalid|
 cue|stem||77364f0bc8f16811|ef46db3751d8e999|1566650647||t19720.8965934433s||0|rds|local|vector|||0.173||target cue attempted to run targetstar_exist_meta to during a pipeline, which is unsupported except when format in cfile, file_fast and repository  local, or if you are reading from a data store that does not belong to the current pipeline. This is because functions like tar_exist_meta attempt to access or modify the local data store, which may not exist or be properly synced in certain situations. Also, please be aware that some functions like tar_make and tar_destroy should never run inside a target. Please find a different workaround for your use case.
-export|stem|c7a83f7758ff1027|8684a434b42518b1|9cd195832c12834a|-1361306371||t20479.9250068071s|de766c0169f7517b|2965701|rds|local|vector|||0.513||
+export|stem|d1598383be9dcc22|8684a434b42518b1|4fc3ecdffbd43835|-1361306371||t20480.0167866873s|7e0b08837f0046e4|2968200|rds|local|vector|||0.505||
 export_dataset|function|aa232b4c5158c91c|||||||||||||||
-get_ballot_info|function|dfcfaec831cfc0fd|||||||||||||||
+get_ballot_info|function|7ed892e69ea73978|||||||||||||||
 get_content|function|848c18fb0b8218c4|||||||||||||||
 get_local_vote_count|function|39622b64531735ec|||||||||||||||
 get_max_page_number|function|24dbaf74ef9cc085|||||||||||||||
@@ -33,9 +33,9 @@ get_missing_ballot_counts|function|850b1f71dd89d5d2|||||||||||||||
 get_missing_info|function|0a299775ce183bad|||||||||||||||
 get_MP_record|function|32714756d4168c7d|||||||||||||||
 get_MP_records|function|5ab3ddde9f272a9b|||||||||||||||
-get_topics|function|d8124fed5ff83449|||||||||||||||
+get_topics|function|e116a51b5be66f3d|||||||||||||||
 get_vote_type_distribution|function|63d448ff9e1b440e|||||||||||||||
-get_voting_records|function|966db8e2012f5434|||||||||||||||
+get_voting_records|function|44f813c9080b9403|||||||||||||||
 join_results|function|102421083afe9368|||||||||||||||
 joined_results|stem|25cdbcf79f214635|a57c9ee76d2ed7ce|170082b8912df63d|306905367||t20475.6795691427s|f19898aa3b2fa9ca|3087881|rds|local|vector|||0.035||
 match_danish_government|function|b7cc84784fa27bc5|||||||||||||||
@@ -51,14 +51,14 @@ MP_names_file_path|stem|24b4b40c1d8d7e93|dd33efc92ee2f645|ef46db3751d8e999|-2121
 MP_names_RDS|stem|24b4b40c1d8d7e93|9114fb1216a41601|ecff70af28ed9e08|403381341||t20260.3613458462s|77f1a8cb303e5572|743|rds|local|vector|||0||
 MP_timeline|stem||ecfc86a82792dbb5|5a9fa473b6374bdd|1283382744||t20475.651129471s||0|rds|local|vector|||0.003||bad file argument
 needs_update_ballot_info|function|4702749cf38232ac|||||||||||||||
-northatlantic_ft|stem|6eef2f89e5d88867|7c9ffe1c45d39155|6f7db0c62e5f5100|-955248254||t20479.9249967274s|dd79b371633b8d70|3031365|rds|local|vector|||27.306||
+northatlantic_ft|stem|d294ad4c7c71cf6a|7c9ffe1c45d39155|3039599559fb0870|-955248254||t20480.0167769754s|1611be832b90022c|3034132|rds|local|vector|||27.581||
 northatlantic_votes_raw|stem|b5d421a179ec69b2|706901400d0b71c3|847d7324c0552a6a|390780735||t19720.9099869671s|4a8c3bac8bfc04b8|417669|rds|local|vector|||79.561||
 print_test|stem|da6e0b1eb43cde3f|1cc02097f1123527|ef46db3751d8e999|58567252||t19720.8749633778s|93a4d4dc4116d568|64|rds|local|vector|||0.17||
 raw_ballot_results|stem|66ca957e0eaf7bf0|b7ef26a6f737c918|ac7ba217aebfde6b|-710281401||t20476.9916802104s|3819279967f7de53|242024|rds|local|vector|||445.228||
-raw_voting_records|stem|5f2479b89c9141a2|97d6902dc1bf00c2|cbec10bc01e56110|-47314081||t20479.8862538694s|bf221929b5b465da|221717|rds|local|vector|||10.002||
-records_with_ballot_info|stem|2ce5bdfb1a933ebc|a57c9ee76d2ed7ce|6a84d5b33bc498f7|-1473261242||t20479.9244781722s|f29fea4aa3d18013|3041304|rds|local|vector|||0.012||
-records_with_home_gvt|stem|4c6a759cfb6c7719|b69e95e99dd6a796|4df38e038a2acf87|1912220421||t20479.9246767496s|1ebce4e3dd3a7ea2|3029693|rds|local|vector|||16.312||
-records_with_parties|stem|8447ec46b5f3280d|0b44ed4e3beddd29|3c1ba1b0b794c374|72161659||t20479.9434737447s|754a8d8c7b9ab174|3028323|rds|local|vector|||0.122||
+raw_voting_records|stem|5f2479b89c9141a2|97d6902dc1bf00c2|ee9dfa89856ab54e|-47314081||t20480.0070417967s|bf221929b5b465da|221717|rds|local|vector|||35.725||
+records_with_ballot_info|stem|c56d3652f8ba8e55|a57c9ee76d2ed7ce|54db5866d859dcbf|-1473261242||t20480.0162531414s|f98af2f524eb557c|3043719|rds|local|vector|||0.086||
+records_with_home_gvt|stem|ff3fc8bfa03aa5c7|b69e95e99dd6a796|6bdddcc8064b0179|1912220421||t20480.0164538111s|3738aa4c4d2c887d|3032452|rds|local|vector|||16.613||
+records_with_parties|stem|0b96456b314d9244|0b44ed4e3beddd29|01fc43cfa08a12ed|72161659||t20480.0162575412s|979a151085a60c54|3031058|rds|local|vector|||0.022||
 render_codebook|function|6c8990f3cd1e54d4|||||||||||||||
 results_with_meeting_dates|stem|8a9919bc537c0756|c199bd9203f4720e|eef333682651bd94|1808671628||t19721.6037192915s|a117b83c5fa3383c|209318|rds|local|vector|||32.517||
 results_with_parties|stem|e35b52d488b2d435|eafd76f3f2eab7bc|4789eaaecebc5438|1205797589||t20475.6860681651s|aa42a979962d6be7|3073775|rds|local|vector|||0.095|Detected an unexpected manytomany relationship between x and y.ℹ Row 1 of x matches multiple rows in y.ℹ Row 1 of y matches multiple rows in x.ℹ If a manytomany relationship is expected, set relationship   manytomany to silence this warning.|

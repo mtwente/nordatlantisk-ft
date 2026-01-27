@@ -39,7 +39,7 @@ northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rd
 northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
 ballot_info_raw <- readRDS(here("data", "raw", "ballot_info_raw.rds"))
 ballot_results_ft <- readRDS(here("data", "processed", "ballot_results_ft.rds"))
-ballot_topics_raw <- read.csv(here("data", "raw", "ballot_topics_raw.csv"), check.names = FALSE)
+ballot_topics_raw <- readRDS(here("data", "raw", "ballot_topics_raw.rds"))
 
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
@@ -1044,7 +1044,7 @@ head(ballot_info_raw$opdateringsdato)
 
 ### ballot_topics_raw {#ballot_topics_raw}
 
-`ballot_topics_raw` is provided as `csv` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.csv"))$mtime, "%B %Y")`, `ballot_topics_raw.csv` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
+`ballot_topics_raw` is provided as `csv` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.rds"))$mtime, "%B %Y")`, `ballot_topics_raw.rds` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
 
 ```{r}
 str(ballot_topics_raw)

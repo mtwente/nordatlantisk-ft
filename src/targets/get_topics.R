@@ -18,12 +18,10 @@ get_topics <- function(ballot_results) {
   process_ids <- process_ids[!is.na(process_ids) & process_ids != ""]
 
   # ---- Step 2: load existing cache if available ----
-  cache_file <- here("data", "raw", "ballot_topics_raw.csv")
+  local_path <- here("data", "raw", "ballot_topics_raw.rds")
   
-  if (file.exists(cache_file)) {
-    topics_cache <- readr::read_csv(cache_file, show_col_types = FALSE) %>%
-      mutate(ft_process_id = as.factor(ft_process_id),
-             ft_topic_id = as.factor(ft_topic_id))
+  if (file.exists(local_path)) {
+    topics_cache <- readRDS(local_path)
   } else {
     topics_cache <- tibble(
       ft_process_id   = factor(),
@@ -65,7 +63,8 @@ get_topics <- function(ballot_results) {
       distinct(ft_process_id, .keep_all = TRUE)
     
     # ---- Step 5: save updated cache ----
-    readr::write_csv(topics_cache, cache_file)
+    saveRDS(topics_cache, file = local_path)
+    
   }
   
   # ---- Return ----
