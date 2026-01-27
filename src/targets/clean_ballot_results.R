@@ -49,7 +49,7 @@ clean_ballot_results <- function(input_df) {
       ft_process_id    = as.factor(ft_process_id),
       ballot_nr        = as.factor(ballot_nr),
       ballot_type_id   = as.factor(ballot_type_id),
-      comment           = as.character(comment),
+      comment          = as.character(comment),
       ballot_result_string = as.character(ballot_result_string)
     )
   
