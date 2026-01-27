@@ -441,10 +441,10 @@ Descriptions of all variables in `MP_dates` are provided in the following sectio
 
 #### MP_dates\$period_id {#mp_datesperiod_id}
 
-Each recorded membership period can be reliably identified by using the `period_id` variable, allowing to distinguish between multiple membership periods of the same politician(s). All Period IDs are stored as values of the type `r typeof(mandates$period_id)`.
+Each recorded membership period can be reliably identified by using the `period_id` variable, allowing to distinguish between multiple membership periods of the same politician(s). Period IDs are stored as `r class(mandates$period_id)` variables.
 
 ```{r}
-str(mandates$surname)
+head(mandates$period_id)
 ```
 
 #### MP_dates\$surname {#mp_datessurname}
@@ -1058,7 +1058,7 @@ head(ballot_info_raw$opdateringsdato)
 
 ### ballot_topics_raw {#ballot_topics_raw}
 
-`ballot_topics_raw` is provided as `csv` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.rds"))$mtime, "%B %Y")`, `ballot_topics_raw.rds` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
+`ballot_topics_raw` is provided as `rds` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.rds"))$mtime, "%B %Y")`, `ballot_topics_raw.rds` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
 
 ```{r}
 str(ballot_topics_raw)
@@ -1510,7 +1510,7 @@ summary(cabinets_dk$DK_V)
 
 ### northatlantic_ft {#northatlantic_ft}
 
-`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes), [`ballot_topics_raw`](#ballot_topics_raw) as well as information on cabinets in [`cabinets_fo`](#cabinets_fo), [`cabinets_gl`](#cabinets_gl) and [`cabinets_dk`](#cabinets_dk). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
+`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes), [`ballot_topics_raw`](#ballot_topics_raw) as well as information on cabinets from [`cabinets_fo`](#cabinets_fo), [`cabinets_gl`](#cabinets_gl) and [`cabinets_dk`](#cabinets_dk) and on MP membership timelines from [`MP_dates`](#mp_dates). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
 
 ```{r}
 str(northatlantic_ft)
