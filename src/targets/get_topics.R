@@ -24,10 +24,10 @@ get_topics <- function(ballot_results) {
     topics_cache <- readRDS(local_path)
   } else {
     topics_cache <- tibble(
-      ft_process_id   = factor(),
-      ft_process_step = character(),
-      ft_topic_id = factor(),
-      ft_topic        = character(),
+      ft_process_id = factor(0),
+      ft_process_step = character(0),
+      ft_topic_id = factor(0),
+      ft_topic = character(0),
     )
   }
   
@@ -45,17 +45,20 @@ get_topics <- function(ballot_results) {
       }, error = function(e) NULL)
       
       if (is.null(resp)) {
-        tibble(
-          ft_process_id   = as.integer(id),
-          ft_topic        = NA_character_,
-        )
-      } else {
-        tibble(
-          ft_process_id   = as.integer(id),
-          ft_topic_id     = as.factor(resp$id),
-          ft_topic        = resp$titel %||% NA_character_
-        )
+        return(tibble(
+          ft_process_id   = as.factor(id),
+          ft_process_step = NA_character_,
+          ft_topic_id     = NA_character_,
+          ft_topic        = NA_character_
+        ))
       }
+      
+      tibble(
+        ft_process_id   = as.factor(resp$id),
+        ft_process_step = resp$titel %||% NA_character_,
+        ft_topic_id     = as.factor(resp$Sag$id %||% NA),
+        ft_topic        = resp$Sag$titel %||% NA_character_
+      )
     })
     
     # ---- Step 4: merge with existing cache ----
