@@ -39,12 +39,11 @@ political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
 ### Timeline of Mandates -----
-#mandates <- read.delim(here("data", "processed", "MP_dates.csv"), sep = ";", stringsAsFactors = FALSE)
-mandates <- readRDS(here("data", "processed", "MP_dates.rds"))
+MP_dates <- readRDS(here("data", "processed", "MP_dates.rds"))
 elections <- readRDS(here("data", "processed", "election_dates.rds"))
 
 #### Convert dates
-mandates <- mandates %>%
+MP_dates <- MP_dates %>%
   mutate(
     start = ymd(start),
     end   = ymd(end),
@@ -55,7 +54,7 @@ mandates <- mandates %>%
 ## Manipulate Data -----
 
 ### Avoid confusing MPs with the same last name
-mandates <- mandates %>%
+MP_dates <- MP_dates %>%
   mutate(
     plotting_name = case_when(
       MP_id == "12283" ~ "A. V. Johannesen",
@@ -180,20 +179,20 @@ Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the
 #| fig-cap: Timeline of MPs from Greenland and the Faroe Islands during the timeframe covered by this data set.
 
 # remove pre-2000 MPs (Edmund Joensen's and Lisbeth Petersen's first terms)
-mandates <- mandates %>%
+MP_dates <- MP_dates %>%
   filter(end >= as.Date("2000-01-01"))
 
 # Order MPs by first start date for nicer plotting
-mandates <- mandates %>%
+MP_dates <- MP_dates %>%
   group_by(plotting_name) %>%
   mutate(first_start = min(start)) %>%
   ungroup() %>%
   arrange(desc(first_start)) %>%
   mutate(plotting_name = factor(plotting_name, levels = unique(plotting_name)))
 
-mandates$origin <- factor(mandates$origin, levels = c("GL", "FO"))
+MP_dates$origin <- factor(MP_dates$origin, levels = c("GL", "FO"))
 
-ggplot(mandates, aes(x = start, xend = end, y = plotting_name, yend = plotting_name, color = substitute)) +
+ggplot(MP_dates, aes(x = start, xend = end, y = plotting_name, yend = plotting_name, color = substitute)) +
   geom_segment(linewidth = 4, lineend = "butt") +
   scale_color_manual(values = c("FALSE" = "#6195CF", "TRUE" = "#777777"), labels = c("Regular", "Substitute")) +
   labs(
@@ -281,8 +280,8 @@ kable(
 #| label: fig-party-timeline
 #| fig-cap: Timeline of political parties from Greenland and the Faroe Islands with an MP in Folketinget since 2004.
 
-# collapse mandates into non-overlapping party intervals
-party_periods <- mandates %>%
+# collapse MP_dates timeline into non-overlapping party intervals
+party_periods <- MP_dates %>%
   select(party, origin, start, end) %>%
   arrange(party, origin, start, end) %>%
   group_by(party, origin)
@@ -504,7 +503,7 @@ The distribution of recorded votes by all MPs is displayed on a timeline in @fig
 #| fig-cap: Distribution of votes over time per MP (for, against, abstaining, absent). Because there are so many data points, vertical jittering is added to make it a little easier to get an overview of the available data.
 
 northatlantic_ft <- northatlantic_ft %>%
-  mutate(plotting_name = factor(plotting_name, levels = levels(mandates$plotting_name)))
+  mutate(plotting_name = factor(plotting_name, levels = levels(MP_dates$plotting_name)))
 
 scatterplot <- ggplot(northatlantic_ft %>%
                         arrange(desc(vote_type_id)),
@@ -544,7 +543,7 @@ scatterplot
 #| fig-cap: Distribution of votes over time per MP (for, against, abstaining). Only showing ballots when the MP is in attendance. Because there are so many data points, vertical and horizontal jittering is added to make it a little easier to get an overview of the available data.
 
 northatlantic_ft_without_absences <- northatlantic_ft_without_absences %>%
-  mutate(plotting_name = factor(plotting_name, levels = levels(mandates$plotting_name)))
+  mutate(plotting_name = factor(plotting_name, levels = levels(MP_dates$plotting_name)))
 
 scatterplot_without_absences <- ggplot(northatlantic_ft_without_absences %>% 
                                         arrange(vote_type_id),
