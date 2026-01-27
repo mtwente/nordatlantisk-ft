@@ -14,12 +14,23 @@ source(here("src", "utils", "check_for_updates.R"))
 get_ballot_info <- function() {
   
   # ---- Read existing data ----
-  local_path <- here("data", "raw", "ballot_info_raw.csv")
+  local_path <- here("data", "raw", "ballot_info_raw.rds")
   
   existing_records <- if (file.exists(local_path)) {
-    read.csv(local_path, stringsAsFactors = FALSE)
+    readRDS(local_path)
   } else {
-    data.frame()
+    existing_records <- data.frame(
+      id = character(0),
+      nummer = character(0),
+      konklusion = character(0),
+      vedtaget = character(0),
+      kommentar = character(0),
+      mødeid = character(0),
+      typeid = character(0),
+      sagstrinid = character(0),
+      opdateringsdato = character(0),
+      stringsAsFactors = FALSE
+    )
   }
   
   local_count <- nrow(existing_records)
@@ -51,7 +62,7 @@ get_ballot_info <- function() {
   
   # ---- Paging ----
   start_skip <- (local_count %/% 100) * 100
-  max_skip   <- ((total_count - 1) %/% 100) * 100
+  max_skip   <- ((update_check$total_count - 1) %/% 100) * 100
   
   temp_downloaded_ballot_results <- data.frame()
   
@@ -86,12 +97,9 @@ get_ballot_info <- function() {
   combined_df <- bind_rows(existing_records, temp_downloaded_ballot_results) %>%
     distinct(id, .keep_all = TRUE) %>%
     arrange(id)
-  
-  write.csv(
-    combined_df,
-    file = local_path,
-    row.names = FALSE
-  )
+
+  # ---- Export ----
+  saveRDS(combined_df, file = local_path)
   
   combined_df
 }

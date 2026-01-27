@@ -112,9 +112,9 @@ tar_plan(
 
   ballot_info_with_dates = get_meeting_dates(ballot_info, "mødeid"),
   
-  raw_ballot_results = get_missing_info(ballot_info_with_dates),
+  ballot_info_with_counts = add_ft_results(ballot_info_with_dates),
   
-  cleaned_ballot_results = clean_ballot_results(raw_ballot_results),
+  cleaned_ballot_results = clean_ballot_results(ballot_info_with_counts),
   
   ballot_topics = get_topics(cleaned_ballot_results),
   
