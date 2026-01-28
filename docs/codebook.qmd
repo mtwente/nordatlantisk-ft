@@ -269,8 +269,8 @@ classDiagram
       DK_&ast;: bool
     }
 
-style ballot_info_raw fill:#D1BBD7
-style ballot_results_ft fill:#D1BBD7
+style ballot_info_raw fill:#6195CF,color:#FFFFFF
+style ballot_results_ft fill:#6195CF,color:#FFFFFF
 
 style ballot_topics_raw fill:#253C78,color:#FFFFFF
 
@@ -279,8 +279,8 @@ style northatlantic_ft fill:#F7CB45
 style northatlantic_votes_raw fill:#FFEAAE
 style northatlantic_votes fill:#FFEAAE
 
-style MP_names fill:#6195CF,color:#FFFFFF
-style MP_dates fill:#6195CF,color:#FFFFFF
+style MP_names fill:#D1BBD7
+style MP_dates fill:#D1BBD7
 
 click MP_dates href "#mp_dates" "tooltip"
 click election_dates href "#election_dates" "tooltip"
