@@ -1,10 +1,10 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|50b0b09ad9d8aa7e|||||||||||||||
+.Random.seed|object|bd01036eb4ecd8e1|||||||||||||||
 "%||%"|function|176c749ab515e6f3|||||||||||||||
-add_ft_results|function|850b1f71dd89d5d2|||||||||||||||
+add_ft_results|function|31a423686243c50e|||||||||||||||
 annotate_csv|function|c532a09c089e0936|||||||||||||||
-ballot_info|stem|0286a5adfd946fbf|c3177031d0f9a243|65159d2c6ba444cb|-1356312050||t20480.6842852728s|68dd269e308adedc|232972|rds|local|vector|||0.398||
-ballot_info_with_counts|stem|d9a73f79b2d247df|55eaf272ca3e7321|424d25a41507d3ad|1293345458||t20480.6551094032s|0eac7992418e20a5|287204|rds|local|vector|||450.008||
+ballot_info|stem|0286a5adfd946fbf|c3177031d0f9a243|72ea2158f4fbc527|-1356312050||t20481.7289746261s|68dd269e308adedc|232972|rds|local|vector|||0.423||
+ballot_info_with_counts|stem|d9a73f79b2d247df|55eaf272ca3e7321|5fa0e8365a9bc709|1293345458||t20481.7308181136s|0eac7992418e20a5|287204|rds|local|vector|||0.09||
 ballot_info_with_dates|stem|0b99fb1807036d05|c199bd9203f4720e|a740271c03585c4e|-1538018715||t20479.9163180991s|0826a47b7457a3fa|243518|rds|local|vector|||57.903||
 ballot_results|stem|8d1750210e047b1d|6efabfa22b2b7d0e|d7b1e0640ad92fd3|1992756893||t19720.9153063949s|ca06277be079bbc9|222691|rds|local|vector|||459.526||
 ballot_results_with_topics|stem|9c5b1f46e472143e|dc8fb805ea9aec5d|52eb4c347fd896be|822781586||t20319.6031643917s|5cf73858a05ff67f|597396|rds|local|vector|||534.922||
@@ -24,7 +24,7 @@ codebook|stem|d0ae3a1d17d62d65|1005ee0ab3e841f3|e11738939520571e|-2106169944||t1
 cue|stem||77364f0bc8f16811|ef46db3751d8e999|1566650647||t19720.8965934433s||0|rds|local|vector|||0.173||target cue attempted to run targetstar_exist_meta to during a pipeline, which is unsupported except when format in cfile, file_fast and repository  local, or if you are reading from a data store that does not belong to the current pipeline. This is because functions like tar_exist_meta attempt to access or modify the local data store, which may not exist or be properly synced in certain situations. Also, please be aware that some functions like tar_make and tar_destroy should never run inside a target. Please find a different workaround for your use case.
 export|stem|d1598383be9dcc22|8684a434b42518b1|022062143b517dff|-1361306371||t20480.6843942926s|7e0b08837f0046e4|2968200|rds|local|vector|||0.517||
 export_dataset|function|a4f469f7b28a7759|||||||||||||||
-get_ballot_info|function|7ed892e69ea73978|||||||||||||||
+get_ballot_info|function|9af2e4f61352fe64|||||||||||||||
 get_content|function|848c18fb0b8218c4|||||||||||||||
 get_local_vote_count|function|39622b64531735ec|||||||||||||||
 get_max_page_number|function|24dbaf74ef9cc085|||||||||||||||
@@ -47,7 +47,7 @@ meeting_dates|stem|8a9919bc537c0756|c199bd9203f4720e|eef333682651bd94|642247789|
 MP_dates|stem|a3c520fb1d050c70|ecfc86a82792dbb5|e7bccbe709ee65bb|1731631693||t20480.6818150893s|cdb9a12b35d17c7c|1885|rds|local|vector|||0.001||
 MP_dates_file|stem|a3c520fb1d050c70|9a6dec680ddcc990|ef46db3751d8e999|358077025|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_dates.rds|t20480.6838296445s|cdb9a12b35d17c7c|1885|file|local|vector|||0.001||
 MP_names|stem|76edbd82c9003dfa|9114fb1216a41601|5de09b02c4aa6d30|-136046039||t20480.6818150412s|bfbea0656bc5b842|1174|rds|local|vector|||0||
-MP_names_file|stem|76edbd82c9003dfa|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20480.6838561043s|bfbea0656bc5b842|1174|file|local|vector|||0.089||
+MP_names_file|stem|76edbd82c9003dfa|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20480.6894376085s|bfbea0656bc5b842|1174|file|local|vector|||0.089||
 MP_names_file_path|stem|24b4b40c1d8d7e93|dd33efc92ee2f645|ef46db3751d8e999|-2121344532|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20260.3508400771s|77f1a8cb303e5572|743|file|local|vector|||0.075||
 MP_names_RDS|stem|24b4b40c1d8d7e93|9114fb1216a41601|ecff70af28ed9e08|403381341||t20260.3613458462s|77f1a8cb303e5572|743|rds|local|vector|||0||
 MP_timeline|stem||ecfc86a82792dbb5|5a9fa473b6374bdd|1283382744||t20475.651129471s||0|rds|local|vector|||0.003||bad file argument
@@ -56,7 +56,7 @@ northatlantic_ft|stem|d294ad4c7c71cf6a|7c9ffe1c45d39155|3039599559fb0870|-955248
 northatlantic_votes_raw|stem|b5d421a179ec69b2|706901400d0b71c3|847d7324c0552a6a|390780735||t19720.9099869671s|4a8c3bac8bfc04b8|417669|rds|local|vector|||79.561||
 print_test|stem|da6e0b1eb43cde3f|1cc02097f1123527|ef46db3751d8e999|58567252||t19720.8749633778s|93a4d4dc4116d568|64|rds|local|vector|||0.17||
 raw_ballot_results|stem|66ca957e0eaf7bf0|b7ef26a6f737c918|ac7ba217aebfde6b|-710281401||t20476.9916802104s|3819279967f7de53|242024|rds|local|vector|||445.228||
-raw_voting_records|stem|5f2479b89c9141a2|97d6902dc1bf00c2|ee9dfa89856ab54e|-47314081||t20480.6843834657s|bf221929b5b465da|221717|rds|local|vector|||8.437||
+raw_voting_records|stem|5f2479b89c9141a2|97d6902dc1bf00c2|ee9dfa89856ab54e|-47314081||t20481.7290721746s|bf221929b5b465da|221717|rds|local|vector|||8.38||
 records_with_ballot_info|stem|c56d3652f8ba8e55|a57c9ee76d2ed7ce|54db5866d859dcbf|-1473261242||t20480.6819122902s|f98af2f524eb557c|3043719|rds|local|vector|||0.036||
 records_with_home_gvt|stem|ff3fc8bfa03aa5c7|b69e95e99dd6a796|6bdddcc8064b0179|1912220421||t20480.6821149231s|3738aa4c4d2c887d|3032452|rds|local|vector|||16.734||
 records_with_parties|stem|0b96456b314d9244|0b44ed4e3beddd29|01fc43cfa08a12ed|72161659||t20480.6819173603s|979a151085a60c54|3031058|rds|local|vector|||0.106||
