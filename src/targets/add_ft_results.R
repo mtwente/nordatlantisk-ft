@@ -21,8 +21,6 @@ add_ft_results <- function(input_df) {
     "mødeid", "typeid", "sagstrinid", "opdateringsdato", "dato"
   ) %in% colnames(input_df)))
   
-  message("Processing ", nrow(input_df), " ballots...")
-  
   # ---- Prepare initial dataframe ----
   output_df <- input_df %>%
     mutate(
@@ -39,17 +37,40 @@ add_ft_results <- function(input_df) {
   output_df$ft_against[has_results]    <- str_nth_number(output_df$konklusion[has_results], n = 2)
   output_df$ft_abstention[has_results] <- str_nth_number(output_df$konklusion[has_results], n = 3)
   
-  # ---- Step 2: Fill counts from ODA API for missing konklusion ----
+  # ---- Step 2: load / initialize vote-count cache ----
+  cache_path <- here("data", "raw", "ballot_vote_counts_raw.rds")
+  
+  vote_cache <- if (file.exists(cache_path)) {
+    readRDS(cache_path)
+  } else {
+    tibble(
+      id             = character(0),
+      ft_for         = integer(0),
+      ft_against     = integer(0),
+      ft_abstention  = integer(0)
+    )
+  }
+  
+  vote_cache <- vote_cache %>%
+    mutate(id = as.character(id))
+  
+  # ---- Step 3: determine which ballots actually need API calls ----
   missing_ballots <- output_df$id[!has_results]
+  missing_ballots <- setdiff(missing_ballots, vote_cache$id)
   
   if (length(missing_ballots) > 0) {
-    message("Fetching counts from API for ", length(missing_ballots), " ballots with empty \"konklusion\" string...")
     
-    get_counts_for_ballot <- function(bid) {
+    message(
+      "Fetching vote counts from API for ",
+      length(missing_ballots),
+      " previously unprocessed ballots..."
+    )
+    
+    get_counts_for_ballot <- function(ballot_id) {
       
       get_count <- function(typeid) {
         url <- paste0(
-          "https://oda.ft.dk/api/Afstemning(", bid, ")/Stemme?",
+          "https://oda.ft.dk/api/Afstemning(", ballot_id, ")/Stemme?",
           "$inlinecount=allpages&$filter=typeid%20eq%20", typeid, "&$top=0"
         )
         parsed <- tryCatch(get_content(url), error = function(e) list(odata.count = 0))
@@ -57,7 +78,7 @@ add_ft_results <- function(input_df) {
       }
       
       tibble(
-        id             = bid,
+        id             = as.character(ballot_id),
         ft_for         = get_count(1),
         ft_against     = get_count(2),
         #ft_absent      = get_count(3), calculate below instead of API call
@@ -65,11 +86,22 @@ add_ft_results <- function(input_df) {
       )
     }
     
-    counts_df <- map_dfr(missing_ballots, get_counts_for_ballot)
+    new_counts <- map_dfr(missing_ballots, get_counts_for_ballot)
+    
+    # ---- Update cache ----
+    vote_cache <- bind_rows(vote_cache, new_counts) %>%
+      distinct(id, .keep_all = TRUE)
+    
+    saveRDS(vote_cache, cache_path)
+  }
     
     # ---- Merge API counts back ----
+    ## ensure safe join
+    output_df  <- output_df  %>% mutate(id = as.character(id))
+    vote_cache <- vote_cache %>% mutate(id = as.character(id))
+  
     output_df <- output_df %>%
-      left_join(counts_df, by = "id", suffix = c(".local", ".api")) %>%
+    left_join(vote_cache, by = "id", suffix = c(".local", ".api")) %>%
       mutate(
         ft_for        = coalesce(ft_for.local, ft_for.api),
         ft_against    = coalesce(ft_against.local, ft_against.api),
@@ -77,7 +109,6 @@ add_ft_results <- function(input_df) {
         #ft_absent     = coalesce(ft_absent.local, ft_absent.api) see below
       ) %>%
       select(-ends_with(".local"), -ends_with(".api"))
-  }
   
   # ---- Calculate count of absentees ----
   has_complete_counts <-

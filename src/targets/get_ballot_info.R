@@ -84,8 +84,8 @@ get_ballot_info <- function() {
       }
       
       temp_content_list <- lapply(entry, function(x) if (is.null(x)) NA else x)
-      temp_content_df <- as.data.frame(t(unlist(temp_content_list)))
-      
+      temp_content_df <- as.data.frame(t(unlist(temp_content_list)), stringsAsFactors = FALSE)
+
       temp_downloaded_ballot_results <- rbind(
         temp_downloaded_ballot_results,
         temp_content_df

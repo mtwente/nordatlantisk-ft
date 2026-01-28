@@ -269,8 +269,8 @@ classDiagram
       DK_&ast;: bool
     }
 
-style ballot_info_raw fill:#D1BBD7
-style ballot_results_ft fill:#D1BBD7
+style ballot_info_raw fill:#6195CF,color:#FFFFFF
+style ballot_results_ft fill:#6195CF,color:#FFFFFF
 
 style ballot_topics_raw fill:#253C78,color:#FFFFFF
 
@@ -279,8 +279,8 @@ style northatlantic_ft fill:#F7CB45
 style northatlantic_votes_raw fill:#FFEAAE
 style northatlantic_votes fill:#FFEAAE
 
-style MP_names fill:#6195CF,color:#FFFFFF
-style MP_dates fill:#6195CF,color:#FFFFFF
+style MP_names fill:#D1BBD7
+style MP_dates fill:#D1BBD7
 
 click MP_dates href "#mp_dates" "tooltip"
 click election_dates href "#election_dates" "tooltip"
@@ -299,7 +299,7 @@ click northatlantic_ft href "#northatlantic_ft" "tooltip"
 
 ### MP_names {#mp_names}
 
-`MP_names` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. This `csv` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
+`MP_names` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. This `rds` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
 
 [^1]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
 
@@ -307,13 +307,11 @@ click northatlantic_ft href "#northatlantic_ft" "tooltip"
 str(mp_names)
 ```
 
-Descriptions of all variables in `MP_names` are provided in the following sections. The only variable necessary to execute the workflow is stored as [`MP_names$MP_id`](#mp_namesmp_id).
+Descriptions of all variables in `MP_names` are provided in the following sections.
 
 #### MP_names\$surname {#mp_namessurname}
 
 All surname(s) are stored as values of the type `r typeof(mp_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
-
-This column is not necessary for successfully executing the workflow pipeline, but it is used to map MP names to the corresponding IDs for increased readability of resulting plots.
 
 ```{r}
 head(mp_names$surname)
@@ -323,8 +321,6 @@ head(mp_names$surname)
 
 All first names are stored as values of the type `r typeof(mp_names$first_name)`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_names$MP_id`](#MP_names_MP_id) instead for reliable identification.
 
-This column is not necessary for successfully executing the workflow pipeline, but it can be used to map MPs’ names to the corresponding IDs for increased readability of resulting plots.
-
 ```{r}
 head(mp_names$first_name)
 ```
@@ -332,8 +328,6 @@ head(mp_names$first_name)
 #### MP_names\$MP_id {#mp_namesmp_id}
 
 Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(mp_names$MP_id)` as `r class(mp_names$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
-
-`MP_id` is the only necessary column in `MP_names` for retrieving voting records. Most of the other variables are somehow used in post-processing, though.
 
 ```{r}
 head(mp_names$MP_id)
@@ -431,7 +425,7 @@ summary(mp_names$substitute)
 
 ### MP_dates {#mp_dates}
 
-`MP_dates` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset includes detailed information on membership timelines of MPs in Folketinget. Because a substantial share of MPs from Greenland and the Faroe Islands were absent for a longer period [@harderFaeroskeOgGronlandske2022, 12-13], there have been a number of substitute MPs (stedfortræder) replacing the originally elected politicians during their time(s) of absence. Those MPs are listed here as well. As of `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `MP_dates` includes `r nrow(MP_dates)` observations of `r ncol(MP_dates)` variables.
+`MP_dates` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset includes detailed information on membership timelines of MPs in Folketinget. Because a substantial share of MPs from Greenland and the Faroe Islands were absent for a longer period [@harderFaeroskeOgGronlandske2022, 12-13], there have been a number of substitute MPs (stedfortrædere) replacing the originally elected politicians during their time(s) of absence. Those MPs are listed here as well. As of `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `MP_dates` includes `r nrow(MP_dates)` observations of `r ncol(MP_dates)` variables.
 
 ```{r}
 str(MP_dates)
@@ -483,7 +477,7 @@ table(MP_dates$origin)
 
 The political party that each MP belongs to is stored as value of the type `r typeof(MP_dates$party)` as `r class(MP_dates$party)` variable. See [`MP_names$party`](#mp_namesparty) and [`political_parties`](#political_parties) for more information. In contrast to those, `MP_dates$party` actually provides information on changing party membership(s) since membership entries are split up on a timeline. This way, it's possible to match each recorded vote to the valid party membership at a specific point in time.
 
-Note that the value `UF` means that the MP is not a member of a political group/party at the time ("uden for folketingsgrupperne").
+Note that the value `UF` means that the MP is not a member of a political group/party at the time (uden for folketingsgrupperne).
 
 ```{r}
 unique(MP_dates$party)
@@ -677,7 +671,7 @@ head(political_parties$anti_pro_eu)
 
 ### northatlantic_votes {#northatlantic_votes}
 
-`northatlantic_votes` is provided as `rds` file in `/data/processed/`. After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#northatlantic_votes_raw) is available as `csv` file in `/data/raw/`. As per `r format(file.info(here("data", "processed", "northatlantic_votes.rds"))$mtime, "%B %Y")`, `northatlantic_votes.rds` contains `r nrow(northatlantic_votes)` observations of `r ncol(northatlantic_votes)` variables.
+`northatlantic_votes` is provided as `rds` file in `/data/processed/`. After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#northatlantic_votes_raw) is available as `rds` file in `/data/raw/`. As per `r format(file.info(here("data", "processed", "northatlantic_votes.rds"))$mtime, "%B %Y")`, `northatlantic_votes.rds` contains `r nrow(northatlantic_votes)` observations of `r ncol(northatlantic_votes)` variables.
 
 ```{r}
 str(northatlantic_votes)
@@ -844,7 +838,7 @@ head(ballot_results_ft$ballot_date)
 
 In `ft_for`, the number of votes cast in favor of a proposal is stored as `r class(ballot_results_ft$ft_for)` variable of the type `r typeof(ballot_results_ft$ft_for)`.
 
-The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing votes in favor as well as votes against and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled from the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
+The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing votes in favor as well as votes against and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
 
 In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of votes in favor of the proposal are first extracted from [`ballot_result_string`](#ballot_results_ftballot_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the ballot result string also differs over time, I rely on the order of the results being presented to extract the votes in favor of the proposal at hand. In a second step, I filter those cases in `ballot_results_ft` where there is an empty string in `ballot_result_string` (`r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)`). For those observations, I retrieve the number of votes in favor from the Folketinget ODA API. This information is then merged back into the `ballot_results_ft` data frame.
 
@@ -858,7 +852,7 @@ summary(ballot_results_ft$ft_for)
 
 In `ft_against`, the number of votes cast in favor of a proposal is stored as `r class(ballot_results_ft$ft_against)` variable of the type `r typeof(ballot_results_ft$ft_against)`.
 
-The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing votes against as well as votes in favor and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled from the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
+The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing votes against as well as votes in favor and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
 
 In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of votes against of the proposal are first extracted from [`ballot_result_string`](#ballot_results_ftballot_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the ballot result string also differs over time, I rely on the order of the results being presented to extract the votes against the proposal at hand. In a second step, I filter those cases in `ballot_results_ft` where there is an empty string in `ballot_result_string` (`r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)`). For those observations, I retrieve the number of votes against from the Folketinget ODA API. This information is then merged back into the `ballot_results_ft` data frame.
 
@@ -872,7 +866,7 @@ summary(ballot_results_ft$ft_against)
 
 In `ft_abstention`, the number of abstentions in a vote is stored as `r class(ballot_results_ft$ft_abstention)` variable of the type `r typeof(ballot_results_ft$ft_abstention)`.
 
-The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing abstentions against as well as votes in favor and against in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled from the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
+The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing abstentions against as well as votes in favor and against in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
 
 In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of abstaining votes on the proposal are first extracted from [`ballot_result_string`](#ballot_results_ftballot_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the ballot result string also differs over time, I rely on the order of the results being presented to extract the number of abstentions. In a second step, I filter those cases in `ballot_results_ft` where there is an empty string in `ballot_result_string` (`r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)`). For those observations, I retrieve the number of abstentions from the Folketinget ODA API. This information is then merged back into the `ballot_results_ft` data frame.
 
@@ -1112,7 +1106,7 @@ head(ballot_topics_raw$ft_topic)
 
 ### cabinets_fo {#cabinets_fo}
 
-`cabinets_fo` is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+`cabinets_fo` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 See also [cabinets_gl](#cabinets_gl) and [cabinets_dk](#cabinets_dk).
 
@@ -1238,7 +1232,7 @@ summary(cabinets_fo$FO_H)
 
 ### cabinets_gl {#cabinets_gl}
 
-`cabinets_gl` is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+`cabinets_gl` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 See also [cabinets_fo](#cabinets_fo) and [cabinets_dk](#cabinets_dk).
 
@@ -1374,7 +1368,7 @@ summary(cabinets_gl$GL_SIU)
 
 ### cabinets_dk {#cabinets_dk}
 
-`cabinets_dk` is provided as `csv` and `rds` file in `/data/processed/`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+`cabinets_dk` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 See also [cabinets_fo](#cabinets_fo) and [cabinets_gl](#cabinets_gl).
 
