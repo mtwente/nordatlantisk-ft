@@ -96,7 +96,7 @@ add_ft_results <- function(input_df) {
   }
     
     # ---- Merge API counts back ----
-  
+    ## ensure safe join
     output_df  <- output_df  %>% mutate(id = as.character(id))
     vote_cache <- vote_cache %>% mutate(id = as.character(id))
   

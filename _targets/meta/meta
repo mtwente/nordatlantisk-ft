@@ -1,9 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|bd01036eb4ecd8e1|||||||||||||||
+.Random.seed|object|97578f489bdf7759|||||||||||||||
 "%||%"|function|176c749ab515e6f3|||||||||||||||
 add_ft_results|function|31a423686243c50e|||||||||||||||
 annotate_csv|function|c532a09c089e0936|||||||||||||||
-ballot_info|stem|0286a5adfd946fbf|c3177031d0f9a243|72ea2158f4fbc527|-1356312050||t20481.7289746261s|68dd269e308adedc|232972|rds|local|vector|||0.423||
+ballot_info|stem|0286a5adfd946fbf|c3177031d0f9a243|42cf6ffff6cb1b4b|-1356312050||t20481.7335991609s|68dd269e308adedc|232972|rds|local|vector|||0.391||
 ballot_info_with_counts|stem|d9a73f79b2d247df|55eaf272ca3e7321|5fa0e8365a9bc709|1293345458||t20481.7308181136s|0eac7992418e20a5|287204|rds|local|vector|||0.09||
 ballot_info_with_dates|stem|0b99fb1807036d05|c199bd9203f4720e|a740271c03585c4e|-1538018715||t20479.9163180991s|0826a47b7457a3fa|243518|rds|local|vector|||57.903||
 ballot_results|stem|8d1750210e047b1d|6efabfa22b2b7d0e|d7b1e0640ad92fd3|1992756893||t19720.9153063949s|ca06277be079bbc9|222691|rds|local|vector|||459.526||
@@ -24,7 +24,7 @@ codebook|stem|d0ae3a1d17d62d65|1005ee0ab3e841f3|e11738939520571e|-2106169944||t1
 cue|stem||77364f0bc8f16811|ef46db3751d8e999|1566650647||t19720.8965934433s||0|rds|local|vector|||0.173||target cue attempted to run targetstar_exist_meta to during a pipeline, which is unsupported except when format in cfile, file_fast and repository  local, or if you are reading from a data store that does not belong to the current pipeline. This is because functions like tar_exist_meta attempt to access or modify the local data store, which may not exist or be properly synced in certain situations. Also, please be aware that some functions like tar_make and tar_destroy should never run inside a target. Please find a different workaround for your use case.
 export|stem|d1598383be9dcc22|8684a434b42518b1|022062143b517dff|-1361306371||t20480.6843942926s|7e0b08837f0046e4|2968200|rds|local|vector|||0.517||
 export_dataset|function|a4f469f7b28a7759|||||||||||||||
-get_ballot_info|function|9af2e4f61352fe64|||||||||||||||
+get_ballot_info|function|9b8d658b91bd474f|||||||||||||||
 get_content|function|848c18fb0b8218c4|||||||||||||||
 get_local_vote_count|function|39622b64531735ec|||||||||||||||
 get_max_page_number|function|24dbaf74ef9cc085|||||||||||||||
