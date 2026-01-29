@@ -228,7 +228,7 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 
 [^3]: Both parties have been formed quite recently -- Naleraq in 2014 and Nunatta Qitornai in 2017. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
 
-See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West [-@westSkipanarligarFortreytirOg2022 in Faroese; -@westFaeroskPolitikMellem2020 in Danish].
+See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West [-@westSkipanarligarFortreytirOg2022 in Faroese; -@westFaeroskPolitikMellem2020 in Danish; -@westMPFirefightingWhen2018, 101-106 in English].
 
 All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022]. @fig-party-timeline shows the allocation of Folketinget seats to political parties from Greenland and the Faroe Islands on a timeline.
 
