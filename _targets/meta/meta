@@ -1,9 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|4ae8410ef30de08f|||||||||||||||
+.Random.seed|object|1c6ab4c986abdbcb|||||||||||||||
 "%||%"|function|176c749ab515e6f3|||||||||||||||
 add_ft_results|function|31a423686243c50e|||||||||||||||
 annotate_csv|function|c532a09c089e0936|||||||||||||||
-ballot_info|stem|9f466f5807744964|c3177031d0f9a243|42cf6ffff6cb1b4b|-1356312050||t20482.3920501637s|4489f4aab140b24f|233085|rds|local|vector|||0.699||
+ballot_info|stem|9f466f5807744964|c3177031d0f9a243|42cf6ffff6cb1b4b|-1356312050||t20482.6969353111s|4489f4aab140b24f|233085|rds|local|vector|||0.602||
 ballot_info_with_counts|stem|acb0d1941ce38fcc|55eaf272ca3e7321|9803a656a3afe96a|1293345458||t20482.3928555848s|8080ec0be7b81a55|287310|rds|local|vector|||0.08||
 ballot_info_with_dates|stem|d4d1349de2eee4a7|c199bd9203f4720e|50154c3961b15ca0|-1538018715||t20482.3927091501s|e0c363de8fcffc88|243636|rds|local|vector|||56.878||
 ballot_results|stem|8d1750210e047b1d|6efabfa22b2b7d0e|d7b1e0640ad92fd3|1992756893||t19720.9153063949s|ca06277be079bbc9|222691|rds|local|vector|||459.526||
@@ -56,7 +56,7 @@ northatlantic_ft|stem|3f14b1897d48fb86|7c9ffe1c45d39155|1ba17e05011db6df|-955248
 northatlantic_votes_raw|stem|b5d421a179ec69b2|706901400d0b71c3|847d7324c0552a6a|390780735||t19720.9099869671s|4a8c3bac8bfc04b8|417669|rds|local|vector|||79.561||
 print_test|stem|da6e0b1eb43cde3f|1cc02097f1123527|ef46db3751d8e999|58567252||t19720.8749633778s|93a4d4dc4116d568|64|rds|local|vector|||0.17||
 raw_ballot_results|stem|66ca957e0eaf7bf0|b7ef26a6f737c918|ac7ba217aebfde6b|-710281401||t20476.9916802104s|3819279967f7de53|242024|rds|local|vector|||445.228||
-raw_voting_records|stem|b64a740558b0036e|97d6902dc1bf00c2|ee9dfa89856ab54e|-47314081||t20482.3928541713s|2cda53e561f55736|221765|rds|local|vector|||12.486||
+raw_voting_records|stem|b64a740558b0036e|97d6902dc1bf00c2|ee9dfa89856ab54e|-47314081||t20482.6970395773s|2cda53e561f55736|221765|rds|local|vector|||8.962||
 records_with_ballot_info|stem|1b18b4a945e1fa44|a57c9ee76d2ed7ce|6c45c68915e8d45a|-1473261242||t20482.3928676841s|c022e8374df1f5e7|3044966|rds|local|vector|||0.012||
 records_with_home_gvt|stem|113c645295dac326|b69e95e99dd6a796|0dceec3d507b1c77|1912220421||t20482.3930694969s|56e25c5cd0f51621|3033659|rds|local|vector|||16.652||
 records_with_parties|stem|df6bca3a3887ec9e|0b44ed4e3beddd29|7a33e211694b9dd2|72161659||t20482.3928728468s|c10a355aea33cf9d|3032265|rds|local|vector|||0.114||
