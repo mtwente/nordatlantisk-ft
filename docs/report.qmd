@@ -72,6 +72,10 @@ northatlantic_ft <- northatlantic_ft %>%
     )
   )
 
+### Order origin factor levels for facet order
+northatlantic_ft <- northatlantic_ft %>%
+  mutate(origin = forcats::fct_rev(origin))
+
 ### Order dataset by MP surnames for plotting
 northatlantic_ft_ordered <- northatlantic_ft %>%
   mutate(surname = fct_reorder(surname, vote_type_id, .fun = length)) %>%
