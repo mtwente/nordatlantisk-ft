@@ -28,7 +28,7 @@ This repository contains voting records of Greenlandic and Faroese MPs. Voting r
 
 For all MPs that were elected in either Greenland or the Faroe Islands since 2004, voting records were retrieved from [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Because Folketinget seems to have changed their way of record keeping since 2004, the retrieved data had to be processed to consolidate different variables (e.g. extracting ballot results stored as one text string into four numeric variables).
 
-In this repository, the raw data is available as `csv` files, and processed data is available as `rds` and `csv` files including metadata. Also included is the workflow to replicate and update the data set using R.
+In this repository, data is available as `rds` and `csv` files including metadata. Data from intermediate processing steps is stored as `rds` files for caching. Also included is the workflow to replicate and update the data set using R.
 
 For each recorded vote, the database contains additional metadata such as statements on the MP's party membership, the overall ballot result in parliament or the topic of the vote. Additionally included is basic information on the cabinets governing in Denmark, Greenland and the Faroe Islands at the time of each record. Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
 
