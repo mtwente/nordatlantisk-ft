@@ -60,7 +60,7 @@ add_ft_results <- function(input_df) {
     message(
       "Fetching vote counts from API for ",
       length(missing_ballots),
-      " previously unprocessed ballots..."
+      " votes with missing results..."
     )
     
     get_counts_for_ballot <- function(ballot_id) {
