@@ -51,9 +51,6 @@ add_ft_results <- function(input_df) {
     )
   }
   
-  vote_cache <- vote_cache %>%
-    mutate(id = as.character(id))
-  
   # ---- Step 3: determine which ballots actually need API calls ----
   missing_ballots <- output_df$id[!has_results]
   missing_ballots <- setdiff(missing_ballots, vote_cache$id)
@@ -96,10 +93,7 @@ add_ft_results <- function(input_df) {
   }
     
     # ---- Merge API counts back ----
-    ## ensure safe join
-    output_df  <- output_df  %>% mutate(id = as.character(id))
-    vote_cache <- vote_cache %>% mutate(id = as.character(id))
-  
+
     output_df <- output_df %>%
     left_join(vote_cache, by = "id", suffix = c(".local", ".api")) %>%
       mutate(
