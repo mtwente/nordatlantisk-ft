@@ -124,7 +124,7 @@ classDiagram
     cabinets_gl .. cabinets_dk
     cabinets_dk <|-- northatlantic_ft
 
-    MP_dates <|-- northatlantic_ft
+    MP_dates *-- northatlantic_ft
 
     class northatlantic_ft {
         ballot_id : int
