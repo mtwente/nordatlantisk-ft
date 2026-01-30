@@ -44,7 +44,7 @@ add_ft_results <- function(input_df) {
     readRDS(cache_path)
   } else {
     tibble(
-      id             = character(0),
+      id             = integer(0),
       ft_for         = integer(0),
       ft_against     = integer(0),
       ft_abstention  = integer(0)
