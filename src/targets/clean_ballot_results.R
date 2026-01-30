@@ -38,17 +38,17 @@ clean_ballot_results <- function(input_df) {
   # ---- Type coercion ----
   input_df <- input_df %>%
     mutate(
-      ballot_id        = as.factor(ballot_id),
-      meeting_id       = as.factor(meeting_id),
+      ballot_id        = as.integer(ballot_id),
+      meeting_id       = as.integer(meeting_id),
       ballot_pass      = as.logical(ballot_pass),
       ballot_date      = as.Date(ballot_date, format = "%Y-%m-%d"),
       ft_for           = as.numeric(ft_for),
       ft_against       = as.numeric(ft_against),
       ft_abstention    = as.numeric(ft_abstention),
       ft_absent        = as.numeric(ft_absent),
-      ft_process_id    = as.factor(ft_process_id),
-      ballot_nr        = as.factor(ballot_nr),
-      ballot_type_id   = as.factor(ballot_type_id),
+      ft_process_id    = as.integer(ft_process_id),
+      ballot_nr        = as.integer(ballot_nr),
+      ballot_type_id   = as.integer(ballot_type_id),
       comment          = as.character(comment),
       ballot_result_string = as.character(ballot_result_string)
     )

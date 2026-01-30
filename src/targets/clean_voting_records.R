@@ -16,7 +16,7 @@ clean_voting_records <- function(input_df) {
   output_df <- input_df %>%
     mutate(vote_id = as.factor(vote_id),
            vote_type_id = as.factor(vote_type_id),
-           ballot_id = as.factor(ballot_id),
+           ballot_id = as.integer(ballot_id),
            MP_id = as.factor(MP_id)
     )
   
