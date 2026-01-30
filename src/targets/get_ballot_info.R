@@ -1,13 +1,16 @@
 # Setup -----
 ## Packages -----
+library(here)
 library(httr)
 library(magrittr)
-library(here)
+library(purrr)
 
 ## External Functions -----
 source(here("src", "utils", "get_content.R"), local = TRUE)
 source(here("src", "utils", "get_max_page_number.R"), local = TRUE)
-source(here("src", "utils", "check_for_updates.R"))
+source(here("src", "utils", "get_local_mtime.R"))
+source(here("src", "utils", "format_api_datetime.R"))
+source(here("src", "utils", "get_updated_records.R"))
 
 # Definition -----
 
@@ -17,89 +20,93 @@ get_ballot_info <- function() {
   local_path <- here("data", "raw", "ballot_info_raw.rds")
   
   existing_records <- if (file.exists(local_path)) {
-    readRDS(local_path)
+    readRDS(local_path) %>%
+      mutate(
+        id              = as.integer(id),
+        nummer          = as.integer(nummer),
+        konklusion      = as.character(konklusion),
+        vedtaget        = as.logical(vedtaget),
+        kommentar       = as.character(kommentar),
+        mødeid          = as.integer(mødeid),
+        typeid          = as.integer(typeid),
+        sagstrinid      = as.integer(sagstrinid),
+        opdateringsdato = as.POSIXct(
+          opdateringsdato,
+          format = "%Y-%m-%dT%H:%M:%OS",
+          tz = "UTC"
+        )
+      )
   } else {
-    existing_records <- data.frame(
-      id = character(0),
-      nummer = character(0),
-      konklusion = character(0),
-      vedtaget = character(0),
-      kommentar = character(0),
-      mødeid = character(0),
-      typeid = character(0),
-      sagstrinid = character(0),
-      opdateringsdato = character(0),
+    data.frame(
+      id              = integer(0),
+      nummer          = integer(0),
+      konklusion      = character(0),
+      vedtaget        = logical(0),
+      kommentar       = character(0),
+      mødeid          = integer(0),
+      typeid          = integer(0),
+      sagstrinid      = integer(0),
+      opdateringsdato = as.POSIXct(character(0), tz = "UTC"),
       stringsAsFactors = FALSE
     )
   }
   
-  local_count <- nrow(existing_records)
+  local_mtime_utc <- get_local_mtime(local_path)
   
-  # ---- Compare local/online data ----
-  update_check <- check_for_updates(
-    count_url   = "https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$skip=0",
-    ordered_url = "https://oda.ft.dk/api/Afstemning?$orderby=opdateringsdato%20desc&$top=1",
-    local_count = local_count,
-    data_path   = local_path
-  )
+  base_url <- "https://oda.ft.dk/api/Afstemning?$inlinecount=allpages"
   
-  if (!update_check$needs_update) {
-    
-    message(
-      "Ballot Data: No new records since last update (",
-      format(update_check$mod_date, "%Y-%m-%d %H:%M:%S"),
-      ")"
+  api_url <- if (!is.null(local_mtime_utc)) {
+    paste0(
+      base_url,
+      "&$filter=opdateringsdato%20gt%20DateTime'",
+      format_api_datetime(local_mtime_utc),
+      "'"
     )
-    
+  } else {
+    base_url
+  }
+  
+  message("Fetching new or updated ballot records from API…")
+  
+  entries <- get_updated_records(api_url)
+  
+  if (length(entries) == 0) {
+    message("No updates found.")
     return(existing_records)
   }
   
-  message(
-    "Ballot Data: downloading ",
-    update_check$total_count - local_count,
-    " new or updated records"
-  )
+  message("Fetching ", length(entries), " new or updated records…")
   
-  # ---- Paging ----
-  start_skip <- (local_count %/% 100) * 100
-  max_skip   <- ((update_check$total_count - 1) %/% 100) * 100
-  
-  temp_downloaded_ballot_results <- data.frame()
-  
-  for (n in seq(start_skip, max_skip, 100)) {
-    
-    temp_content_ballot_results <- paste0(
-      "https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$skip=",
-      n
-    ) %>%
-      get_content()
-    
-    for (i in seq_along(temp_content_ballot_results[[3]])) {
-      
-      entry <- temp_content_ballot_results[[3]][[i]]
-      
-      if (!is.list(entry)) {
-        warning("Skipping non-list element at index ", i, " on page ", n)
-        next
-      }
-      
-      temp_content_list <- lapply(entry, function(x) if (is.null(x)) NA else x)
-      temp_content_df <- as.data.frame(t(unlist(temp_content_list)), stringsAsFactors = FALSE)
-
-      temp_downloaded_ballot_results <- rbind(
-        temp_downloaded_ballot_results,
-        temp_content_df
-      )
-    }
+  parse_entry <- function(entry) {
+    tibble::tibble(
+      id              = entry$id,
+      nummer          = entry$nummer %||% NA_character_,
+      konklusion      = entry$konklusion %||% NA_character_,
+      vedtaget        = entry$vedtaget %||% NA_character_,
+      kommentar       = entry$kommentar %||% NA_character_,
+      mødeid          = as.integer(entry$mødeid %||% NA),
+      typeid          = as.integer(entry$typeid %||% NA),
+      sagstrinid      = as.integer(entry$sagstrinid %||% NA),
+      opdateringsdato = entry$opdateringsdato %||% NA_character_
+    )
   }
   
-  # ---- Combine, deduplicate, sort ----
-  combined_df <- bind_rows(existing_records, temp_downloaded_ballot_results) %>%
-    distinct(id, .keep_all = TRUE) %>%
-    arrange(id)
-
-  # ---- Export ----
-  saveRDS(combined_df, file = local_path)
+  new_records <- purrr::map_dfr(entries, parse_entry)
+  
+  new_records <- new_records %>%
+    mutate(
+      opdateringsdato = as.POSIXct(
+        opdateringsdato,
+        format = "%Y-%m-%dT%H:%M:%OS",
+        tz = "UTC"
+      )
+    )
+  
+  combined_df <- bind_rows(existing_records, new_records) %>%
+    arrange(id, desc(opdateringsdato)) %>%
+    distinct(id, .keep_all = TRUE)
+  
+  saveRDS(combined_df, local_path)
   
   combined_df
 }
