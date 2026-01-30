@@ -1,9 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|367089535891f402|||||||||||||||
+.Random.seed|object|7df212aeb2a27855|||||||||||||||
 "%||%"|function|176c749ab515e6f3|||||||||||||||
 add_ft_results|function|1f68021d79f3e6cc|||||||||||||||
 annotate_csv|function|c532a09c089e0936|||||||||||||||
-ballot_info|stem|2c948c14a917f09f|c3177031d0f9a243|8579d1213d6b5ad2|-1356312050||t20483.6843441296s|612eb62a9674f595|197176|rds|local|vector|||0.533||
+ballot_info|stem|2c948c14a917f09f|c3177031d0f9a243|8579d1213d6b5ad2|-1356312050||t20483.7050818256s|612eb62a9674f595|197176|rds|local|vector|||14.1||
 ballot_info_with_counts|stem|1da2080f51d8dfef|55eaf272ca3e7321|593cf4f9c8b55503|1293345458||t20483.6995703123s|3e5c1aecadded3a7|252990|rds|local|vector|||0.083||
 ballot_info_with_dates|stem|939d59f20500066f|c199bd9203f4720e|a7e562f5f10b0657|-1538018715||t20483.6216744101s|64a8ae4327c17ac0|205400|rds|local|vector|||41.455||
 ballot_results|stem|8d1750210e047b1d|6efabfa22b2b7d0e|d7b1e0640ad92fd3|1992756893||t19720.9153063949s|ca06277be079bbc9|222691|rds|local|vector|||459.526||
