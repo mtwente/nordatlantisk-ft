@@ -1,3 +1,7 @@
+# Setup -----
+## External Functions -----
+source(here("src", "utils", "get_content.R"))
+
 # Definition -----
 
 get_updated_records <- function(base_url) {
