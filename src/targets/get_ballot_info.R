@@ -6,7 +6,6 @@ library(magrittr)
 library(purrr)
 
 ## External Functions -----
-source(here("src", "utils", "get_content.R"), local = TRUE)
 source(here("src", "utils", "get_local_mtime.R"))
 source(here("src", "utils", "format_api_datetime.R"))
 source(here("src", "utils", "get_updated_records.R"))
