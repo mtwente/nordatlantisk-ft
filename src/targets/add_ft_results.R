@@ -78,7 +78,7 @@ add_ft_results <- function(input_df) {
       }
       
       tibble(
-        id             = as.character(ballot_id),
+        id             = as.integer(ballot_id),
         ft_for         = get_count(1),
         ft_against     = get_count(2),
         #ft_absent      = get_count(3), calculate below instead of API call
