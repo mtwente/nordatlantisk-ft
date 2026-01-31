@@ -48,12 +48,10 @@ get_voting_records <- function(input_df) {
   
   if (nrow(new_records) == 0) {
     message(
-      "MP ", MP_id,
-      ": No new records since last update (",
+      "No new records since last update (",
       format(local_mtime_utc, "%Y-%m-%d %H:%M:%S"),
       ")"
     )
-    
     return(existing_records)
   }
   
