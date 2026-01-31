@@ -80,7 +80,11 @@ get_ballot_info <- function() {
   entries <- get_updated_records(api_url)
   
   if (length(entries) == 0) {
-    message("No updates found.")
+    message(
+      "No new records since last update (",
+      format(local_mtime_utc, "%Y-%m-%d %H:%M:%S"),
+      ")"
+    )
     return(existing_records)
   }
   
