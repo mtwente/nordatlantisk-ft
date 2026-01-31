@@ -11,8 +11,7 @@ clean_ballot_results <- function(input_df) {
   input_df <- input_df %>%
     mutate(
       kommentar  = ifelse(kommentar == "", NA, kommentar),
-      konklusion = ifelse(konklusion == "", NA, konklusion),
-      dato       = gsub("[T].*$", "", dato)
+      konklusion = ifelse(konklusion == "", NA, konklusion)
     ) %>%
     select(-opdateringsdato)
   
@@ -20,16 +19,16 @@ clean_ballot_results <- function(input_df) {
   colnames(input_df) <- c(
     "ballot_id", "ballot_nr", "ballot_result_string",
     "ballot_pass", "comment", "meeting_id",
-    "ballot_type_id", "ft_process_id",
-    "ballot_date",
+    "ballot_type_id", "ft_process_id", "ft_process_step",
+    "ft_topic", "ballot_date",
     "ft_for", "ft_against", "ft_abstention", "ft_absent"
   )
   
   # ---- Reorder columns ----
   col_order <- c(
     "ballot_id", "meeting_id", "ballot_pass", "ballot_date",
-    "ft_for", "ft_against", "ft_abstention", "ft_absent",
-    "ft_process_id", "ballot_nr", "ballot_type_id",
+    "ft_topic", "ft_for", "ft_against", "ft_abstention", "ft_absent",
+    "ft_process_id", "ft_process_step", "ballot_nr", "ballot_type_id",
     "comment", "ballot_result_string"
   )
   
@@ -41,12 +40,14 @@ clean_ballot_results <- function(input_df) {
       ballot_id        = as.integer(ballot_id),
       meeting_id       = as.integer(meeting_id),
       ballot_pass      = as.logical(ballot_pass),
-      ballot_date      = as.Date(ballot_date, format = "%Y-%m-%d"),
+      ballot_date      = as.Date(ballot_date),
+      ft_topic         = as.character(ft_topic),
       ft_for           = as.numeric(ft_for),
       ft_against       = as.numeric(ft_against),
       ft_abstention    = as.numeric(ft_abstention),
       ft_absent        = as.numeric(ft_absent),
       ft_process_id    = as.integer(ft_process_id),
+      ft_process_step  = as.character(ft_process_step),
       ballot_nr        = as.integer(ballot_nr),
       ballot_type_id   = as.integer(ballot_type_id),
       comment          = as.character(comment),
