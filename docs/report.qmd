@@ -180,46 +180,116 @@ Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the
 #| echo: false
 #| message: false
 #| label: fig-mandates
-#| fig-cap: Timeline of MPs from Greenland and the Faroe Islands during the timeframe covered by this data set.
+#| fig-cap: Timeline of MPs from Greenland and the Faroe Islands during the timeframe covered by this data set. Substitutions shorter than three weeks are plotted as points for better visibility.
 
 # remove pre-2000 MPs (Edmund Joensen's and Lisbeth Petersen's first terms)
 MP_dates <- MP_dates %>%
-  filter(end >= as.Date("2000-01-01"))
+  filter(end >= as.Date("2000-01-01")) %>%
+  mutate(origin = factor(origin, levels = c("GL", "FO")))
 
 # Order MPs by first start date for nicer plotting
 MP_dates <- MP_dates %>%
-  group_by(plotting_name) %>%
+  group_by(origin, plotting_name) %>%
   mutate(first_start = min(start)) %>%
-  ungroup() %>%
+  ungroup()
+
+# build facet-specific ordering
+levels_gl <- MP_dates %>%
+  filter(origin == "GL") %>%
+  distinct(plotting_name, first_start) %>%
   arrange(desc(first_start)) %>%
-  mutate(plotting_name = factor(plotting_name, levels = unique(plotting_name)))
+  pull(plotting_name)
 
-MP_dates$origin <- factor(MP_dates$origin, levels = c("GL", "FO"))
+levels_fo <- MP_dates %>%
+  filter(origin == "FO") %>%
+  distinct(plotting_name, first_start) %>%
+  arrange(desc(first_start)) %>%
+  pull(plotting_name)
 
-ggplot(MP_dates, aes(x = start, xend = end, y = plotting_name, yend = plotting_name, color = substitute)) +
-  geom_segment(linewidth = 4, lineend = "butt") +
-  scale_color_manual(values = c("FALSE" = "#6195CF", "TRUE" = "#777777"), labels = c("Regular", "Substitute")) +
-  labs(
-    color = "Membership"
+MP_dates <- MP_dates %>%
+  mutate(
+    plotting_name = case_when(
+      origin == "GL" ~ factor(plotting_name, levels = levels_gl),
+      origin == "FO" ~ factor(plotting_name, levels = levels_fo)
+    )
+  )
+
+ggplot(MP_dates, aes(x = start,
+                     xend = end,
+                     y = plotting_name,
+                     yend = plotting_name,
+                     color = substitute)) +
+
+  # for correct order of MPs across facets and scales
+  geom_blank(aes(y = plotting_name)) +
+
+  # Segments for all regular MPs and long-term substitutions
+  geom_segment(
+    data = MP_dates %>%
+      filter(
+        substitute == FALSE |
+          (substitute == TRUE & !is.na(end) & as.numeric(end - start) >= 21)
+      ),
+    linewidth = 4,
+    lineend = "butt"
+  ) +
+
+  # Points for short-term substitutions
+geom_point(
+  data = MP_dates %>%
+    filter(
+      substitute == TRUE &
+        !is.na(end) &
+        as.numeric(end - start) < 21
+    ),
+  aes(
+    x = start,
+    fill = substitute
+  ),
+  shape = 21,
+  size = 1.5,
+  stroke = 0.2,
+  color = "#777777"
+  ) +
+
+  scale_color_manual(
+    values = c("FALSE" = "#6195CF", "TRUE" = "#F7CB45"),
+    labels = c("Regular", "Substitute")
+  ) +
+  scale_fill_manual(
+  values = c("FALSE" = "#6195CF", "TRUE" = "#F7CB45"),
+  guide = "none"
   ) +
   
-  # add Folketing Election dates
-  geom_vline(data = elections_ft, aes(xintercept = as.Date(date), linetype = election_type),
+  labs(color = "Membership") +
+
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
     color = "#000000",
     linewidth = 0.2
   ) +
-  scale_linetype_manual(values = c("Folketing Election" = "longdash"), name = "") +
-  
-  facet_grid(origin ~ ., scales = "free_y", space = "free_y",
-             labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
   ) +
-  
+
+  facet_grid(
+    origin ~ .,
+    scales = "free_y",
+    space = "free_y",
+    labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
+  ) +
+
   coord_cartesian(xlim = c(min(northatlantic_ft$ballot_date), NA)) +
-  
+
   theme_nordatlantisk_basis() +
-  theme(legend.position = "right",
-        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05),
-        panel.grid.minor.x = element_blank())
+  theme(
+    legend.position = "right",
+    panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05),
+    panel.grid.minor.x = element_blank()
+  )
 ```
 
 ## Political Parties
