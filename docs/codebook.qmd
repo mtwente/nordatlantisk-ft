@@ -39,7 +39,6 @@ northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rd
 northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
 ballot_info_raw <- readRDS(here("data", "raw", "ballot_info_raw.rds"))
 ballot_results_ft <- readRDS(here("data", "processed", "ballot_results_ft.rds"))
-ballot_topics_raw <- readRDS(here("data", "raw", "ballot_topics_raw.rds"))
 
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
@@ -113,7 +112,6 @@ classDiagram
 
     northatlantic_votes <|-- northatlantic_ft
     ballot_results_ft <|-- northatlantic_ft
-    ballot_topics_raw <|-- northatlantic_ft
 
     MP_names *-- northatlantic_votes_raw
     northatlantic_votes_raw <|-- northatlantic_votes
@@ -190,11 +188,13 @@ classDiagram
         meeting_id : int
         ballot_pass : bool
         ballot_date : date
+        ft_topic: string
         ft_for : int
         ft_against : int
         ft_abstention : int
         ft_absent : int
         ft_process_id : int
+        ft_process_step: string
         ballot_nr : int
         ballot_type_id : int
         comment : string
@@ -210,14 +210,10 @@ classDiagram
         mødeid : int
         typeid : int
         sagstrinid : int
+        sagstrin_titel: string
+        sag_titel: string
+        dato: date
         opdateringsdato : date
-    }
-
-    class ballot_topics_raw {
-        ft_process_id : int
-        ft_process_step : string
-        ft_topic_id : int
-        ft_topic : string
     }
 
     class northatlantic_votes_raw {
@@ -272,8 +268,6 @@ classDiagram
 style ballot_info_raw fill:#6195CF,color:#FFFFFF
 style ballot_results_ft fill:#6195CF,color:#FFFFFF
 
-style ballot_topics_raw fill:#253C78,color:#FFFFFF
-
 style northatlantic_ft fill:#F7CB45
 
 style northatlantic_votes_raw fill:#FFEAAE
@@ -290,7 +284,6 @@ click northatlantic_votes_raw href "#northatlantic_votes_raw" "tooltip"
 click northatlantic_votes href "#northatlantic_votes" "tooltip"
 click ballot_info_raw href "#ballot_info_raw" "tooltip"
 click ballot_results_ft href "#ballot_results_ft" "tooltip"
-click ballot_topics_raw href "#ballot_topics_raw" "tooltip"
 click cabinets_fo href "#cabinets_fo" "tooltip"
 click cabinets_gl href "#cabinets_gl" "tooltip"
 click cabinets_dk href "#cabinets_dk" "tooltip"
@@ -1046,60 +1039,6 @@ This variable is eliminated from [`ballot_results_ft`](#ballot_results_ft) as a 
 
 ```{r}
 head(ballot_info_raw$opdateringsdato)
-```
-
-------------------------------------------------------------------------
-
-### ballot_topics_raw {#ballot_topics_raw}
-
-`ballot_topics_raw` is provided as `rds` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.rds"))$mtime, "%B %Y")`, `ballot_topics_raw.rds` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
-
-```{r}
-str(ballot_topics_raw)
-```
-
-Descriptions of all variables in `ballot_topics_raw` are provided in the following sections.
-
-#### ballot_topics_raw\$ft_process_id
-
-All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_process_id)` as `r class(ballot_topics_raw$ft_process_id)` variable.
-
-This variable corresponds to the [`sagstrinid`](#ballot_info_rawsagstrinid) variable and the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
-
-`ft_process_id` is used to join `ballot_topics_raw` to [`northatlantic_ft`](#northatlantic_ft) based on matching with[`ballot_results_ft$ft_process_id`](#ballot_results_ftft_process_id).
-
-```{r}
-head(ballot_topics_raw$ft_process_id)
-```
-
-#### ballot_topics_raw\$ft_process_step {#ballot_topicsrawft_process_step}
-
-All legislative processes in Folketinget run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_topics_raw$ft_process_step)` in Danish language as `r class(ballot_topics_raw$ft_process_step)` variable.
-
-This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
-
-```{r}
-head(ballot_topics_raw$ft_process_step)
-```
-
-#### ballot_topics_raw\$ft_topic_id {#ballot_topicsrawft_topic_id}
-
-Each proposal that is being voted on in Folketinget is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data) based on the proposal's topic. Each topic ID is thus a unique identifier for one topic relating to several ballots and debates etc. in Folketinget. This identifier is stored in `ft_topic_id`. Topic IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_topic_id)` as `r class(ballot_topics_raw$ft_topic_id)` variable.
-
-This variable corresponds to the `id` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk).
-
-```{r}
-head(ballot_topics_raw$ft_topic_id)
-```
-
-#### ballot_topics_raw\$ft_topic {#ballot_topicsrawft_topic}
-
-Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_topics_raw$ft_topic)`.
-
-This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable).
-
-```{r}
-head(ballot_topics_raw$ft_topic)
 ```
 
 ------------------------------------------------------------------------
