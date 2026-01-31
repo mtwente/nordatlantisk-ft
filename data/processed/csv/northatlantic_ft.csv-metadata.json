@@ -88,14 +88,6 @@
 				"datatype": "string"
 			},
 			{
-				"name": "ft_topic_id",
-				"dc:title": "Topic ID",
-				"dc:description": "Folketinget ODA ID assigned to the parliamentary process the ballot is part of",
-				"datatype": {
-					"base": "integer"
-				}
-			},
-			{
 				"name": "ft_topic",
 				"dc:title": "Ballot Topic",
 				"dc:description": "Description of the topic the proposal on the ballot is about (in Danish)",
