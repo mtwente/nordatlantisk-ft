@@ -1119,9 +1119,9 @@ summary(cabinets_fo$FO_B)
 
 #### cabinets_fo\$FO_C {#cabinets_fofoc}
 
-`FO_C` indicates whether the Faroese political party **Javnaðarflokkurin** (`C`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_C)` as `r class(cabinets_fo$FO_C)` variable.
+`FO_B` indicates whether the Faroese political party **Sambandsflokkurin** (`B`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_B)` as `r class(cabinets_fo$FO_B)` variable.
 
-Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_C` which only stores statements on official cabinet membership.
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_B` which only stores statements on official cabinet membership.
 
 ```{r}
 summary(cabinets_fo$FO_C)
