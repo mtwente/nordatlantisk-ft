@@ -434,7 +434,7 @@ Descriptions of all variables in `MP_dates` are provided in the following sectio
 ...
 
 ```{r MP_dates-period_id}
-head(MP_dates$period_id)
+str(MP_dates$period_id)
 ```
 
 #### MP_dates$surname
@@ -570,7 +570,7 @@ Descriptions of all variables in `political_parties` are provided in the followi
 ...
 
 ```{r political_parties-party}
-str(political_parties$party)
+head(political_parties$party)
 ```
 
 #### political_parties$full_name
@@ -610,7 +610,7 @@ head(political_parties$colour)
 ...
 
 ```{r political_parties-origin}
-head(political_parties$origin)
+summary(political_parties$origin)
 ```
 
 #### political_parties$left_right
@@ -722,9 +722,8 @@ head(northatlantic_votes_raw$id)
 ...
 
 ```{r northatlantic_votes_raw-typeid}
-summary(northatlantic_votes_raw$typeid)
+unique(northatlantic_votes_raw$typeid)
 ```
-
 
 #### northatlantic_votes_raw$afstemningid
 
@@ -753,3 +752,389 @@ head(northatlantic_votes_raw$opdateringsdato)
 ```
 
 ------------------------------------------------------------------------
+
+### ballot_results_ft
+
+After all ballots are downloaded, they are processed and then stored in this file. As of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, `ballot_results_ft.rds` contains `r nrow(ballot_results_ft)` observations of `r ncol(ballot_results_ft)` variables.
+
+`ballot_results_ft` is provided as `rds` file in `/data/processed/`. The unprocessed [raw data](#ballot_info_raw) is available as `rds` file in `/data/raw/`.
+
+```{r ballot_results_ft-intro}
+str(ballot_results_ft)
+```
+
+Descriptions of all variables in `ballot_results_ft` are provided in the following sections.
+
+#### ballot_results_ft$ballot_id
+
+...
+
+```{r ballot_results_ft-ballot_id}
+head(ballot_results_ft$ballot_id)
+```
+
+#### ballot_results_ft$meeting_id
+
+...
+
+```{r ballot_results_ft-meeting_id}
+head(ballot_results_ft$meeting_id)
+```
+
+#### ballot_results_ft$ballot_pass
+
+...
+
+```{r ballot_results_ft-ballot_pass}
+summary(ballot_results_ft$ballot_pass)
+```
+
+#### ballot_results_ft$ballot_date
+
+...
+
+```{r ballot_results_ft-ballot_date}
+head(ballot_results_ft$ballot_date)
+```
+
+#### ballot_results_ft$ft_topic
+
+...
+
+```{r ballot_results_ft-ft_topic}
+head(ballot_results_ft$ft_topic)
+```
+
+#### ballot_results_ft$ft_for
+
+...
+
+```{r ballot_results_ft-ft_for}
+summary(ballot_results_ft$ft_for)
+```
+
+#### ballot_results_ft$ft_against
+
+...
+
+```{r ballot_results_ft-ft_against}
+summary(ballot_results_ft$ft_against)
+```
+
+#### ballot_results_ft$ft_abstention
+
+...
+
+```{r ballot_results_ft-ft_abstention}
+summary(ballot_results_ft$ft_abstention)
+```
+
+#### ballot_results_ft$ft_absent
+
+...
+
+```{r ballot_results_ft-ft_absent}
+summary(ballot_results_ft$ft_absent)
+```
+
+#### ballot_results_ft$ft_process_id
+
+...
+
+```{r ballot_results_ft-ft_process_id}
+head(ballot_results_ft$ft_process_id)
+```
+
+#### ballot_results_ft$ft_process_step
+
+...
+
+```{r ballot_results_ft-ft_process_step}
+head(ballot_results_ft$ft_process_step)
+```
+
+#### ballot_results_ft$ballot_nr
+
+...
+
+```{r ballot_results_ft-ballot_nr}
+head(ballot_results_ft$ballot_nr)
+```
+
+#### ballot_results_ft$ballot_type_id
+
+...
+
+```{r ballot_results_ft-ballot_type_id}
+table(ballot_results_ft$ballot_type_id)
+```
+
+#### ballot_results_ft$comment
+
+...
+
+```{r ballot_results_ft-comment}
+head(ballot_results_ft$comment)
+```
+
+#### ballot_results_ft$ballot_result_string
+
+...
+
+```{r ballot_results_ft-ballot_result_string}
+head(ballot_results_ft$ballot_result_string)
+```
+
+------------------------------------------------------------------------
+
+### ballot_info_raw {#ballot_info_raw}
+
+`ballot_info_raw` contains the downloaded data on voting records before any preprocessing. As per `r format(file.info(here("data", "raw", "ballot_info_raw.rds"))$mtime, "%B %Y")`, `ballot_info_raw.rds` contains `r nrow(ballot_info_raw)` observations of `r ncol(ballot_info_raw)` variables.
+
+`ballot_info_raw` is provided as `rds` file in `/data/raw/`. The processed [data](#ballot_results_ft) is available as `rds` file in `/data/processed`.
+
+```{r}
+str(ballot_info_raw)
+```
+
+Descriptions of all variables in `ballot_info_raw` are provided in the following sections.
+
+#### ballot_info_raw$id
+
+...
+
+```{r}
+head(ballot_info_raw$id)
+```
+
+#### ballot_info_raw$nummer
+
+...
+
+```{r}
+head(ballot_info_raw$nummer)
+```
+
+#### ballot_info_raw$konklusion
+
+...
+
+```{r}
+head(ballot_info_raw$konklusion)
+```
+
+#### ballot_info_raw$vedtaget
+
+...
+
+```{r}
+summary(ballot_info_raw$vedtaget)
+```
+
+#### ballot_info_raw$kommentar
+
+...
+
+```{r}
+head(ballot_info_raw$kommentar)
+```
+
+#### ballot_info_raw$mødeid
+
+...
+
+```{r}
+head(ballot_info_raw$mødeid)
+```
+
+#### ballot_info_raw$typeid
+
+...
+
+```{r}
+table(ballot_info_raw$typeid)
+```
+
+#### ballot_info_raw$sagstrinid
+
+...
+
+```{r}
+head(ballot_info_raw$sagstrinid)
+```
+
+#### ballot_info_raw$sagstrin_titel
+
+...
+
+```{r}
+head(ballot_info_raw$sagstrin_titel)
+```
+
+#### ballot_info_raw$sag_titel
+
+...
+
+```{r}
+head(ballot_info_raw$sag_titel)
+```
+
+#### ballot_info_raw$dato
+
+...
+
+```{r}
+head(ballot_info_raw$dato)
+```
+
+#### ballot_info_raw$opdateringsdato
+
+...
+
+```{r}
+head(ballot_info_raw$opdateringsdato)
+```
+
+------------------------------------------------------------------------
+
+### cabinets_fo {#cabinets_fo}
+
+The dataset contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+
+`cabinets_fo` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
+
+See also [cabinets_gl](#cabinets_gl) and [cabinets_dk](#cabinets_dk).
+
+```{r cabinets_fo-intro}
+str(cabinets_fo)
+```
+
+Descriptions of all variables in `cabinets_fo` are provided in the following sections.
+
+#### cabinets_fo$cabinet
+
+Each cabinet formed in the Faroe Islands (Landsstýri) is assigned a human-readable identifier. The cabinets are usually named after the head of government, using their surname(s), followed by an integer number for multiple cabinets headed by the same person. Because in the timeframe covered by this data set, there have been two Faroese governments with a PM named Johannesen, the first letter of their first name is also appended to the `cabinet` variable. This variable is stored as value of the type `r typeof(cabinets_fo$cabinet)` as `r class(cabinets_fo$cabinet)` variable.
+
+```{r cabinets_fo-cabinet}
+head(cabinets_fo$cabinet)
+```
+
+#### cabinets_fo$wikidata_id
+
+The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the cabinet in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(cabinets_fo$wikidata_id)` as `r class(cabinets_fo$wikidata_id)` variable.
+
+```{r cabinets_fo-wikidata_id}
+head(cabinets_fo$wikidata_id)
+```
+
+#### cabinets_fo$location
+
+`location` indicates where a cabinet is formed -- in the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(cabinets_fo$location)` as `r class(cabinets_fo$location)` variable. When merging data, this proved to be helpful to distinguish between the different political parties, some of which share a common abbreviation across regions.
+
+```{r cabinets_fo-location}
+table(cabinets_fo$location)
+```
+
+#### cabinets_fo$start
+
+The date on which each cabinet is formed is stored as `r class(cabinets_fo$start)` variable of the type `r typeof(cabinets_fo$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_fo$start), "%B %d, %Y")` (`r min(cabinets_fo$start)`) and the most recent entry from `r format(max(cabinets_fo$start), "%B %d, %Y")` (`r max(cabinets_fo$start)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`.
+
+```{r cabinets_fo-start}
+head(cabinets_fo$start)
+```
+
+#### cabinets_fo$end
+
+The date on which each cabinet is succeeded by the next one is stored as `r class(cabinets_fo$end)` variable of the type `r typeof(cabinets_fo$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_fo$end), "%B %d, %Y")` (`r min(cabinets_fo$end)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`.
+
+Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
+
+```{r cabinets_fo-end}
+head(cabinets_fo$end)
+```
+
+#### cabinets_fo$FO_A
+
+`FO_A` indicates whether the Faroese political party **Fólkaflokkurin** (`A`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_A)` as `r class(cabinets_fo$FO_A)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_A` which only stores statements on official cabinet membership.
+
+```{r cabinets_fo-FO_A}
+summary(cabinets_fo$FO_A)
+```
+
+#### cabinets_fo$FO_B
+
+`FO_B` indicates whether the Faroese political party **Sambandsflokkurin** (`B`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_B)` as `r class(cabinets_fo$FO_B)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_B` which only stores statements on official cabinet membership.
+
+```{r cabinets_fo-FO_B}
+summary(cabinets_fo$FO_B)
+```
+
+#### cabinets_fo$FO_C
+
+`FO_C` indicates whether the Faroese political party **Javnaðarflokkurin** (`C`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_C)` as `r class(cabinets_fo$FO_C)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_C` which only stores statements on official cabinet membership.
+
+```{r cabinets_fo-FO_C}
+summary(cabinets_fo$FO_C)
+```
+
+#### cabinets_fo$FO_D
+
+`FO_D` indicates whether the Faroese political party **Sjálvstýri** (`D`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_D)` as `r class(cabinets_fo$FO_D)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_D` which only stores statements on official cabinet membership.
+
+```{r cabinets_fo-FO_D}
+summary(cabinets_fo$FO_D)
+```
+
+#### cabinets_fo$FO_E
+
+`FO_E` indicates whether the Faroese political party **Tjóðveldi** (`E`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_E)` as `r class(cabinets_fo$FO_E)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_E` which only stores statements on official cabinet membership.
+
+```{r cabinets_fo-FO_E}
+summary(cabinets_fo$FO_E)
+```
+
+#### cabinets_fo$FO_F
+
+`FO_F` indicates whether the Faroese political party **Framsókn** (`F`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_F)` as `r class(cabinets_fo$FO_F)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_F` which only stores statements on official cabinet membership.
+
+```{r cabinets_fo-FO_F}
+summary(cabinets_fo$FO_F)
+```
+
+#### cabinets_fo$FO_H
+
+`FO_H` indicates whether the Faroese political party **Miðflokkurin** (`H`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_H)` as `r class(cabinets_fo$FO_H)` variable.
+
+Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_H` which only stores statements on official cabinet membership.
+
+```{r cabinets_fo-FO_H}
+summary(cabinets_fo$FO_H)
+```
+
+------------------------------------------------------------------------
+
+### cabinets_gl {#cabinets_gl}
+
+The dataset contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+
+`cabinets_gl` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
+
+See also [cabinets_fo](#cabinets_fo) and [cabinets_dk](#cabinets_dk).
+
+```{r cabinets_gl-intro}
+str(cabinets_gl)
+```
+
+Descriptions of all variables in `cabinets_gl` are provided in the following sections.
