@@ -15,7 +15,7 @@
 	},
 	"dc:description": "MP_dates is provided in csv and rds formats in /data/processed. This dataset includes detailed information on membership timelines of MPs in Folketinget. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-01-27T17:24:42+0100",
+		"@value": "2026-01-31T01:32:56+0100",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",

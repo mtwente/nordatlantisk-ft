@@ -7,6 +7,7 @@ library(dplyr)
 
 ## External Functions -----
 source(here("src", "utils", "get_MP_record.R"), local = TRUE)
+source(here("src", "utils", "get_local_mtime.R"))
 
 # Definition -----
 
@@ -38,16 +39,38 @@ get_voting_records <- function(input_df) {
     )
   }
   
-  local_mtime_utc <- get_local_mtime(local_path)
-
-  new_records <- purrr::map_dfr(
-    input_df$MP_id,
-    get_MP_record,
-    local_mtime_utc = local_mtime_utc
-  )
+  last_update_by_mp <- existing_records %>%
+    group_by(aktørid) %>%
+    summarise(
+      last_update = max(opdateringsdato, na.rm = TRUE),
+      .groups = "drop"
+    )
   
+  # get new or updated records
+  new_records <- purrr::map_dfr(input_df$MP_id, function(mp_id) {
+    
+    mp_last_update <- last_update_by_mp %>%
+      filter(aktørid == mp_id) %>%
+      pull(last_update)
+    
+    # If MP is new → fetch everything
+    if (length(mp_last_update) == 0 || is.na(mp_last_update)) {
+      mp_last_update <- NULL
+    }
+    
+    get_MP_record(
+      mp_id,
+      local_mtime_utc = mp_last_update
+    )
+  })
+
   if (nrow(new_records) == 0) {
-    message("No new or updated voting records found.")
+    local_mtime_utc <- get_local_mtime(local_path)
+    message(
+      "No new records since last update (",
+      format(local_mtime_utc, "%Y-%m-%d %H:%M:%S"),
+      ")"
+    )
     return(existing_records)
   }
   

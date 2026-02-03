@@ -44,15 +44,12 @@ add_ft_results <- function(input_df) {
     readRDS(cache_path)
   } else {
     tibble(
-      id             = character(0),
+      id             = integer(0),
       ft_for         = integer(0),
       ft_against     = integer(0),
       ft_abstention  = integer(0)
     )
   }
-  
-  vote_cache <- vote_cache %>%
-    mutate(id = as.character(id))
   
   # ---- Step 3: determine which ballots actually need API calls ----
   missing_ballots <- output_df$id[!has_results]
@@ -63,7 +60,7 @@ add_ft_results <- function(input_df) {
     message(
       "Fetching vote counts from API for ",
       length(missing_ballots),
-      " previously unprocessed ballots..."
+      " votes with missing results..."
     )
     
     get_counts_for_ballot <- function(ballot_id) {
@@ -96,10 +93,7 @@ add_ft_results <- function(input_df) {
   }
     
     # ---- Merge API counts back ----
-    ## ensure safe join
-    output_df  <- output_df  %>% mutate(id = as.character(id))
-    vote_cache <- vote_cache %>% mutate(id = as.character(id))
-  
+
     output_df <- output_df %>%
     left_join(vote_cache, by = "id", suffix = c(".local", ".api")) %>%
       mutate(

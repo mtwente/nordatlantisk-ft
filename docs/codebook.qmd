@@ -29,7 +29,7 @@ library(lubridate)
 ## Read Data -----
 
 ### List of MPs -----
-mp_names <- readRDS(here("data", "processed", "MP_names.rds"))
+MP_names <- readRDS(here("data", "processed", "MP_names.rds"))
 
 ### List of political parties -----
 political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
@@ -39,12 +39,11 @@ northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rd
 northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
 ballot_info_raw <- readRDS(here("data", "raw", "ballot_info_raw.rds"))
 ballot_results_ft <- readRDS(here("data", "processed", "ballot_results_ft.rds"))
-ballot_topics_raw <- readRDS(here("data", "raw", "ballot_topics_raw.rds"))
 
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
 plot_dataset <- northatlantic_ft %>%
-  left_join(mp_names %>% select(MP_id, origin), by = "MP_id")
+  left_join(MP_names %>% select(MP_id, origin), by = "MP_id")
 
 ### Timeline of MP_dates and Cabinets -----
 MP_dates <- readRDS(here("data", "processed", "MP_dates.rds"))
@@ -90,17 +89,17 @@ cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
 
 ## Introduction {#introduction}
 
-This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2025.
+This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2026. Refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
 
-All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, the tabular metadata is provided in `json` files at `/data/processed/csv` according to the W3C Metadata Vocabulary for Tabular Data [@w3cW3CRecommendationMetadata2015].
+All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, tabular metadata is provided in `json` files according to the W3C Metadata Vocabulary for Tabular Data [@w3cW3CRecommendationMetadata2015].
 
 ## File and Variable Descriptions {#file-and-variable-descriptions}
 
-The general structure of the data used in the workflow to compile the final `northatlantisk_ft.csv` output is illustrated in @fig-datamodel.
+The general structure of the data used in the workflow to compile the final `northatlantisk_ft.csv` output is illustrated in @fig-datamodel. Click on an element to jump to its description in the codebook.
 
 ```{mermaid datamodel}
 %%| label: fig-datamodel
-%%| fig-cap: Chart illustrating the files used to create the dataset including variable names and types. Click on an element to jump to its description in the codebook.
+%%| fig-cap: Chart illustrating the files used to create the dataset including variable names and types.
 
 classDiagram
     direction LR
@@ -113,7 +112,6 @@ classDiagram
 
     northatlantic_votes <|-- northatlantic_ft
     ballot_results_ft <|-- northatlantic_ft
-    ballot_topics_raw <|-- northatlantic_ft
 
     MP_names *-- northatlantic_votes_raw
     northatlantic_votes_raw <|-- northatlantic_votes
@@ -134,9 +132,9 @@ classDiagram
         party : string
         gvt_party_at_home: bool
         vote_type_id : int
+        vote_id : int
         ballot_pass : bool
         ft_process_step : string
-        ft_topic_id : int
         ft_topic : string
         ft_for : int
         ft_against : int
@@ -190,11 +188,13 @@ classDiagram
         meeting_id : int
         ballot_pass : bool
         ballot_date : date
+        ft_topic: string
         ft_for : int
         ft_against : int
         ft_abstention : int
         ft_absent : int
         ft_process_id : int
+        ft_process_step: string
         ballot_nr : int
         ballot_type_id : int
         comment : string
@@ -210,14 +210,10 @@ classDiagram
         mødeid : int
         typeid : int
         sagstrinid : int
+        sagstrin_titel : string
+        sag_titel : string
+        dato : date
         opdateringsdato : date
-    }
-
-    class ballot_topics_raw {
-        ft_process_id : int
-        ft_process_step : string
-        ft_topic_id : int
-        ft_topic : string
     }
 
     class northatlantic_votes_raw {
@@ -272,8 +268,6 @@ classDiagram
 style ballot_info_raw fill:#6195CF,color:#FFFFFF
 style ballot_results_ft fill:#6195CF,color:#FFFFFF
 
-style ballot_topics_raw fill:#253C78,color:#FFFFFF
-
 style northatlantic_ft fill:#F7CB45
 
 style northatlantic_votes_raw fill:#FFEAAE
@@ -285,75 +279,80 @@ style MP_dates fill:#D1BBD7
 click MP_dates href "#mp_dates" "tooltip"
 click election_dates href "#election_dates" "tooltip"
 click political_parties href "#political_parties" "tooltip"
-click MP_names href "#mp_names" "tooltip"
+click MP_names href "#MP_names" "tooltip"
 click northatlantic_votes_raw href "#northatlantic_votes_raw" "tooltip"
 click northatlantic_votes href "#northatlantic_votes" "tooltip"
 click ballot_info_raw href "#ballot_info_raw" "tooltip"
 click ballot_results_ft href "#ballot_results_ft" "tooltip"
-click ballot_topics_raw href "#ballot_topics_raw" "tooltip"
 click cabinets_fo href "#cabinets_fo" "tooltip"
 click cabinets_gl href "#cabinets_gl" "tooltip"
 click cabinets_dk href "#cabinets_dk" "tooltip"
 click northatlantic_ft href "#northatlantic_ft" "tooltip"
 ```
 
-### MP_names {#mp_names}
+------------------------------------------------------------------------
 
-`MP_names` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. This `rds` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(mp_names)` MPs.
+### MP_names
+
+This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(MP_names)` MPs.
+
+`MP_names` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. These files are compiled by executing the script at [`src/create_MP_list.R`](/src/create_MP_list.R) and other MPs should be added by updating this script.
+
+The `rds` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file.
 
 [^1]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
 
-```{r}
-str(mp_names)
+```{r MP_names-intro}
+str(MP_names)
 ```
 
 Descriptions of all variables in `MP_names` are provided in the following sections.
 
-#### MP_names\$surname {#mp_namessurname}
+#### MP_names$surname
 
-All surname(s) are stored as values of the type `r typeof(mp_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
+All surname(s) are stored as values of the type `r typeof(MP_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
 
-```{r}
-head(mp_names$surname)
+```{r MP_names-surname}
+head(MP_names$surname)
 ```
 
-#### MP_names\$first_name {#mp_namesfirst_name}
+#### MP_names$first_name
 
-All first names are stored as values of the type `r typeof(mp_names$first_name)`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_names$MP_id`](#MP_names_MP_id) instead for reliable identification.
+All first names are stored as values of the type `r typeof(MP_names$first_name)`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
 
-```{r}
-head(mp_names$first_name)
+```{r MP_names-first_name}
+head(MP_names$first_name)
 ```
 
-#### MP_names\$MP_id {#mp_namesmp_id}
+#### MP_names$MP_id
 
-Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(mp_names$MP_id)` as `r class(mp_names$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
+Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_names$MP_id)` as `r class(MP_names$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
 
-```{r}
-head(mp_names$MP_id)
+```{r MP_names-MP_id}
+head(MP_names$MP_id)
 ```
 
 This variable corresponds to the `aktørid` variable and the `Aktør` resource in [the Folketing online database](https://oda.ft.dk). Note that in Folketinget’s data model, ministries, parliamentary commissions, NGOs etc. are also listed as `Aktør` with their resp. `aktørid`.
 
-#### MP_names\$wikidata_id {#mp_nameswikidata_id}
+#### MP_names$wikidata_id
 
-Apart from [`MP_names$MP_id`](#MP_names_MP_id), each MP's Wikidata QID is stored in `MP_names` for further processing options. This identifier can be used to query Wikidata to supplement the dataset with further information. At the moment, this identifier is not used in any step of the processing pipeline.
+Apart from [`MP_names$MP_id`](#mp_namesmp_id), each MP's Wikidata QID is stored in `MP_names` for further processing options. This identifier can be used to query Wikidata to supplement the dataset with further information. At the moment, this identifier is not used in any step of the processing pipeline.
 
-```{r}
-head(mp_names$wikidata_id)
+```{r MP_names-wikidata_id}
+head(MP_names$wikidata_id)
 ```
 
-#### MP_names\$origin {#mp_namesorigin}
+#### MP_names$origin
 
-Using `ISO 3166-2` codes, `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(mp_names$origin)` as `r class(mp_names$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
+Using `ISO 3166-2` codes, `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(MP_names$origin)` as `r class(MP_names$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
 
-```{r}
-summary(mp_names$origin)
+```{r MP_names-origin}
+summary(MP_names$origin)
 ```
 
-#### MP_names\$party {#mp_namesparty}
+#### MP_names$party
 
-The political party that each MP belongs to is stored as value of the type `r typeof(mp_names$party)` as `r class(mp_names$party)` variable.
+The political party that each MP belongs to is stored as value of the type `r typeof(MP_names$party)` as `r class(MP_names$party)` variable.
 
 Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, as per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties (Nunatta Qitornai and Naleraq[^2]).
 
@@ -361,8 +360,8 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 
 For now, the `MP_names` data frame does not include information on membership periods etc. At the moment, these two cases are therefore stored with a single string without distinguishing between membership periods. Instead, a timeline of party membership(s) can be inferred using the information available in [`MP_dates`](#mp_dates). See also [`political_parties`](#political_parties).
 
-```{r}
-summary(mp_names$party)
+```{r MP_names-party}
+summary(MP_names$party)
 ```
 
 All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
@@ -413,113 +412,116 @@ kable(
   escape = FALSE)
 ```
 
-#### MP_names\$substitute {#mp_namessubstitute}
+#### MP_names$substitute
 
 Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. For now, they are listed as full members in `MP_names`. More detailed data on membership periods is available in [`MP_dates`](#mp_dates).
 
-```{r}
-summary(mp_names$substitute)
+```{r MP_names-substitute}
+summary(MP_names$substitute)
 ```
 
 ------------------------------------------------------------------------
 
-### MP_dates {#mp_dates}
+### MP_dates
 
-`MP_dates` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset includes detailed information on membership timelines of MPs in Folketinget. Because a substantial share of MPs from Greenland and the Faroe Islands were absent for a longer period [@harderFaeroskeOgGronlandske2022, 12-13], there have been a number of substitute MPs (stedfortrædere) replacing the originally elected politicians during their time(s) of absence. Those MPs are listed here as well. As of `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `MP_dates` includes `r nrow(MP_dates)` observations of `r ncol(MP_dates)` variables.
+The dataset includes detailed information on membership timelines of MPs in Folketinget. Because a substantial share of MPs from Greenland and the Faroe Islands were absent for a longer period [@harderFaeroskeOgGronlandske2022, 12-13], there have been a number of substitute MPs (stedfortrædere) replacing the originally elected politicians during their time(s) of absence. Those MPs are listed here as well. As of `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `MP_dates` includes `r nrow(MP_dates)` observations of `r ncol(MP_dates)` variables.
 
-```{r}
+`MP_dates` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. These files are compiled by executing the script at [`src/create_MP_dates.R`](/src/create_MP_dates.R) and other MPs should be added by updating this script.
+
+```{r MP_dates-intro}
 str(MP_dates)
 ```
 
 Descriptions of all variables in `MP_dates` are provided in the following sections.
 
-#### MP_dates\$period_id {#mp_datesperiod_id}
+#### MP_dates$period_id
 
 Each recorded membership period can be reliably identified by using the `period_id` variable, allowing to distinguish between multiple membership periods of the same politician(s). Period IDs are stored as `r class(MP_dates$period_id)` variables.
 
-```{r}
-head(MP_dates$period_id)
+```{r MP_dates-period_id}
+str(MP_dates$period_id)
 ```
 
-#### MP_dates\$surname {#mp_datessurname}
+#### MP_dates$surname
 
-All surname(s) are stored as values of the type `r typeof(MP_dates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification of each MP and to [`MP_dates$period_id`](#mp_datesperiod_id) for reliable identification of membership periods. See also [`MP_names$surname`](#mp_namessurname).
+All surname(s) are stored as values of the type `r typeof(MP_dates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmp_id) instead for reliable identification of each MP and to [`MP_dates$period_id`](#mp_datesperiod_id) for reliable identification of membership periods. See also [`MP_names$surname`](#mp_namessurname).
 
-```{r}
+```{r MP_dates-surname}
 str(MP_dates$surname)
 ```
 
-#### MP_dates\$first_name {#mp_datesfirst_name}
+
+#### MP_dates$first_name
 
 All first names are stored as values of the type `r typeof(MP_dates$first_name)`. Names are spelled according to standardised orthography and, morphologically, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there may be multiple MPs with the same first name(s), refer to [`MP_dates$MP_id`](#mp_datesmpid) instead for reliable identification. See also [`MP_names$first_name`](#mp_namesfirst_name).
 
-```{r}
+```{r MP_dates-first_name}
 str(MP_dates$first_name)
 ```
 
-#### MP_dates\$MP_id {#mp_datesmpid}
 
-Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_dates$MP_id)` as `r class(MP_dates$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207). See also [`MP_names$mP_id`](#mp_namesmp_id).
+#### MP_dates$MP_id
+
+Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_dates$MP_id)` as `r class(MP_dates$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207). See also [`MP_names$MP_id`](#mp_namesmp_id).
 
 ```{r}
 str(MP_dates$MP_id)
 ```
 
-#### MP_dates\$origin {#mp_datesorigin}
+
+#### MP_dates$origin
 
 Using `ISO 3166-2` codes, `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(MP_dates$origin)` as `r class(MP_dates$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
 
-```{r}
-table(MP_dates$origin)
+```{r MP_dates-origin}
+summary(MP_dates$origin)
 ```
 
-#### MP_dates\$party {#mp_datesparty}
+
+#### MP_dates$party
 
 The political party that each MP belongs to is stored as value of the type `r typeof(MP_dates$party)` as `r class(MP_dates$party)` variable. See [`MP_names$party`](#mp_namesparty) and [`political_parties`](#political_parties) for more information. In contrast to those, `MP_dates$party` actually provides information on changing party membership(s) since membership entries are split up on a timeline. This way, it's possible to match each recorded vote to the valid party membership at a specific point in time.
 
 Note that the value `UF` means that the MP is not a member of a political group/party at the time (uden for folketingsgrupperne).
 
-```{r}
+```{r MP_dates-party}
 unique(MP_dates$party)
 ```
 
-#### MP_dates\$start {#mp_datesstart}
+#### MP_dates$start
 
 The date on which each membership period begins is stored as `r class(MP_dates$start)` variable of the type `r typeof(MP_dates$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(MP_dates$start), "%B %d, %Y")` (`r min(MP_dates$start)`) and the most recent entry from `r format(max(MP_dates$start), "%B %d, %Y")` (`r max(MP_dates$start)`) as of `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %Y")`.
 
 In this data set, a membership period is either starting when a politicians joins Folketinget for the first time, if the MP in question is re-joining after being replaced by a temporary substitute member or if there is a change in party affiliation.
 
-```{r}
+```{r MP_dates-start}
 head(MP_dates$start)
 ```
 
-#### MP_dates\$end {#mp_datesend}
+
+#### MP_dates$end
 
 The date on which each membership period ends is stored as `r class(MP_dates$end)` variable of the type `r typeof(MP_dates$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(MP_dates$end), "%B %d, %Y")` (`r min(MP_dates$end)`) as of `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %Y")`.
 
 In this data set, a membership period ends either when a politicians leaves Folketinget for good, if the MP in question is temporarily being replaced by a temporary substitute member or if there is a change in party affiliation.
 
-```{r}
+```{r MP_dates-end}
 head(MP_dates$end)
 ```
 
-#### MP_dates\$substitute {#mp_datessubstitute}
+#### MP_dates$substitute
 
 Some of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13]. Doris Jakobsen (SIU), Lisbeth Petersen (B), Magni Arge (E) and Sjúrður Skaale (C) all first became MPs as substitute members, but later joined as regular MPs after a general election. In contrast to the data in [`MP_names$substitute`](#mp_namessubstitute), the data available in `MP_dates$substitute` also distinguishes between MPs that first joined as substitute MPs but became regular MPs at a later date.
 
-As per `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `r length(unique(MP_dates$MP_id[MP_dates$substitute]))` substitute MPs have joined Folketinget in total.
+As per `r format(file.info(here("data", "processed", "csv", "MP_dates.csv"))$mtime, "%B %d, %Y")`, `r length(unique(MP_dates$MP_id[MP_dates$substitute == TRUE]))` of the politicians that are part of this data set joined Folketinget in the role of a substitute member, filling in for one of the originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13].
 
-`r sum(mp_names$substitute == TRUE)` of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^3], filling in for one of the `r sum(mp_names$substitute == FALSE)` originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13].
-
-[^3]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
-
-```{r}
-table(MP_dates$substitute)
+```{r MP_dates-substitute}
+summary(MP_dates$substitute)
 ```
 
 ------------------------------------------------------------------------
 
-### election_dates {#election_dates}
+### election_dates
 
 This repository is shipped with a list of all elections to the parliaments in Denmark (Folketinget), Greenland (Inatsisartut) and the Faroe Islands (Løgtingið) that led to the formation of the parliaments in session during the time period covered by this data set. This translates to `r nrow(election_dates[election_dates$election_type == "Folketing Election",])` elections to Folketing, `r nrow(election_dates[election_dates$election_type == "Inatsisartut Election",])` elections to Inatsisartut, and `r nrow(election_dates[election_dates$election_type == "Løgting Election",])` elections to Løgting. The earliest election included is the one held on `r format(min(election_dates$date), "%B %d, %Y")`, while the most recent election included was held on `r format(max(election_dates$date), "%B %d, %Y")`.
 
@@ -527,73 +529,74 @@ The contents of `election_dates` is not used during the workflow to compile the 
 
 `election_dates` is provided in `csv` and `rds` formats in `/data/processed`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. These files are compiled by executing the script at [`src/create_election_list.R`](/src/create_election_list.R) and following elections should be added by updating this script.
 
-```{r}
+```{r election_dates-intro}
 str(election_dates)
 ```
 
 Descriptions of all variables in `election_dates` are provided in the following sections.
 
-#### election_dates\$election
+#### election_dates$election
 
-Each recorded election can be reliably identified by using the `election` variable. All entries are stored as values of the type `r typeof(election_dates$election)` as `r class(election_dates$election)` variable.
+The `election` variable is the unique identifier for each recorded election in this dataset. All entries are stored as values of the type `r typeof(election_dates$election)` as `r class(election_dates$election)` variable.
 
-```{r}
+```{r election_dates-election}
 head(election_dates$election)
 ```
 
-#### election_dates\$election_type
+
+#### election_dates$election_type
 
 The `election_dates` dataset includes elections to three different parliaments: Danish Folketinget, Greenlandic Inatsisartut and Faroese Løgtingið. To distinguish between elections, the type of election is stored in `election_dates$election_type`. All entries are stored as values of the type `r typeof(election_dates$election_type)` as `r class(election_dates$election_type)` variable.
 
-```{r}
-table(election_dates$election_type)
+```{r election_dates-election_type}
+summary(election_dates$election_type)
 ```
 
-#### election_dates\$date
+#### election_dates$date
 
 The date of each election is stored in `election_dates$date`, indicating the day of voting. All entries are stored as values of the type `r typeof(election_dates$date)` as `r class(election_dates$date)` variable. The dates are formatted using the `%Y-%m-%d` notation.
 
 Note that the 2022 Folketing election which took place in Denmark and Greenland on `r format(as.Date("2022-11-01"), "%B %d, %Y")` was held earlier on the Faroe Islands -- it was moved up to `r format(as.Date("2022-10-31"), "%B %d, %Y")` due to a Faroese public holiday [@statsministerietValgdatoPaFaeroerne2022].
 
-```{r}
+```{r election_dates-date}
 str(election_dates$date)
 ```
 
 ------------------------------------------------------------------------
 
-### political_parties {#political_parties}
+### political_parties
 
 This repository is shipped with a list of political parties that have been represented in Folketinget during the time period covered by this data set. This list was most recently updated on `r format(file.info(here("data", "processed", "csv", "political_parties.csv"))$mtime, "%B %d, %Y")` and includes `r nrow(political_parties)` political parties. From these parties, `r nrow(political_parties[political_parties$origin == "GL", ])` are from Greenland and `r nrow(political_parties[political_parties$origin == "FO", ])` from the Faroe Islands.
 
 The contents of `election_dates` is not used during the workflow to compile the final `northatlantik_ft` data set, but is used as secondary data for visualisation purposes.
 
-`political_parties` is provided is provided in `csv` and `rds` formats in `/data/processed`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. See also [`MP_names$party`](#mp_namesparty).
+`political_parties` is provided is provided in `csv` and `rds` formats in `/data/processed`. Metadata for the `csv` file is provided in an accompanying `json` metadata file.
 
-```{r}
+```{r political_parties-intro}
 str(political_parties)
 ```
 
 Descriptions of all variables in `political_parties` are provided in the following sections.
 
-#### political_parties\$party
+#### political_parties$party
 
 The `party` variable of `political_parties` stores the common abbreviation for each party. All entries are stored as values of the type `r typeof(political_parties$party)` as `r class(political_parties$party)` variable.
 
 Note that while political parties in Greenland are abbreviated using letters actually corresponding to their official names, this is not the case for parties in Denmark and and the Faroe Islands. Here, parties are often referred to by their one-letter reference code ([*Bogstavsbetegnelser*](https://www.valg.im.dk/partier-og-kandidater/partiernes-bogstavbetegnelser)). This code does not necessarily correspond to any part of the party's official name, but is simply a commonly used shorthand for the party. For example, the Faroese Social Democratic Party (Javnaðarflokkurin) is commonly labelled as `C`, even though the letter does not appear anywhere in the party's name.
 
-```{r}
-str(political_parties$party)
+```{r political_parties-party}
+head(political_parties$party)
 ```
 
-#### political_parties\$full_name
+#### political_parties$full_name
 
-The `full_name` variable of `political_parties` stores the full name for each party. All entries are stored as values of the type `r typeof(political_parties$full_name)` as `r class(political_parties$full_name)` variable.
+The `full_name` variable of `political_parties` stores the full name for each party. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. All entries are stored as values of the type `r typeof(political_parties$full_name)` as `r class(political_parties$full_name)` variable.
 
-```{r}
+```{r political_parties-full_name}
 str(political_parties$full_name)
 ```
 
-#### political_parties\$wikidata_id {#political_partieswikidata_id}
+#### political_parties$wikidata_id
 
 The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the political party in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(political_parties$wikidata_id)` as `r class(political_parties$wikidata_id)` variable.
 
@@ -601,95 +604,97 @@ The `wikidata_id` variable stores the `QID` linking to the Wikidata entity repre
 head(political_parties$wikidata_id)
 ```
 
-#### political_parties\$party_family
+#### political_parties$party_family
 
 The `party_family` variable of `political_parties` stores the label for the political party family the party is matched with in the ParlGov dataset [@doringParlGov2022Release2022]. All entries are stored as values of the type `r typeof(political_parties$party_family)` as `r class(political_parties$party_family)` variable.
 
 Note that party families are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$party_family) | political_parties$party_family == ""], collapse = ", ")`).
 
-```{r}
+```{r political_parties-party_family}
 head(political_parties$party_family)
 ```
 
-#### political_parties\$colour
+#### political_parties$colour
 
 The `colour` variable of `political_parties` stores `HEX` codes corresponding to the colour usually associated with the party. All entries are stored as values of the type `r typeof(political_parties$colour)` as `r class(political_parties$colour)` variable. The codes are retrieved from each party's Wikipedia article.
 
-```{r}
+```{r political_parties-colour}
 head(political_parties$colour)
 ```
 
-#### political_parties\$origin
+#### political_parties$origin
 
 Using `ISO 3166-2` codes, `origin` indicates whether a party stands for election in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(political_parties$origin)` as `r class(political_parties$origin)` variable. As per `r format(file.info(here("data", "processed", "csv", "political_parties.csv"))$mtime, "%B %Y")`, `political_parties` lists `r nrow(political_parties[political_parties$origin == "GL", ])` Greenlandic and `r nrow(political_parties[political_parties$origin == "FO", ])` Faroese parties.
 
-```{r}
-table(political_parties$origin)
+```{r political_parties-origin}
+summary(political_parties$origin)
 ```
 
-#### political_parties\$left_right
+#### political_parties$left_right
 
 `left_right` indicates where a party's positions are located on a scale from 0 (left) to 10 (right). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$left_right)` as `r class(political_parties$left_right)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
-```{r}
+```{r political_parties-left_right}
 head(political_parties$left_right)
 ```
 
-#### political_parties\$state_market
+#### political_parties$state_market
 
 `state_market` indicates where a party's positions on regulating the economy are located on a scale from 0 (preferring state regulations) to 10 (preferring unregulated markets). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$state_market)` as `r class(political_parties$state_market)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
-```{r}
+```{r political_parties-state_market}
 head(political_parties$state_market)
 ```
 
-#### political_parties\$liberty_authority
+#### political_parties$liberty_authority
 
 `liberty_authority` indicates a party's position on a scale from 0 (libertarian) to 10 (authoritarian). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$liberty_authority)` as `r class(political_parties$liberty_authority)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
-```{r}
+```{r political_parties-liberty_authority}
 head(political_parties$liberty_authority)
 ```
 
-#### political_parties\$anti_pro_eu
+#### political_parties$anti_pro_eu
 
 `anti_pro_eu` indicates a party's position towards EU integration on a scale from 0 (in favor of EU integration) to 10 (against EU integration). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$anti_pro_eu)` as `r class(political_parties$anti_pro_eu)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
-```{r}
+```{r political_parties-anti_pro_eu}
 head(political_parties$anti_pro_eu)
 ```
 
 ------------------------------------------------------------------------
 
-### northatlantic_votes {#northatlantic_votes}
+### northatlantic_votes
 
-`northatlantic_votes` is provided as `rds` file in `/data/processed/`. After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#northatlantic_votes_raw) is available as `rds` file in `/data/raw/`. As per `r format(file.info(here("data", "processed", "northatlantic_votes.rds"))$mtime, "%B %Y")`, `northatlantic_votes.rds` contains `r nrow(northatlantic_votes)` observations of `r ncol(northatlantic_votes)` variables.
+After all votes cast by the MPs specified in [`MP_names`](#mp_names) are downloaded, they are processed and then stored in this file. As per `r format(file.info(here("data", "processed", "northatlantic_votes.rds"))$mtime, "%B %Y")`, `northatlantic_votes.rds` contains `r nrow(northatlantic_votes)` observations of `r ncol(northatlantic_votes)` variables.
 
-```{r}
+`northatlantic_votes` is provided as `rds` file in `/data/processed/`. The unprocessed [raw data](#northatlantic_votes_raw) is available as `rds` file in `/data/raw/`.
+
+```{r northatlantic_votes-intro}
 str(northatlantic_votes)
 ```
 
 Descriptions of all variables in `northatlantic_votes` are provided in the following sections.
 
-#### northatlantic_votes\$vote_id {#northatlantic_votesvote_id}
+#### northatlantic_votes$vote_id
 
 All votes cast in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each vote ID is thus a unique identifier for one vote cast in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_votes$vote_id)` as `r class(northatlantic_votes$vote_id)` variable.
 
 This variable corresponds to the `id` variable and the `Stemme` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r}
+```{r northatlantic_votes-vote_id}
 head(northatlantic_votes$vote_id)
 ```
 
-#### northatlantic_votes\$vote_type_id {#northatlantic_votesvote_type_id}
+#### northatlantic_votes$vote_type_id
 
 All votes cast in Folketinget are recorded using numeric values that correspond to the MP’s decision (see @tbl-typeid). All Vote Type IDs are stored as values of the type `r typeof(northatlantic_votes$vote_type_id)` as `r class(northatlantic_votes$vote_type_id)` variable.
 
@@ -704,25 +709,25 @@ All votes cast in Folketinget are recorded using numeric values that correspond 
 
 This variable corresponds to the `typeid` variable and the `Stemmetype` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r}
+```{r northatlantic_votes-vote_type_id}
 head(northatlantic_votes$vote_type_id)
 ```
 
-#### northatlantic_votes\$ballot_id {#northatlantic_votesballot_id}
+#### northatlantic_votes$ballot_id
 
 All ballot procedures in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot ID is thus a unique identifier for one ballot in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_votes$ballot_id)` as `r class(northatlantic_votes$ballot_id)` variable.
 
 This variable corresponds to the [`ballot_results_ft$ballot_id`](#ballot_results_ftballot_id) variable and the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). Take care not to confuse `ballot_id` with [`ballot_results_ft$ballot_nr`](#ballot_results_ftballot_nr).
 
-```{r}
+```{r northatlantic_votes-ballot_id}
 head(northatlantic_votes$ballot_id)
 ```
 
-#### northatlantic_votes\$MP_id {#northatlantic_votesmp_id}
+#### northatlantic_votes$MP_id
 
 See [`MP_names$MP_id`](#mp_namesmp_id).
 
-```{r}
+```{r northatlantic_votes-MP_id}
 head(northatlantic_votes$MP_id)
 ```
 
@@ -730,111 +735,120 @@ head(northatlantic_votes$MP_id)
 
 ### northatlantic_votes_raw {#northatlantic_votes_raw}
 
-`northatlantic_votes_raw` is provided as `rds` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#northatlantic_votes) is available as `rds` file in `/data/processed`. As of `r format(file.info(here("data", "raw", "northatlantic_votes_raw.rds"))$mtime, "%B %Y")`, `northatlantic_votes_raw.rds` contains `r nrow(northatlantic_votes_raw)` observations of `r ncol(northatlantic_votes_raw)` variables.
+`northatlantic_votes_raw` contains the downloaded data on voting records before any preprocessing. As of `r format(file.info(here("data", "raw", "northatlantic_votes_raw.rds"))$mtime, "%B %Y")`, `northatlantic_votes_raw.rds` contains `r nrow(northatlantic_votes_raw)` observations of `r ncol(northatlantic_votes_raw)` variables.
 
-```{r}
+`northatlantic_votes_raw` is provided as `rds` file in `/data/raw/`. The [processed data](#northatlantic_votes) is available as `rds` file in `/data/processed`.
+
+```{r northatlantic_votes_raw-intro}
 str(northatlantic_votes_raw)
 ```
 
 Descriptions of all variables in `northatlantic_votes_raw` are provided in the following sections.
 
-#### northatlantic_votes_raw\$id
+#### northatlantic_votes_raw$id
 
 See [`northatlantic_votes$vote_id`](#northatlantic_votesvote_id). In the raw data, `id` is stored as `r typeof(northatlantic_votes_raw$id)` value.
 
-```{r}
+```{r northatlantic_votes_raw-id}
 head(northatlantic_votes_raw$id)
 ```
 
-#### northatlantic_votes_raw\$typeid
+#### northatlantic_votes_raw$typeid
 
 See [`northatlantic_votes$vote_type_id`](#northatlantic_votesvote_type_id). In the raw data, `typeid` is stored as `r typeof(northatlantic_votes_raw$typeid)` value.
 
-```{r}
-table(northatlantic_votes_raw$typeid)
+```{r northatlantic_votes_raw-typeid}
+unique(northatlantic_votes_raw$typeid)
 ```
 
-#### northatlantic_votes_raw\$afstemningid
+#### northatlantic_votes_raw$afstemningid
 
 See [`northatlantic_votes$ballot_id`](#northatlantic_votesballot_id). In the raw data, `afstemningid` is stored as `r typeof(northatlantic_votes_raw$afstemningid)` value.
 
 Take care not to confuse `afstemningid` with [`ballot_results_ft$ballot_nr`](#ballot_results_ftballot_nr).
 
-```{r}
+```{r northatlantic_votes_raw-afstemningid}
 head(northatlantic_votes_raw$afstemningid)
 ```
 
-#### northatlantic_votes_raw\$aktørid
+#### northatlantic_votes_raw$aktørid
 
 See [`northatlantic_votes$MP_id`](#northatlantic_votesmp_id). In the raw data, `aktørid` is stored as `r typeof(northatlantic_votes_raw$aktørid)` value.
 
-```{r}
+```{r northatlantic_votes_raw-aktørid}
 head(northatlantic_votes_raw$aktørid)
 ```
 
-#### northatlantic_votes_raw\$opdateringsdato
+#### northatlantic_votes_raw$opdateringsdato
 
 For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its most recent update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(northatlantic_votes_raw$opdateringsdato)`. The time stamps are originally formatted as `%Y-%m-%dT%T`, with some values even at split second level, but simplified to `%Y-%m-%d` after downloading.
 
-This variable is eliminated from [`northatlantic_votes`](#northatlantic_votes) as a result of data processing.
+This variable is eliminated from [`northatlantic_votes`](#northatlantic_votes) as a result of data processing but used to check for updates in the raw data on voting records when running the workflow pipeline.
 
-```{r}
+```{r northatlantic_votes_raw-opdateringsdato}
 head(northatlantic_votes_raw$opdateringsdato)
 ```
 
 ------------------------------------------------------------------------
 
-### ballot_results_ft {#ballot_results_ft}
+### ballot_results_ft
 
-`ballot_results_ft` is provided as `rds` file in `/data/processed/`. After all ballots are downloaded, they are processed and then stored in this file. The unprocessed [raw data](#ballot_info_raw) is available as `rds` file in `/data/raw/`. As of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, `ballot_results_ft.rds` contains `r nrow(ballot_results_ft)` observations of `r ncol(ballot_results_ft)` variables.
+After all ballots are downloaded, they are processed and then stored in this file. As of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, `ballot_results_ft.rds` contains `r nrow(ballot_results_ft)` observations of `r ncol(ballot_results_ft)` variables.
 
-```{r}
+`ballot_results_ft` is provided as `rds` file in `/data/processed/`. The unprocessed [raw data](#ballot_info_raw) is available as `rds` file in `/data/raw/`.
+
+```{r ballot_results_ft-intro}
 str(ballot_results_ft)
 ```
 
 Descriptions of all variables in `ballot_results_ft` are provided in the following sections.
 
-#### ballot_results_ft\$ballot_id {#ballot_results_ftballot_id}
+#### ballot_results_ft$ballot_id
 
 See [northatlantic_votes\$ballot_id](#northatlantic_votesballot_id). Take care not to confuse `ballot_id` with [`ballot_nr`](#ballot_results_ftballot_nr).
 
-```{r}
+```{r ballot_results_ft-ballot_id}
 head(ballot_results_ft$ballot_id)
 ```
 
-#### ballot_results_ft\$meeting_id {#ballot_results_ftmeeting_id}
+#### ballot_results_ft$meeting_id
 
 All meetings in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each meeting ID is thus a unique identifier for one meeting in Folketinget. All IDs are stored as values of the type `r typeof(ballot_results_ft$meeting_id)` as `r class(ballot_results_ft$meeting_id)` variable.
 
 This variable corresponds to the [`mødeid`](#ballot_info_rawmødeid) variable and the `Møde` resource in [the Folketing online database](https://oda.ft.dk).
-
-This variable is eliminated when joining `ballot_results_ft` and `northatlantic_votes` to [`northatlantic_ft`](#northatlantic_ft).
-
-```{r}
+```{r ballot_results_ft-meeting_id}
 head(ballot_results_ft$meeting_id)
 ```
 
-#### ballot_results_ft\$ballot_pass {#ballot_results_ftballot_pass}
+#### ballot_results_ft$ballot_pass
 
 The result of all ballots in Folketinget is stored in `ballot_pass` as `r typeof(ballot_results_ft$ballot_pass)` variable. If parliament votes in favor of a proposal, it passes and `ballot_pass` is assigned `TRUE`; if parliament votes a proposal down, it does not pass and `ballot_pass` is assigned `FALSE`.
 
 This variable corresponds to the [`vedtaget`](#ballot_info_rawvedtaget) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r}
+```{r ballot_results_ft-ballot_pass}
 summary(ballot_results_ft$ballot_pass)
 ```
 
-#### ballot_results_ft\$ballot_date {#ballot_results_ftballot_date}
+#### ballot_results_ft$ballot_date
 
 The date on which each ballot takes place in Folketinget is stored as `r class(ballot_results_ft$ballot_date)` variable of the type `r typeof(ballot_results_ft$ballot_date)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r min(ballot_results_ft$ballot_date)`) and the most recent entry from `r format(max(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r max(ballot_results_ft$ballot_date)`) as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`.
 
-This variable is added to the data using the [`get_meeting_dates()`](/src/targets/get_meeting_dates.R) function.
-
-```{r}
+```{r ballot_results_ft-ballot_date}
 head(ballot_results_ft$ballot_date)
 ```
 
-#### ballot_results_ft\$ft_for {#ballot_results_ftft_for}
+#### ballot_results_ft$ft_topic
+
+Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_results_ft$ft_topic)`.
+
+This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable).
+
+```{r ballot_results_ft-ft_topic}
+head(ballot_results_ft$ft_topic)
+```
+
+#### ballot_results_ft$ft_for
 
 In `ft_for`, the number of votes cast in favor of a proposal is stored as `r class(ballot_results_ft$ft_for)` variable of the type `r typeof(ballot_results_ft$ft_for)`.
 
@@ -844,11 +858,11 @@ In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of vot
 
 The maximum value stored in `ft_for` is `r max(ballot_results_ft$ft_for, na.rm = TRUE)` and the minimum value stored in `ft_for` is `r min(ballot_results_ft$ft_for, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_for` cannot be greater than `179`.
 
-```{r}
+```{r ballot_results_ft-ft_for}
 summary(ballot_results_ft$ft_for)
 ```
 
-#### ballot_results_ft\$ft_against {#ballot_results_ftft_against}
+#### ballot_results_ft$ft_against
 
 In `ft_against`, the number of votes cast in favor of a proposal is stored as `r class(ballot_results_ft$ft_against)` variable of the type `r typeof(ballot_results_ft$ft_against)`.
 
@@ -858,11 +872,11 @@ In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of vot
 
 The maximum value stored in `ft_against` is `r max(ballot_results_ft$ft_against, na.rm = TRUE)` and the minimum value stored in `ft_against` is `r min(ballot_results_ft$ft_against, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_against` cannot be greater than `179`.
 
-```{r}
+```{r ballot_results_ft-ft_against}
 summary(ballot_results_ft$ft_against)
 ```
 
-#### ballot_results_ft\$ft_abstention {#ballot_results_ftft_abstention}
+#### ballot_results_ft$ft_abstention
 
 In `ft_abstention`, the number of abstentions in a vote is stored as `r class(ballot_results_ft$ft_abstention)` variable of the type `r typeof(ballot_results_ft$ft_abstention)`.
 
@@ -872,11 +886,11 @@ In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of abs
 
 The maximum value stored in `ft_abstention` is `r max(ballot_results_ft$ft_abstention, na.rm = TRUE)` and the minimum value stored in `ft_abstention` is `r min(ballot_results_ft$ft_abstention, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_abstention` cannot be greater than `179`.
 
-```{r}
+```{r ballot_results_ft-ft_abstention}
 summary(ballot_results_ft$ft_abstention)
 ```
 
-#### ballot_results_ft\$ft_absent {#ballot_results_ftft_absent}
+#### ballot_results_ft$ft_absent
 
 In `ft_absent`, the number of MPs who were absent for each ballot is stored as `r class(ballot_results_ft$ft_absent)` variable with values of the type `r typeof(ballot_results_ft$ft_absent)`.
 
@@ -884,33 +898,41 @@ The number of absentees for each observation is calculated by substracting the s
 
 The maximum value stored in `ft_absent` is `r max(ballot_results_ft$ft_absent, na.rm = TRUE)` and the minimum value stored in `ft_absent` is `r min(ballot_results_ft$ft_absent, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_absent` cannot be greater than `179`.
 
-```{r}
+```{r ballot_results_ft-ft_absent}
 summary(ballot_results_ft$ft_absent)
 ```
 
-#### ballot_results_ft\$ft_process_id {#ballot_results_ftft_process_id}
+#### ballot_results_ft$ft_process_id
 
 All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `r typeof(ballot_results_ft$ft_process_id)` as `r class(ballot_results_ft$ft_process_id)` variable.
 
 This variable corresponds to the [`sagstrinid`](#ballot_info_rawsagstrinid) variable and the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
 
-`ft_process_id` used to join [`ballot_topics_raw`](#ballot_topics_raw) to [`northatlantic_ft`](#northatlantic_ft).
-
-```{r}
+```{r ballot_results_ft-ft_process_id}
 head(ballot_results_ft$ft_process_id)
 ```
 
-#### ballot_results_ft\$ballot_nr {#ballot_results_ftballot_nr}
+#### ballot_results_ft$ft_process_step
+
+All legislative processes run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_results_ft$ft_process_step)` in Danish language as `r class(ballot_results_ft$ft_process_step)` variable.
+
+This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
+
+```{r ballot_results_ft-ft_process_step}
+head(ballot_results_ft$ft_process_step)
+```
+
+#### ballot_results_ft$ballot_nr
 
 In addition to the [`ballot_id`](#ballot_results_ftballot_id), all ballot procedures in Folketinget are also assigned a number by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot number is thus another identifier for one ballot in Folketinget. All ballot numbers are stored as values of the type `r typeof(ballot_results_ft$ballot_nr)` as `r class(ballot_results_ft$ballot_nr)` variable.
 
 This variable corresponds to the [`ballot_info_raw$nummer`](#ballot_info_rawnummer) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). Take care not to confuse `ballot_nr` with [`ballot_id`](#ballot_results_ftballot_id).
 
-```{r}
+```{r ballot_results_ft-ballot_nr}
 head(ballot_results_ft$ballot_nr)
 ```
 
-#### ballot_results_ft\$ballot_type_id {#ballot_results_ftballot_type_id}
+#### ballot_results_ft$ballot_type_id
 
 All ballot procedures in Folketinget are categorised using numeric values that correspond to the type of ballot (@tbl-ballottypeid). All Ballot Type IDs are stored as values of the type `r typeof(ballot_results_ft$ballot_type_id)` as `r class(ballot_results_ft$ballot_type_id)` variable.
 
@@ -925,11 +947,11 @@ All ballot procedures in Folketinget are categorised using numeric values that c
 
 This variable corresponds to `typeid` variable in [`ballot_info_raw`](#ballot_info_rawtypeid) and the `type` variable in the `Afstemningstype` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r}
+```{r ballot_results_ft-ballot_type_id}
 table(ballot_results_ft$ballot_type_id)
 ```
 
-#### ballot_results_ft\$comment {#ballot_results_ftcomment}
+#### ballot_results_ft$comment
 
 If necessary, comments on each ballot are stored as values of the type `r typeof(ballot_results_ft$comment)` in Danish language. A Folketing wording standard for `comment` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations. As per `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(ballot_results_ft$comment))` observations with comments (total number of observations: `r nrow(ballot_results_ft)`). Comments on ballot results mostly regard human or technical errors, for example:
 
@@ -948,17 +970,17 @@ If necessary, comments on each ballot are stored as values of the type `r typeof
 
 : {.striped .hover}
 
-```{r}
+```{r ballot_results_ft-comment}
 head(ballot_results_ft$comment)
 ```
 
-#### ballot_results_ft\$ballot_result_string {#ballot_results_ftballot_result_string}
+#### ballot_results_ft$ballot_result_string
 
 In `ballot_result_string`, ballot results are stored as values of the type `r typeof(ballot_results_ft$ballot_result_string)` in Danish language. The variable indicates whether the proposal was adopted or not; how many votes were in favor resp. against or abstentions, and from which political parties these votes came. A Folketing wording standard for `ballot_result_string` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations.
 
 As per `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(ballot_results_ft$ballot_result_string))` observations with result character strings (total number of observations: `r nrow(ballot_results_ft)`). For the observations where `ballot_result_string` is not `NA`, the values are used to calculate [`ft_for`](#ballot_results_ftft_for), [`ft_against`](#ballot_results_ftft_against) and [`ft_abstention`](#ballot_results_ftft_abstention). Information on absent MPs is not provided in `ballot_result_string` but [can be inferred from the other values](#ballot_results_ftft_absent).
 
-```{r}
+```{r ballot_results_ft-ballot_result_string}
 head(ballot_results_ft$ballot_result_string)
 ```
 
@@ -966,7 +988,9 @@ head(ballot_results_ft$ballot_result_string)
 
 ### ballot_info_raw {#ballot_info_raw}
 
-`ballot_info_raw` is provided as `rds` file in `/data/raw/`. It contains the downloaded data on voting records before any preprocessing. The [processed data](#ballot_results_ft) is available as `rds` file in `/data/processed`. As per `r format(file.info(here("data", "raw", "ballot_info_raw.rds"))$mtime, "%B %Y")`, `ballot_info_raw.rds` contains `r nrow(ballot_info_raw)` observations of `r ncol(ballot_info_raw)` variables.
+`ballot_info_raw` contains the downloaded data on voting records before any preprocessing. As per `r format(file.info(here("data", "raw", "ballot_info_raw.rds"))$mtime, "%B %Y")`, `ballot_info_raw.rds` contains `r nrow(ballot_info_raw)` observations of `r ncol(ballot_info_raw)` variables.
+
+`ballot_info_raw` is provided as `rds` file in `/data/raw/`. The processed [data](#ballot_results_ft) is available as `rds` file in `/data/processed`.
 
 ```{r}
 str(ballot_info_raw)
@@ -974,31 +998,31 @@ str(ballot_info_raw)
 
 Descriptions of all variables in `ballot_info_raw` are provided in the following sections.
 
-#### ballot_info_raw\$id {#ballot_info_rawid}
+#### ballot_info_raw$id
 
-See [ballot_result_ft\$ballot_id](#ballot_results_ftballot_id). Take care not to confuse `id` with [`nummer`](#ballot_info_rawnummer). In the raw data, `id` is stored as `r typeof(ballot_info_raw$id)` value.
+See [ballot_result_ft$ballot_id](#ballot_results_ftballot_id). Take care not to confuse `id` with [`nummer`](#ballot_info_rawnummer). In the raw data, `id` is stored as `r typeof(ballot_info_raw$id)` value.
 
 ```{r}
 head(ballot_info_raw$id)
 ```
 
-#### ballot_info_raw\$nummer {#ballot_info_rawnummer}
+#### ballot_info_raw$nummer
 
-See [ballot_results_ft\$ballot_nr](#ballot_results_ftballot_nr). Take care not to confuse `nummer` with [`id`](#ballot_info_rawid). In the raw data, `nummer` is stored as `r typeof(ballot_info_raw$nummer)` value.
+See [ballot_results_ft$ballot_nr](#ballot_results_ftballot_nr). Take care not to confuse `nummer` with [`id`](#ballot_info_rawid). In the raw data, `nummer` is stored as `r typeof(ballot_info_raw$nummer)` value.
 
 ```{r}
 head(ballot_info_raw$nummer)
 ```
 
-#### ballot_info_raw\$konklusion
+#### ballot_info_raw$konklusion
 
-See [ballot_results_ft\$ballot_result_string](#ballot_results_ftballot_result_string). In the raw data, `konklusion` is stored as `r typeof(ballot_info_raw$konklusion)` value.
+See [ballot_results_ft$ballot_result_string](#ballot_results_ftballot_result_string). In the raw data, `konklusion` is stored as `r typeof(ballot_info_raw$konklusion)` value.
 
 ```{r}
 head(ballot_info_raw$konklusion)
 ```
 
-#### ballot_info_raw\$vedtaget {#ballot_info_rawvedtaget}
+#### ballot_info_raw$vedtaget
 
 See [ballot_results_ft\$ballot_pass](#ballot_results_ftballot_pass). In the raw data, `vedtaget` is stored as `r typeof(ballot_info_raw$vedtaget)` value.
 
@@ -1006,7 +1030,7 @@ See [ballot_results_ft\$ballot_pass](#ballot_results_ftballot_pass). In the raw 
 summary(ballot_info_raw$vedtaget)
 ```
 
-#### ballot_info_raw\$kommentar
+#### ballot_info_raw$kommentar
 
 See [ballot_results_ft\$comment](#ballot_results_ftcomment). In the raw data, `kommentar` is stored as `r typeof(ballot_info_raw$kommentar)` value.
 
@@ -1014,7 +1038,7 @@ See [ballot_results_ft\$comment](#ballot_results_ftcomment). In the raw data, `k
 head(ballot_info_raw$kommentar)
 ```
 
-#### ballot_info_raw\$mødeid {#ballot_info_rawmødeid}
+#### ballot_info_raw$mødeid
 
 See [ballot_results_ft\$meeting_id](#ballot_results_ftmeeting_id). In the raw data, `mødeid` is stored as `r typeof(ballot_info_raw$mødeid)` value.
 
@@ -1022,7 +1046,7 @@ See [ballot_results_ft\$meeting_id](#ballot_results_ftmeeting_id). In the raw da
 head(ballot_info_raw$mødeid)
 ```
 
-#### ballot_info_raw\$typeid {#ballot_info_rawtypeid}
+#### ballot_info_raw$typeid
 
 See [ballot_results_ft\$ballot_type_id](#ballot_results_ftballot_type_id). In the raw data, `typeid` is stored as `r typeof(ballot_info_raw$typeid)` value.
 
@@ -1030,7 +1054,7 @@ See [ballot_results_ft\$ballot_type_id](#ballot_results_ftballot_type_id). In th
 table(ballot_info_raw$typeid)
 ```
 
-#### ballot_info_raw\$sagstrinid {#ballot_info_rawsagstrinid}
+#### ballot_info_raw$sagstrinid
 
 See [ballot_results_ft\$ft_process_id](#ballot_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(ballot_info_raw$sagstrinid)` value.
 
@@ -1038,11 +1062,33 @@ See [ballot_results_ft\$ft_process_id](#ballot_results_ftft_process_id). In the 
 head(ballot_info_raw$sagstrinid)
 ```
 
-#### ballot_info_raw\$opdateringsdato
+#### ballot_info_raw$sagstrin_titel
 
-For all records kept in [the Folketing online database](https://oda.ft.dk), the time stamp of its most recent update is stored in `opdateringsdato`. All dates are stored as values of the type `r typeof(ballot_info_raw$opdateringsdato)`. The time stamps are formatted as `%Y-%m-%dT%T`, with some values even at split second level.
+See [ballot_results_ft$ft_process_step](#ballot_results_ftft_process_step). In the raw data, `sagstrin_titel` is stored as `r typeof(ballot_info_raw$sagstrin_titel)` value.
 
-This variable is eliminated from [`ballot_results_ft`](#ballot_results_ft) as a result of data processing.
+```{r}
+head(ballot_info_raw$sagstrin_titel)
+```
+
+#### ballot_info_raw$sag_titel
+
+See [ballot_results_ft$ft_topic](#ballot_results_ftft_topic). In the raw data, `sag_titel` is stored as `r typeof(ballot_info_raw$sag_titel)` value.
+
+```{r}
+head(ballot_info_raw$sag_titel)
+```
+
+#### ballot_info_raw$dato
+
+See [ballot_results_ft$ballot_date](#ballot_results_ftballot_date). In the raw data, `dato` is stored as `r class(ballot_info_raw$dato)` value.
+
+```{r}
+head(ballot_info_raw$dato)
+```
+
+#### ballot_info_raw$opdateringsdato
+
+This variable is used to check against the API for updated records. In the raw data, `opdateringsdato` is stored as `r class(ballot_info_raw$opdateringsdato)` value.
 
 ```{r}
 head(ballot_info_raw$opdateringsdato)
@@ -1050,181 +1096,129 @@ head(ballot_info_raw$opdateringsdato)
 
 ------------------------------------------------------------------------
 
-### ballot_topics_raw {#ballot_topics_raw}
-
-`ballot_topics_raw` is provided as `rds` file in `/data/raw/`. It contains information on the content of each ballot in this data set, including the content of the proposal at hand. As per `r format(file.info(here("data", "raw", "ballot_topics_raw.rds"))$mtime, "%B %Y")`, `ballot_topics_raw.rds` contains `r nrow(ballot_topics_raw)` observations of `r ncol(ballot_topics_raw)` variables.
-
-```{r}
-str(ballot_topics_raw)
-```
-
-Descriptions of all variables in `ballot_topics_raw` are provided in the following sections.
-
-#### ballot_topics_raw\$ft_process_id
-
-All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_process_id)` as `r class(ballot_topics_raw$ft_process_id)` variable.
-
-This variable corresponds to the [`sagstrinid`](#ballot_info_rawsagstrinid) variable and the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
-
-`ft_process_id` is used to join `ballot_topics_raw` to [`northatlantic_ft`](#northatlantic_ft) based on matching with[`ballot_results_ft$ft_process_id`](#ballot_results_ftft_process_id).
-
-```{r}
-head(ballot_topics_raw$ft_process_id)
-```
-
-#### ballot_topics_raw\$ft_process_step {#ballot_topicsrawft_process_step}
-
-All legislative processes in Folketinget run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_topics_raw$ft_process_step)` in Danish language as `r class(ballot_topics_raw$ft_process_step)` variable.
-
-This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
-
-```{r}
-head(ballot_topics_raw$ft_process_step)
-```
-
-#### ballot_topics_raw\$ft_topic_id {#ballot_topicsrawft_topic_id}
-
-Each proposal that is being voted on in Folketinget is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data) based on the proposal's topic. Each topic ID is thus a unique identifier for one topic relating to several ballots and debates etc. in Folketinget. This identifier is stored in `ft_topic_id`. Topic IDs are stored as values of the type `r typeof(ballot_topics_raw$ft_topic_id)` as `r class(ballot_topics_raw$ft_topic_id)` variable.
-
-This variable corresponds to the `id` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk).
-
-```{r}
-head(ballot_topics_raw$ft_topic_id)
-```
-
-#### ballot_topics_raw\$ft_topic {#ballot_topicsrawft_topic}
-
-Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_topics_raw$ft_topic)`.
-
-This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable).
-
-```{r}
-head(ballot_topics_raw$ft_topic)
-```
-
-------------------------------------------------------------------------
-
 ### cabinets_fo {#cabinets_fo}
 
-`cabinets_fo` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+The dataset contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+
+`cabinets_fo` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
 
 See also [cabinets_gl](#cabinets_gl) and [cabinets_dk](#cabinets_dk).
 
-```{r}
+```{r cabinets_fo-intro}
 str(cabinets_fo)
 ```
 
 Descriptions of all variables in `cabinets_fo` are provided in the following sections.
 
-#### cabinets_fo\$cabinet {#cabinets_focabinet}
+#### cabinets_fo$cabinet
 
 Each cabinet formed in the Faroe Islands (Landsstýri) is assigned a human-readable identifier. The cabinets are usually named after the head of government, using their surname(s), followed by an integer number for multiple cabinets headed by the same person. Because in the timeframe covered by this data set, there have been two Faroese governments with a PM named Johannesen, the first letter of their first name is also appended to the `cabinet` variable. This variable is stored as value of the type `r typeof(cabinets_fo$cabinet)` as `r class(cabinets_fo$cabinet)` variable.
 
-```{r}
+```{r cabinets_fo-cabinet}
 head(cabinets_fo$cabinet)
 ```
 
-#### cabinets_fo\$wikidata_id {#cabinets_fowikidata_id}
+#### cabinets_fo$wikidata_id
 
 The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the cabinet in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(cabinets_fo$wikidata_id)` as `r class(cabinets_fo$wikidata_id)` variable.
 
-```{r}
+```{r cabinets_fo-wikidata_id}
 head(cabinets_fo$wikidata_id)
 ```
 
-#### cabinets_fo\$location {#cabinets_folocation}
+#### cabinets_fo$location
 
 `location` indicates where a cabinet is formed -- in the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(cabinets_fo$location)` as `r class(cabinets_fo$location)` variable. When merging data, this proved to be helpful to distinguish between the different political parties, some of which share a common abbreviation across regions.
 
-```{r}
-table(cabinets_fo$location)
+```{r cabinets_fo-location}
+summary(cabinets_fo$location)
 ```
 
-#### cabinets_fo\$start {#cabinets_fostart}
+#### cabinets_fo$start
 
 The date on which each cabinet is formed is stored as `r class(cabinets_fo$start)` variable of the type `r typeof(cabinets_fo$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_fo$start), "%B %d, %Y")` (`r min(cabinets_fo$start)`) and the most recent entry from `r format(max(cabinets_fo$start), "%B %d, %Y")` (`r max(cabinets_fo$start)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`.
 
-```{r}
+```{r cabinets_fo-start}
 head(cabinets_fo$start)
 ```
 
-#### cabinets_fo\$end {#cabinets_fo_end}
+#### cabinets_fo$end
 
 The date on which each cabinet is succeeded by the next one is stored as `r class(cabinets_fo$end)` variable of the type `r typeof(cabinets_fo$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_fo$end), "%B %d, %Y")` (`r min(cabinets_fo$end)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`.
 
 Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
 
-```{r}
+```{r cabinets_fo-end}
 head(cabinets_fo$end)
 ```
 
-#### cabinets_fo\$FO_A {#cabinets_fofoa}
+#### cabinets_fo$FO_A
 
 `FO_A` indicates whether the Faroese political party **Fólkaflokkurin** (`A`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_A)` as `r class(cabinets_fo$FO_A)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_A` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_fo-FO_A}
 summary(cabinets_fo$FO_A)
 ```
 
-#### cabinets_fo\$FO_B {#cabinets_fofob}
+#### cabinets_fo$FO_B
 
 `FO_B` indicates whether the Faroese political party **Sambandsflokkurin** (`B`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_B)` as `r class(cabinets_fo$FO_B)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_B` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_fo-FO_B}
 summary(cabinets_fo$FO_B)
 ```
 
-#### cabinets_fo\$FO_C {#cabinets_fofoc}
+#### cabinets_fo$FO_C
 
 `FO_C` indicates whether the Faroese political party **Javnaðarflokkurin** (`C`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_C)` as `r class(cabinets_fo$FO_C)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_C` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_fo-FO_C}
 summary(cabinets_fo$FO_C)
 ```
 
-#### cabinets_fo\$FO_D {#cabinets_fofod}
+#### cabinets_fo$FO_D
 
 `FO_D` indicates whether the Faroese political party **Sjálvstýri** (`D`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_D)` as `r class(cabinets_fo$FO_D)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_D` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_fo-FO_D}
 summary(cabinets_fo$FO_D)
 ```
 
-#### cabinets_fo\$FO_E {#cabinets_fofoe}
+#### cabinets_fo$FO_E
 
 `FO_E` indicates whether the Faroese political party **Tjóðveldi** (`E`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_E)` as `r class(cabinets_fo$FO_E)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_E` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_fo-FO_E}
 summary(cabinets_fo$FO_E)
 ```
 
-#### cabinets_fo\$FO_F {#cabinets_fofof}
+#### cabinets_fo$FO_F
 
 `FO_F` indicates whether the Faroese political party **Framsókn** (`F`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_F)` as `r class(cabinets_fo$FO_F)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_F` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_fo-FO_F}
 summary(cabinets_fo$FO_F)
 ```
 
-#### cabinets_fo\$FO_H {#cabinets_fofoh}
+#### cabinets_fo$FO_H
 
 `FO_H` indicates whether the Faroese political party **Miðflokkurin** (`H`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_fo$FO_H)` as `r class(cabinets_fo$FO_H)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `FO_H` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_fo-FO_H}
 summary(cabinets_fo$FO_H)
 ```
 
@@ -1232,271 +1226,276 @@ summary(cabinets_fo$FO_H)
 
 ### cabinets_gl {#cabinets_gl}
 
-`cabinets_gl` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+The dataset contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+
+`cabinets_gl` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
 
 See also [cabinets_fo](#cabinets_fo) and [cabinets_dk](#cabinets_dk).
 
-```{r}
+```{r cabinets_gl-intro}
 str(cabinets_gl)
 ```
 
 Descriptions of all variables in `cabinets_gl` are provided in the following sections.
 
-#### cabinets_gl\$cabinet {#cabinets_glcabinet}
+#### cabinets_gl$cabinet
 
 Each cabinet formed in Greenland (Naalakkersuisut) is assigned a human-readable identifier. The cabinets are usually named after the head of government, using their surname(s), followed by an integer number for multiple cabinets headed by the same person. Because in the timeframe covered by this data set, there have been two Faroese governments with a PM named Johannesen, the first letter of their first name is also appended to the `cabinet` variable. This variable is stored as value of the type `r typeof(cabinets_gl$cabinet)` as `r class(cabinets_gl$cabinet)` variable.
 
-```{r}
+```{r cabinets_gl-cabinet}
 head(cabinets_gl$cabinet)
 ```
 
-#### cabinets_gl\$wikidata_id {#cabinets_glwikidata_id}
+#### cabinets_gl$wikidata_id
 
 The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the cabinet in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(cabinets_gl$wikidata_id)` as `r class(cabinets_gl$wikidata_id)` variable.
 
-```{r}
+```{r cabinets_gl-wikidata_id}
 head(cabinets_gl$wikidata_id)
 ```
 
-#### cabinets_gl\$location {#cabinets_gllocation}
+#### cabinets_gl$location
 
 `location` indicates where a cabinet is formed -- in Greenland (`GL`). This variable is stored as value of the type `r typeof(cabinets_gl$location)` as `r class(cabinets_gl$location)` variable. When merging data, this proved to be helpful to distinguish between the different political parties, some of which share a common abbreviation across regions.
 
-```{r}
-table(cabinets_gl$location)
+```{r cabinets_gl-location}
+summary(cabinets_gl$location)
 ```
 
-#### cabinets_gl\$start {#cabinets_glstart}
+#### cabinets_gl$start
 
 The date on which each cabinet is formed is stored as `r class(cabinets_gl$start)` variable of the type `r typeof(cabinets_gl$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_gl$start), "%B %d, %Y")` (`r min(cabinets_gl$start)`) and the most recent entry from `r format(max(cabinets_gl$start), "%B %d, %Y")` (`r max(cabinets_gl$start)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`.
 
-```{r}
+```{r cabinets_gl-start}
 head(cabinets_gl$start)
 ```
 
-#### cabinets_gl\$end {#cabinets_glend}
+#### cabinets_gl$end
 
 The date on which each cabinet is succeeded by the next one is stored as `r class(cabinets_gl$end)` variable of the type `r typeof(cabinets_gl$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_gl$end), "%B %d, %Y")` (`r min(cabinets_gl$end)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`.
 
 Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
 
-```{r}
+```{r cabinets_gl-end}
 head(cabinets_gl$end)
 ```
 
-#### cabinets_gl\$GL_A {#cabinets_glgla}
+#### cabinets_gl$GL_A
 
 `GL_A` indicates whether the Greenlandic political party **Atassut** (`A`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_A)` as `r class(cabinets_gl$GL_A)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_A` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_A}
 summary(cabinets_gl$GL_A)
 ```
 
-#### cabinets_gl\$GL_D {#cabinets_glgld}
+#### cabinets_gl$GL_D
 
 `GL_D` indicates whether the Greenlandic political party **Demokraatit** (`D`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_D)` as `r class(cabinets_gl$GL_D)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_D` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_D}
 summary(cabinets_gl$GL_D)
 ```
 
-#### cabinets_gl\$GL_IA {#cabinets_glglia}
+#### cabinets_gl$GL_IA
 
 `GL_IA` indicates whether the Greenlandic political party **Inuit Ataqatigiit** (`IA`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_IA)` as `r class(cabinets_gl$GL_IA)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_IA` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_IA}
 summary(cabinets_gl$GL_IA)
 ```
 
-#### cabinets_gl\$GL_KP {#cabinets_glglkp}
+#### cabinets_gl$GL_KP
 
 `GL_KP` indicates whether the Greenlandic political party **Kattusseqatigiit Partiiat** (`KP`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_KP)` as `r class(cabinets_gl$GL_KP)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_KP` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_KP}
 summary(cabinets_gl$GL_KP)
 ```
 
-#### cabinets_gl\$GL_N {#cabinets_glgln}
+#### cabinets_gl$GL_N
 
 `GL_N` indicates whether the Greenlandic political party **Naleraq** (`N`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_N)` as `r class(cabinets_gl$GL_N)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_N` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_N}
 summary(cabinets_gl$GL_N)
 ```
 
-#### cabinets_gl\$GL_NQ {#cabinets_glglnq}
+#### cabinets_gl$GL_NQ
 
 `GL_NQ` indicates whether the Greenlandic political party **Nunatta Qitornai** (`NQ`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_NQ)` as `r class(cabinets_gl$GL_NQ)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_NQ` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_NQ}
 summary(cabinets_gl$GL_NQ)
 ```
 
-#### cabinets_gl\$GL_PI {#cabinets_glglpi}
+#### cabinets_gl$GL_PI
 
 `GL_PI` indicates whether the Greenlandic political party **Partii Inuit** (`PI`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_PI)` as `r class(cabinets_gl$GL_PI)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_PI` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_PI}
 summary(cabinets_gl$GL_PI)
 ```
 
-#### cabinets_gl\$GL_SIU {#cabinets_glglsiu}
+#### cabinets_gl$GL_SIU
 
 `GL_SIU` indicates whether the Greenlandic political party **Siumut** (`SIU`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_gl$GL_SIU)` as `r class(cabinets_gl$GL_SIU)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `GL_SIU` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_gl-GL_SIU}
 summary(cabinets_gl$GL_SIU)
 ```
 
 ------------------------------------------------------------------------
 
-### cabinets_dk {#cabinets_dk}
+### cabinets_dk
 
-`cabinets_dk` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+The dataset contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+
+`cabinets_dk` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
 
 See also [cabinets_fo](#cabinets_fo) and [cabinets_gl](#cabinets_gl).
 
-```{r}
+```{r cabinets_dk-intro}
 str(cabinets_dk)
 ```
 
 Descriptions of all variables in `cabinets_dk` are provided in the following sections.
 
-#### cabinets_dk\$cabinet {#cabinets_dkcabinet}
+#### cabinets_dk$cabinet
 
 Each cabinet formed in Denmark is assigned a human-readable identifier. The cabinets are usually named after the head of government, using their surname(s), followed by an integer number for multiple cabinets headed by the same person. Because in the timeframe covered by this data set, there have been two Danish governments with a PM named Rasmussen, the first letter of their first name is also appended to the `cabinet` variable. This variable is stored as value of the type `r typeof(cabinets_dk$cabinet)` as `r class(cabinets_dk$cabinet)` variable.
 
-```{r}
+```{r cabinets_dk-cabinet}
 head(cabinets_dk$cabinet)
 ```
 
-#### cabinets_dk\$wikidata_id {#cabinets_dkwikidata_id}
+#### cabinets_dk$wikidata_id
 
 The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the cabinet in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(cabinets_dk$wikidata_id)` as `r class(cabinets_dk$wikidata_id)` variable.
 
-```{r}
+```{r cabinets_dk-wikidata_id}
 head(cabinets_dk$wikidata_id)
 ```
 
-#### cabinets_dk\$bloc {#cabinets_dkbloc}
+#### cabinets_dk$bloc
 
 `bloc` indicates whether a cabinet belongs to either the red/left or blue/right section of the political spectrum or if it is formed across both blocs. This variable is stored as value of the type `r typeof(cabinets_dk$bloc)` as `r class(cabinets_dk$bloc)` variable.
 
-```{r}
-table(cabinets_dk$bloc)
+```{r cabinets_dk-bloc}
+summary(cabinets_dk$bloc)
 ```
 
-#### cabinets_dk\$type {#cabinets_dktype}
+#### cabinets_dk$type
 
 `type` indicates whether a cabinet is formed by a single politial party or if it is a coalition government. This variable is stored as value of the type `r typeof(cabinets_dk$type)` as `r class(cabinets_dk$type)` variable.
 
 Note that a `single_party` cabinet does not necessarily have the majority of seats in parliament. The cabinet in question may instead rely on informal support agreements with other political parties that are not officially part of the cabinet.
 
-```{r}
-table(cabinets_dk$type)
+```{r cabinets_dk-type}
+summary(cabinets_dk$type)
 ```
 
-#### cabinets_dk\$start {#cabinets_dkstart}
+#### cabinets_dk$start
 
 The date on which each cabinet is formed is stored as `r class(cabinets_dk$start)` variable of the type `r typeof(cabinets_dk$start)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_dk$start), "%B %d, %Y")` (`r min(cabinets_dk$start)`) and the most recent entry from `r format(max(cabinets_dk$start), "%B %d, %Y")` (`r max(cabinets_dk$start)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`.
 
-```{r}
+```{r cabinets_dk-start}
 head(cabinets_dk$start)
 ```
 
-#### cabinets_dk\$end {#cabinets_dkend}
+#### cabinets_dk$end
 
 The date on which each cabinet is succeeded by the next one is stored as `r class(cabinets_dk$end)` variable of the type `r typeof(cabinets_dk$end)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(cabinets_dk$end), "%B %d, %Y")` (`r min(cabinets_dk$end)`) as of `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`.
 
 Note that this date does not necessarily correspond to the date when a government 'collapses' or officially announces its resignation. Rather, the date denotes the day of the transition of power to the next cabinet.
 
-```{r}
+```{r cabinets_dk-end}
 head(cabinets_dk$end)
 ```
 
-#### cabinets_dk\$DK_A {#cabinets_dkdka}
+#### cabinets_dk$DK_A
 
 `DK_A` indicates whether the Danish political party **Socialdemokratiet** (`A`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_A)` as `r class(cabinets_dk$DK_A)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_A` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_dk-DK_A}
 summary(cabinets_dk$DK_A)
 ```
 
-#### cabinets_dk\$DK_B {#cabinets_dkdkb}
+#### cabinets_dk$DK_B
 
 `DK_B` indicates whether the Danish political party **Radikale Venstre** (`B`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_B)` as `r class(cabinets_dk$DK_B)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_B` which only stores statements on official cabinet membership.
 
-```{r}
+
+```{r cabinets_dk-DK_B}
 summary(cabinets_dk$DK_B)
 ```
 
-#### cabinets_dk\$DK_C {#cabinets_dkdkc}
+#### cabinets_dk$DK_C
 
 `DK_C` indicates whether the Danish political party **Det Konservative Folkeparti** (`C`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_C)` as `r class(cabinets_dk$DK_C)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_C` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_dk-DK_C}
 summary(cabinets_dk$DK_C)
 ```
 
-#### cabinets_dk\$DK_F {#cabinets_dkdkf}
+#### cabinets_dk$DK_F
 
 `DK_F` indicates whether the Danish political party **Socialistisk Folkeparti** (`F`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_F)` as `r class(cabinets_dk$DK_F)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_F` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_dk-DK_F}
 summary(cabinets_dk$DK_F)
 ```
 
-#### cabinets_dk\$DK_I {#cabinets_dkdki}
+#### cabinets_dk$DK_I
 
 `DK_I` indicates whether the Danish political party **Liberal Alliance** (`I`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_I)` as `r class(cabinets_dk$DK_I)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_I` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_dk-DK_I}
 summary(cabinets_dk$DK_I)
 ```
 
-#### cabinets_dk\$DK_M {#cabinets_dkdkm}
+#### cabinets_dk$DK_M
 
 `DK_M` indicates whether the Danish political party **Moderaterne** (`M`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_M)` as `r class(cabinets_dk$DK_M)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_M` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_dk-DK_M}
 summary(cabinets_dk$DK_M)
 ```
 
-#### cabinets_dk\$DK_V {#cabinets_dkdkv}
+#### cabinets_dk$DK_V
 
 `DK_V` indicates whether the Danish political party **Venstre** (`V`) is member of the cabinet. This variable is stored as value of the type `r typeof(cabinets_dk$DK_V)` as `r class(cabinets_dk$DK_V)` variable.
 
 Note that a cabinet may rely on more political parties/MPs to maintain a majority. These situations are not reflected in `DK_V` which only stores statements on official cabinet membership.
 
-```{r}
+```{r cabinets_dk-DK_V}
 summary(cabinets_dk$DK_V)
 ```
 
@@ -1504,186 +1503,196 @@ summary(cabinets_dk$DK_V)
 
 ### northatlantic_ft {#northatlantic_ft}
 
-`northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. The dataset contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes), [`ballot_topics_raw`](#ballot_topics_raw) as well as information on cabinets from [`cabinets_fo`](#cabinets_fo), [`cabinets_gl`](#cabinets_gl) and [`cabinets_dk`](#cabinets_dk) and on MP membership timelines from [`MP_dates`](#mp_dates). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
+ The dataset contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes) and information on cabinets from [`cabinets_fo`](#cabinets_fo), [`cabinets_gl`](#cabinets_gl) and [`cabinets_dk`](#cabinets_dk) as well as MP membership timelines from [`MP_dates`](#mp_dates). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
 
-```{r}
+ `northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file.
+
+```{r northatlantic_ft-intro}
 str(northatlantic_ft)
 ```
 
 Descriptions of all variables in `northatlantic_ft` are provided in the following sections.
 
-#### northatlantic_ft\$ballot_id
+#### northatlantic_ft$ballot_id
 
-`ballot_id` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes` and `ballot_results_ft`. See [`northatlantic_votes$ballot_id`](#northatlantic_votesballot_id).
+All ballot procedures in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot ID is thus a unique identifier for one ballot in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_ft$ballot_id)` as `r class(northatlantic_ft$ballot_id)` variable.
 
-```{r}
+This variable corresponds to the [`ballot_results_ft$ballot_id`](#ballot_results_ftballot_id) and the [`northatlantic_votes$ballot_id`](#northatlantic_votesballot_id) variable and the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk).
+
+```{r northatlantic_ft-ballot_id}
 str(northatlantic_ft$ballot_id)
 ```
 
-#### northatlantic_ft\$MP_id
+#### northatlantic_ft$MP_id
 
-`MP_id` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes` and `ballot_results_ft`. See [`northatlantic_votes$MP_id`](#northatlantic_votesmp_id).
+Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_ft$MP_id)` as `r class(northatlantic_ft$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
 
-```{r}
+```{r northatlantic_ft-MP_id}
 str(northatlantic_ft$MP_id)
 ```
 
-#### northatlantic_ft\$surname
+#### northatlantic_ft$surname
 
-`surname` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$surname`](#mp_namessurname).
+All surname(s) are stored as values of the type `r typeof(northatlantic_ft$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`northatlantic_ft$MP_id`](#northatlantic_ftmp_id) instead for reliable identification.
 
-```{r}
+```{r northatlantic_ft-surname}
 str(northatlantic_ft$surname)
 ```
 
-#### northatlantic_ft\$origin
+#### northatlantic_ft$origin
 
-`origin` is created by using [`join_results()`](/src/targets/join_results.R) on `northatlantic_votes`, `ballot_results_ft`, and `MP_names`. See [`MP_names$origin`](#mp_namesorigin).
+Using `ISO 3166-2` codes, `origin` indicates whether an MP was elected in either Greenland (`GL`) or the Faroe Islands (`FO`). This variable is stored as value of the type `r typeof(northatlantic_ft$origin)` as `r class(northatlantic_ft$origin)` variable. Note that this only indicates where the MP in question ran for office. MPs with ties to Greenland or the Faroe Islands who won a Folketinget mandate in a continental election district are thus not part of this data set, as they are not considered *Northatlantic* MPs.
 
-```{r}
+```{r northatlantic_ft-origin}
 summary(northatlantic_ft$origin)
 ```
 
-#### northatlantic_ft\$party
+#### northatlantic_ft$party
 
-`party` is created by using [`match_party_affiliation()`](/src/targets/match_party_affiliation.R), combining [`northatlantic_ft$ballot_date`](#northatlantic_ftballot_date) and [`MP_dates`](#mp_dates). This way, changes in party affiliations are reflected in `northatlantic_ft$party` as well.
+The political party that each MP belongs to at the time of the vote is stored as value of the type `r typeof(northatlantic_ft$party)` as `r class(northatlantic_ft$party)` variable.
 
-```{r}
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, as per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties (Nunatta Qitornai and Naleraq[^3]).
+
+[^3]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
+
+```{r northatlantic_ft-party}
 summary(northatlantic_ft$party)
 ```
 
-#### northatlantic_ft\$gvt_party_at_home
+#### northatlantic_ft$gvt_party_at_home
 
 `gvt_party_at_home` is created by using [`match_home_government()`](/src/targets/match_home_government.R) on `northatlantic_ft`, and `cabinets_fo` resp. `cabinets_gl`, indicating whether the MP is a member of a political party that is part of the governing Naalakkersuisut (GL) resp. Landsstýri (FO) at the time. See [`cabinets_fo`](#cabinets_fo) and [`cabinets_gl`](#cabinets_gl).
 
-```{r}
+```{r northatlantic_ft-gvt_party_at_home}
 summary(northatlantic_ft$gvt_party_at_home)
 ```
 
-#### northatlantic_ft\$vote_type_id
+#### northatlantic_ft$vote_type_id
 
 `northatlantic_ft` is a result of [`join_results()`](/src/targets/join_results.R) in which `vote_type_id` is joined from `northatlantic_votes$vote_type_id`. See [`northatlantic_votes$vote_type_id`](#northatlantic_votesvote_type_id).
 
-```{r}
-table(northatlantic_ft$vote_type_id)
+```{r northatlantic_ft-vote_type_id}
+summary(northatlantic_ft$vote_type_id)
 ```
 
-#### northatlantic_ft\$vote_id
+#### northatlantic_ft$vote_id
 
-See [`northatlantic_votes$votes_id`](#northatlantic_votesvote_id).
+All votes cast in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each vote ID is thus a unique identifier for one vote cast in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_votes$vote_id)` as `r class(northatlantic_votes$vote_id)` variable.
 
-```{r}
+This variable corresponds to the `id` variable and the `Stemme` resource in [the Folketing online database](https://oda.ft.dk). See [`northatlantic_votes$votes_id`](#northatlantic_votesvote_id).
+
+```{r northatlantic_ft-vote_id}
 str(northatlantic_ft$vote_id)
 ```
 
-#### northatlantic_ft\$ballot_pass
+#### northatlantic_ft$ballot_pass
 
-See [`ballot_results_ft$ballot_pass`](#ballot_results_ftballot_pass).
+The result of all ballots in Folketinget is stored in `ballot_pass` as `r typeof(northatlantic_ft$ballot_pass)` variable. If parliament votes in favor of a proposal, it passes and `ballot_pass` is assigned `TRUE`; if parliament votes a proposal down, it does not pass and `ballot_pass` is assigned `FALSE`.
 
-```{r}
+This variable corresponds to the [`vedtaget`](#ballot_info_rawvedtaget) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). See [`ballot_results_ft$ballot_pass`](#ballot_results_ftballot_pass).
+
+```{r northatlantic_ft-ballot_pass}
 summary(northatlantic_ft$ballot_pass)
 ```
 
-#### northatlantic_ft\$ft_process_step
+#### northatlantic_ft$ft_process_step
 
-See [`ballot_topics_raw$ft_process_step`](#ballot_topics_rawft_process_step).
+All legislative processes run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(northatlantic_ft$ft_process_step)` in Danish language as `r class(northatlantic_ft$ft_process_step)` variable.
 
-```{r}
+This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk). See [`ballot_results_ft$ft_process_step`](#ballot_results_ftft_process_step).
+
+```{r northatlantic_ft-ft_process_step}
 str(northatlantic_ft$ft_process_step)
 ```
 
-#### northatlantic_ft\$ft_topic_id
+#### northatlantic_ft$ft_topic
 
-See [`ballot_topics_raw$ft_topic_id`](#ballot_topics_rawft_topic_id).
+Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_results_ft$ft_topic)`.
 
-```{r}
-head(northatlantic_ft$ft_topic_id)
+This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable). See [`ballot_results_ft$ft_topic`](#ballot_results_ftft_topic).
+
+```{r northatlantic_ft-ft_topic}
+head(northatlantic_ft$ft_topic)
 ```
 
-#### northatlantic_ft\$ft_topic
-
-See [`ballot_topics_raw$ft_topic`](#ballot_topics_rawft_topic).
-
-```{r}
-str(northatlantic_ft$ft_topic)
-```
-
-#### northatlantic_ft\$ft_for
+#### northatlantic_ft$ft_for
 
 See [`ballot_results_ft$ft_for`](#ballot_results_ftft_for).
 
-```{r}
+```{r northatlantic_ft-ft_for}
 summary(northatlantic_ft$ft_for)
 ```
 
-#### northatlantic_ft\$ft_against
+#### northatlantic_ft$ft_against
 
 See [`ballot_results_ft$ft_against`](#ballot_results_ftft_against).
 
-```{r}
+```{r northatlantic_ft-ft_against}
 summary(northatlantic_ft$ft_against)
 ```
 
-#### northatlantic_ft\$ft_abstention
+#### northatlantic_ft$ft_abstention
 
 See [`ballot_results_ft$ft_abstention`](#ballot_results_ftft_abstention).
 
-```{r}
+```{r northatlantic_ft-ft_abstention}
 summary(northatlantic_ft$ft_abstention)
 ```
 
-#### northatlantic_ft\$ft_absent
+#### northatlantic_ft$ft_absent
 
 See [`ballot_results_ft$ft_absent`](#ballot_results_ftft_absent).
 
-```{r}
+```{r northatlantic_ft-ft_absent}
 summary(northatlantic_ft$ft_absent)
 ```
 
-#### northatlantic_ft\$ballot_date {#northatlantic_ftballot_date}
+#### northatlantic_ft$ballot_date
+
+The date on which each ballot takes place in Folketinget is stored as `r class(ballot_results_ft$ballot_date)` variable of the type `r typeof(ballot_results_ft$ballot_date)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r min(ballot_results_ft$ballot_date)`) and the most recent entry from `r format(max(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r max(ballot_results_ft$ballot_date)`) as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`.
 
 See [`ballot_results_ft$ballot_date`](#ballot_results_ftballot_date).
 
-```{r}
+```{r northatlantic_ft-ballot_date}
 str(northatlantic_ft$ballot_date)
 ```
 
-#### northatlantic_ft\$ballot_type_id
+#### northatlantic_ft$ballot_type_id
 
 See [`ballot_results_ft$ballot_type_id`](#ballot_results_ftballot_type_id).
 
-```{r}
+```{r northatlantic_ft-ballot_type_id}
 table(northatlantic_ft$ballot_type_id)
 ```
 
-#### northatlantic_ft\$gvt_type_dk
+#### northatlantic_ft$gvt_type_dk
 
-`gvt_type_dk` is created by using [`match_danish_government()`](/src/targets/match_danish_government.R) on [`cabinets_dk`](#cabinets_dk), indicating whether the Danish government is a coalition or a single-party government at the time of the observation. See [`cabinets_dk$type`](#cabinets_dktype).
+`gvt_type_dk` is created by using [`match_danish_government()`](/src/targets/match_danish_government.R) on [`cabinets_dk`](#cabinets_dk), indicating whether the Danish government is a coalition or a single-party government at the time of the observation. See [cabinets_dk$type](#cabinets_dktype).
 
-```{r}
+```{r northatlantic_ft-gvt_type_dk}
 summary(northatlantic_ft$gvt_type_dk)
 ```
 
-#### northatlantic_ft\$gvt_bloc_dk
+#### northatlantic_ft$gvt_bloc_dk
 
-`gvt_bloc_dk` is created by using [`match_danish_government()`](/src/targets/match_danish_government.R) on [`cabinets_dk`](#cabinets_dk), indicating the political bloc (left/red, right/blue or across) the Danish government belongs to at the time of the observation. See [`cabinets_dk$bloc`](#cabinets_dkbloc).
+`gvt_bloc_dk` is created by using [`match_danish_government()`](/src/targets/match_danish_government.R) on [`cabinets_dk`](#cabinets_dk), indicating the political bloc (left/red, right/blue or across) the Danish government belongs to at the time of the observation. See [cabinets_dk$bloc](#cabinets_dkbloc).
 
-```{r}
+```{r northatlantic_ft-gvt_bloc_dk}
 summary(northatlantic_ft$gvt_bloc_dk)
 ```
 
-#### northatlantic_ft\$comment
+#### northatlantic_ft$comment
 
 See [`ballot_results_ft$comment`](#ballot_results_ftcomment).
 
-```{r}
+```{r northatlantic_ft-comment}
 str(northatlantic_ft$comment)
 ```
 
-#### northatlantic_ft\$ballot_result_string
+#### northatlantic_ft$ballot_result_string
 
 See [`ballot_results_ft$ballot_result_string`](#ballot_results_ftballot_result_string).
 
-```{r}
+```{r northatlantic_ft-ballot_result_string}
 str(northatlantic_ft$ballot_result_string)
 ```

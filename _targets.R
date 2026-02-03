@@ -110,16 +110,13 @@ tar_plan(
     )
   ),
 
-  ballot_info_with_dates = get_meeting_dates(ballot_info, "mødeid"),
-  
-  ballot_info_with_counts = add_ft_results(ballot_info_with_dates),
+  ballot_info_with_counts = add_ft_results(ballot_info),
   
   cleaned_ballot_results = clean_ballot_results(ballot_info_with_counts),
   
-  ballot_topics = get_topics(cleaned_ballot_results),
-  
-  records_with_ballot_info = join_results(cleaned_voting_records, cleaned_ballot_results,
-                                  ballot_topics, MP_names),
+  records_with_ballot_info = join_results(cleaned_voting_records,
+                                          cleaned_ballot_results,
+                                          MP_names),
   
   ## targets to add non-voting-related metadata to dataset
   records_with_parties = match_party_affiliation(records_with_ballot_info, MP_dates),

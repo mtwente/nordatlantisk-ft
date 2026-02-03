@@ -12,7 +12,7 @@ export_dataset <- function(northatlantic_ft) {
   # Clean Up Data Frame Columns  -----
   
   col_order <- c("ballot_id", "MP_id", "surname", "origin", "party", "gvt_party_at_home",
-                 "vote_type_id", "vote_id", "ballot_pass", "ft_process_step", "ft_topic_id",
+                 "vote_type_id", "vote_id", "ballot_pass", "ft_process_step",
                  "ft_topic", "ft_for", "ft_against", "ft_abstention", "ft_absent",
                  "ballot_date", "ballot_type_id", "gvt_type_dk", "gvt_bloc_dk",
                  "comment", "ballot_result_string")
@@ -43,7 +43,6 @@ export_dataset <- function(northatlantic_ft) {
              "Vote ID",
              "Ballot Passing",
              "Process Step",
-             "Topic ID",
              "Ballot Topic",
              "Vote Count: In Favor",
              "Vote Count: Against",
@@ -66,7 +65,6 @@ export_dataset <- function(northatlantic_ft) {
              "Folketinget ODA ID assigned to the vote",
              "Boolean indicating if the ballot passed",
              "Stage of the parliamentary process the ballot is part of (in Danish)",
-             "Folketinget ODA ID assigned to the parliamentary process the ballot is part of",
              "Description of the topic the proposal on the ballot is about (in Danish)",
              "Number of votes in favor of the proposal",
              "Number of votes against the proposal",

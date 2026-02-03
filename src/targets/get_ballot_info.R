@@ -11,7 +11,6 @@ source(here("src", "utils", "format_api_datetime.R"))
 source(here("src", "utils", "get_updated_records.R"))
 
 # Definition -----
-
 get_ballot_info <- function() {
   
   # ---- Read existing data ----
@@ -28,6 +27,9 @@ get_ballot_info <- function() {
         mødeid          = as.integer(mødeid),
         typeid          = as.integer(typeid),
         sagstrinid      = as.integer(sagstrinid),
+        sagstrin_titel  = as.character(sagstrin_titel),
+        sag_titel       = as.character(sag_titel),
+        dato            = as.POSIXct(dato, tz = "UTC"),
         opdateringsdato = as.POSIXct(
           opdateringsdato,
           format = "%Y-%m-%dT%H:%M:%OS",
@@ -44,6 +46,9 @@ get_ballot_info <- function() {
       mødeid          = integer(0),
       typeid          = integer(0),
       sagstrinid      = integer(0),
+      sagstrin_titel  = character(0),
+      sag_titel       = character(0),
+      dato            = as.POSIXct(character(0), tz = "UTC"),
       opdateringsdato = as.POSIXct(character(0), tz = "UTC"),
       stringsAsFactors = FALSE
     )
@@ -51,7 +56,13 @@ get_ballot_info <- function() {
   
   local_mtime_utc <- get_local_mtime(local_path)
   
-  base_url <- "https://oda.ft.dk/api/Afstemning?$inlinecount=allpages"
+  base_url <- paste0(
+    "https://oda.ft.dk/api/Afstemning?",
+    "$inlinecount=allpages",
+    "&$select=id,nummer,konklusion,vedtaget,kommentar,m%C3%B8deid,typeid,",
+    "sagstrinid,opdateringsdato,Sagstrin/titel,Sagstrin/Sag/titel,M%C3%B8de/dato",
+    "&$expand=Sagstrin/Sag,M%C3%B8de"
+  )
   
   api_url <- if (!is.null(local_mtime_utc)) {
     paste0(
@@ -69,7 +80,11 @@ get_ballot_info <- function() {
   entries <- get_updated_records(api_url)
   
   if (length(entries) == 0) {
-    message("No updates found.")
+    message(
+      "No new records since last update (",
+      format(local_mtime_utc, "%Y-%m-%d %H:%M:%S"),
+      ")"
+    )
     return(existing_records)
   }
   
@@ -85,20 +100,20 @@ get_ballot_info <- function() {
       mødeid          = as.integer(entry$mødeid %||% NA),
       typeid          = as.integer(entry$typeid %||% NA),
       sagstrinid      = as.integer(entry$sagstrinid %||% NA),
-      opdateringsdato = entry$opdateringsdato %||% NA_character_
+      sagstrin_titel  = entry$Sagstrin$titel %||% NA_character_,
+      sag_titel       = entry$Sagstrin$Sag$titel %||% NA_character_,
+      dato            = as.POSIXct(entry$Møde$dato,
+                                   format = "%Y-%m-%dT%H:%M:%OS",
+                                   tz = "UTC")
+                                   %||% NA_character_,
+      opdateringsdato = as.POSIXct(entry$opdateringsdato,
+                                   format = "%Y-%m-%dT%H:%M:%OS",
+                                   tz = "UTC"
+                                   )
     )
-  }
+    }
   
   new_records <- purrr::map_dfr(entries, parse_entry)
-  
-  new_records <- new_records %>%
-    mutate(
-      opdateringsdato = as.POSIXct(
-        opdateringsdato,
-        format = "%Y-%m-%dT%H:%M:%OS",
-        tz = "UTC"
-      )
-    )
   
   combined_df <- bind_rows(existing_records, new_records) %>%
     arrange(id, desc(opdateringsdato)) %>%
