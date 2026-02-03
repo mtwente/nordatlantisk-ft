@@ -114,7 +114,7 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## Dataset
 
-*nordatlantisk-ft* is compiled from data available on Folketingets Open Data Platform [@folketingetFolketingetsAbneData2025] and comprises voting records of Northatlantic MPs. This includes records of `r length(unique(northatlantic_ft$ballot_id))` ballots in Folketinget as per the most recent update (`r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`). The dataset documents voting behavior of MPs from Greenland and the Faroe Islands and also contains metadata on each ballot -- e.g. date and topic of each vote or the overall ballot result.
+*nordatlantisk-ft* is compiled from data available on Folketingets Open Data Platform [@folketingetFolketingetsAbneData2026] and comprises `r length(unique(northatlantic_ft$vote_id))` records of votes cast by Northatlantic MPs as per the most recent update (`r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`). The dataset documents voting behavior of MPs from Greenland and the Faroe Islands and also contains metadata on each record -- e.g. date and topic of each vote or the overall voting result, covering votes on `r length(unique(northatlantic_ft$ballot_id))` proposals in Folketinget. Refer to the [Codebook](codebook.qmd) for details.
 
 See the [Codebook](codebook.qmd) for details and refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
 

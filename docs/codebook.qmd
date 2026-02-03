@@ -89,7 +89,7 @@ cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
 
 ## Introduction {#introduction}
 
-This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2025.
+This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2026. Refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
 
 All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, tabular metadata is provided in `json` files according to the W3C Metadata Vocabulary for Tabular Data [@w3cW3CRecommendationMetadata2015].
 
