@@ -1,4 +1,4 @@
-"roll_call_id","MP_id","surname","origin","party","gvt_party_at_home","vote_type_id","vote_id","roll_call_pass","ft_process_step","ft_topic","ft_for","ft_against","ft_abstention","ft_absent","roll_call_date","roll_call_type_id","gvt_type_dk","gvt_bloc_dk","comment","roll_call_result_string"
+"roll_call_id","MP_id","surname","origin","party","gvt_party_at_home","vote_type_id","vote_id","roll_call_pass","ft_process_step","ft_topic","ft_for","ft_against","ft_abstention","ft_absent","date","roll_call_type_id","gvt_type_dk","gvt_bloc_dk","comment","result_string"
 1,"247","Joensen","FO","B",TRUE,"3","154",TRUE,NA,NA,108,0,0,71,2014-09-09,2,"coalition","left",NA,"Vedtaget
 
 108 stemmer for forslaget (V, S, DF, RV, SF, EL, LA, KF, UFG)
