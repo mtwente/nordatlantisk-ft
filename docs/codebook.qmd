@@ -866,7 +866,7 @@ summary(roll_call_results_ft$ft_for)
 
 In `ft_against`, the number of votes cast in favor of a proposal is stored as `r class(roll_call_results_ft$ft_against)` variable of the type `r typeof(roll_call_results_ft$ft_against)`.
 
-The open records kept by Folketinget are inconsistent regarding the coding of roll_call results: Overall results are stored in a single [`result_string`](#roll_call_results_ftresult_string) in Danish, listing votes against as well as votes in favor and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(roll_call_results_ft$result_string))` out of `r nrow(roll_call_results_ft)` observations as of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
+The open records kept by Folketinget are inconsistent regarding the coding of roll call results: Overall results are stored in a single [`result_string`](#roll_call_results_ftresult_string) in Danish, listing votes against as well as votes in favor and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(roll_call_results_ft$result_string))` out of `r nrow(roll_call_results_ft)` observations as of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
 
 In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of votes against of the proposal are first extracted from [`result_string`](#roll_call_results_ftresult_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the roll call result string also differs over time, I rely on the order of the results being presented to extract the votes against the proposal at hand. In a second step, I filter those cases in `roll_call_results_ft` where there is an empty string in `result_string` (`r sum(is.na(roll_call_results_ft$result_string))` out of `r nrow(roll_call_results_ft)`). For those observations, I retrieve the number of votes against from the Folketinget ODA API. This information is then merged back into the `roll_call_results_ft` data frame.
 
@@ -943,7 +943,7 @@ All roll call procedures in Folketinget are categorised using numeric values tha
 | 3 | Forslag til vedtagelse | Proposed Adoption | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "3"])` |
 | 4 | Ændringsforslag | Amendment | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "4"])` |
 
-: roll_call Type IDs as used by Folketingets Open Data Service {#tbl-roll_calltypeid} {.striped .hover}
+: Roll call Type IDs as used by Folketingets Open Data Service {#tbl-roll_calltypeid} {.striped .hover}
 
 This variable corresponds to `typeid` variable in [`roll_call_info_raw`](#roll_call_info_rawtypeid) and the `type` variable in the `Afstemningstype` resource in [the Folketing online database](https://oda.ft.dk).
 
@@ -953,7 +953,7 @@ table(roll_call_results_ft$roll_call_type_id)
 
 #### roll_call_results_ft$comment
 
-If necessary, comments on each roll call are stored as values of the type `r typeof(roll_call_results_ft$comment)` in Danish language. A Folketing wording standard for `comment` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations. As per `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(roll_call_results_ft$comment))` observations with comments (total number of observations: `r nrow(roll_call_results_ft)`). Comments on roll_call results mostly regard human or technical errors, for example:
+If necessary, comments on each roll call are stored as values of the type `r typeof(roll_call_results_ft$comment)` in Danish language. A Folketing wording standard for `comment` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations. As per `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(roll_call_results_ft$comment))` observations with comments (total number of observations: `r nrow(roll_call_results_ft)`). Comments on roll call results mostly regard human or technical errors, for example:
 
 | Danish | English |
 |--------------------------------|----------------------------------------|
