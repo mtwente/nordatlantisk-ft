@@ -100,26 +100,26 @@ tar_plan(
   
   cleaned_voting_records = clean_voting_records(raw_voting_records),
   
-  ## targets to add ballot information to dataset
+  ## targets to add roll call information to dataset
   tar_target(
-    name = ballot_info,
-    command = get_ballot_info(),
+    name = roll_call_info,
+    command = get_roll_call_info(),
     cue = tar_cue_age(
-      name = cleaned_ballot_results,
+      name = cleaned_roll_call_results,
       age = as.difftime(1, units = "weeks")
     )
   ),
 
-  ballot_info_with_counts = add_ft_results(ballot_info),
+  roll_call_info_with_counts = add_ft_results(roll_call_info),
   
-  cleaned_ballot_results = clean_ballot_results(ballot_info_with_counts),
+  cleaned_roll_call_results = clean_roll_call_results(roll_call_info_with_counts),
   
-  records_with_ballot_info = join_results(cleaned_voting_records,
-                                          cleaned_ballot_results,
+  records_with_roll_call_info = join_results(cleaned_voting_records,
+                                          cleaned_roll_call_results,
                                           MP_names),
   
   ## targets to add non-voting-related metadata to dataset
-  records_with_parties = match_party_affiliation(records_with_ballot_info, MP_dates),
+  records_with_parties = match_party_affiliation(records_with_roll_call_info, MP_dates),
   
   records_with_home_gvt = match_home_government(records_with_parties, cabinets_fo, cabinets_gl),
   

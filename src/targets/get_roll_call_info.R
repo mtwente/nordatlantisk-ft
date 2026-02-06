@@ -11,10 +11,10 @@ source(here("src", "utils", "format_api_datetime.R"))
 source(here("src", "utils", "get_updated_records.R"))
 
 # Definition -----
-get_ballot_info <- function() {
+get_roll_call_info <- function() {
   
   # ---- Read existing data ----
-  local_path <- here("data", "raw", "ballot_info_raw.rds")
+  local_path <- here("data", "raw", "roll_call_info_raw.rds")
   
   existing_records <- if (file.exists(local_path)) {
     readRDS(local_path) %>%
@@ -75,7 +75,7 @@ get_ballot_info <- function() {
     base_url
   }
   
-  message("Fetching new or updated ballot records from API…")
+  message("Fetching new or updated roll call records from API…")
   
   entries <- get_updated_records(api_url)
   

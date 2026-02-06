@@ -37,8 +37,8 @@ political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 ### Voting Records Database -----
 northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rds"))
 northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
-ballot_info_raw <- readRDS(here("data", "raw", "ballot_info_raw.rds"))
-ballot_results_ft <- readRDS(here("data", "processed", "ballot_results_ft.rds"))
+roll_call_info_raw <- readRDS(here("data", "raw", "roll_call_info_raw.rds"))
+roll_call_results_ft <- readRDS(here("data", "processed", "roll_call_results_ft.rds"))
 
 northatlantic_ft <- readRDS(here("data", "processed", "northatlantic_ft.rds"))
 
@@ -111,12 +111,12 @@ classDiagram
     MP_names *-- northatlantic_ft
 
     northatlantic_votes <|-- northatlantic_ft
-    ballot_results_ft <|-- northatlantic_ft
+    roll_call_results_ft <|-- northatlantic_ft
 
     MP_names *-- northatlantic_votes_raw
     northatlantic_votes_raw <|-- northatlantic_votes
 
-    ballot_info_raw <|-- ballot_results_ft
+    roll_call_info_raw <|-- roll_call_results_ft
 
     cabinets_fo .. cabinets_gl
     cabinets_gl .. cabinets_dk
@@ -125,7 +125,7 @@ classDiagram
     MP_dates *-- northatlantic_ft
 
     class northatlantic_ft {
-        ballot_id : int
+        roll_call_id : int
         MP_id : int
         surname : string
         origin: string
@@ -133,25 +133,25 @@ classDiagram
         gvt_party_at_home: bool
         vote_type_id : int
         vote_id : int
-        ballot_pass : bool
+        roll_call_pass : bool
         ft_process_step : string
         ft_topic : string
         ft_for : int
         ft_against : int
         ft_abstention : int
         ft_absent : int
-        ballot_date : date
-        ballot_type_id : int
+        roll_call_date : date
+        roll_call_type_id : int
         gvt_type_dk : string
         gvt_bloc_dk : string
         comment : string
-        ballot_result_string : int
+        roll_call_result_string : int
     }
 
         class northatlantic_votes {
         vote_id : int
         vote_type_id : int
-        ballot_id : int
+        roll_call_id : int
         MP_id : int
     }
 
@@ -183,11 +183,11 @@ classDiagram
         substitute : bool
     }
 
-    class ballot_results_ft {
-        ballot_id : int
+    class roll_call_results_ft {
+        roll_call_id : int
         meeting_id : int
-        ballot_pass : bool
-        ballot_date : date
+        roll_call_pass : bool
+        roll_call_date : date
         ft_topic: string
         ft_for : int
         ft_against : int
@@ -195,13 +195,13 @@ classDiagram
         ft_absent : int
         ft_process_id : int
         ft_process_step: string
-        ballot_nr : int
-        ballot_type_id : int
+        roll_call_nr : int
+        roll_call_type_id : int
         comment : string
-        ballot_result_string : string
+        roll_call_result_string : string
     }
 
-    class ballot_info_raw {
+    class roll_call_info_raw {
         id : int
         nummer : int
         konklusion : string
@@ -265,8 +265,8 @@ classDiagram
       DK_&ast;: bool
     }
 
-style ballot_info_raw fill:#6195CF,color:#FFFFFF
-style ballot_results_ft fill:#6195CF,color:#FFFFFF
+style roll_call_info_raw fill:#6195CF,color:#FFFFFF
+style roll_call_results_ft fill:#6195CF,color:#FFFFFF
 
 style northatlantic_ft fill:#F7CB45
 
@@ -282,8 +282,8 @@ click political_parties href "#political_parties" "tooltip"
 click MP_names href "#MP_names" "tooltip"
 click northatlantic_votes_raw href "#northatlantic_votes_raw" "tooltip"
 click northatlantic_votes href "#northatlantic_votes" "tooltip"
-click ballot_info_raw href "#ballot_info_raw" "tooltip"
-click ballot_results_ft href "#ballot_results_ft" "tooltip"
+click roll_call_info_raw href "#roll_call_info_raw" "tooltip"
+click roll_call_results_ft href "#roll_call_results_ft" "tooltip"
 click cabinets_fo href "#cabinets_fo" "tooltip"
 click cabinets_gl href "#cabinets_gl" "tooltip"
 click cabinets_dk href "#cabinets_dk" "tooltip"
@@ -294,7 +294,7 @@ click northatlantic_ft href "#northatlantic_ft" "tooltip"
 
 ### MP_names
 
-This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(MP_names)` MPs.
+This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from `r format(min(northatlantic_ft$roll_call_date), "%B %d, %Y")` until the most recent update of this data set (on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`), which results in `r nrow(MP_names)` MPs.
 
 `MP_names` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. These files are compiled by executing the script at [`src/create_MP_list.R`](/src/create_MP_list.R) and other MPs should be added by updating this script.
 
@@ -713,14 +713,14 @@ This variable corresponds to the `typeid` variable and the `Stemmetype` resource
 head(northatlantic_votes$vote_type_id)
 ```
 
-#### northatlantic_votes$ballot_id
+#### northatlantic_votes$roll_call_id
 
-All ballot procedures in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot ID is thus a unique identifier for one ballot in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_votes$ballot_id)` as `r class(northatlantic_votes$ballot_id)` variable.
+All roll call procedures in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each roll call ID is thus a unique identifier for one roll call in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_votes$roll_call_id)` as `r class(northatlantic_votes$roll_call_id)` variable.
 
-This variable corresponds to the [`ballot_results_ft$ballot_id`](#ballot_results_ftballot_id) variable and the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). Take care not to confuse `ballot_id` with [`ballot_results_ft$ballot_nr`](#ballot_results_ftballot_nr).
+This variable corresponds to the [`roll_call_results_ft$roll_call_id`](#roll_call_results_ftroll_call_id) variable and the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). Take care not to confuse `roll_call_id` with [`roll_call_results_ft$roll_call_nr`](#roll_call_results_ftroll_call_nr).
 
-```{r northatlantic_votes-ballot_id}
-head(northatlantic_votes$ballot_id)
+```{r northatlantic_votes-roll_call_id}
+head(northatlantic_votes$roll_call_id)
 ```
 
 #### northatlantic_votes$MP_id
@@ -763,9 +763,9 @@ unique(northatlantic_votes_raw$typeid)
 
 #### northatlantic_votes_raw$afstemningid
 
-See [`northatlantic_votes$ballot_id`](#northatlantic_votesballot_id). In the raw data, `afstemningid` is stored as `r typeof(northatlantic_votes_raw$afstemningid)` value.
+See [`northatlantic_votes$roll_call_id`](#northatlantic_votesroll_call_id). In the raw data, `afstemningid` is stored as `r typeof(northatlantic_votes_raw$afstemningid)` value.
 
-Take care not to confuse `afstemningid` with [`ballot_results_ft$ballot_nr`](#ballot_results_ftballot_nr).
+Take care not to confuse `afstemningid` with [`roll_call_results_ft$roll_call_nr`](#roll_call_results_ftroll_call_nr).
 
 ```{r northatlantic_votes_raw-afstemningid}
 head(northatlantic_votes_raw$afstemningid)
@@ -791,169 +791,169 @@ head(northatlantic_votes_raw$opdateringsdato)
 
 ------------------------------------------------------------------------
 
-### ballot_results_ft
+### roll_call_results_ft
 
-After all ballots are downloaded, they are processed and then stored in this file. As of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, `ballot_results_ft.rds` contains `r nrow(ballot_results_ft)` observations of `r ncol(ballot_results_ft)` variables.
+After all roll calls are downloaded, they are processed and then stored in this file. As of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`, `roll_call_results_ft.rds` contains `r nrow(roll_call_results_ft)` observations of `r ncol(roll_call_results_ft)` variables.
 
-`ballot_results_ft` is provided as `rds` file in `/data/processed/`. The unprocessed [raw data](#ballot_info_raw) is available as `rds` file in `/data/raw/`.
+`roll_call_results_ft` is provided as `rds` file in `/data/processed/`. The unprocessed [raw data](#roll_call_info_raw) is available as `rds` file in `/data/raw/`.
 
-```{r ballot_results_ft-intro}
-str(ballot_results_ft)
+```{r roll_call_results_ft-intro}
+str(roll_call_results_ft)
 ```
 
-Descriptions of all variables in `ballot_results_ft` are provided in the following sections.
+Descriptions of all variables in `roll_call_results_ft` are provided in the following sections.
 
-#### ballot_results_ft$ballot_id
+#### roll_call_results_ft$roll_call_id
 
-See [northatlantic_votes\$ballot_id](#northatlantic_votesballot_id). Take care not to confuse `ballot_id` with [`ballot_nr`](#ballot_results_ftballot_nr).
+See [northatlantic_votes\$roll_call_id](#northatlantic_votesroll_call_id). Take care not to confuse `roll_call_id` with [`roll_call_nr`](#roll_call_results_ftroll_call_nr).
 
-```{r ballot_results_ft-ballot_id}
-head(ballot_results_ft$ballot_id)
+```{r roll_call_results_ft-roll_call_id}
+head(roll_call_results_ft$roll_call_id)
 ```
 
-#### ballot_results_ft$meeting_id
+#### roll_call_results_ft$meeting_id
 
-All meetings in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each meeting ID is thus a unique identifier for one meeting in Folketinget. All IDs are stored as values of the type `r typeof(ballot_results_ft$meeting_id)` as `r class(ballot_results_ft$meeting_id)` variable.
+All meetings in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each meeting ID is thus a unique identifier for one meeting in Folketinget. All IDs are stored as values of the type `r typeof(roll_call_results_ft$meeting_id)` as `r class(roll_call_results_ft$meeting_id)` variable.
 
-This variable corresponds to the [`mødeid`](#ballot_info_rawmødeid) variable and the `Møde` resource in [the Folketing online database](https://oda.ft.dk).
-```{r ballot_results_ft-meeting_id}
-head(ballot_results_ft$meeting_id)
+This variable corresponds to the [`mødeid`](#roll_call_info_rawmødeid) variable and the `Møde` resource in [the Folketing online database](https://oda.ft.dk).
+```{r roll_call_results_ft-meeting_id}
+head(roll_call_results_ft$meeting_id)
 ```
 
-#### ballot_results_ft$ballot_pass
+#### roll_call_results_ft$roll_call_pass
 
-The result of all ballots in Folketinget is stored in `ballot_pass` as `r typeof(ballot_results_ft$ballot_pass)` variable. If parliament votes in favor of a proposal, it passes and `ballot_pass` is assigned `TRUE`; if parliament votes a proposal down, it does not pass and `ballot_pass` is assigned `FALSE`.
+The result of all roll calls in Folketinget is stored in `roll_call_pass` as `r typeof(roll_call_results_ft$roll_call_pass)` variable. If parliament votes in favor of a proposal, it passes and `roll_call_pass` is assigned `TRUE`; if parliament votes a proposal down, it does not pass and `roll_call_pass` is assigned `FALSE`.
 
-This variable corresponds to the [`vedtaget`](#ballot_info_rawvedtaget) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk).
+This variable corresponds to the [`vedtaget`](#roll_call_info_rawvedtaget) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r ballot_results_ft-ballot_pass}
-summary(ballot_results_ft$ballot_pass)
+```{r roll_call_results_ft-roll_call_pass}
+summary(roll_call_results_ft$roll_call_pass)
 ```
 
-#### ballot_results_ft$ballot_date
+#### roll_call_results_ft$roll_call_date
 
-The date on which each ballot takes place in Folketinget is stored as `r class(ballot_results_ft$ballot_date)` variable of the type `r typeof(ballot_results_ft$ballot_date)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r min(ballot_results_ft$ballot_date)`) and the most recent entry from `r format(max(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r max(ballot_results_ft$ballot_date)`) as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`.
+The date on which each roll call takes place in Folketinget is stored as `r class(roll_call_results_ft$roll_call_date)` variable of the type `r typeof(roll_call_results_ft$roll_call_date)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(roll_call_results_ft$roll_call_date), "%B %d, %Y")` (`r min(roll_call_results_ft$roll_call_date)`) and the most recent entry from `r format(max(roll_call_results_ft$roll_call_date), "%B %d, %Y")` (`r max(roll_call_results_ft$roll_call_date)`) as of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`.
 
-```{r ballot_results_ft-ballot_date}
-head(ballot_results_ft$ballot_date)
+```{r roll_call_results_ft-roll_call_date}
+head(roll_call_results_ft$roll_call_date)
 ```
 
-#### ballot_results_ft$ft_topic
+#### roll_call_results_ft$ft_topic
 
-Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_results_ft$ft_topic)`.
+Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(roll_call_results_ft$ft_topic)`.
 
 This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable).
 
-```{r ballot_results_ft-ft_topic}
-head(ballot_results_ft$ft_topic)
+```{r roll_call_results_ft-ft_topic}
+head(roll_call_results_ft$ft_topic)
 ```
 
-#### ballot_results_ft$ft_for
+#### roll_call_results_ft$ft_for
 
-In `ft_for`, the number of votes cast in favor of a proposal is stored as `r class(ballot_results_ft$ft_for)` variable of the type `r typeof(ballot_results_ft$ft_for)`.
+In `ft_for`, the number of votes cast in favor of a proposal is stored as `r class(roll_call_results_ft$ft_for)` variable of the type `r typeof(roll_call_results_ft$ft_for)`.
 
-The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing votes in favor as well as votes against and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
+The open records kept by Folketinget are inconsistent regarding the coding of roll call results: Overall results are stored in a single [`roll_call_result_string`](#roll_call_results_ftroll_call_result_string) in Danish, listing votes in favor as well as votes against and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(roll_call_results_ft$roll_call_result_string))` out of `r nrow(roll_call_results_ft)` observations as of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
 
-In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of votes in favor of the proposal are first extracted from [`ballot_result_string`](#ballot_results_ftballot_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the ballot result string also differs over time, I rely on the order of the results being presented to extract the votes in favor of the proposal at hand. In a second step, I filter those cases in `ballot_results_ft` where there is an empty string in `ballot_result_string` (`r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)`). For those observations, I retrieve the number of votes in favor from the Folketinget ODA API. This information is then merged back into the `ballot_results_ft` data frame.
+In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of votes in favor of the proposal are first extracted from [`roll_call_result_string`](#roll_call_results_ftroll_call_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the roll call result string also differs over time, I rely on the order of the results being presented to extract the votes in favor of the proposal at hand. In a second step, I filter those cases in `roll_call_results_ft` where there is an empty string in `roll_call_result_string` (`r sum(is.na(roll_call_results_ft$roll_call_result_string))` out of `r nrow(roll_call_results_ft)`). For those observations, I retrieve the number of votes in favor from the Folketinget ODA API. This information is then merged back into the `roll_call_results_ft` data frame.
 
-The maximum value stored in `ft_for` is `r max(ballot_results_ft$ft_for, na.rm = TRUE)` and the minimum value stored in `ft_for` is `r min(ballot_results_ft$ft_for, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_for` cannot be greater than `179`.
+The maximum value stored in `ft_for` is `r max(roll_call_results_ft$ft_for, na.rm = TRUE)` and the minimum value stored in `ft_for` is `r min(roll_call_results_ft$ft_for, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_for` cannot be greater than `179`.
 
-```{r ballot_results_ft-ft_for}
-summary(ballot_results_ft$ft_for)
+```{r roll_call_results_ft-ft_for}
+summary(roll_call_results_ft$ft_for)
 ```
 
-#### ballot_results_ft$ft_against
+#### roll_call_results_ft$ft_against
 
-In `ft_against`, the number of votes cast in favor of a proposal is stored as `r class(ballot_results_ft$ft_against)` variable of the type `r typeof(ballot_results_ft$ft_against)`.
+In `ft_against`, the number of votes cast in favor of a proposal is stored as `r class(roll_call_results_ft$ft_against)` variable of the type `r typeof(roll_call_results_ft$ft_against)`.
 
-The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing votes against as well as votes in favor and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
+The open records kept by Folketinget are inconsistent regarding the coding of roll_call results: Overall results are stored in a single [`roll_call_result_string`](#roll_call_results_ftroll_call_result_string) in Danish, listing votes against as well as votes in favor and abstentions in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(roll_call_results_ft$roll_call_result_string))` out of `r nrow(roll_call_results_ft)` observations as of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
 
-In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of votes against of the proposal are first extracted from [`ballot_result_string`](#ballot_results_ftballot_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the ballot result string also differs over time, I rely on the order of the results being presented to extract the votes against the proposal at hand. In a second step, I filter those cases in `ballot_results_ft` where there is an empty string in `ballot_result_string` (`r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)`). For those observations, I retrieve the number of votes against from the Folketinget ODA API. This information is then merged back into the `ballot_results_ft` data frame.
+In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of votes against of the proposal are first extracted from [`roll_call_result_string`](#roll_call_results_ftroll_call_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the roll call result string also differs over time, I rely on the order of the results being presented to extract the votes against the proposal at hand. In a second step, I filter those cases in `roll_call_results_ft` where there is an empty string in `roll_call_result_string` (`r sum(is.na(roll_call_results_ft$roll_call_result_string))` out of `r nrow(roll_call_results_ft)`). For those observations, I retrieve the number of votes against from the Folketinget ODA API. This information is then merged back into the `roll_call_results_ft` data frame.
 
-The maximum value stored in `ft_against` is `r max(ballot_results_ft$ft_against, na.rm = TRUE)` and the minimum value stored in `ft_against` is `r min(ballot_results_ft$ft_against, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_against` cannot be greater than `179`.
+The maximum value stored in `ft_against` is `r max(roll_call_results_ft$ft_against, na.rm = TRUE)` and the minimum value stored in `ft_against` is `r min(roll_call_results_ft$ft_against, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_against` cannot be greater than `179`.
 
-```{r ballot_results_ft-ft_against}
-summary(ballot_results_ft$ft_against)
+```{r roll_call_results_ft-ft_against}
+summary(roll_call_results_ft$ft_against)
 ```
 
-#### ballot_results_ft$ft_abstention
+#### roll_call_results_ft$ft_abstention
 
-In `ft_abstention`, the number of abstentions in a vote is stored as `r class(ballot_results_ft$ft_abstention)` variable of the type `r typeof(ballot_results_ft$ft_abstention)`.
+In `ft_abstention`, the number of abstentions in a vote is stored as `r class(roll_call_results_ft$ft_abstention)` variable of the type `r typeof(roll_call_results_ft$ft_abstention)`.
 
-The open records kept by Folketinget are inconsistent regarding the coding of ballot results: Overall results are stored in a single [`ballot_result_string`](#ballot_results_ftballot_result_string) in Danish, listing abstentions against as well as votes in favor and against in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)` observations as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
+The open records kept by Folketinget are inconsistent regarding the coding of roll call results: Overall results are stored in a single [`roll_call_result_string`](#roll_call_results_ftroll_call_result_string) in Danish, listing abstentions against as well as votes in favor and against in the same string. However, for some records, there are no result strings listing the vote counts (technically, there are empty strings). For these records, records have to be pulled using the API individually. This concerns `r sum(is.na(roll_call_results_ft$roll_call_result_string))` out of `r nrow(roll_call_results_ft)` observations as of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`. Affected are mostly votes from dates earlier than June 2010, when Folketinget appears to have switched their way of record keeping to the current setup with results given as a string.
 
-In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of abstaining votes on the proposal are first extracted from [`ballot_result_string`](#ballot_results_ftballot_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the ballot result string also differs over time, I rely on the order of the results being presented to extract the number of abstentions. In a second step, I filter those cases in `ballot_results_ft` where there is an empty string in `ballot_result_string` (`r sum(is.na(ballot_results_ft$ballot_result_string))` out of `r nrow(ballot_results_ft)`). For those observations, I retrieve the number of abstentions from the Folketinget ODA API. This information is then merged back into the `ballot_results_ft` data frame.
+In [`add_ft_results.R`](/src/targets/add_ft_results.R), the overall count of abstaining votes on the proposal are first extracted from [`roll_call_result_string`](#roll_call_results_ftroll_call_result_string) (where available) using [`str_nth_number()`](https://rorynolan.github.io/strex/reference/str_nth_number.html) from the strex package [@nolanStrexExtraString2024]. Even though the wording used in the roll call result string also differs over time, I rely on the order of the results being presented to extract the number of abstentions. In a second step, I filter those cases in `roll_call_results_ft` where there is an empty string in `roll_call_result_string` (`r sum(is.na(roll_call_results_ft$roll_call_result_string))` out of `r nrow(roll_call_results_ft)`). For those observations, I retrieve the number of abstentions from the Folketinget ODA API. This information is then merged back into the `roll_call_results_ft` data frame.
 
-The maximum value stored in `ft_abstention` is `r max(ballot_results_ft$ft_abstention, na.rm = TRUE)` and the minimum value stored in `ft_abstention` is `r min(ballot_results_ft$ft_abstention, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_abstention` cannot be greater than `179`.
+The maximum value stored in `ft_abstention` is `r max(roll_call_results_ft$ft_abstention, na.rm = TRUE)` and the minimum value stored in `ft_abstention` is `r min(roll_call_results_ft$ft_abstention, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_abstention` cannot be greater than `179`.
 
-```{r ballot_results_ft-ft_abstention}
-summary(ballot_results_ft$ft_abstention)
+```{r roll_call_results_ft-ft_abstention}
+summary(roll_call_results_ft$ft_abstention)
 ```
 
-#### ballot_results_ft$ft_absent
+#### roll_call_results_ft$ft_absent
 
-In `ft_absent`, the number of MPs who were absent for each ballot is stored as `r class(ballot_results_ft$ft_absent)` variable with values of the type `r typeof(ballot_results_ft$ft_absent)`.
+In `ft_absent`, the number of MPs who were absent for each roll call is stored as `r class(roll_call_results_ft$ft_absent)` variable with values of the type `r typeof(roll_call_results_ft$ft_absent)`.
 
-The number of absentees for each observation is calculated by substracting the sum of `ballot_results_ft$ft_for`, `ballot_results_ft$ft_against` and `ballot_results_ft$ft_abstention` from `179`, the fixed number of MPs in Folketinget.
+The number of absentees for each observation is calculated by substracting the sum of `roll_call_results_ft$ft_for`, `roll_call_results_ft$ft_against` and `roll_call_results_ft$ft_abstention` from `179`, the fixed number of MPs in Folketinget.
 
-The maximum value stored in `ft_absent` is `r max(ballot_results_ft$ft_absent, na.rm = TRUE)` and the minimum value stored in `ft_absent` is `r min(ballot_results_ft$ft_absent, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_absent` cannot be greater than `179`.
+The maximum value stored in `ft_absent` is `r max(roll_call_results_ft$ft_absent, na.rm = TRUE)` and the minimum value stored in `ft_absent` is `r min(roll_call_results_ft$ft_absent, na.rm = TRUE)`. As the total number of MPs in Folketinget is 179, the value of `ft_absent` cannot be greater than `179`.
 
-```{r ballot_results_ft-ft_absent}
-summary(ballot_results_ft$ft_absent)
+```{r roll_call_results_ft-ft_absent}
+summary(roll_call_results_ft$ft_absent)
 ```
 
-#### ballot_results_ft$ft_process_id
+#### roll_call_results_ft$ft_process_id
 
-All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `r typeof(ballot_results_ft$ft_process_id)` as `r class(ballot_results_ft$ft_process_id)` variable.
+All legislative processes in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each process ID is thus a unique identifier for one process relating to legislation in Folketinget. All IDs are stored as values of the type `r typeof(roll_call_results_ft$ft_process_id)` as `r class(roll_call_results_ft$ft_process_id)` variable.
 
-This variable corresponds to the [`sagstrinid`](#ballot_info_rawsagstrinid) variable and the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
+This variable corresponds to the [`sagstrinid`](#roll_call_info_rawsagstrinid) variable and the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r ballot_results_ft-ft_process_id}
-head(ballot_results_ft$ft_process_id)
+```{r roll_call_results_ft-ft_process_id}
+head(roll_call_results_ft$ft_process_id)
 ```
 
-#### ballot_results_ft$ft_process_step
+#### roll_call_results_ft$ft_process_step
 
-All legislative processes run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(ballot_results_ft$ft_process_step)` in Danish language as `r class(ballot_results_ft$ft_process_step)` variable.
+All legislative processes run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(roll_call_results_ft$ft_process_step)` in Danish language as `r class(roll_call_results_ft$ft_process_step)` variable.
 
 This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r ballot_results_ft-ft_process_step}
-head(ballot_results_ft$ft_process_step)
+```{r roll_call_results_ft-ft_process_step}
+head(roll_call_results_ft$ft_process_step)
 ```
 
-#### ballot_results_ft$ballot_nr
+#### roll_call_results_ft$roll_call_nr
 
-In addition to the [`ballot_id`](#ballot_results_ftballot_id), all ballot procedures in Folketinget are also assigned a number by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot number is thus another identifier for one ballot in Folketinget. All ballot numbers are stored as values of the type `r typeof(ballot_results_ft$ballot_nr)` as `r class(ballot_results_ft$ballot_nr)` variable.
+In addition to the [`roll_call_id`](#roll_call_results_ftroll_call_id), all roll call procedures in Folketinget are also assigned a number by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each roll call number is thus another identifier for one roll call in Folketinget. All roll call numbers are stored as values of the type `r typeof(roll_call_results_ft$roll_call_nr)` as `r class(roll_call_results_ft$roll_call_nr)` variable.
 
-This variable corresponds to the [`ballot_info_raw$nummer`](#ballot_info_rawnummer) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). Take care not to confuse `ballot_nr` with [`ballot_id`](#ballot_results_ftballot_id).
+This variable corresponds to the [`roll_call_info_raw$nummer`](#roll_call_info_rawnummer) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). Take care not to confuse `roll_call_nr` with [`roll_call_id`](#roll_call_results_ftroll_call_id).
 
-```{r ballot_results_ft-ballot_nr}
-head(ballot_results_ft$ballot_nr)
+```{r roll_call_results_ft-roll_call_nr}
+head(roll_call_results_ft$roll_call_nr)
 ```
 
-#### ballot_results_ft$ballot_type_id
+#### roll_call_results_ft$roll_call_type_id
 
-All ballot procedures in Folketinget are categorised using numeric values that correspond to the type of ballot (@tbl-ballottypeid). All Ballot Type IDs are stored as values of the type `r typeof(ballot_results_ft$ballot_type_id)` as `r class(ballot_results_ft$ballot_type_id)` variable.
+All roll call procedures in Folketinget are categorised using numeric values that correspond to the type of roll call (@tbl-roll_calltypeid). All roll call Type IDs are stored as values of the type `r typeof(roll_call_results_ft$roll_call_type_id)` as `r class(roll_call_results_ft$roll_call_type_id)` variable.
 
 | ID | Type | English | n |
 |:-----------------|:-----------------|:------------------|-----------------:|
-| 1 | Endelig vedtagelse | Final Adoption | `r length(ballot_results_ft$ballot_type_id[ballot_results_ft$ballot_type_id == "1"])` |
-| 2 | Udvalgsindstilling | Committee Recommendation Report | `r length(ballot_results_ft$ballot_type_id[ballot_results_ft$ballot_type_id == "2"])` |
-| 3 | Forslag til vedtagelse | Proposed Adoption | `r length(ballot_results_ft$ballot_type_id[ballot_results_ft$ballot_type_id == "3"])` |
-| 4 | Ændringsforslag | Amendment | `r length(ballot_results_ft$ballot_type_id[ballot_results_ft$ballot_type_id == "4"])` |
+| 1 | Endelig vedtagelse | Final Adoption | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "1"])` |
+| 2 | Udvalgsindstilling | Committee Recommendation Report | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "2"])` |
+| 3 | Forslag til vedtagelse | Proposed Adoption | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "3"])` |
+| 4 | Ændringsforslag | Amendment | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "4"])` |
 
-: Ballot Type IDs as used by Folketingets Open Data Service {#tbl-ballottypeid} {.striped .hover}
+: roll_call Type IDs as used by Folketingets Open Data Service {#tbl-roll_calltypeid} {.striped .hover}
 
-This variable corresponds to `typeid` variable in [`ballot_info_raw`](#ballot_info_rawtypeid) and the `type` variable in the `Afstemningstype` resource in [the Folketing online database](https://oda.ft.dk).
+This variable corresponds to `typeid` variable in [`roll_call_info_raw`](#roll_call_info_rawtypeid) and the `type` variable in the `Afstemningstype` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r ballot_results_ft-ballot_type_id}
-table(ballot_results_ft$ballot_type_id)
+```{r roll_call_results_ft-roll_call_type_id}
+table(roll_call_results_ft$roll_call_type_id)
 ```
 
-#### ballot_results_ft$comment
+#### roll_call_results_ft$comment
 
-If necessary, comments on each ballot are stored as values of the type `r typeof(ballot_results_ft$comment)` in Danish language. A Folketing wording standard for `comment` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations. As per `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(ballot_results_ft$comment))` observations with comments (total number of observations: `r nrow(ballot_results_ft)`). Comments on ballot results mostly regard human or technical errors, for example:
+If necessary, comments on each roll call are stored as values of the type `r typeof(roll_call_results_ft$comment)` in Danish language. A Folketing wording standard for `comment` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations. As per `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(roll_call_results_ft$comment))` observations with comments (total number of observations: `r nrow(roll_call_results_ft)`). Comments on roll_call results mostly regard human or technical errors, for example:
 
 | Danish | English |
 |--------------------------------|----------------------------------------|
@@ -970,135 +970,135 @@ If necessary, comments on each ballot are stored as values of the type `r typeof
 
 : {.striped .hover}
 
-```{r ballot_results_ft-comment}
-head(ballot_results_ft$comment)
+```{r roll_call_results_ft-comment}
+head(roll_call_results_ft$comment)
 ```
 
-#### ballot_results_ft$ballot_result_string
+#### roll_call_results_ft$roll_call_result_string
 
-In `ballot_result_string`, ballot results are stored as values of the type `r typeof(ballot_results_ft$ballot_result_string)` in Danish language. The variable indicates whether the proposal was adopted or not; how many votes were in favor resp. against or abstentions, and from which political parties these votes came. A Folketing wording standard for `ballot_result_string` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations.
+In `roll_call_result_string`, roll call results are stored as values of the type `r typeof(roll_call_results_ft$roll_call_result_string)` in Danish language. The variable indicates whether the proposal was adopted or not; how many votes were in favor resp. against or abstentions, and from which political parties these votes came. A Folketing wording standard for `roll_call_result_string` does not seem to exist, so the sentence structures and vocabulary differs a lot between observations.
 
-As per `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(ballot_results_ft$ballot_result_string))` observations with result character strings (total number of observations: `r nrow(ballot_results_ft)`). For the observations where `ballot_result_string` is not `NA`, the values are used to calculate [`ft_for`](#ballot_results_ftft_for), [`ft_against`](#ballot_results_ftft_against) and [`ft_abstention`](#ballot_results_ftft_abstention). Information on absent MPs is not provided in `ballot_result_string` but [can be inferred from the other values](#ballot_results_ftft_absent).
+As per `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`, there are `r sum(!is.na(roll_call_results_ft$roll_call_result_string))` observations with result character strings (total number of observations: `r nrow(roll_call_results_ft)`). For the observations where `roll_call_result_string` is not `NA`, the values are used to calculate [`ft_for`](#roll_call_results_ftft_for), [`ft_against`](#roll_call_results_ftft_against) and [`ft_abstention`](#roll_call_results_ftft_abstention). Information on absent MPs is not provided in `roll_call_result_string` but [can be inferred from the other values](#roll_call_results_ftft_absent).
 
-```{r ballot_results_ft-ballot_result_string}
-head(ballot_results_ft$ballot_result_string)
+```{r roll_call_results_ft-roll_call_result_string}
+head(roll_call_results_ft$roll_call_result_string)
 ```
 
 ------------------------------------------------------------------------
 
-### ballot_info_raw {#ballot_info_raw}
+### roll_call_info_raw {#roll_call_info_raw}
 
-`ballot_info_raw` contains the downloaded data on voting records before any preprocessing. As per `r format(file.info(here("data", "raw", "ballot_info_raw.rds"))$mtime, "%B %Y")`, `ballot_info_raw.rds` contains `r nrow(ballot_info_raw)` observations of `r ncol(ballot_info_raw)` variables.
+`roll_call_info_raw` contains the downloaded data on voting records before any preprocessing. As per `r format(file.info(here("data", "raw", "roll_call_info_raw.rds"))$mtime, "%B %Y")`, `roll_call_info_raw.rds` contains `r nrow(roll_call_info_raw)` observations of `r ncol(roll_call_info_raw)` variables.
 
-`ballot_info_raw` is provided as `rds` file in `/data/raw/`. The processed [data](#ballot_results_ft) is available as `rds` file in `/data/processed`.
+`roll_call_info_raw` is provided as `rds` file in `/data/raw/`. The processed [data](#roll_call_results_ft) is available as `rds` file in `/data/processed`.
 
 ```{r}
-str(ballot_info_raw)
+str(roll_call_info_raw)
 ```
 
-Descriptions of all variables in `ballot_info_raw` are provided in the following sections.
+Descriptions of all variables in `roll_call_info_raw` are provided in the following sections.
 
-#### ballot_info_raw$id
+#### roll_call_info_raw$id
 
-See [ballot_result_ft$ballot_id](#ballot_results_ftballot_id). Take care not to confuse `id` with [`nummer`](#ballot_info_rawnummer). In the raw data, `id` is stored as `r typeof(ballot_info_raw$id)` value.
+See [roll_call_result_ft$roll_call_id](#roll_call_results_ftroll_call_id). Take care not to confuse `id` with [`nummer`](#roll_call_info_rawnummer). In the raw data, `id` is stored as `r typeof(roll_call_info_raw$id)` value.
 
 ```{r}
-head(ballot_info_raw$id)
+head(roll_call_info_raw$id)
 ```
 
-#### ballot_info_raw$nummer
+#### roll_call_info_raw$nummer
 
-See [ballot_results_ft$ballot_nr](#ballot_results_ftballot_nr). Take care not to confuse `nummer` with [`id`](#ballot_info_rawid). In the raw data, `nummer` is stored as `r typeof(ballot_info_raw$nummer)` value.
+See [roll_call_results_ft$roll_call_nr](#roll_call_results_ftroll_call_nr). Take care not to confuse `nummer` with [`id`](#roll_call_info_rawid). In the raw data, `nummer` is stored as `r typeof(roll_call_info_raw$nummer)` value.
 
 ```{r}
-head(ballot_info_raw$nummer)
+head(roll_call_info_raw$nummer)
 ```
 
-#### ballot_info_raw$konklusion
+#### roll_call_info_raw$konklusion
 
-See [ballot_results_ft$ballot_result_string](#ballot_results_ftballot_result_string). In the raw data, `konklusion` is stored as `r typeof(ballot_info_raw$konklusion)` value.
+See [roll_call_results_ft$roll_call_result_string](#roll_call_results_ftroll_call_result_string). In the raw data, `konklusion` is stored as `r typeof(roll_call_info_raw$konklusion)` value.
 
 ```{r}
-head(ballot_info_raw$konklusion)
+head(roll_call_info_raw$konklusion)
 ```
 
-#### ballot_info_raw$vedtaget
+#### roll_call_info_raw$vedtaget
 
-See [ballot_results_ft\$ballot_pass](#ballot_results_ftballot_pass). In the raw data, `vedtaget` is stored as `r typeof(ballot_info_raw$vedtaget)` value.
+See [roll_call_results_ft\$roll_call_pass](#roll_call_results_ftroll_call_pass). In the raw data, `vedtaget` is stored as `r typeof(roll_call_info_raw$vedtaget)` value.
 
 ```{r}
-summary(ballot_info_raw$vedtaget)
+summary(roll_call_info_raw$vedtaget)
 ```
 
-#### ballot_info_raw$kommentar
+#### roll_call_info_raw$kommentar
 
-See [ballot_results_ft\$comment](#ballot_results_ftcomment). In the raw data, `kommentar` is stored as `r typeof(ballot_info_raw$kommentar)` value.
+See [roll_call_results_ft\$comment](#roll_call_results_ftcomment). In the raw data, `kommentar` is stored as `r typeof(roll_call_info_raw$kommentar)` value.
 
 ```{r}
-head(ballot_info_raw$kommentar)
+head(roll_call_info_raw$kommentar)
 ```
 
-#### ballot_info_raw$mødeid
+#### roll_call_info_raw$mødeid
 
-See [ballot_results_ft\$meeting_id](#ballot_results_ftmeeting_id). In the raw data, `mødeid` is stored as `r typeof(ballot_info_raw$mødeid)` value.
+See [roll_call_results_ft\$meeting_id](#roll_call_results_ftmeeting_id). In the raw data, `mødeid` is stored as `r typeof(roll_call_info_raw$mødeid)` value.
 
 ```{r}
-head(ballot_info_raw$mødeid)
+head(roll_call_info_raw$mødeid)
 ```
 
-#### ballot_info_raw$typeid
+#### roll_call_info_raw$typeid
 
-See [ballot_results_ft\$ballot_type_id](#ballot_results_ftballot_type_id). In the raw data, `typeid` is stored as `r typeof(ballot_info_raw$typeid)` value.
+See [roll_call_results_ft\$roll_call_type_id](#roll_call_results_ftroll_call_type_id). In the raw data, `typeid` is stored as `r typeof(roll_call_info_raw$typeid)` value.
 
 ```{r}
-table(ballot_info_raw$typeid)
+table(roll_call_info_raw$typeid)
 ```
 
-#### ballot_info_raw$sagstrinid
+#### roll_call_info_raw$sagstrinid
 
-See [ballot_results_ft\$ft_process_id](#ballot_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(ballot_info_raw$sagstrinid)` value.
+See [roll_call_results_ft\$ft_process_id](#roll_call_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(roll_call_info_raw$sagstrinid)` value.
 
 ```{r}
-head(ballot_info_raw$sagstrinid)
+head(roll_call_info_raw$sagstrinid)
 ```
 
-#### ballot_info_raw$sagstrin_titel
+#### roll_call_info_raw$sagstrin_titel
 
-See [ballot_results_ft$ft_process_step](#ballot_results_ftft_process_step). In the raw data, `sagstrin_titel` is stored as `r typeof(ballot_info_raw$sagstrin_titel)` value.
+See [roll_call_results_ft$ft_process_step](#roll_call_results_ftft_process_step). In the raw data, `sagstrin_titel` is stored as `r typeof(roll_call_info_raw$sagstrin_titel)` value.
 
 ```{r}
-head(ballot_info_raw$sagstrin_titel)
+head(roll_call_info_raw$sagstrin_titel)
 ```
 
-#### ballot_info_raw$sag_titel
+#### roll_call_info_raw$sag_titel
 
-See [ballot_results_ft$ft_topic](#ballot_results_ftft_topic). In the raw data, `sag_titel` is stored as `r typeof(ballot_info_raw$sag_titel)` value.
+See [roll_call_results_ft$ft_topic](#roll_call_results_ftft_topic). In the raw data, `sag_titel` is stored as `r typeof(roll_call_info_raw$sag_titel)` value.
 
 ```{r}
-head(ballot_info_raw$sag_titel)
+head(roll_call_info_raw$sag_titel)
 ```
 
-#### ballot_info_raw$dato
+#### roll_call_info_raw$dato
 
-See [ballot_results_ft$ballot_date](#ballot_results_ftballot_date). In the raw data, `dato` is stored as `r class(ballot_info_raw$dato)` value.
+See [roll_call_results_ft$roll_call_date](#roll_call_results_ftroll_call_date). In the raw data, `dato` is stored as `r class(roll_call_info_raw$dato)` value.
 
 ```{r}
-head(ballot_info_raw$dato)
+head(roll_call_info_raw$dato)
 ```
 
-#### ballot_info_raw$opdateringsdato
+#### roll_call_info_raw$opdateringsdato
 
-This variable is used to check against the API for updated records. In the raw data, `opdateringsdato` is stored as `r class(ballot_info_raw$opdateringsdato)` value.
+This variable is used to check against the API for updated records. In the raw data, `opdateringsdato` is stored as `r class(roll_call_info_raw$opdateringsdato)` value.
 
 ```{r}
-head(ballot_info_raw$opdateringsdato)
+head(roll_call_info_raw$opdateringsdato)
 ```
 
 ------------------------------------------------------------------------
 
 ### cabinets_fo {#cabinets_fo}
 
-The dataset contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+The dataset contains information on the coalition governments of the Faroe Islands (Landsstýri), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_fo.csv"))$mtime, "%B %Y")`, `cabinets_fo` contains information on `r nrow(cabinets_fo)` cabinets stored in `r ncol(cabinets_fo)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$roll_call_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 `cabinets_fo` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
 
@@ -1226,7 +1226,7 @@ summary(cabinets_fo$FO_H)
 
 ### cabinets_gl {#cabinets_gl}
 
-The dataset contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+The dataset contains information on the coalition governments of Greenland (Naalakersuisut), in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_gl.csv"))$mtime, "%B %Y")`, `cabinets_gl` contains information on `r nrow(cabinets_gl)` cabinets stored in `r ncol(cabinets_gl)` variables. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$roll_call_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 `cabinets_gl` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
 
@@ -1364,7 +1364,7 @@ summary(cabinets_gl$GL_SIU)
 
 ### cabinets_dk
 
-The dataset contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
+The dataset contains information on coalition governments of Denmark, in particular a timeline including the parties that are part of each cabinet. As per `r format(file.info(here("data", "processed", "csv", "cabinets_dk.csv"))$mtime, "%B %Y")`, `cabinets_dk` contains information on `r nrow(cabinets_dk)` cabinets stored in `r ncol(cabinets_dk)` variables. On this list are `r sum(cabinets_dk$bloc == "left", na.rm = TRUE)` red bloc/left-wing, `r sum(cabinets_dk$bloc == "right", na.rm = TRUE)` blue/right-wing and `r sum(cabinets_dk$bloc == "across", na.rm = TRUE)` cross-bloc cabinets. This data set spans the timeframe covered by the voting database -- from `r format(min(northatlantic_ft$roll_call_date), "%B %d, %Y")` until the most recent update of this data set on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`.
 
 `cabinets_dk` is provided as `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file. 
 
@@ -1503,7 +1503,7 @@ summary(cabinets_dk$DK_V)
 
 ### northatlantic_ft {#northatlantic_ft}
 
- The dataset contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`ballot_results_ft`](#ballot_results_ft), [`northatlantic_votes`](#northatlantic_votes) and information on cabinets from [`cabinets_fo`](#cabinets_fo), [`cabinets_gl`](#cabinets_gl) and [`cabinets_dk`](#cabinets_dk) as well as MP membership timelines from [`MP_dates`](#mp_dates). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
+ The dataset contains data on voting records of the MPs specified in [`MP_names`](#mp_names), created by processing and joining [`roll_call_results_ft`](#roll_call_results_ft), [`northatlantic_votes`](#northatlantic_votes) and information on cabinets from [`cabinets_fo`](#cabinets_fo), [`cabinets_gl`](#cabinets_gl) and [`cabinets_dk`](#cabinets_dk) as well as MP membership timelines from [`MP_dates`](#mp_dates). As per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, `northatlantic_ft` contains `r nrow(northatlantic_ft)` observations of `r ncol(northatlantic_ft)` variables.
 
  `northatlantic_ft` is the resulting product of the [targets pipeline](/_targets.R) and is provided as both `rds` file in `/data/processed` and `csv` file in `/data/processed/csv`. Metadata for the `csv` file is provided in an accompanying `json` metadata file.
 
@@ -1513,14 +1513,14 @@ str(northatlantic_ft)
 
 Descriptions of all variables in `northatlantic_ft` are provided in the following sections.
 
-#### northatlantic_ft$ballot_id
+#### northatlantic_ft$roll_call_id
 
-All ballot procedures in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each ballot ID is thus a unique identifier for one ballot in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_ft$ballot_id)` as `r class(northatlantic_ft$ballot_id)` variable.
+All roll call procedures in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each roll call ID is thus a unique identifier for one roll call in Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_ft$roll_call_id)` as `r class(northatlantic_ft$roll_call_id)` variable.
 
-This variable corresponds to the [`ballot_results_ft$ballot_id`](#ballot_results_ftballot_id) and the [`northatlantic_votes$ballot_id`](#northatlantic_votesballot_id) variable and the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk).
+This variable corresponds to the [`roll_call_results_ft$roll_call_id`](#roll_call_results_ftroll_call_id) and the [`northatlantic_votes$roll_call_id`](#northatlantic_votesroll_call_id) variable and the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk).
 
-```{r northatlantic_ft-ballot_id}
-str(northatlantic_ft$ballot_id)
+```{r northatlantic_ft-roll_call_id}
+str(northatlantic_ft$roll_call_id)
 ```
 
 #### northatlantic_ft$MP_id
@@ -1585,21 +1585,21 @@ This variable corresponds to the `id` variable and the `Stemme` resource in [the
 str(northatlantic_ft$vote_id)
 ```
 
-#### northatlantic_ft$ballot_pass
+#### northatlantic_ft$roll_call_pass
 
-The result of all ballots in Folketinget is stored in `ballot_pass` as `r typeof(northatlantic_ft$ballot_pass)` variable. If parliament votes in favor of a proposal, it passes and `ballot_pass` is assigned `TRUE`; if parliament votes a proposal down, it does not pass and `ballot_pass` is assigned `FALSE`.
+The result of all roll calls in Folketinget is stored in `roll_call_pass` as `r typeof(northatlantic_ft$roll_call_pass)` variable. If parliament votes in favor of a proposal, it passes and `roll_call_pass` is assigned `TRUE`; if parliament votes a proposal down, it does not pass and `roll_call_pass` is assigned `FALSE`.
 
-This variable corresponds to the [`vedtaget`](#ballot_info_rawvedtaget) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). See [`ballot_results_ft$ballot_pass`](#ballot_results_ftballot_pass).
+This variable corresponds to the [`vedtaget`](#roll_call_info_rawvedtaget) variable in the `Afstemning` resource in [the Folketing online database](https://oda.ft.dk). See [`roll_call_results_ft$roll_call_pass`](#roll_call_results_ftroll_call_pass).
 
-```{r northatlantic_ft-ballot_pass}
-summary(northatlantic_ft$ballot_pass)
+```{r northatlantic_ft-roll_call_pass}
+summary(northatlantic_ft$roll_call_pass)
 ```
 
 #### northatlantic_ft$ft_process_step
 
 All legislative processes run their course through Folketinget in several steps which is described by `ft_process_step`. Process steps are stored as values of the type `r typeof(northatlantic_ft$ft_process_step)` in Danish language as `r class(northatlantic_ft$ft_process_step)` variable.
 
-This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk). See [`ballot_results_ft$ft_process_step`](#ballot_results_ftft_process_step).
+This variable corresponds to the `titel` variable in the `Sagstrin` resource in [the Folketing online database](https://oda.ft.dk). See [`roll_call_results_ft$ft_process_step`](#roll_call_results_ftft_process_step).
 
 ```{r northatlantic_ft-ft_process_step}
 str(northatlantic_ft$ft_process_step)
@@ -1607,9 +1607,9 @@ str(northatlantic_ft$ft_process_step)
 
 #### northatlantic_ft$ft_topic
 
-Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(ballot_results_ft$ft_topic)`.
+Each proposal that is being voted on in Folketinget has a description of the topic(s) that are mentioned in the proposal. This description is stored in `ft_topic`. Topic descriptions are stored as values of the type `r typeof(roll_call_results_ft$ft_topic)`.
 
-This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable). See [`ballot_results_ft$ft_topic`](#ballot_results_ftft_topic).
+This variable corresponds to the `titel` variable in the `Sag` resource in [the Folketing online database](https://oda.ft.dk) (which additionally provides a shorter version with less formalised language in the `titelkort` variable). See [`roll_call_results_ft$ft_topic`](#roll_call_results_ftft_topic).
 
 ```{r northatlantic_ft-ft_topic}
 head(northatlantic_ft$ft_topic)
@@ -1617,7 +1617,7 @@ head(northatlantic_ft$ft_topic)
 
 #### northatlantic_ft$ft_for
 
-See [`ballot_results_ft$ft_for`](#ballot_results_ftft_for).
+See [`roll_call_results_ft$ft_for`](#roll_call_results_ftft_for).
 
 ```{r northatlantic_ft-ft_for}
 summary(northatlantic_ft$ft_for)
@@ -1625,7 +1625,7 @@ summary(northatlantic_ft$ft_for)
 
 #### northatlantic_ft$ft_against
 
-See [`ballot_results_ft$ft_against`](#ballot_results_ftft_against).
+See [`roll_call_results_ft$ft_against`](#roll_call_results_ftft_against).
 
 ```{r northatlantic_ft-ft_against}
 summary(northatlantic_ft$ft_against)
@@ -1633,7 +1633,7 @@ summary(northatlantic_ft$ft_against)
 
 #### northatlantic_ft$ft_abstention
 
-See [`ballot_results_ft$ft_abstention`](#ballot_results_ftft_abstention).
+See [`roll_call_results_ft$ft_abstention`](#roll_call_results_ftft_abstention).
 
 ```{r northatlantic_ft-ft_abstention}
 summary(northatlantic_ft$ft_abstention)
@@ -1641,28 +1641,28 @@ summary(northatlantic_ft$ft_abstention)
 
 #### northatlantic_ft$ft_absent
 
-See [`ballot_results_ft$ft_absent`](#ballot_results_ftft_absent).
+See [`roll_call_results_ft$ft_absent`](#roll_call_results_ftft_absent).
 
 ```{r northatlantic_ft-ft_absent}
 summary(northatlantic_ft$ft_absent)
 ```
 
-#### northatlantic_ft$ballot_date
+#### northatlantic_ft$roll_call_date
 
-The date on which each ballot takes place in Folketinget is stored as `r class(ballot_results_ft$ballot_date)` variable of the type `r typeof(ballot_results_ft$ballot_date)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r min(ballot_results_ft$ballot_date)`) and the most recent entry from `r format(max(ballot_results_ft$ballot_date), "%B %d, %Y")` (`r max(ballot_results_ft$ballot_date)`) as of `r format(file.info(here("data", "processed", "ballot_results_ft.rds"))$mtime, "%B %Y")`.
+The date on which each roll call takes place in Folketinget is stored as `r class(roll_call_results_ft$roll_call_date)` variable of the type `r typeof(roll_call_results_ft$roll_call_date)`. Calendar information is formatted as `%Y-%m-%d`, the earliest entry being from `r format(min(roll_call_results_ft$roll_call_date), "%B %d, %Y")` (`r min(roll_call_results_ft$roll_call_date)`) and the most recent entry from `r format(max(roll_call_results_ft$roll_call_date), "%B %d, %Y")` (`r max(roll_call_results_ft$roll_call_date)`) as of `r format(file.info(here("data", "processed", "roll_call_results_ft.rds"))$mtime, "%B %Y")`.
 
-See [`ballot_results_ft$ballot_date`](#ballot_results_ftballot_date).
+See [`roll_call_results_ft$roll_call_date`](#roll_call_results_ftroll_call_date).
 
-```{r northatlantic_ft-ballot_date}
-str(northatlantic_ft$ballot_date)
+```{r northatlantic_ft-roll_call_date}
+str(northatlantic_ft$roll_call_date)
 ```
 
-#### northatlantic_ft$ballot_type_id
+#### northatlantic_ft$roll_call_type_id
 
-See [`ballot_results_ft$ballot_type_id`](#ballot_results_ftballot_type_id).
+See [`roll_call_results_ft$roll_call_type_id`](#roll_call_results_ftroll_call_type_id).
 
-```{r northatlantic_ft-ballot_type_id}
-table(northatlantic_ft$ballot_type_id)
+```{r northatlantic_ft-roll_call_type_id}
+table(northatlantic_ft$roll_call_type_id)
 ```
 
 #### northatlantic_ft$gvt_type_dk
@@ -1683,16 +1683,16 @@ summary(northatlantic_ft$gvt_bloc_dk)
 
 #### northatlantic_ft$comment
 
-See [`ballot_results_ft$comment`](#ballot_results_ftcomment).
+See [`roll_call_results_ft$comment`](#roll_call_results_ftcomment).
 
 ```{r northatlantic_ft-comment}
 str(northatlantic_ft$comment)
 ```
 
-#### northatlantic_ft$ballot_result_string
+#### northatlantic_ft$roll_call_result_string
 
-See [`ballot_results_ft$ballot_result_string`](#ballot_results_ftballot_result_string).
+See [`roll_call_results_ft$roll_call_result_string`](#roll_call_results_ftroll_call_result_string).
 
-```{r northatlantic_ft-ballot_result_string}
-str(northatlantic_ft$ballot_result_string)
+```{r northatlantic_ft-roll_call_result_string}
+str(northatlantic_ft$roll_call_result_string)
 ```

@@ -38,7 +38,7 @@ add_ft_results <- function(input_df) {
   output_df$ft_abstention[has_results] <- str_nth_number(output_df$konklusion[has_results], n = 3)
   
   # ---- Step 2: load / initialize vote-count cache ----
-  cache_path <- here("data", "raw", "ballot_vote_counts_raw.rds")
+  cache_path <- here("data", "raw", "roll_call_vote_counts_raw.rds")
   
   vote_cache <- if (file.exists(cache_path)) {
     readRDS(cache_path)
@@ -51,23 +51,23 @@ add_ft_results <- function(input_df) {
     )
   }
   
-  # ---- Step 3: determine which ballots actually need API calls ----
-  missing_ballots <- output_df$id[!has_results]
-  missing_ballots <- setdiff(missing_ballots, vote_cache$id)
+  # ---- Step 3: determine which roll calls actually need API calls ----
+  missing_roll_calls <- output_df$id[!has_results]
+  missing_roll_calls <- setdiff(missing_roll_calls, vote_cache$id)
   
-  if (length(missing_ballots) > 0) {
+  if (length(missing_roll_calls) > 0) {
     
     message(
       "Fetching vote counts from API for ",
-      length(missing_ballots),
+      length(missing_roll_calls),
       " votes with missing results..."
     )
     
-    get_counts_for_ballot <- function(ballot_id) {
+    get_counts_for_roll_call <- function(roll_call_id) {
       
       get_count <- function(typeid) {
         url <- paste0(
-          "https://oda.ft.dk/api/Afstemning(", ballot_id, ")/Stemme?",
+          "https://oda.ft.dk/api/Afstemning(", roll_call_id, ")/Stemme?",
           "$inlinecount=allpages&$filter=typeid%20eq%20", typeid, "&$top=0"
         )
         parsed <- tryCatch(get_content(url), error = function(e) list(odata.count = 0))
@@ -75,7 +75,7 @@ add_ft_results <- function(input_df) {
       }
       
       tibble(
-        id             = as.integer(ballot_id),
+        id             = as.integer(roll_call_id),
         ft_for         = get_count(1),
         ft_against     = get_count(2),
         #ft_absent      = get_count(3), calculate below instead of API call
@@ -83,7 +83,7 @@ add_ft_results <- function(input_df) {
       )
     }
     
-    new_counts <- map_dfr(missing_ballots, get_counts_for_ballot)
+    new_counts <- map_dfr(missing_roll_calls, get_counts_for_roll_call)
     
     # ---- Update cache ----
     vote_cache <- bind_rows(vote_cache, new_counts) %>%

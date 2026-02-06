@@ -26,11 +26,11 @@ Additionally, there is a [Zotero group library](https://www.zotero.org/groups/53
 
 This repository contains voting records of Greenlandic and Faroese MPs. Voting records are available online starting October 2004.
 
-For all MPs that were elected in either Greenland or the Faroe Islands since 2004, voting records were retrieved from [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Because Folketinget seems to have changed their way of record keeping since 2004, the retrieved data had to be processed to consolidate different variables (e.g. extracting ballot results stored as one text string into four numeric variables).
+For all MPs that were elected in either Greenland or the Faroe Islands since 2004, voting records were retrieved from [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Because Folketinget seems to have changed their way of record keeping since 2004, the retrieved data had to be processed to consolidate different variables (e.g. extracting roll call results stored as one text string into four numeric variables).
 
 In this repository, data is available as `rds` and `csv` files including metadata. Data from intermediate processing steps is stored as `rds` files for caching. Also included is the workflow to replicate and update the data set using R.
 
-For each recorded vote, the database contains additional metadata such as statements on the MP's party membership, the overall ballot result in parliament or the topic of the vote. Additionally included is basic information on the cabinets governing in Denmark, Greenland and the Faroe Islands at the time of each record. Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
+For each recorded vote, the database contains additional metadata such as statements on the MP's party membership, the overall roll call result in parliament or the topic of the vote. Additionally included is basic information on the cabinets governing in Denmark, Greenland and the Faroe Islands at the time of each record. Descriptions of the workflow and all variables are provided in the [codebook](docs/codebook.qmd). To get an impression of the available data, take a [first glance](docs/report.qmd).
 
 ### Installation
 
@@ -58,7 +58,7 @@ targets::tar_make()
 
 Running `tar_make()` will execute the workflow as defined in [`_targets.R`](./_targets.R), skipping files ('targets') that have not changed since the last build process.
 
-The targets pipeline is set to check for new voting records **once a week only**. To force running the scripts with the most recent data available, change the `cue` arguments from the targets `ballot_info` and `raw_voting_records` in `_targets.R`.
+The targets pipeline is set to check for new voting records **once a week only**. To force running the scripts with the most recent data available, change the `cue` arguments from the targets `roll_call_info` and `raw_voting_records` in `_targets.R`.
 
 You can use the scripts to assemble data sets with voting records of other members of Folketinget as well. To download voting records for other MPs, look up their ODA IDs at [oda.ft.dk](https://oda.ft.dk), add it to the data frame created in [`src/create_MP_list.R`](/src/create_MP_list.R). Supply other metadata to [`src/create_MP_dates.R`](/src/create_MP_dates.R) and, if necessary, to [`src/create_party_list.R`](/src/create_party_list.R). Then run `targets::tar_make()`.
 
@@ -143,7 +143,7 @@ We use [SemVer](http://semver.org/) for versioning. The available versions are l
 
 See also the list of [contributors](https://github.com/mtwente/nordatlantisk-ft/graphs/contributors) who contributed to this project.
 
-Voting records and ballot results were retrieved from [Folketinget's open data service](https://oda.ft.dk/) under [Folketinget's terms of service](https://www.ft.dk/dokumenter/aabne_data). Some additional metadata on party positions used in the documentation is incorporated from [ParlGov](https://doi.org/10.7910/DVN/UKILBE).
+Voting records and roll call results were retrieved from [Folketinget's open data service](https://oda.ft.dk/) under [Folketinget's terms of service](https://www.ft.dk/dokumenter/aabne_data). Some additional metadata on party positions used in the documentation is incorporated from [ParlGov](https://doi.org/10.7910/DVN/UKILBE).
 
 ## License
 

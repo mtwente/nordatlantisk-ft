@@ -5,7 +5,7 @@ library(dplyr)
 
 # Definition -----
 
-clean_ballot_results <- function(input_df) {
+clean_roll_call_results <- function(input_df) {
   
   # ---- Basic cleaning ----
   input_df <- input_df %>%
@@ -17,19 +17,19 @@ clean_ballot_results <- function(input_df) {
   
   # ---- Rename columns to final schema ----
   colnames(input_df) <- c(
-    "ballot_id", "ballot_nr", "ballot_result_string",
-    "ballot_pass", "comment", "meeting_id",
-    "ballot_type_id", "ft_process_id", "ft_process_step",
-    "ft_topic", "ballot_date",
+    "roll_call_id", "roll_call_nr", "roll_call_result_string",
+    "roll_call_pass", "comment", "meeting_id",
+    "roll_call_type_id", "ft_process_id", "ft_process_step",
+    "ft_topic", "roll_call_date",
     "ft_for", "ft_against", "ft_abstention", "ft_absent"
   )
   
   # ---- Reorder columns ----
   col_order <- c(
-    "ballot_id", "meeting_id", "ballot_pass", "ballot_date",
+    "roll_call_id", "meeting_id", "roll_call_pass", "roll_call_date",
     "ft_topic", "ft_for", "ft_against", "ft_abstention", "ft_absent",
-    "ft_process_id", "ft_process_step", "ballot_nr", "ballot_type_id",
-    "comment", "ballot_result_string"
+    "ft_process_id", "ft_process_step", "roll_call_nr", "roll_call_type_id",
+    "comment", "roll_call_result_string"
   )
   
   input_df <- input_df[, col_order]
@@ -37,10 +37,10 @@ clean_ballot_results <- function(input_df) {
   # ---- Type coercion ----
   input_df <- input_df %>%
     mutate(
-      ballot_id        = as.integer(ballot_id),
+      roll_call_id        = as.integer(roll_call_id),
       meeting_id       = as.integer(meeting_id),
-      ballot_pass      = as.logical(ballot_pass),
-      ballot_date      = as.Date(ballot_date),
+      roll_call_pass      = as.logical(roll_call_pass),
+      roll_call_date      = as.Date(roll_call_date),
       ft_topic         = as.character(ft_topic),
       ft_for           = as.numeric(ft_for),
       ft_against       = as.numeric(ft_against),
@@ -48,16 +48,16 @@ clean_ballot_results <- function(input_df) {
       ft_absent        = as.numeric(ft_absent),
       ft_process_id    = as.integer(ft_process_id),
       ft_process_step  = as.character(ft_process_step),
-      ballot_nr        = as.integer(ballot_nr),
-      ballot_type_id   = as.integer(ballot_type_id),
+      roll_call_nr        = as.integer(roll_call_nr),
+      roll_call_type_id   = as.integer(roll_call_type_id),
       comment          = as.character(comment),
-      ballot_result_string = as.character(ballot_result_string)
+      roll_call_result_string = as.character(roll_call_result_string)
     )
   
   # ---- Save ----
   saveRDS(
     input_df,
-    here("data", "processed", "ballot_results_ft.rds")
+    here("data", "processed", "roll_call_results_ft.rds")
   )
   
   input_df
