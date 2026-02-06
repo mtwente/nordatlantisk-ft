@@ -992,7 +992,7 @@ head(roll_call_results_ft$result_string)
 
 `roll_call_info_raw` is provided as `rds` file in `/data/raw/`. The processed [data](#roll_call_results_ft) is available as `rds` file in `/data/processed`.
 
-```{r}
+```{r roll_call_info_raw-intro}
 str(roll_call_info_raw)
 ```
 
@@ -1002,7 +1002,7 @@ Descriptions of all variables in `roll_call_info_raw` are provided in the follow
 
 See [roll_call_result_ft$roll_call_id](#roll_call_results_ftroll_call_id). Take care not to confuse `id` with [`nummer`](#roll_call_info_rawnummer). In the raw data, `id` is stored as `r typeof(roll_call_info_raw$id)` value.
 
-```{r}
+```{r roll_call_info_raw-id}
 head(roll_call_info_raw$id)
 ```
 
@@ -1010,7 +1010,7 @@ head(roll_call_info_raw$id)
 
 See [roll_call_results_ft$roll_call_nr](#roll_call_results_ftroll_call_nr). Take care not to confuse `nummer` with [`id`](#roll_call_info_rawid). In the raw data, `nummer` is stored as `r typeof(roll_call_info_raw$nummer)` value.
 
-```{r}
+```{r roll_call_info_raw-nummer}
 head(roll_call_info_raw$nummer)
 ```
 
@@ -1018,7 +1018,7 @@ head(roll_call_info_raw$nummer)
 
 See [roll_call_results_ft$result_string](#roll_call_results_ftresult_string). In the raw data, `konklusion` is stored as `r typeof(roll_call_info_raw$konklusion)` value.
 
-```{r}
+```{r roll_call_info_raw-konklusion}
 head(roll_call_info_raw$konklusion)
 ```
 
@@ -1026,7 +1026,7 @@ head(roll_call_info_raw$konklusion)
 
 See [roll_call_results_ft\$roll_call_pass](#roll_call_results_ftroll_call_pass). In the raw data, `vedtaget` is stored as `r typeof(roll_call_info_raw$vedtaget)` value.
 
-```{r}
+```{r roll_call_info_raw-vedtaget}
 summary(roll_call_info_raw$vedtaget)
 ```
 
@@ -1034,7 +1034,7 @@ summary(roll_call_info_raw$vedtaget)
 
 See [roll_call_results_ft\$comment](#roll_call_results_ftcomment). In the raw data, `kommentar` is stored as `r typeof(roll_call_info_raw$kommentar)` value.
 
-```{r}
+```{r roll_call_info_raw-kommentar}
 head(roll_call_info_raw$kommentar)
 ```
 
@@ -1042,7 +1042,7 @@ head(roll_call_info_raw$kommentar)
 
 See [roll_call_results_ft\$meeting_id](#roll_call_results_ftmeeting_id). In the raw data, `mødeid` is stored as `r typeof(roll_call_info_raw$mødeid)` value.
 
-```{r}
+```{r roll_call_info_raw-mødeid}
 head(roll_call_info_raw$mødeid)
 ```
 
@@ -1050,7 +1050,7 @@ head(roll_call_info_raw$mødeid)
 
 See [roll_call_results_ft\$roll_call_type_id](#roll_call_results_ftroll_call_type_id). In the raw data, `typeid` is stored as `r typeof(roll_call_info_raw$typeid)` value.
 
-```{r}
+```{r roll_call_info_raw-typeid}
 table(roll_call_info_raw$typeid)
 ```
 
@@ -1058,7 +1058,7 @@ table(roll_call_info_raw$typeid)
 
 See [roll_call_results_ft\$ft_process_id](#roll_call_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(roll_call_info_raw$sagstrinid)` value.
 
-```{r}
+```{r roll_call_info_raw-sagstrinid}
 head(roll_call_info_raw$sagstrinid)
 ```
 
@@ -1066,7 +1066,7 @@ head(roll_call_info_raw$sagstrinid)
 
 See [roll_call_results_ft$ft_process_step](#roll_call_results_ftft_process_step). In the raw data, `sagstrin_titel` is stored as `r typeof(roll_call_info_raw$sagstrin_titel)` value.
 
-```{r}
+```{r roll_call_info_raw-sagstrin_titel}
 head(roll_call_info_raw$sagstrin_titel)
 ```
 
@@ -1074,7 +1074,7 @@ head(roll_call_info_raw$sagstrin_titel)
 
 See [roll_call_results_ft$ft_topic](#roll_call_results_ftft_topic). In the raw data, `sag_titel` is stored as `r typeof(roll_call_info_raw$sag_titel)` value.
 
-```{r}
+```{r roll_call_info_raw-sag_titel}
 head(roll_call_info_raw$sag_titel)
 ```
 
@@ -1082,7 +1082,7 @@ head(roll_call_info_raw$sag_titel)
 
 See [roll_call_results_ft$date](#roll_call_results_ftdate). In the raw data, `dato` is stored as `r class(roll_call_info_raw$dato)` value.
 
-```{r}
+```{r roll_call_info_raw-dato}
 head(roll_call_info_raw$dato)
 ```
 
@@ -1090,7 +1090,7 @@ head(roll_call_info_raw$dato)
 
 This variable is used to check against the API for updated records. In the raw data, `opdateringsdato` is stored as `r class(roll_call_info_raw$opdateringsdato)` value.
 
-```{r}
+```{r roll_call_info_raw-opdateringsdato}
 head(roll_call_info_raw$opdateringsdato)
 ```
 
