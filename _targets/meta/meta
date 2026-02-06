@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|03a996ce3de98f05|||||||||||||||
+.Random.seed|object|7292cde2e0e52fe1|||||||||||||||
 "%||%"|function|176c749ab515e6f3|||||||||||||||
 add_ft_results|function|630d9b03bfce059a|||||||||||||||
 annotate_csv|function|c532a09c089e0936|||||||||||||||
@@ -36,10 +36,10 @@ MP_dates_file|stem|a3c520fb1d050c70|9a6dec680ddcc990|ef46db3751d8e999|358077025|
 MP_names|stem|76edbd82c9003dfa|9114fb1216a41601|5de09b02c4aa6d30|-136046039||t20484.0237858898s|bfbea0656bc5b842|1174|rds|local|vector|||0||
 MP_names_file|stem|76edbd82c9003dfa|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20484.0229428793s|bfbea0656bc5b842|1174|file|local|vector|||0||
 northatlantic_ft|stem|870348685c213de7|7c9ffe1c45d39155|ce2c57656fe8e275|-955248254||t20490.6041437855s|6526cc22f8767839|1186098|rds|local|vector|||29.178||
-raw_voting_records|stem|c3bd57bc557c9779|97d6902dc1bf00c2|3eb81ed3595ec480|-47314081||t20490.6036045s|f65800b2d8e6d01b|226657|rds|local|vector|||6.962||
+raw_voting_records|stem|c3bd57bc557c9779|97d6902dc1bf00c2|3eb81ed3595ec480|-47314081||t20490.6148824722s|f65800b2d8e6d01b|226657|rds|local|vector|||10.723||
 records_with_ballot_info|stem|7198d42b35cfbe04|fb92ef8f3b43df67|e6d71779e4a19e69|-1473261242||t20484.0239570637s|ce022acee6cad062|1185958|rds|local|vector|||0.011||
 records_with_home_gvt|stem|8d2e5d5d27063334|b69e95e99dd6a796|2459257af0865675|1912220421||t20490.6038039614s|ed1e4c5b88aad14b|1185220|rds|local|vector|||16.416||
 records_with_parties|stem|56b58d99131061de|c716074d63d8648f|de8938317d43996c|72161659||t20490.6036120611s|fe61bcc40fef150c|1183789|rds|local|vector|||0.114||
 records_with_roll_call_info|stem|a44d0a4de63e5f28|8151c1253fd5f841|7b125582cab996eb|-1401673750||t20490.6036088796s|1126109e98c740cd|1185960|rds|local|vector|||0.018||
-roll_call_info|stem|c3ddd5b198071f5f|d8ac013fc4e02736|5663781f2e0ba5c5|-982050913||t20490.5877632129s|0f1afac4bee85766|757869|rds|local|vector|||21.069||
+roll_call_info|stem|c3ddd5b198071f5f|d8ac013fc4e02736|5663781f2e0ba5c5|-982050913||t20490.6147580185s|0f1afac4bee85766|757869|rds|local|vector|||0.328||
 roll_call_info_with_counts|stem|55746aff2d73f938|90037f2e65f795e7|91237bc576f4f19b|-130160661||t20490.5930101973s|5aa12cc73086fab1|802420|rds|local|vector|||453.247||
