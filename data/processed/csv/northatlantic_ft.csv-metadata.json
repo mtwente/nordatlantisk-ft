@@ -13,9 +13,9 @@
 		"email": "mtwente@protonmail.com",
 		"orcid": "0009-0005-7187-9774"
 	},
-	"dc:description": "nordatlantisk-ft is compiled from data available on Folketingets Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each ballot – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
+	"dc:description": "nordatlantisk-ft is compiled from data available on Folketingets Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each roll call – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-01-31T01:35:15+0100",
+		"@value": "2026-02-06T15:29:58+0100",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",
@@ -26,9 +26,9 @@
 	"tableSchema": {
 		"columns": [
 			{
-				"name": "ballot_id",
-				"dc:title": "Ballot ID",
-				"dc:description": "ID assigned to the ballot in Folketinget records",
+				"name": "roll_call_id",
+				"dc:title": "Roll Call ID",
+				"dc:description": "ID assigned to the roll call in Folketinget records",
 				"datatype": {
 					"base": "integer"
 				}
@@ -76,21 +76,21 @@
 				"datatype": "factor"
 			},
 			{
-				"name": "ballot_pass",
-				"dc:title": "Ballot Passing",
-				"dc:description": "Boolean indicating if the ballot passed",
+				"name": "roll_call_pass",
+				"dc:title": "Roll Call Passing",
+				"dc:description": "Boolean indicating if the roll call passed",
 				"datatype": "boolean"
 			},
 			{
 				"name": "ft_process_step",
 				"dc:title": "Process Step",
-				"dc:description": "Stage of the parliamentary process the ballot is part of (in Danish)",
+				"dc:description": "Stage of the parliamentary process the roll call is part of (in Danish)",
 				"datatype": "string"
 			},
 			{
 				"name": "ft_topic",
-				"dc:title": "Ballot Topic",
-				"dc:description": "Description of the topic the proposal on the ballot is about (in Danish)",
+				"dc:title": "Roll Call Topic",
+				"dc:description": "Description of the topic the proposal on the roll call is about (in Danish)",
 				"datatype": "string"
 			},
 			{
@@ -134,9 +134,9 @@
 				}
 			},
 			{
-				"name": "ballot_date",
-				"dc:title": "Ballot Date",
-				"dc:description": "Date of the ballot",
+				"name": "date",
+				"dc:title": "Roll Call Date",
+				"dc:description": "Date of the roll call",
 				"datatype": {
 					"base": "date",
 					"format": "yyyy-MM-dd",
@@ -145,9 +145,9 @@
 				}
 			},
 			{
-				"name": "ballot_type_id",
-				"dc:title": "Ballot Type ID",
-				"dc:description": "Folketinget ODA ID assigned to the ballot type",
+				"name": "roll_call_type_id",
+				"dc:title": "Roll Call Type ID",
+				"dc:description": "Folketinget ODA ID assigned to the roll call type",
 				"datatype": {
 					"base": "integer"
 				}
@@ -167,12 +167,12 @@
 			{
 				"name": "comment",
 				"dc:title": "Comment",
-				"dc:description": "Additional comments about the ballot (in Danish)",
+				"dc:description": "Additional comments about the roll call (in Danish)",
 				"datatype": "string"
 			},
 			{
-				"name": "ballot_result_string",
-				"dc:title": "Ballot Result String",
+				"name": "result_string",
+				"dc:title": "Roll Call Result String",
 				"dc:description": "Description of the result (in Danish)",
 				"datatype": "string"
 			}

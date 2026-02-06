@@ -114,13 +114,13 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## Dataset
 
-*nordatlantisk-ft* is compiled from data available on Folketingets Open Data Platform [@folketingetFolketingetsAbneData2026] and comprises `r length(unique(northatlantic_ft$vote_id))` records of votes cast by Northatlantic MPs as per the most recent update (`r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`). The dataset documents voting behavior of MPs from Greenland and the Faroe Islands and also contains metadata on each record -- e.g. date and topic of each vote or the overall voting result, covering votes on `r length(unique(northatlantic_ft$ballot_id))` proposals in Folketinget. Refer to the [Codebook](codebook.qmd) for details.
+*nordatlantisk-ft* is compiled from data available on Folketingets Open Data Platform [@folketingetFolketingetsAbneData2026] and comprises `r length(unique(northatlantic_ft$vote_id))` records of votes cast by Northatlantic MPs as per the most recent update (`r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`). The dataset documents voting behavior of MPs from Greenland and the Faroe Islands and also contains metadata on each record -- e.g. date and topic of each vote or the overall voting result, covering votes on `r length(unique(northatlantic_ft$roll_call_id))` proposals in Folketinget. Refer to the [Codebook](codebook.qmd) for details.
 
 This data is intended for re-use ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)) and is version-controlled [in a GitHub repository](https://www.github.com/mtwente/nordatlantisk-ft) including extensive documentation and long-term archival on Zenodo. The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) [@mahrOneTemplateRule2025a] and follows the [Advanced Structure for Data Analysis](https://book.the-turing-way.org/project-design/pd-overview/project-repo/project-repo-advanced/) of _The Turing Way_.
 
 ## MPs
 
-This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties.
+This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(min(northatlantic_ft$date), "%B %d, %Y")`. There have been `r nrow(mp_names)` individual politicians from Greenland or the Faroe Islands who served as MPs in the time frame covered by Folketinget's Open Data Platform (@tbl-MPs). `r sum(mp_names$origin == "GL")` of them are members of Greenlandic parties, and `r sum(mp_names$origin == "FO")` are representing Faroese parties.
 
 `r sum(mp_names$substitute == TRUE)` of the politicians that are part of this data set joined Folketinget in the role of a substitute member[^1], filling in for one of the `r sum(mp_names$substitute == FALSE)` originally elected MPs while they were on leave [cf. @harderFaeroskeOgGronlandske2022, 12-13].
 
@@ -131,6 +131,7 @@ This dataset contains votes cast by Greenlandic and Faroese MPs since `r format(
 #| message: false
 #| label: tbl-MPs
 #| tbl-cap: List of MPs from Greenland and the Faroe Islands in Folketinget since 2004.
+#| tbl-colwidths: [33, 33, 17, 17]
 
 MPs_gl <- mp_names %>%
   filter(origin == "GL") %>%
@@ -174,7 +175,7 @@ kable(MPs_fo_substitute, caption = "Temporary Substitute MPs from Faroese Partie
 
 [^2]: Note that the data for membership periods is taken from Folketinget's member biographies website. There, membership periods and temporary replacement members are given as written text and are mostly specified to the day. However, in some cases, the exact timeline of replacements seems not to be complete -- e.g., when there is a timeframe listed with a temporary MP being active, but the information on the MP that is being replaced does not correspond to the specified period. This seems mostly to be an issue of keeping the free-text biographies up to date and in sync.
 
-Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$ballot_date), "%B %d, %Y")`. For MPs representing Greenland resp. the Faroe Islands in election periods earlier than `r format(min(northatlantic_ft$ballot_date), "%B %Y")`, see the full timeline -- going back to 1953 -- provided by @harderSupplerendeMaterialeFaeroske2022.
+Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the timeline since there are no voting records available online earlier than `r format(min(northatlantic_ft$date), "%B %d, %Y")`. For MPs representing Greenland resp. the Faroe Islands in election periods earlier than `r format(min(northatlantic_ft$date), "%B %Y")`, see the full timeline -- going back to 1953 -- provided by @harderSupplerendeMaterialeFaeroske2022.
 
 ```{r timeline-mandates}
 #| echo: false
@@ -282,7 +283,7 @@ geom_point(
     labeller = labeller(origin = c("GL" = "Greenland", "FO" = "Faroe Islands"))
   ) +
 
-  coord_cartesian(xlim = c(min(northatlantic_ft$ballot_date), NA)) +
+  coord_cartesian(xlim = c(min(northatlantic_ft$date), NA)) +
 
   theme_nordatlantisk_basis() +
   theme(
@@ -391,7 +392,7 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
   facet_grid(origin ~ ., scales = "free_y", space = "free_y",
              labeller = labeller(origin = c("FO" = "Faroe Islands", "GL" = "Greenland"))) +
   
-  coord_cartesian(xlim = c(min(northatlantic_ft$ballot_date), NA)) +
+  coord_cartesian(xlim = c(min(northatlantic_ft$date), NA)) +
   
   theme_nordatlantisk_basis() +
   theme(
@@ -405,7 +406,7 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
 
 The following exploratory plots were generated using ggplot2 [@wickhamGgplot2ElegantGraphics2016] with the data available on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`, covering voting behaviour from `r nrow(mp_names)` MPs. These visualizations make no distinction between directly elected MPs and substitute MPs.
 
-On a proposal, members can either vote `for`, `against` or neither for or against (`abstention`). Taking into account all ballots that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
+On a proposal, members can either vote `for`, `against` or neither for or against (`abstention`). Taking into account all roll calls that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
 
 ::: {#fig-vote-share}
 <!-- in a fenced div because of the dynamically updating caption -->
@@ -469,7 +470,7 @@ For `r mean(northatlantic_ft$vote_type_id == "3") %>% scales::percent(accuracy =
 #| fig-cap: Share of non-absent records per year (for, against, abstaining).
 
 votes_per_year_origin <- northatlantic_ft %>%
-  mutate(year = lubridate::year(ballot_date)) %>%
+  mutate(year = lubridate::year(date)) %>%
   group_by(origin, year) %>%
   summarise(
     share_present = mean(vote_type_id != 3),
@@ -511,7 +512,7 @@ ggplot(
 
 ### Votes Per MP
 
-@fig-votes-per-mp visualizes the distribution of votes cast by each MP that is part of the dataset. MPs are grouped by whether they are representing Greenland or the Faroe Islands. As MPs are absent for most ballots, @fig-votes-per-mp-filtered shows the distribution only with votes that were actually cast.
+@fig-votes-per-mp visualizes the distribution of votes cast by each MP that is part of the dataset. MPs are grouped by whether they are representing Greenland or the Faroe Islands. As MPs are absent for most roll calls, @fig-votes-per-mp-filtered shows the distribution only with votes that were actually cast.
 
 ```{r votes-per-mp}
 #| echo: false
@@ -545,7 +546,7 @@ plot_votes
 #| echo: false
 #| message: false
 #| label: fig-votes-per-mp-filtered
-#| fig-cap: Number of votes cast by each MP coded by the type of vote (for, against, abstaining). Only showing ballots when the MP is in attendance.
+#| fig-cap: Number of votes cast by each MP coded by the type of vote (for, against, abstaining). Only showing roll calls when the MP is in attendance.
 
 plot_votes_without_absences <- ggplot(northatlantic_ft_without_absences, aes(y = plotting_name, fill = vote_type_id)) +
   geom_bar() +
@@ -568,7 +569,7 @@ plot_votes_without_absences
 
 ### Votes Per MP Over Time
 
-The distribution of recorded votes by all MPs is displayed on a timeline in @fig-votes-timeline. Again, MPs are grouped by whether they are representing Greenland or the Faroe Islands. As MPs are absent for most ballots, @fig-votes-timeline-filtered shows the timeline only with votes that were actually cast.
+The distribution of recorded votes by all MPs is displayed on a timeline in @fig-votes-timeline. Again, MPs are grouped by whether they are representing Greenland or the Faroe Islands. As MPs are absent for most roll calls, @fig-votes-timeline-filtered shows the timeline only with votes that were actually cast.
 
 ```{r votes-over-time}
 #| echo: false
@@ -581,7 +582,7 @@ northatlantic_ft <- northatlantic_ft %>%
 
 scatterplot <- ggplot(northatlantic_ft %>%
                         arrange(desc(vote_type_id)),
-                      aes(x = ballot_date, y = plotting_name, color = vote_type_id)) +
+                      aes(x = date, y = plotting_name, color = vote_type_id)) +
 
   geom_jitter(width = 0, height = 0.2, size = 1.2, shape = 19, key_glyph = draw_key_rect) +
   scale_x_date(expand = expansion(mult = c(0.01, .05))) +
@@ -614,14 +615,14 @@ scatterplot
 #| echo: false
 #| message: false
 #| label: fig-votes-timeline-filtered
-#| fig-cap: Distribution of votes over time per MP (for, against, abstaining). Only showing ballots when the MP is in attendance. Because there are so many data points, vertical and horizontal jittering is added to make it a little easier to get an overview of the available data.
+#| fig-cap: Distribution of votes over time per MP (for, against, abstaining). Only showing roll calls when the MP is in attendance. Because there are so many data points, vertical and horizontal jittering is added to make it a little easier to get an overview of the available data.
 
 northatlantic_ft_without_absences <- northatlantic_ft_without_absences %>%
   mutate(plotting_name = factor(plotting_name, levels = levels(MP_dates$plotting_name)))
 
 scatterplot_without_absences <- ggplot(northatlantic_ft_without_absences %>% 
                                         arrange(vote_type_id),
-                                      aes(x = ballot_date, y = plotting_name, color = vote_type_id)) +
+                                      aes(x = date, y = plotting_name, color = vote_type_id)) +
 
   geom_jitter(width = 0.4, height = 0.25, size = 1.2, shape = 19, alpha = 0.8, key_glyph = draw_key_rect) +
   scale_x_date(expand = expansion(mult = c(0.01, .05))) +

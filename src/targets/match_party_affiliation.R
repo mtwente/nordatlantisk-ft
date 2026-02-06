@@ -16,11 +16,11 @@ match_party_affiliation <- function(input_df, MP_dates) {
   output_df <- input_df %>%
     mutate(
       MP_id = as.factor(MP_id),
-      ballot_date = as.Date(ballot_date)
+      date = as.Date(date)
     ) %>%
     left_join(MP_dates, by = "MP_id",
               relationship = "many-to-many") %>%
-    filter(ballot_date >= start & ballot_date <= end) %>%
+    filter(date >= start & date <= end) %>%
     select(-start, -end) %>%
     mutate(party = factor(party)) %>%
     relocate(party, .after = surname)

@@ -23,8 +23,8 @@ match_danish_government <- function(input_df, cabinets_dk) {
       gvt_bloc_dk = {
         cab <- cabinets_dk %>%
           filter(
-            ballot_date >= start,
-            ballot_date <= end
+            date >= start,
+            date <= end
           )
         
         if (nrow(cab) == 0) {
@@ -37,8 +37,8 @@ match_danish_government <- function(input_df, cabinets_dk) {
       gvt_type_dk = {
         cab <- cabinets_dk %>%
           filter(
-            ballot_date >= start,
-            ballot_date <= end
+            date >= start,
+            date <= end
           )
         
         if (nrow(cab) == 0) {

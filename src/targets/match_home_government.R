@@ -25,8 +25,8 @@ match_home_government <- function(input_df, cabinets_fo, cabinets_gl) {
         cab <- cabinets_fo_gl %>%
           filter(
             location == origin,
-            ballot_date >= start,
-            ballot_date <= end
+            date >= start,
+            date <= end
           )
         
         if (nrow(cab) == 0) {
