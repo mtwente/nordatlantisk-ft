@@ -8,9 +8,9 @@ library(here)
 join_results <- function(voting_records, roll_call_results, MP_names) {
     
   voting_records <- voting_records %>%
-    left_join(roll_call_results %>% select(roll_call_id, roll_call_pass, roll_call_date, ft_topic,
+    left_join(roll_call_results %>% select(roll_call_id, roll_call_pass, date, ft_topic,
                                         ft_for, ft_against, ft_abstention, ft_absent,
-                                        roll_call_type_id, comment, roll_call_result_string,
+                                        roll_call_type_id, comment, result_string,
                                         ft_process_id, ft_process_step),
               by = "roll_call_id") %>%
     

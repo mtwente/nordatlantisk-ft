@@ -25,8 +25,8 @@ match_home_government <- function(input_df, cabinets_fo, cabinets_gl) {
         cab <- cabinets_fo_gl %>%
           filter(
             location == origin,
-            roll_call_date >= start,
-            roll_call_date <= end
+            date >= start,
+            date <= end
           )
         
         if (nrow(cab) == 0) {

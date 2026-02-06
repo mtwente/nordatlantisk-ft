@@ -14,8 +14,8 @@ export_dataset <- function(northatlantic_ft) {
   col_order <- c("roll_call_id", "MP_id", "surname", "origin", "party", "gvt_party_at_home",
                  "vote_type_id", "vote_id", "roll_call_pass", "ft_process_step",
                  "ft_topic", "ft_for", "ft_against", "ft_abstention", "ft_absent",
-                 "roll_call_date", "roll_call_type_id", "gvt_type_dk", "gvt_bloc_dk",
-                 "comment", "roll_call_result_string")
+                 "date", "roll_call_type_id", "gvt_type_dk", "gvt_bloc_dk",
+                 "comment", "result_string")
   
   northatlantic_ft <- northatlantic_ft[, col_order]
   
