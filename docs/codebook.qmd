@@ -89,7 +89,7 @@ cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
 
 ## Introduction {#introduction}
 
-This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2026. Refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
+This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2026. Refer to @berntzenParliamentaryOpenData2019 for background information on Folketinget's open data ecosystem.
 
 All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, tabular metadata is provided in `json` files according to the W3C Metadata Vocabulary for Tabular Data [@w3cW3CRecommendationMetadata2015].
 
@@ -298,7 +298,7 @@ This repository is shipped with a list of all Folketinget MPs that have represen
 
 `MP_names` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. These files are compiled by executing the script at [`src/create_MP_list.R`](/src/create_MP_list.R) and other MPs should be added by updating this script.
 
-The `rds` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file.
+The `rds` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketinget's Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file.
 
 [^1]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
 
@@ -705,7 +705,7 @@ All votes cast in Folketinget are recorded using numeric values that correspond 
 | 3 | fravær | absence | `r length(northatlantic_votes$vote_type_id[northatlantic_votes$vote_type_id == "3"])` |
 | 4 | hverken for eller imod | abstention | `r length(northatlantic_votes$vote_type_id[northatlantic_votes$vote_type_id == "4"])` |
 
-: Vote Type IDs as used by Folketingets Open Data Service {#tbl-typeid} {.striped .hover}
+: Vote Type IDs as used by Folketinget's Open Data Service {#tbl-typeid} {.striped .hover}
 
 This variable corresponds to the `typeid` variable and the `Stemmetype` resource in [the Folketing online database](https://oda.ft.dk).
 
@@ -943,7 +943,7 @@ All roll call procedures in Folketinget are categorised using numeric values tha
 | 3 | Forslag til vedtagelse | Proposed Adoption | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "3"])` |
 | 4 | Ændringsforslag | Amendment | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "4"])` |
 
-: Roll call Type IDs as used by Folketingets Open Data Service {#tbl-roll_calltypeid} {.striped .hover}
+: Roll call Type IDs as used by Folketinget's Open Data Service {#tbl-roll_calltypeid} {.striped .hover}
 
 This variable corresponds to `typeid` variable in [`roll_call_info_raw`](#roll_call_info_rawtypeid) and the `type` variable in the `Afstemningstype` resource in [the Folketing online database](https://oda.ft.dk).
 
