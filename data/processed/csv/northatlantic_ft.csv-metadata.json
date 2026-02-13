@@ -13,9 +13,9 @@
 		"email": "mtwente@protonmail.com",
 		"orcid": "0009-0005-7187-9774"
 	},
-	"dc:description": "nordatlantisk-ft is compiled from data available on Folketingets Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each roll call – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
+	"dc:description": "nordatlantisk-ft is compiled from data available on Folketinget's Open Data Platform and comprises voting records of MPs from Greenland and the Faroe Islands, documenting their voting behavior. It also contains metadata on each roll call – e.g. date and topic of each vote or the overall voting result. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-02-06T15:29:58+0100",
+		"@value": "2026-02-13T16:14:43+0100",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",
