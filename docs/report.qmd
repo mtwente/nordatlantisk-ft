@@ -406,7 +406,7 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
 
 The following exploratory plots were generated using ggplot2 [@wickhamGgplot2ElegantGraphics2016] with the data available on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`, covering voting behaviour from `r nrow(mp_names)` MPs. These visualizations make no distinction between directly elected MPs and substitute MPs.
 
-On a proposal, members can either vote `for`, `against` or neither for or against (`abstention`). Taking into account all roll calls that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
+On a proposal, members can either vote `for`, `against` or neither for nor against (`abstention`). Taking into account all roll calls that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
 
 ::: {#fig-vote-share}
 <!-- in a fenced div because of the dynamically updating caption -->
