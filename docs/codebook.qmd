@@ -1001,7 +1001,7 @@ Descriptions of all variables in `roll_call_info_raw` are provided in the follow
 
 #### roll_call_info_raw$id
 
-See [roll_call_result_ft$roll_call_id](#roll_call_results_ftroll_call_id). Take care not to confuse `id` with [`nummer`](#roll_call_info_rawnummer). In the raw data, `id` is stored as `r typeof(roll_call_info_raw$id)` value.
+See [roll_call_results_ft$roll_call_id](#roll_call_results_ftroll_call_id). Take care not to confuse `id` with [`nummer`](#roll_call_info_rawnummer). In the raw data, `id` is stored as `r typeof(roll_call_info_raw$id)` value.
 
 ```{r roll_call_info_raw-id}
 head(roll_call_info_raw$id)
