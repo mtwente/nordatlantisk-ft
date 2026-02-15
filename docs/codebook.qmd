@@ -49,8 +49,11 @@ plot_dataset <- northatlantic_ft %>%
 ### Timeline of MP_dates and Cabinets -----
 MP_dates <- readRDS(here("data", "processed", "MP_dates.rds"))
 election_dates <- readRDS(here("data", "processed", "election_dates.rds"))
-cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
+#### Subset Election Dates for Folketinget only
+elections_ft <- election_dates %>%
+  filter(election_type == "Folketing Election")
 
+cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
 cabinets_fo <- readRDS(here("data", "processed", "cabinets_fo.rds"))
 cabinets_gl <- readRDS(here("data", "processed", "cabinets_gl.rds"))
 
@@ -85,6 +88,22 @@ cabinets_dk <- cabinets_dk %>%
     )
 
 cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
+
+## Set Plotting Theme -----
+
+theme_nordatlantisk_basis <- function(){
+  
+  theme_grey() %+replace%
+    theme(axis.title = element_blank(),
+          axis.ticks.y = element_blank(),
+          panel.background = element_blank(),
+          panel.grid.major.x = element_line(color = "#000000", linewidth = 0.1),
+          panel.grid.minor.x = element_line(color = "#000000", linewidth = 0.1),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          axis.ticks.x = element_line(color = "#000000", linewidth = 0.1),
+          axis.line.y.left = element_line(color = "#000000", linewidth = 0.1))
+}
 
 ```
 
@@ -889,6 +908,44 @@ The maximum value stored in `ft_for` is `r max(roll_call_results_ft$ft_for, na.r
 summary(roll_call_results_ft$ft_for)
 ```
 
+```{r roll_call_results_ft-ft_for-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-for
+#| fig-cap: Timeline of `for` vote counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_for <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_for)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#6195CF", shape = 21,
+              fill = "#6195CF", stroke = 0.1) +
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_for
+```
+
 #### roll_call_results_ft$ft_against
 
 In `ft_against`, the number of votes cast in favor of a proposal is stored as `r class(roll_call_results_ft$ft_against)` variable of the type `r typeof(roll_call_results_ft$ft_against)`.
@@ -901,6 +958,45 @@ The maximum value stored in `ft_against` is `r max(roll_call_results_ft$ft_again
 
 ```{r roll_call_results_ft-ft_against}
 summary(roll_call_results_ft$ft_against)
+```
+
+```{r roll_call_results_ft-ft_against-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-against
+#| fig-cap: Timeline of `against` vote counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_against <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_against)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#777777", shape = 21,
+              fill = "#F7CB45", stroke = 0.05) +
+
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+  
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_against
 ```
 
 #### roll_call_results_ft$ft_abstention
@@ -917,6 +1013,46 @@ The maximum value stored in `ft_abstention` is `r max(roll_call_results_ft$ft_ab
 summary(roll_call_results_ft$ft_abstention)
 ```
 
+```{r roll_call_results_ft-ft_abstention-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-abstention
+#| fig-cap: Timeline of `abstention` vote counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_abstention <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_abstention)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#777777", shape = 21,
+              fill = "#777777", stroke = 0.05) +
+
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+  
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_abstention
+```
+
+
 #### roll_call_results_ft$ft_absent
 
 In `ft_absent`, the number of MPs who were absent for each roll call is stored as `r class(roll_call_results_ft$ft_absent)` variable with values of the type `r typeof(roll_call_results_ft$ft_absent)`.
@@ -927,6 +1063,45 @@ The maximum value stored in `ft_absent` is `r max(roll_call_results_ft$ft_absent
 
 ```{r roll_call_results_ft-ft_absent}
 summary(roll_call_results_ft$ft_absent)
+```
+
+```{r roll_call_results_ft-ft_absent-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-absent
+#| fig-cap: Timeline of `absent` counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_absent <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_absent)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#777777", shape = 21,
+              fill = "#D1BBD7", stroke = 0.05) +
+
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+  
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_absent
 ```
 
 #### roll_call_results_ft$ft_process_id
