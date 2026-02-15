@@ -112,7 +112,7 @@ tar_plan(
 
   roll_call_info_with_counts = add_ft_results(roll_call_info),
   
-  cleaned_roll_call_results = clean_roll_call_results(roll_call_info_with_counts),
+  ministries_lookup = add_ministries(roll_call_info_with_counts),
   
   records_with_roll_call_info = join_results(cleaned_voting_records,
                                           cleaned_roll_call_results,
