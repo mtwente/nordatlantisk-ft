@@ -37,6 +37,7 @@ political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 ### Voting Records Database -----
 northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rds"))
 northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
+ministries_lookup <- readRDS(here("data", "raw", "ministries_lookup.rds"))
 roll_call_info_raw <- readRDS(here("data", "raw", "roll_call_info_raw.rds"))
 roll_call_results_ft <- readRDS(here("data", "processed", "roll_call_results_ft.rds"))
 
@@ -118,6 +119,9 @@ classDiagram
 
     roll_call_info_raw <|-- roll_call_results_ft
 
+    roll_call_info_raw ~~ ministries_lookup
+    ministries_lookup <|-- roll_call_results_ft
+
     cabinets_fo .. cabinets_gl
     cabinets_gl .. cabinets_dk
     cabinets_dk <|-- northatlantic_ft
@@ -135,6 +139,7 @@ classDiagram
         vote_id : int
         roll_call_pass : bool
         ft_process_step : string
+        ministry : string
         ft_topic : string
         ft_for : int
         ft_against : int
@@ -189,6 +194,7 @@ classDiagram
         roll_call_pass : bool
         date : date
         ft_topic: string
+        ministry: string
         ft_for : int
         ft_against : int
         ft_abstention : int
@@ -215,6 +221,12 @@ classDiagram
         sag_titel : string
         dato : date
         opdateringsdato : date
+    }
+
+    class ministries_lookup {
+      sagid : int
+      ministerium : string
+      opdateringsdato : date
     }
 
     class northatlantic_votes_raw {
@@ -268,6 +280,7 @@ classDiagram
 
 style roll_call_info_raw fill:#6195CF,color:#FFFFFF
 style roll_call_results_ft fill:#6195CF,color:#FFFFFF
+style ministries_lookup fill:#9bc0e8
 
 style northatlantic_ft fill:#F7CB45
 
@@ -283,6 +296,7 @@ click political_parties href "#political_parties" "tooltip"
 click MP_names href "#MP_names" "tooltip"
 click northatlantic_votes_raw href "#northatlantic_votes_raw" "tooltip"
 click northatlantic_votes href "#northatlantic_votes" "tooltip"
+click ministries_lookup href "#ministries_lookup" "tooltip"
 click roll_call_info_raw href "#roll_call_info_raw" "tooltip"
 click roll_call_results_ft href "#roll_call_results_ft" "tooltip"
 click cabinets_fo href "#cabinets_fo" "tooltip"
@@ -849,6 +863,18 @@ This variable corresponds to the `titel` variable in the `Sag` resource in [the 
 head(roll_call_results_ft$ft_topic)
 ```
 
+#### roll_call_results_ft$ministry
+
+Each proposal that is being voted on in Folketinget is assigned to one ministry that is responsible for handling the government's end. The name of that ministry is stored in this variable for each observation. Ministry names are stored as values of the type `r typeof(roll_call_results_ft$ministry)` in Danish language.
+
+This variable is joined from [`ministries_lookup`](#ministries_lookup) based on [`roll_call_info_raw$sagid`](#roll_call_info_rawsagid) and corresponds to the `navn` variable in the `SagAktør` resource in [the Folketing online database](https://oda.ft.dk), filtered for those `aktørid` values that are designated as `Ministerområde` (`rolleid = 6`) for the `Sag` in question.
+
+```{r roll_call_results_ft-ministry}
+head(roll_call_results_ft$ministry)
+```
+
+Note that since designations and areas of responsibilities have changed over time, there will be several instances of, e.g. transport ministries (Transportministeriet, Transport- og Energiministeriet, Transport- og Boligministeriet, Transport- og Bygningsministeriet as well as Transport-, Bygnings- og Boligministeriet). See [`northatlantic_ft$ministry`](#northatlantic_ftministry) for a list of all occurring ministries.
+
 #### roll_call_results_ft$ft_for
 
 In `ft_for`, the number of votes cast in favor of a proposal is stored as `r class(roll_call_results_ft$ft_for)` variable of the type `r typeof(roll_call_results_ft$ft_for)`.
@@ -1103,6 +1129,44 @@ This variable is used to check against the API for updated records. In the raw d
 
 ```{r roll_call_info_raw-opdateringsdato}
 head(roll_call_info_raw$opdateringsdato)
+```
+
+------------------------------------------------------------------------
+
+### ministries_lookup {#ministries_lookup}
+
+`ministries_lookup` contains information on the ministry assigned to each proposal (`Sag`). As per `r format(file.info(here("data", "raw", "ministries_lookup.rds"))$mtime, "%B %Y")`, `ministries_lookup.rds` contains `r nrow(ministries_lookup)` observations of `r ncol(ministries_lookup)` variables.
+
+`ministries_lookup` is provided as `rds` file in `/data/raw/`. It is being joined to [`roll_call_results_ft`](#roll_call_results_ft) by matching with [`roll_call_info_raw$sagid`](#roll_call_info_rawsagid).
+
+```{r ministries_lookup-intro}
+str(ministries_lookup)
+```
+
+Descriptions of all variables in `ministries_lookup` are provided in the following sections.
+
+#### ministries_lookup$sagid
+
+See [roll_call_results_raw$sagid](#roll_call_info_rawsagid).
+
+```{r ministries_lookup-sagid}
+head(ministries_lookup$sagid)
+```
+
+#### ministries_lookup$ministerium
+
+See [roll_call_results_ft$ministry](#roll_call_results_ftministry).
+
+```{r ministries_lookup-ministerium}
+head(ministries_lookup$ministerium)
+```
+
+#### ministries_lookup$opdateringsdato
+
+This variable is used to check against the API for updated records. In the raw data, `opdateringsdato` is stored as `r class(ministries_lookup$opdateringsdato)` value.
+
+```{r ministries_lookup-opdateringsdato}
+head(ministries_lookup$opdateringsdato)
 ```
 
 ------------------------------------------------------------------------
@@ -1615,6 +1679,37 @@ This variable corresponds to the `titel` variable in the `Sagstrin` resource in 
 ```{r northatlantic_ft-ft_process_step}
 str(northatlantic_ft$ft_process_step)
 ```
+
+#### northatlantic_ft$ministry
+
+Each proposal that is being voted on in Folketinget is assigned to one ministry that is responsible for handling the government's end. The name of that ministry is stored in this variable for each observation. Ministry names are stored as values of the type `r typeof(northatlantic_ft$ministry)` in Danish language.
+
+The values of this variable correspond to the `navn` variable in the `SagAktør` resource in [the Folketing online database](https://oda.ft.dk), filtered for those `aktørid` values that are designated as `Ministerområde` (`rolleid = 6`) for the `Sag` in question. See also [`ministries_lookup`](#ministries_lookup).
+
+```{r northatlantic_ft-ministry}
+str(northatlantic_ft$ministry)
+```
+
+Note that since designations and areas of responsibilities have changed over time, there will be several instances of, e.g. transport ministries (Transportministeriet, Transport- og Energiministeriet, Transport- og Boligministeriet, Transport- og Bygningsministeriet as well as Transport-, Bygnings- og Boligministeriet).
+
+::: {.callout-note title="Click to see a list of all ministries listed in the data" appearance="minimal" collapse="true"}
+
+```{r northatlantic_ft-ministry-table}
+#| echo: false
+#| warning: false
+#| label: tbl-ministries
+#| tbl-cap: List of all ministries associated with a roll call vote including the count of occurrences in the data.
+
+ministry_counts <- northatlantic_ft %>%
+  count(ministry, .drop = FALSE) %>%  # .drop = FALSE keeps NAs
+  arrange(ministry)                   # sort alphabetically
+
+kable(ministry_counts, 
+      col.names = c("Ministry", "Count"),
+      align = c("l", "r"))
+```
+
+:::
 
 #### northatlantic_ft$ft_topic
 
