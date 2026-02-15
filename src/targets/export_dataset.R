@@ -12,7 +12,7 @@ export_dataset <- function(northatlantic_ft) {
   # Clean Up Data Frame Columns  -----
   
   col_order <- c("roll_call_id", "MP_id", "surname", "origin", "party", "gvt_party_at_home",
-                 "vote_type_id", "vote_id", "roll_call_pass", "ft_process_step",
+                 "vote_type_id", "vote_id", "roll_call_pass", "ft_process_step", "ministry",
                  "ft_topic", "ft_for", "ft_against", "ft_abstention", "ft_absent",
                  "date", "roll_call_type_id", "gvt_type_dk", "gvt_bloc_dk",
                  "comment", "result_string")
@@ -43,6 +43,7 @@ export_dataset <- function(northatlantic_ft) {
              "Vote ID",
              "Roll Call Passing",
              "Process Step",
+             "Responsible Ministry",
              "Roll Call Topic",
              "Vote Count: In Favor",
              "Vote Count: Against",
@@ -65,6 +66,7 @@ export_dataset <- function(northatlantic_ft) {
              "Folketinget ODA ID assigned to the vote",
              "Boolean indicating if the roll call passed",
              "Stage of the parliamentary process the roll call is part of (in Danish)",
+             "Name of the ministry responsible for the proposal (in Danish)",
              "Description of the topic the proposal on the roll call is about (in Danish)",
              "Number of votes in favor of the proposal",
              "Number of votes against the proposal",

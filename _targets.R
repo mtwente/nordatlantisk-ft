@@ -114,6 +114,9 @@ tar_plan(
   
   ministries_lookup = add_ministries(roll_call_info_with_counts),
   
+  cleaned_roll_call_results = clean_roll_call_results(roll_call_info_with_counts,
+                                                      ministries_lookup),
+  
   records_with_roll_call_info = join_results(cleaned_voting_records,
                                           cleaned_roll_call_results,
                                           MP_names),
