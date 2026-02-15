@@ -211,6 +211,7 @@ classDiagram
         typeid : int
         sagstrinid : int
         sagstrin_titel : string
+        sagid : int
         sag_titel : string
         dato : date
         opdateringsdato : date
@@ -1056,7 +1057,7 @@ table(roll_call_info_raw$typeid)
 
 #### roll_call_info_raw$sagstrinid
 
-See [roll_call_results_ft\$ft_process_id](#roll_call_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(roll_call_info_raw$sagstrinid)` value.
+See [roll_call_results_ft\$ft_process_id](#roll_call_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(roll_call_info_raw$sagstrinid)` value. Take care not to confuse `sagstrinid` with [`roll_call_info_raw$sagid`](#roll_call_info_rawsagid).
 
 ```{r roll_call_info_raw-sagstrinid}
 head(roll_call_info_raw$sagstrinid)
@@ -1068,6 +1069,16 @@ See [roll_call_results_ft$ft_process_step](#roll_call_results_ftft_process_step)
 
 ```{r roll_call_info_raw-sagstrin_titel}
 head(roll_call_info_raw$sagstrin_titel)
+```
+
+#### roll_call_info_raw$sagid
+
+All legislation in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `sagid` is thus a unique identifier for one issue being handled in Folketinget. All IDs are stored as values of the type `r typeof(roll_call_info_raw$sagid)`. Take care not to confuse `sagid` with [`roll_call_info_raw$sagstrinid`](#roll_call_info_rawsagstrinid). `sagid` is used to match the responsible [ministry](#ministries_lookup) to each proposal in [roll_call_results_ft](#roll_call_results_ft).
+
+This variable corresponds to the `sagid` variable and the `Sag` resource in the Folketing online database.
+
+```{r roll_call_info_raw-sagid}
+head(roll_call_info_raw$sagid)
 ```
 
 #### roll_call_info_raw$sag_titel
