@@ -132,9 +132,9 @@ classDiagram
         roll_call_id : int
         MP_id : int
         surname : string
-        origin: string
+        origin : string
         party : string
-        gvt_party_at_home: bool
+        gvt_party_at_home : bool
         vote_type_id : int
         vote_id : int
         roll_call_pass : bool
@@ -164,7 +164,7 @@ classDiagram
         period_id : string
         surname : string
         first_name : string
-        MP_id: int
+        MP_id : int
         origin: string
         party : string
         start : date
@@ -193,14 +193,14 @@ classDiagram
         meeting_id : int
         roll_call_pass : bool
         date : date
-        ft_topic: string
-        ministry: string
+        ft_topic : string
+        ministry : string
         ft_for : int
         ft_against : int
         ft_abstention : int
         ft_absent : int
         ft_process_id : int
-        ft_process_step: string
+        ft_process_step : string
         roll_call_nr : int
         roll_call_type_id : int
         comment : string
@@ -251,31 +251,31 @@ classDiagram
     }
 
     class cabinets_fo {
-      cabinet: string
-      wikidata_id: string
-      location: string
-      start: date
-      end: date
-      FO_&ast;: bool
+      cabinet : string
+      wikidata_id : string
+      location : string
+      start : date
+      end : date
+      FO_&ast; : bool
     }
 
     class cabinets_gl {
-      cabinet: string
-      wikidata_id: string
-      location: string
-      start: date
-      end: date
-      GL_&ast;: bool
+      cabinet : string
+      wikidata_id : string
+      location : string
+      start : date
+      end : date
+      GL_&ast; : bool
     }
 
     class cabinets_dk {
-      cabinet: string
-      wikidata_id: string
-      bloc: string
-      type: string
-      start: date
-      end: date
-      DK_&ast;: bool
+      cabinet : string
+      wikidata_id : string
+      bloc : string
+      type : string
+      start : date
+      end : date
+      DK_&ast; : bool
     }
 
 style roll_call_info_raw fill:#6195CF,color:#FFFFFF
