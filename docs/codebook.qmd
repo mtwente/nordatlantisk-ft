@@ -379,7 +379,7 @@ For now, the `MP_names` data frame does not include information on membership pe
 summary(MP_names$party)
 ```
 
-All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
+All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2024Release2024].
 
 ```{r parties-list}
 #| echo: false
@@ -621,7 +621,7 @@ head(political_parties$wikidata_id)
 
 #### political_parties$party_family
 
-The `party_family` variable of `political_parties` stores the label for the political party family the party is matched with in the ParlGov dataset [@doringParlGov2022Release2022]. All entries are stored as values of the type `r typeof(political_parties$party_family)` as `r class(political_parties$party_family)` variable.
+The `party_family` variable of `political_parties` stores the label for the political party family the party is matched with in the ParlGov dataset [@doringParlGov2024Release2024]. All entries are stored as values of the type `r typeof(political_parties$party_family)` as `r class(political_parties$party_family)` variable.
 
 Note that party families are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$party_family) | political_parties$party_family == ""], collapse = ", ")`).
 
@@ -647,7 +647,7 @@ summary(political_parties$origin)
 
 #### political_parties$left_right
 
-`left_right` indicates where a party's positions are located on a scale from 0 (left) to 10 (right). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$left_right)` as `r class(political_parties$left_right)` variable.
+`left_right` indicates where a party's positions are located on a scale from 0 (left) to 10 (right). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$left_right)` as `r class(political_parties$left_right)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
@@ -657,7 +657,7 @@ head(political_parties$left_right)
 
 #### political_parties$state_market
 
-`state_market` indicates where a party's positions on regulating the economy are located on a scale from 0 (preferring state regulations) to 10 (preferring unregulated markets). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$state_market)` as `r class(political_parties$state_market)` variable.
+`state_market` indicates where a party's positions on regulating the economy are located on a scale from 0 (preferring state regulations) to 10 (preferring unregulated markets). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$state_market)` as `r class(political_parties$state_market)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
@@ -667,7 +667,7 @@ head(political_parties$state_market)
 
 #### political_parties$liberty_authority
 
-`liberty_authority` indicates a party's position on a scale from 0 (libertarian) to 10 (authoritarian). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$liberty_authority)` as `r class(political_parties$liberty_authority)` variable.
+`liberty_authority` indicates a party's position on a scale from 0 (libertarian) to 10 (authoritarian). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$liberty_authority)` as `r class(political_parties$liberty_authority)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
@@ -677,7 +677,7 @@ head(political_parties$liberty_authority)
 
 #### political_parties$anti_pro_eu
 
-`anti_pro_eu` indicates a party's position towards EU integration on a scale from 0 (in favor of EU integration) to 10 (against EU integration). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$anti_pro_eu)` as `r class(political_parties$anti_pro_eu)` variable.
+`anti_pro_eu` indicates a party's position towards EU integration on a scale from 0 (in favor of EU integration) to 10 (against EU integration). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$anti_pro_eu)` as `r class(political_parties$anti_pro_eu)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
