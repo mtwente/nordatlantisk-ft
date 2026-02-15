@@ -28,6 +28,7 @@ get_roll_call_info <- function() {
         typeid          = as.integer(typeid),
         sagstrinid      = as.integer(sagstrinid),
         sagstrin_titel  = as.character(sagstrin_titel),
+        sagid           = as.integer(sagid),
         sag_titel       = as.character(sag_titel),
         dato            = as.POSIXct(dato, tz = "UTC"),
         opdateringsdato = as.POSIXct(
@@ -47,6 +48,7 @@ get_roll_call_info <- function() {
       typeid          = integer(0),
       sagstrinid      = integer(0),
       sagstrin_titel  = character(0),
+      sagid           = integer(0),
       sag_titel       = character(0),
       dato            = as.POSIXct(character(0), tz = "UTC"),
       opdateringsdato = as.POSIXct(character(0), tz = "UTC"),
@@ -60,7 +62,7 @@ get_roll_call_info <- function() {
     "https://oda.ft.dk/api/Afstemning?",
     "$inlinecount=allpages",
     "&$select=id,nummer,konklusion,vedtaget,kommentar,m%C3%B8deid,typeid,",
-    "sagstrinid,opdateringsdato,Sagstrin/titel,Sagstrin/Sag/titel,M%C3%B8de/dato",
+    "sagstrinid,opdateringsdato,Sagstrin/titel,Sagstrin/Sag/titel,Sagstrin/Sag/id,M%C3%B8de/dato",
     "&$expand=Sagstrin/Sag,M%C3%B8de"
   )
   
@@ -101,6 +103,7 @@ get_roll_call_info <- function() {
       typeid          = as.integer(entry$typeid %||% NA),
       sagstrinid      = as.integer(entry$sagstrinid %||% NA),
       sagstrin_titel  = entry$Sagstrin$titel %||% NA_character_,
+      sagid           = as.integer(entry$Sagstrin$Sag$id %||% NA),
       sag_titel       = entry$Sagstrin$Sag$titel %||% NA_character_,
       dato            = as.POSIXct(entry$Møde$dato,
                                    format = "%Y-%m-%dT%H:%M:%OS",

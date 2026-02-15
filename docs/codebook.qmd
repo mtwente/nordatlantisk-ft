@@ -37,6 +37,7 @@ political_parties <- readRDS(here("data", "processed", "political_parties.rds"))
 ### Voting Records Database -----
 northatlantic_votes <- readRDS(here("data", "processed", "northatlantic_votes.rds"))
 northatlantic_votes_raw <- readRDS(here("data", "raw", "northatlantic_votes_raw.rds"))
+ministries_lookup <- readRDS(here("data", "raw", "ministries_lookup.rds"))
 roll_call_info_raw <- readRDS(here("data", "raw", "roll_call_info_raw.rds"))
 roll_call_results_ft <- readRDS(here("data", "processed", "roll_call_results_ft.rds"))
 
@@ -48,8 +49,11 @@ plot_dataset <- northatlantic_ft %>%
 ### Timeline of MP_dates and Cabinets -----
 MP_dates <- readRDS(here("data", "processed", "MP_dates.rds"))
 election_dates <- readRDS(here("data", "processed", "election_dates.rds"))
-cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
+#### Subset Election Dates for Folketinget only
+elections_ft <- election_dates %>%
+  filter(election_type == "Folketing Election")
 
+cabinets_dk <- readRDS(here("data", "processed", "cabinets_dk.rds"))
 cabinets_fo <- readRDS(here("data", "processed", "cabinets_fo.rds"))
 cabinets_gl <- readRDS(here("data", "processed", "cabinets_gl.rds"))
 
@@ -85,11 +89,27 @@ cabinets_dk <- cabinets_dk %>%
 
 cabinets_fo_gl <- full_join(cabinets_gl, cabinets_fo)
 
+## Set Plotting Theme -----
+
+theme_nordatlantisk_basis <- function(){
+  
+  theme_grey() %+replace%
+    theme(axis.title = element_blank(),
+          axis.ticks.y = element_blank(),
+          panel.background = element_blank(),
+          panel.grid.major.x = element_line(color = "#000000", linewidth = 0.1),
+          panel.grid.minor.x = element_line(color = "#000000", linewidth = 0.1),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          axis.ticks.x = element_line(color = "#000000", linewidth = 0.1),
+          axis.line.y.left = element_line(color = "#000000", linewidth = 0.1))
+}
+
 ```
 
 ## Introduction {#introduction}
 
-This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2026. Refer to @berntzenParliamentaryOpenData2019 for background information on Folketingets open data ecosystem.
+This codebook provides descriptions of the `nordatlantisk-ft` data set, i.e. of all files in `/data/`. Variables are described for each file individually with information on connections to other variables within the pipeline to create the data set. All data, unless otherwise specified, is retrieved from the records of the parliament of Denmark, @folketingetFolketingetsAbneData2026. Refer to @berntzenParliamentaryOpenData2019 for background information on Folketinget's open data ecosystem.
 
 All data is available in `rds` format that can be read in an R Session via `readRDS()`. Where data is also available in `csv` format, tabular metadata is provided in `json` files according to the W3C Metadata Vocabulary for Tabular Data [@w3cW3CRecommendationMetadata2015].
 
@@ -118,6 +138,9 @@ classDiagram
 
     roll_call_info_raw <|-- roll_call_results_ft
 
+    roll_call_info_raw ~~ ministries_lookup
+    ministries_lookup <|-- roll_call_results_ft
+
     cabinets_fo .. cabinets_gl
     cabinets_gl .. cabinets_dk
     cabinets_dk <|-- northatlantic_ft
@@ -128,13 +151,14 @@ classDiagram
         roll_call_id : int
         MP_id : int
         surname : string
-        origin: string
+        origin : string
         party : string
-        gvt_party_at_home: bool
+        gvt_party_at_home : bool
         vote_type_id : int
         vote_id : int
         roll_call_pass : bool
         ft_process_step : string
+        ministry : string
         ft_topic : string
         ft_for : int
         ft_against : int
@@ -159,7 +183,7 @@ classDiagram
         period_id : string
         surname : string
         first_name : string
-        MP_id: int
+        MP_id : int
         origin: string
         party : string
         start : date
@@ -188,13 +212,14 @@ classDiagram
         meeting_id : int
         roll_call_pass : bool
         date : date
-        ft_topic: string
+        ft_topic : string
+        ministry : string
         ft_for : int
         ft_against : int
         ft_abstention : int
         ft_absent : int
         ft_process_id : int
-        ft_process_step: string
+        ft_process_step : string
         roll_call_nr : int
         roll_call_type_id : int
         comment : string
@@ -211,9 +236,16 @@ classDiagram
         typeid : int
         sagstrinid : int
         sagstrin_titel : string
+        sagid : int
         sag_titel : string
         dato : date
         opdateringsdato : date
+    }
+
+    class ministries_lookup {
+      sagid : int
+      ministerium : string
+      opdateringsdato : date
     }
 
     class northatlantic_votes_raw {
@@ -238,35 +270,36 @@ classDiagram
     }
 
     class cabinets_fo {
-      cabinet: string
-      wikidata_id: string
-      location: string
-      start: date
-      end: date
-      FO_&ast;: bool
+      cabinet : string
+      wikidata_id : string
+      location : string
+      start : date
+      end : date
+      FO_&ast; : bool
     }
 
     class cabinets_gl {
-      cabinet: string
-      wikidata_id: string
-      location: string
-      start: date
-      end: date
-      GL_&ast;: bool
+      cabinet : string
+      wikidata_id : string
+      location : string
+      start : date
+      end : date
+      GL_&ast; : bool
     }
 
     class cabinets_dk {
-      cabinet: string
-      wikidata_id: string
-      bloc: string
-      type: string
-      start: date
-      end: date
-      DK_&ast;: bool
+      cabinet : string
+      wikidata_id : string
+      bloc : string
+      type : string
+      start : date
+      end : date
+      DK_&ast; : bool
     }
 
 style roll_call_info_raw fill:#6195CF,color:#FFFFFF
 style roll_call_results_ft fill:#6195CF,color:#FFFFFF
+style ministries_lookup fill:#9bc0e8
 
 style northatlantic_ft fill:#F7CB45
 
@@ -282,6 +315,7 @@ click political_parties href "#political_parties" "tooltip"
 click MP_names href "#MP_names" "tooltip"
 click northatlantic_votes_raw href "#northatlantic_votes_raw" "tooltip"
 click northatlantic_votes href "#northatlantic_votes" "tooltip"
+click ministries_lookup href "#ministries_lookup" "tooltip"
 click roll_call_info_raw href "#roll_call_info_raw" "tooltip"
 click roll_call_results_ft href "#roll_call_results_ft" "tooltip"
 click cabinets_fo href "#cabinets_fo" "tooltip"
@@ -298,7 +332,7 @@ This repository is shipped with a list of all Folketinget MPs that have represen
 
 `MP_names` is provided in `csv` and `rds` formats in `/data/processed`.  Metadata for the `csv` file is provided in an accompanying `json` metadata file. These files are compiled by executing the script at [`src/create_MP_list.R`](/src/create_MP_list.R) and other MPs should be added by updating this script.
 
-The `rds` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketingets Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file.
+The `rds` file serves as starting point for building the data set, as the workflow pipeline[^1] retrieves data from [Folketinget's Open Data Portal](https://oda.ft.dk) based on which MPs are listed in this file.
 
 [^1]: See [README](/index.qmd) or [`_targets.R`](/_targets.R)
 
@@ -326,7 +360,7 @@ head(MP_names$first_name)
 
 #### MP_names$MP_id
 
-Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_names$MP_id)` as `r class(MP_names$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
+Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_names$MP_id)` as `r class(MP_names$MP_id)` variable. It is possible to use these IDs e.g. for querying [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
 
 ```{r MP_names-MP_id}
 head(MP_names$MP_id)
@@ -364,7 +398,7 @@ For now, the `MP_names` data frame does not include information on membership pe
 summary(MP_names$party)
 ```
 
-All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022].
+All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2024Release2024].
 
 ```{r parties-list}
 #| echo: false
@@ -462,7 +496,7 @@ str(MP_dates$first_name)
 
 #### MP_dates$MP_id
 
-Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_dates$MP_id)` as `r class(MP_dates$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207). See also [`MP_names$MP_id`](#mp_namesmp_id).
+Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_dates$MP_id)` as `r class(MP_dates$MP_id)` variable. It is possible to use these IDs e.g. for querying [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207). See also [`MP_names$MP_id`](#mp_namesmp_id).
 
 ```{r}
 str(MP_dates$MP_id)
@@ -606,7 +640,7 @@ head(political_parties$wikidata_id)
 
 #### political_parties$party_family
 
-The `party_family` variable of `political_parties` stores the label for the political party family the party is matched with in the ParlGov dataset [@doringParlGov2022Release2022]. All entries are stored as values of the type `r typeof(political_parties$party_family)` as `r class(political_parties$party_family)` variable.
+The `party_family` variable of `political_parties` stores the label for the political party family the party is matched with in the ParlGov dataset [@doringParlGov2024Release2024]. All entries are stored as values of the type `r typeof(political_parties$party_family)` as `r class(political_parties$party_family)` variable.
 
 Note that party families are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$party_family) | political_parties$party_family == ""], collapse = ", ")`).
 
@@ -632,7 +666,7 @@ summary(political_parties$origin)
 
 #### political_parties$left_right
 
-`left_right` indicates where a party's positions are located on a scale from 0 (left) to 10 (right). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$left_right)` as `r class(political_parties$left_right)` variable.
+`left_right` indicates where a party's positions are located on a scale from 0 (left) to 10 (right). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$left_right)` as `r class(political_parties$left_right)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
@@ -642,7 +676,7 @@ head(political_parties$left_right)
 
 #### political_parties$state_market
 
-`state_market` indicates where a party's positions on regulating the economy are located on a scale from 0 (preferring state regulations) to 10 (preferring unregulated markets). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$state_market)` as `r class(political_parties$state_market)` variable.
+`state_market` indicates where a party's positions on regulating the economy are located on a scale from 0 (preferring state regulations) to 10 (preferring unregulated markets). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$state_market)` as `r class(political_parties$state_market)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
@@ -652,7 +686,7 @@ head(political_parties$state_market)
 
 #### political_parties$liberty_authority
 
-`liberty_authority` indicates a party's position on a scale from 0 (libertarian) to 10 (authoritarian). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$liberty_authority)` as `r class(political_parties$liberty_authority)` variable.
+`liberty_authority` indicates a party's position on a scale from 0 (libertarian) to 10 (authoritarian). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$liberty_authority)` as `r class(political_parties$liberty_authority)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
@@ -662,7 +696,7 @@ head(political_parties$liberty_authority)
 
 #### political_parties$anti_pro_eu
 
-`anti_pro_eu` indicates a party's position towards EU integration on a scale from 0 (in favor of EU integration) to 10 (against EU integration). Values are taken directly from the ParlGov dataset [@doringParlGov2022Release2022]. This variable is stored as value of the type `r typeof(political_parties$anti_pro_eu)` as `r class(political_parties$anti_pro_eu)` variable.
+`anti_pro_eu` indicates a party's position towards EU integration on a scale from 0 (in favor of EU integration) to 10 (against EU integration). Values are taken directly from the ParlGov dataset [@doringParlGov2024Release2024]. This variable is stored as value of the type `r typeof(political_parties$anti_pro_eu)` as `r class(political_parties$anti_pro_eu)` variable.
 
 Note that party positions are not listed for parties that have MPs in Folketinget for the first time after the last update of the ParlGov dataset (`r paste(political_parties$full_name[is.na(political_parties$left_right) | political_parties$left_right == ""], collapse = ", ")`).
 
@@ -705,7 +739,7 @@ All votes cast in Folketinget are recorded using numeric values that correspond 
 | 3 | fravær | absence | `r length(northatlantic_votes$vote_type_id[northatlantic_votes$vote_type_id == "3"])` |
 | 4 | hverken for eller imod | abstention | `r length(northatlantic_votes$vote_type_id[northatlantic_votes$vote_type_id == "4"])` |
 
-: Vote Type IDs as used by Folketingets Open Data Service {#tbl-typeid} {.striped .hover}
+: Vote Type IDs as used by Folketinget's Open Data Service {#tbl-typeid} {.striped .hover}
 
 This variable corresponds to the `typeid` variable and the `Stemmetype` resource in [the Folketing online database](https://oda.ft.dk).
 
@@ -848,6 +882,18 @@ This variable corresponds to the `titel` variable in the `Sag` resource in [the 
 head(roll_call_results_ft$ft_topic)
 ```
 
+#### roll_call_results_ft$ministry
+
+Each proposal that is being voted on in Folketinget is assigned to one ministry that is responsible for handling the government's end. The name of that ministry is stored in this variable for each observation. Ministry names are stored as values of the type `r typeof(roll_call_results_ft$ministry)` in Danish language.
+
+This variable is joined from [`ministries_lookup`](#ministries_lookup) based on [`roll_call_info_raw$sagid`](#roll_call_info_rawsagid) and corresponds to the `navn` variable in the `SagAktør` resource in [the Folketing online database](https://oda.ft.dk), filtered for those `aktørid` values that are designated as `Ministerområde` (`rolleid = 6`) for the `Sag` in question.
+
+```{r roll_call_results_ft-ministry}
+head(roll_call_results_ft$ministry)
+```
+
+Note that since designations and areas of responsibilities have changed over time, there will be several instances of, e.g. transport ministries (Transportministeriet, Transport- og Energiministeriet, Transport- og Boligministeriet, Transport- og Bygningsministeriet as well as Transport-, Bygnings- og Boligministeriet). See [`northatlantic_ft$ministry`](#northatlantic_ftministry) for a list of all occurring ministries.
+
 #### roll_call_results_ft$ft_for
 
 In `ft_for`, the number of votes cast in favor of a proposal is stored as `r class(roll_call_results_ft$ft_for)` variable of the type `r typeof(roll_call_results_ft$ft_for)`.
@@ -860,6 +906,44 @@ The maximum value stored in `ft_for` is `r max(roll_call_results_ft$ft_for, na.r
 
 ```{r roll_call_results_ft-ft_for}
 summary(roll_call_results_ft$ft_for)
+```
+
+```{r roll_call_results_ft-ft_for-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-for
+#| fig-cap: Timeline of `for` vote counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_for <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_for)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#6195CF", shape = 21,
+              fill = "#6195CF", stroke = 0.1) +
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_for
 ```
 
 #### roll_call_results_ft$ft_against
@@ -876,6 +960,45 @@ The maximum value stored in `ft_against` is `r max(roll_call_results_ft$ft_again
 summary(roll_call_results_ft$ft_against)
 ```
 
+```{r roll_call_results_ft-ft_against-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-against
+#| fig-cap: Timeline of `against` vote counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_against <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_against)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#777777", shape = 21,
+              fill = "#F7CB45", stroke = 0.05) +
+
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+  
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_against
+```
+
 #### roll_call_results_ft$ft_abstention
 
 In `ft_abstention`, the number of abstentions in a vote is stored as `r class(roll_call_results_ft$ft_abstention)` variable of the type `r typeof(roll_call_results_ft$ft_abstention)`.
@@ -890,6 +1013,46 @@ The maximum value stored in `ft_abstention` is `r max(roll_call_results_ft$ft_ab
 summary(roll_call_results_ft$ft_abstention)
 ```
 
+```{r roll_call_results_ft-ft_abstention-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-abstention
+#| fig-cap: Timeline of `abstention` vote counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_abstention <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_abstention)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#777777", shape = 21,
+              fill = "#777777", stroke = 0.05) +
+
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+  
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_abstention
+```
+
+
 #### roll_call_results_ft$ft_absent
 
 In `ft_absent`, the number of MPs who were absent for each roll call is stored as `r class(roll_call_results_ft$ft_absent)` variable with values of the type `r typeof(roll_call_results_ft$ft_absent)`.
@@ -900,6 +1063,45 @@ The maximum value stored in `ft_absent` is `r max(roll_call_results_ft$ft_absent
 
 ```{r roll_call_results_ft-ft_absent}
 summary(roll_call_results_ft$ft_absent)
+```
+
+```{r roll_call_results_ft-ft_absent-plot}
+#| echo: false
+#| warning: false
+#| label: fig-timeline-absent
+#| fig-cap: Timeline of `absent` counts in roll call votes. Dashed lines designate general Folketinget elections.
+
+scatterplot_absent <- ggplot(northatlantic_ft,
+                      aes(x = date, y = ft_absent)) +
+  
+  geom_jitter(width = 0, height = 0.2, size = 0.8, 
+              color = "#777777", shape = 21,
+              fill = "#D1BBD7", stroke = 0.05) +
+
+  scale_x_date(expand = expansion(mult = c(0.01, .05))) +
+  scale_y_continuous(limits = c(0, 179),
+                     labels = c(0, 50, 100, 150, 179),
+                     breaks = c(0, 50, 100, 150, 179)) +
+  
+  # Folketing elections
+  geom_vline(
+    data = elections_ft,
+    aes(xintercept = as.Date(date), linetype = election_type),
+    color = "#000000",
+    linewidth = 0.2
+  ) +
+  scale_linetype_manual(
+    values = c("Folketing Election" = "longdash"),
+    name = ""
+  ) +
+  
+  theme_nordatlantisk_basis() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y.left = element_blank(),
+        legend.position = "none",
+        panel.grid.major.y = element_line(color = "#777777", linewidth = 0.05))
+
+scatterplot_absent
 ```
 
 #### roll_call_results_ft$ft_process_id
@@ -943,7 +1145,7 @@ All roll call procedures in Folketinget are categorised using numeric values tha
 | 3 | Forslag til vedtagelse | Proposed Adoption | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "3"])` |
 | 4 | Ændringsforslag | Amendment | `r length(roll_call_results_ft$roll_call_type_id[roll_call_results_ft$roll_call_type_id == "4"])` |
 
-: Roll call Type IDs as used by Folketingets Open Data Service {#tbl-roll_calltypeid} {.striped .hover}
+: Roll call Type IDs as used by Folketinget's Open Data Service {#tbl-roll_calltypeid} {.striped .hover}
 
 This variable corresponds to `typeid` variable in [`roll_call_info_raw`](#roll_call_info_rawtypeid) and the `type` variable in the `Afstemningstype` resource in [the Folketing online database](https://oda.ft.dk).
 
@@ -1000,7 +1202,7 @@ Descriptions of all variables in `roll_call_info_raw` are provided in the follow
 
 #### roll_call_info_raw$id
 
-See [roll_call_result_ft$roll_call_id](#roll_call_results_ftroll_call_id). Take care not to confuse `id` with [`nummer`](#roll_call_info_rawnummer). In the raw data, `id` is stored as `r typeof(roll_call_info_raw$id)` value.
+See [roll_call_results_ft$roll_call_id](#roll_call_results_ftroll_call_id). Take care not to confuse `id` with [`nummer`](#roll_call_info_rawnummer). In the raw data, `id` is stored as `r typeof(roll_call_info_raw$id)` value.
 
 ```{r roll_call_info_raw-id}
 head(roll_call_info_raw$id)
@@ -1056,7 +1258,7 @@ table(roll_call_info_raw$typeid)
 
 #### roll_call_info_raw$sagstrinid
 
-See [roll_call_results_ft\$ft_process_id](#roll_call_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(roll_call_info_raw$sagstrinid)` value.
+See [roll_call_results_ft\$ft_process_id](#roll_call_results_ftft_process_id). In the raw data, `sagstrinid` is stored as `r typeof(roll_call_info_raw$sagstrinid)` value. Take care not to confuse `sagstrinid` with [`roll_call_info_raw$sagid`](#roll_call_info_rawsagid).
 
 ```{r roll_call_info_raw-sagstrinid}
 head(roll_call_info_raw$sagstrinid)
@@ -1068,6 +1270,16 @@ See [roll_call_results_ft$ft_process_step](#roll_call_results_ftft_process_step)
 
 ```{r roll_call_info_raw-sagstrin_titel}
 head(roll_call_info_raw$sagstrin_titel)
+```
+
+#### roll_call_info_raw$sagid
+
+All legislation in Folketinget are assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `sagid` is thus a unique identifier for one issue being handled in Folketinget. All IDs are stored as values of the type `r typeof(roll_call_info_raw$sagid)`. Take care not to confuse `sagid` with [`roll_call_info_raw$sagstrinid`](#roll_call_info_rawsagstrinid). `sagid` is used to match the responsible [ministry](#ministries_lookup) to each proposal in [roll_call_results_ft](#roll_call_results_ft).
+
+This variable corresponds to the `sagid` variable and the `Sag` resource in the Folketing online database.
+
+```{r roll_call_info_raw-sagid}
+head(roll_call_info_raw$sagid)
 ```
 
 #### roll_call_info_raw$sag_titel
@@ -1092,6 +1304,44 @@ This variable is used to check against the API for updated records. In the raw d
 
 ```{r roll_call_info_raw-opdateringsdato}
 head(roll_call_info_raw$opdateringsdato)
+```
+
+------------------------------------------------------------------------
+
+### ministries_lookup {#ministries_lookup}
+
+`ministries_lookup` contains information on the ministry assigned to each proposal (`Sag`). As per `r format(file.info(here("data", "raw", "ministries_lookup.rds"))$mtime, "%B %Y")`, `ministries_lookup.rds` contains `r nrow(ministries_lookup)` observations of `r ncol(ministries_lookup)` variables.
+
+`ministries_lookup` is provided as `rds` file in `/data/raw/`. It is being joined to [`roll_call_results_ft`](#roll_call_results_ft) by matching with [`roll_call_info_raw$sagid`](#roll_call_info_rawsagid).
+
+```{r ministries_lookup-intro}
+str(ministries_lookup)
+```
+
+Descriptions of all variables in `ministries_lookup` are provided in the following sections.
+
+#### ministries_lookup$sagid
+
+See [roll_call_results_raw$sagid](#roll_call_info_rawsagid).
+
+```{r ministries_lookup-sagid}
+head(ministries_lookup$sagid)
+```
+
+#### ministries_lookup$ministerium
+
+See [roll_call_results_ft$ministry](#roll_call_results_ftministry).
+
+```{r ministries_lookup-ministerium}
+head(ministries_lookup$ministerium)
+```
+
+#### ministries_lookup$opdateringsdato
+
+This variable is used to check against the API for updated records. In the raw data, `opdateringsdato` is stored as `r class(ministries_lookup$opdateringsdato)` value.
+
+```{r ministries_lookup-opdateringsdato}
+head(ministries_lookup$opdateringsdato)
 ```
 
 ------------------------------------------------------------------------
@@ -1525,7 +1775,7 @@ str(northatlantic_ft$roll_call_id)
 
 #### northatlantic_ft$MP_id
 
-Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_ft$MP_id)` as `r class(northatlantic_ft$MP_id)` variable. It is possible to use these IDs e.g. for querying the [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
+Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(northatlantic_ft$MP_id)` as `r class(northatlantic_ft$MP_id)` variable. It is possible to use these IDs e.g. for querying [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207).
 
 ```{r northatlantic_ft-MP_id}
 str(northatlantic_ft$MP_id)
@@ -1604,6 +1854,37 @@ This variable corresponds to the `titel` variable in the `Sagstrin` resource in 
 ```{r northatlantic_ft-ft_process_step}
 str(northatlantic_ft$ft_process_step)
 ```
+
+#### northatlantic_ft$ministry
+
+Each proposal that is being voted on in Folketinget is assigned to one ministry that is responsible for handling the government's end. The name of that ministry is stored in this variable for each observation. Ministry names are stored as values of the type `r typeof(northatlantic_ft$ministry)` in Danish language.
+
+The values of this variable correspond to the `navn` variable in the `SagAktør` resource in [the Folketing online database](https://oda.ft.dk), filtered for those `aktørid` values that are designated as `Ministerområde` (`rolleid = 6`) for the `Sag` in question. See also [`ministries_lookup`](#ministries_lookup).
+
+```{r northatlantic_ft-ministry}
+str(northatlantic_ft$ministry)
+```
+
+Note that since designations and areas of responsibilities have changed over time, there will be several instances of, e.g. transport ministries (Transportministeriet, Transport- og Energiministeriet, Transport- og Boligministeriet, Transport- og Bygningsministeriet as well as Transport-, Bygnings- og Boligministeriet).
+
+::: {.callout-note title="Click to see a list of all ministries listed in the data" appearance="minimal" collapse="true"}
+
+```{r northatlantic_ft-ministry-table}
+#| echo: false
+#| warning: false
+#| label: tbl-ministries
+#| tbl-cap: List of all ministries associated with a roll call vote including the count of occurrences in the data.
+
+ministry_counts <- northatlantic_ft %>%
+  count(ministry, .drop = FALSE) %>%  # .drop = FALSE keeps NAs
+  arrange(ministry)                   # sort alphabetically
+
+kable(ministry_counts, 
+      col.names = c("Ministry", "Count"),
+      align = c("l", "r"))
+```
+
+:::
 
 #### northatlantic_ft$ft_topic
 

@@ -74,7 +74,7 @@ saveRDS(MP_names, here("data", "processed", "MP_names.rds"))
 ## Metadata -----
 
 annotate_csv(MP_names,
-         dataset_description = "MP_names is provided in csv and rds formats in /data/processed. The csv file serves as starting point for building the data set, as the workflow pipeline1 retrieves data from Folketingets Open Data Portal based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from October 07, 2004 until the most recent update of this data set. Refer to the documentation for more details.",
+         dataset_description = "MP_names is provided in csv and rds formats in /data/processed. The csv file serves as starting point for building the data set, as the workflow pipeline retrieves data from Folketinget's Open Data Portal based on which MPs are listed in this file. This repository is shipped with a list of all Folketinget MPs that have represented the Faroe Islands and Greenland from October 07, 2004 until the most recent update of this data set. Refer to the documentation for more details.",
          primary_key = "MP_id",
          column_title = c(
            "Surname(s)",

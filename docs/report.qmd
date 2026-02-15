@@ -114,7 +114,7 @@ There are 179 MPs in Folketinget, the parliament of Denmark. But only 175 of the
 
 ## Dataset
 
-*nordatlantisk-ft* is compiled from data available on Folketingets Open Data Platform [@folketingetFolketingetsAbneData2026] and comprises `r length(unique(northatlantic_ft$vote_id))` records of votes cast by Northatlantic MPs as per the most recent update (`r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`). The dataset documents voting behavior of MPs from Greenland and the Faroe Islands and also contains metadata on each record -- e.g. date and topic of each vote or the overall voting result, covering votes on `r length(unique(northatlantic_ft$roll_call_id))` proposals in Folketinget. Refer to the [Codebook](codebook.qmd) for details.
+*nordatlantisk-ft* is compiled from data available on Folketinget's Open Data Platform [@folketingetFolketingetsAbneData2026] and comprises `r length(unique(northatlantic_ft$vote_id))` records of votes cast by Northatlantic MPs as per the most recent update (`r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`). The dataset documents voting behavior of MPs from Greenland and the Faroe Islands and also contains metadata on each record -- e.g. date and topic of each vote or the overall voting result, covering votes on `r length(unique(northatlantic_ft$roll_call_id))` proposals in Folketinget. Refer to the [Codebook](codebook.qmd) for details.
 
 This data is intended for re-use ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)) and is version-controlled [in a GitHub repository](https://www.github.com/mtwente/nordatlantisk-ft) including extensive documentation and long-term archival on Zenodo. The structure of this repository is based on the [Open Research Data Template](https://github.com/maehr/open-research-data-template) [@mahrOneTemplateRule2025a] and follows the [Advanced Structure for Data Analysis](https://book.the-turing-way.org/project-design/pd-overview/project-repo/project-repo-advanced/) of _The Turing Way_.
 
@@ -301,7 +301,7 @@ Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$
 
 See @ackrenPoliticalPartiesGreenland2015 for an analysis of the development of Greenlandic political parties until 2014. For overviews of the Faroese political party system see West [-@westSkipanarligarFortreytirOg2022 in Faroese; -@westFaeroskPolitikMellem2020 in Danish; -@westMPFirefightingWhen2018, 101-106 in English].
 
-All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2022Release2022]. @fig-party-timeline shows the allocation of Folketinget seats to political parties from Greenland and the Faroe Islands on a timeline.
+All represented political parties are listed in @tbl-parties with additional information (where available) on their positions from the ParlGov dataset [@doringParlGov2024Release2024]. @fig-party-timeline shows the allocation of Folketinget seats to political parties from Greenland and the Faroe Islands on a timeline.
 
 ```{r parties-list}
 #| echo: false
@@ -406,7 +406,7 @@ ggplot(party_periods, aes(x = start, xend = end, y = party, yend = party, color 
 
 The following exploratory plots were generated using ggplot2 [@wickhamGgplot2ElegantGraphics2016] with the data available on `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %d, %Y")`, covering voting behaviour from `r nrow(mp_names)` MPs. These visualizations make no distinction between directly elected MPs and substitute MPs.
 
-On a proposal, members can either vote `for`, `against` or neither for or against (`abstention`). Taking into account all roll calls that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
+On a proposal, members can either vote `for`, `against` or neither for nor against (`abstention`). Taking into account all roll calls that are recorded in this data set, Greenlandic and Faroese MPs actually cast a vote in just `r mean(northatlantic_ft$vote_type_id != "3") %>% scales::percent(accuracy = 0.1)` of them. For `r length(northatlantic_ft$vote_type_id[northatlantic_ft$vote_type_id == "3"])` out of `r nrow(northatlantic_ft)` cases, the MP in question is listed as absent.
 
 ::: {#fig-vote-share}
 <!-- in a fenced div because of the dynamically updating caption -->
