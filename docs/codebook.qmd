@@ -344,7 +344,7 @@ Descriptions of all variables in `MP_names` are provided in the following sectio
 
 #### MP_names$surname
 
-All surname(s) are stored as values of the type `r typeof(MP_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
+All surname(s) are stored as values of the type `r typeof(MP_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
 
 ```{r MP_names-surname}
 head(MP_names$surname)
@@ -478,7 +478,7 @@ str(MP_dates$period_id)
 
 #### MP_dates$surname
 
-All surname(s) are stored as values of the type `r typeof(MP_dates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmp_id) instead for reliable identification of each MP and to [`MP_dates$period_id`](#mp_datesperiod_id) for reliable identification of membership periods. See also [`MP_names$surname`](#mp_namessurname).
+All surname(s) are stored as values of the type `r typeof(MP_dates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmp_id) instead for reliable identification of each MP and to [`MP_dates$period_id`](#mp_datesperiod_id) for reliable identification of membership periods. See also [`MP_names$surname`](#mp_namessurname).
 
 ```{r MP_dates-surname}
 str(MP_dates$surname)
@@ -1783,7 +1783,7 @@ str(northatlantic_ft$MP_id)
 
 #### northatlantic_ft$surname
 
-All surname(s) are stored as values of the type `r typeof(northatlantic_ft$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`northatlantic_ft$MP_id`](#northatlantic_ftmp_id) instead for reliable identification.
+All surname(s) are stored as values of the type `r typeof(northatlantic_ft$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are multiple MPs with the same surname(s), refer to [`northatlantic_ft$MP_id`](#northatlantic_ftmp_id) instead for reliable identification.
 
 ```{r northatlantic_ft-surname}
 str(northatlantic_ft$surname)
