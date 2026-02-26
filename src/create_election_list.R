@@ -11,19 +11,19 @@ election_dates <- data.frame(
   
   election = c(
     "ft_2001", "ft_2005", "ft_2007", "ft_2011",
-    "ft_2015", "ft_2019", "ft_2022",
+    "ft_2015", "ft_2019", "ft_2022", "ft_2026",
     
     "ina_2002", "ina_2005", "ina_2009", "ina_2013",
     "ina_2014", "ina_2018", "ina_2021", "ina_2025",
     
     "lt_2004", "lt_2008", "lt_2011", "lt_2015",
-    "lt_2019", "lt_2022"
+    "lt_2019", "lt_2022", "lt_2026"
   ),
   
   election_type = factor(c(
-    rep("Folketing Election", 7),
+    rep("Folketing Election", 8),
     rep("Inatsisartut Election", 8),
-    rep("Løgting Election", 6)
+    rep("Løgting Election", 7)
     
   )),
   date = as.Date(c(
@@ -36,6 +36,7 @@ election_dates <- data.frame(
     "2015-06-18",
     "2019-06-05",
     "2022-11-01",
+    "2026-03-24",
     
     ## Inatsisartut
     "2002-12-03",
@@ -53,7 +54,8 @@ election_dates <- data.frame(
     "2011-10-28",
     "2015-09-01",
     "2019-08-31",
-    "2022-12-08"
+    "2022-12-08",
+    "2026-03-26"
   ))
   )
 
