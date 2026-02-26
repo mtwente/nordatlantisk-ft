@@ -181,7 +181,7 @@ Earlier terms served by Edmund Joensen and Lisbeth Petersen are cut off from the
 #| echo: false
 #| message: false
 #| label: fig-mandates
-#| fig-cap: Timeline of MPs from Greenland and the Faroe Islands during the timeframe covered by this data set. Substitutions shorter than three weeks are plotted as points for better visibility.
+#| fig-cap: Timeline of MPs from Greenland and the Faroe Islands during the timeframe covered by this data set. Substitutions shorter than three weeks are plotted as dots for better visibility.
 
 # remove pre-2000 MPs (Edmund Joensen's and Lisbeth Petersen's first terms)
 MP_dates <- MP_dates %>%
@@ -235,7 +235,7 @@ ggplot(MP_dates, aes(x = start,
     lineend = "butt"
   ) +
 
-  # Points for short-term substitutions
+  # Dots for short-term substitutions
 geom_point(
   data = MP_dates %>%
     filter(
