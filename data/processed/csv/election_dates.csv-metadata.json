@@ -15,7 +15,7 @@
 	},
 	"dc:description": "This repository is shipped with a list of all elections to the parliaments in Denmark (Folketinget), Greenland (Inatsisartut) and the Faroe Islands (Løgtingið) that led to the formation of the parliaments in session during the time period covered by this data set. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-01-30T18:25:07+0100",
+		"@value": "2026-02-26T16:55:22+0100",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",
@@ -45,7 +45,7 @@
 					"base": "date",
 					"format": "yyyy-MM-dd",
 					"minimum": "2001-11-20",
-					"maximum": "2025-03-11"
+					"maximum": "2026-03-26"
 				}
 			}
 		],

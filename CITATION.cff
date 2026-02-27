@@ -9,12 +9,9 @@ authors:
     given-names: Moritz
     orcid: 'https://orcid.org/0009-0005-7187-9774'
 identifiers:
-  - description: 'This is the collection of archived snapshots of all versions of nordatlantisk-ft'
+  - description: 'This is the collection of archived snapshots of all versions of nordatlantisk-ft, resolving to the most recent version'
     type: doi
     value: 10.5281/zenodo.10517954
-  - description: 'This is the archived snapshot of version 0.1.0-alpha of nordatlantisk-ft'
-    type: doi
-    value: 10.5281/zenodo.10517955
 
 repository-code: 'https://github.com/mtwente/nordatlantisk-ft'
 abstract: >-
@@ -28,5 +25,5 @@ keywords:
   - Greenland
   - Faroe Islands
 license: CC-BY-4.0
-version: 0.1.0-alpha
-date-released: '2024-01-16'
+version: 0.2.0
+date-released: '2026-02-27'

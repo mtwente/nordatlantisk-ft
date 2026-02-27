@@ -344,7 +344,7 @@ Descriptions of all variables in `MP_names` are provided in the following sectio
 
 #### MP_names$surname
 
-All surname(s) are stored as values of the type `r typeof(MP_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
+All surname(s) are stored as values of the type `r typeof(MP_names$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are multiple MPs with the same surname(s), refer to [`MP_names$MP_id`](#mp_namesmp_id) instead for reliable identification.
 
 ```{r MP_names-surname}
 head(MP_names$surname)
@@ -478,7 +478,7 @@ str(MP_dates$period_id)
 
 #### MP_dates$surname
 
-All surname(s) are stored as values of the type `r typeof(MP_dates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmp_id) instead for reliable identification of each MP and to [`MP_dates$period_id`](#mp_datesperiod_id) for reliable identification of membership periods. See also [`MP_names$surname`](#mp_namessurname).
+All surname(s) are stored as values of the type `r typeof(MP_dates$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are multiple MPs with the same surname(s), refer to [`MP_dates$MP_id`](#mp_datesmp_id) instead for reliable identification of each MP and to [`MP_dates$period_id`](#mp_datesperiod_id) for reliable identification of membership periods. See also [`MP_names$surname`](#mp_namessurname).
 
 ```{r MP_dates-surname}
 str(MP_dates$surname)
@@ -498,7 +498,7 @@ str(MP_dates$first_name)
 
 Each MP is assigned an ID by [Folketingets åbne data service (ODA)](https://www.ft.dk/dokumenter/aabne_data). Each `MP_id` thus is a unique identifier for one member of Folketinget. All IDs are stored as values of the type `r typeof(MP_dates$MP_id)` as `r class(MP_dates$MP_id)` variable. It is possible to use these IDs e.g. for querying [the online database](https://oda.ft.dk) to retrieve documents that relate to a given MP or to find out which parliamentary processes this MP has been engaged in. The Folketing ID is also available as Wikidata Property [P10207](https://www.wikidata.org/wiki/Property:P10207). See also [`MP_names$MP_id`](#mp_namesmp_id).
 
-```{r}
+```{r MP_dates-MP_id}
 str(MP_dates$MP_id)
 ```
 
@@ -634,7 +634,7 @@ str(political_parties$full_name)
 
 The `wikidata_id` variable stores the `QID` linking to the Wikidata entity representing the political party in question, making it easy to retrieve additional information from Wikidata, if necessary. This variable is stored as value of the type `r typeof(political_parties$wikidata_id)` as `r class(political_parties$wikidata_id)` variable.
 
-```{r}
+```{r political_parties-wikidata_id}
 head(political_parties$wikidata_id)
 ```
 
@@ -1783,7 +1783,7 @@ str(northatlantic_ft$MP_id)
 
 #### northatlantic_ft$surname
 
-All surname(s) are stored as values of the type `r typeof(northatlantic_ft$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are be multiple MPs with the same surname(s), refer to [`northatlantic_ft$MP_id`](#northatlantic_ftmp_id) instead for reliable identification.
+All surname(s) are stored as values of the type `r typeof(northatlantic_ft$surname)`. Names are spelled according to standardised orthography and, in terms of morphology, in nominative (Faroese) resp. absolutive (Greenlandic) case. Because there are multiple MPs with the same surname(s), refer to [`northatlantic_ft$MP_id`](#northatlantic_ftmp_id) instead for reliable identification.
 
 ```{r northatlantic_ft-surname}
 str(northatlantic_ft$surname)
