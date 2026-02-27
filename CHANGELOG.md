@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix footnote numbering
 - Fix typo
 - Fix footnote referencing
+- More precise wording
 
 ### Documentation
 
@@ -29,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix document section hierarchy
 - Add statement about stedfortræder membership periods
 - Move report qmd file to docs subfolder
+- Fix grammar/copy paste error
+- Add date of last update to vote-share plot
 
 ### Features
 
@@ -46,6 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve readability of membership status
 - Add update about Nunatta Qitornai dissolving
 - Update FO replacement memberships timeline data
+- Add 2026 election dates for Folketing and Løgting
+- Update voting data as of 2026-02-26
 
 ### Miscellaneous Tasks
 
