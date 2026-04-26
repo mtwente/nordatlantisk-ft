@@ -15,7 +15,7 @@
 	},
 	"dc:description": "cabinets_fo is provided as csv and rds file in /data/processed/. It contains information on coalition governments of the Faroe Islands, in particular a timeline including the parties that are part of each cabinet during the timeframe covered by the northatlantic_ft dataset. Refer to the documentation for more details.",
 	"dc:modified": {
-		"@value": "2026-01-31T00:03:54+0100",
+		"@value": "2026-04-26T18:10:59+0200",
 		"@type": "xs:dateTime"
 	},
 	"dc:type": "Dataset",
@@ -51,7 +51,7 @@
 					"base": "date",
 					"format": "yyyy-MM-dd",
 					"minimum": "2002-06-06",
-					"maximum": "2022-12-22"
+					"maximum": "2026-04-13"
 				}
 			},
 			{
@@ -62,7 +62,7 @@
 					"base": "date",
 					"format": "yyyy-MM-dd",
 					"minimum": "2004-02-03",
-					"maximum": "2022-12-22"
+					"maximum": "2026-04-13"
 				}
 			},
 			{
