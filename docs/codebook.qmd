@@ -388,7 +388,7 @@ summary(MP_names$origin)
 
 The political party that each MP belongs to is stored as value of the type `r typeof(MP_names$party)` as `r class(MP_names$party)` variable.
 
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, as per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties (Nunatta Qitornai and Naleraq[^2]).
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL" & political_parties$party != "NQ")` different political parties. However, as per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties (Nunatta Qitornai and Naleraq[^2]).
 
 [^2]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
 
@@ -1801,7 +1801,7 @@ summary(northatlantic_ft$origin)
 
 The political party that each MP belongs to at the time of the vote is stored as value of the type `r typeof(northatlantic_ft$party)` as `r class(northatlantic_ft$party)` variable.
 
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 2` different political parties. However, as per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties (Nunatta Qitornai and Naleraq[^3]).
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL" & political_parties$party != "NQ")` different political parties. However, as per `r format(file.info(here("data", "processed", "northatlantic_ft.rds"))$mtime, "%B %Y")`, there have been two MPs from Greenland who left their party – Siumut, in both cases – during their time in office and joined other parties (Nunatta Qitornai and Naleraq[^3]).
 
 [^3]: Both parties have been formed quite recently. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies. Nunatta Qitornai has de facto been dissolved after the 2021 Inatsisartut election [@hviidVittusQujaukitsoqMelder2025].
 

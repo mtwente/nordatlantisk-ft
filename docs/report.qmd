@@ -299,7 +299,7 @@ geom_point(
 
 ## Political Parties
 
-Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL") - 1` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and joined two relatively young parties (Nunatta Qitornai and Naleraq[^3]).
+Since 2004, MPs from the Faroe Islands were members of `r sum(political_parties$origin == "FO")` different political parties. Voters in Greenland elected politicians from `r sum(political_parties$origin == "GL" & political_parties$party != "NQ")` different political parties. However, two of the Greenlandic representatives -- Aleqa Hammond and Aki-Matilda Høegh-Dam -- switched party affiliation during their time as member of Folketinget and joined two relatively young parties (Nunatta Qitornai and Naleraq[^3]).
 
 [^3]: Both parties have been formed rather recently -- Naleraq in 2014 [@krebsHerErPartii2014] and Nunatta Qitornai in 2017/2018 [@fieveNytPartiTaettere2018]. The latter has de facto been dissolved after the 2021 Inatsisartut election [@vestergaardhviidVittusQujaukitsoqMelder2025]. See @ahlnessNunattaQitornaiParty2020 for general information on Nunatta Qitornai and their policies.
 
