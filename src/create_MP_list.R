@@ -25,8 +25,10 @@ rows <- list(
   c("Chemnitz", "Aaja", 15757, "Q20199803", "GL", "IA", FALSE),
   c("Hammond", "Aleqa", 15758, "Q1796195", "GL", "SIU, NQ", FALSE),
   c("Høegh-Dam", "Aki-Matilda", 18688, "Q64415132", "GL", "SIU, N", FALSE),
-  c("Olsen", "Markus E.", 20635, "Q122762872","GL", "SIU", TRUE),
-  c("Kûitse", "Elvira", 21206, "Q136486981","GL", "N", TRUE),
+  c("Olsen", "Markus E.", 20635, "Q122762872", "GL", "SIU", TRUE),
+  c("Kûitse", "Elvira", 21206, "Q136486981", "GL", "N", TRUE),
+  c("Høegh-Dam", "Qarsoq", 21388, "Q132292501", "GL", "N", FALSE),
+  c("Nathanielsen", "Naaja H.", 21387, "Q53872865", "GL", "IA", FALSE),
   
   ## Faroe Islands -----
   c("Joensen", "Edmund", 247, "Q678236", "FO", "B", FALSE),

@@ -39,21 +39,25 @@ MP_dates <- do.call(
     
     c("nielsen_1", "Nielsen","Nick","14000","GL","SIU","2014-12-16","2015-02-11",TRUE),
     
-    c("chemnitz_1", "Chemnitz","Aaja","15757","GL","IA","2015-06-18",NA,FALSE),
+    c("chemnitz_1", "Chemnitz","Aaja","15757","GL","IA","2015-06-18","2026-03-24",FALSE),
     
     c("hammond_1", "Hammond","Aleqa","15758","GL","SIU","2015-06-18","2016-08-22",FALSE),
     c("hammond_2", "Hammond","Aleqa","15758","GL","UF","2016-08-23","2018-04-24",FALSE),
     c("hammond_3", "Hammond","Aleqa","15758","GL","NQ","2018-04-25","2019-06-05",FALSE),
     
-    c("hoegh-dam_1", "Høegh-Dam","Aki-Matilda","18688","GL","SIU","2019-06-05","2023-09-22",FALSE),
-    c("hoegh-dam_2", "Høegh-Dam","Aki-Matilda","18688","GL","SIU","2023-10-06","2025-02-07",FALSE),
-    c("hoegh-dam_3", "Høegh-Dam","Aki-Matilda","18688","GL","UF","2025-02-08","2025-02-10",FALSE),
-    c("hoegh-dam_4", "Høegh-Dam","Aki-Matilda","18688","GL","N","2025-02-11","2025-09-19",FALSE),
-    c("hoegh-dam_5", "Høegh-Dam","Aki-Matilda","18688","GL","N","2025-11-14",NA,FALSE),
+    c("hoegh-dam-a_1", "Høegh-Dam","Aki-Matilda","18688","GL","SIU","2019-06-05","2023-09-22",FALSE),
+    c("hoegh-dam-a_2", "Høegh-Dam","Aki-Matilda","18688","GL","SIU","2023-10-06","2025-02-07",FALSE),
+    c("hoegh-dam-a_3", "Høegh-Dam","Aki-Matilda","18688","GL","UF","2025-02-08","2025-02-10",FALSE),
+    c("hoegh-dam-a_4", "Høegh-Dam","Aki-Matilda","18688","GL","N","2025-02-11","2025-09-19",FALSE),
+    c("hoegh-dam-a_5", "Høegh-Dam","Aki-Matilda","18688","GL","N","2025-11-14","2026-03-24",FALSE),
     
     c("olsen_1", "Olsen","Markus E.","20635","GL","SIU","2023-09-22","2023-10-06",TRUE),
     
     c("kuitse_1", "Kûitse","Elvira","21206","GL","N","2025-09-19","2025-11-14",TRUE),
+    
+    c("hoegh-dam-q-1", "Høegh-Dam","Qarsoq","21388","GL","N","2026-03-24",NA,FALSE),
+    
+    c("nathanielsen_1", "Nathanielsen","Naaja H.","21387","GL","IA","2026-03-24",NA,FALSE),
     
     c("joensen_1", "Joensen","Edmund","247","FO","B","1994-09-21","1998-03-11",FALSE),
     c("joensen_2", "Joensen","Edmund","247","FO","B","2007-11-13","2007-12-04",FALSE),
