@@ -126,7 +126,6 @@ This project is maintained by [@mtwente](https://github.com/mtwente). Please und
 
 ## Roadmap
 
-- implement [frictionless-r](https://github.com/frictionlessdata/frictionless-r)
 - implement tests
 
 ## Contributing
