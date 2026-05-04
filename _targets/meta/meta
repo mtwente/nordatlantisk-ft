@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|26b35b7de71b5f6d|||||||||||||||
+.Random.seed|object|62a98aceff384993|||||||||||||||
 "%||%"|function|176c749ab515e6f3|||||||||||||||
 add_ft_results|function|630d9b03bfce059a|||||||||||||||
 add_ministries|function|1d0fb11b1d2cbe48|||||||||||||||
@@ -39,11 +39,11 @@ MP_dates_file|stem|062391d2b398e73c|9a6dec680ddcc990|ef46db3751d8e999|358077025|
 MP_names|stem|f3cc12ffb9c9bdc7|9114fb1216a41601|f44a1100289ad380|-136046039||t20569.7064745238s|01d1049135729cc4|1230|rds|local|vector|||0.001||
 MP_names_file|stem|f3cc12ffb9c9bdc7|dd33efc92ee2f645|ef46db3751d8e999|1302994070|/Users/mtwente/github/nordatlantisk-ft/data/processed/MP_names.rds|t20569.7059929027s|01d1049135729cc4|1230|file|local|vector|||0.092||
 northatlantic_ft|stem|77b95cb265feaa01|7c9ffe1c45d39155|15a597c316a8febb|-955248254||t20569.7071354035s|e2e671f385a8d7f2|1214419|rds|local|vector|||28.464||
-raw_voting_records|stem|3891cd9ead13a2e3|97d6902dc1bf00c2|a49fc14955d4011d|-47314081||t20569.7065910352s|14dea67e5dd64d57|226869|rds|local|vector|||9.849||
+raw_voting_records|stem|3891cd9ead13a2e3|97d6902dc1bf00c2|a49fc14955d4011d|-47314081||t20577.6450572359s|14dea67e5dd64d57|226869|rds|local|vector|||19.49||
 records_with_ballot_info|stem|7198d42b35cfbe04|fb92ef8f3b43df67|e6d71779e4a19e69|-1473261242||t20484.0239570637s|ce022acee6cad062|1185958|rds|local|vector|||0.011||
 records_with_home_gvt|stem|97a36c999d3e002f|b69e95e99dd6a796|2a85a537b26b1a55|1912220421||t20569.7068039002s|0b69bf3a3c51cec0|1213572|rds|local|vector|||17.327||
 records_with_parties|stem|32e0e21d656265b2|c716074d63d8648f|5fa07fc1a72ee0a7|72161659||t20569.706601313s|1f5c0d3e68a04135|1212025|rds|local|vector|||0.123||
 records_with_roll_call_info|stem|3a57ab738f2fa78f|8151c1253fd5f841|e5781b3d4273dd43|-1401673750||t20569.7065977729s|557162e8556950aa|1212712|rds|local|vector|||0.009||
-roll_call_info|stem|0f3dce7b01a3816a|d8ac013fc4e02736|e4c5f7e2895d52c0|-982050913||t20569.7064744666s|cd94cb87d3bec4f7|779137|rds|local|vector|||0.749||
+roll_call_info|stem|0f3dce7b01a3816a|d8ac013fc4e02736|e4c5f7e2895d52c0|-982050913||t20577.6448313007s|cd94cb87d3bec4f7|779137|rds|local|vector|||0.898||
 roll_call_info_with_counts|stem|5c9a7c9b263efeef|90037f2e65f795e7|6a66d357f7566772|-130160661||t20569.7064767245s|88d4f04196e807b8|821681|rds|local|vector|||0.096||
 roll_call_with_ministries|stem|cc864ce192220438|46e815c9942d54b1|d1960f4f48a05a9e|-374652646||t20499.5866290643s|ec10bf2b1923152c|565772|rds|local|vector|||0.081||
