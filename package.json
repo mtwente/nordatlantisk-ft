@@ -17,7 +17,7 @@
 		"cz-conventional-changelog": "^3.3.0",
 		"git-cliff": "^1.4.0",
 		"husky": "^8.0.3",
-		"prettier": "^3.8.3"
+		"prettier": "^3.8.4"
 	},
 	"type": "module",
 	"config": {
