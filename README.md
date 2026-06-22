@@ -138,7 +138,7 @@ We use [SemVer](http://semver.org/) for versioning. The available versions are l
 
 ## Authors and acknowledgment
 
-- Initial work: **Moritz Twente** – [mtwente](https://github.com/mtwente) <a href='https://orcid.org/0009-0005-7187-9774' target='_blank'>![ORCID](/assets/img/ORCID-iD_icon_vector.svg){width=16}</a>
+- Initial work: **Moritz Twente** – [mtwente](https://github.com/mtwente) – [ORCID](https://orcid.org/0009-0005-7187-9774)
 
 See also the list of [contributors](https://github.com/mtwente/nordatlantisk-ft/graphs/contributors) who contributed to this project.
 
